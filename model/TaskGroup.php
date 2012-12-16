@@ -1,8 +1,8 @@
 <?php
-include_once 'Task.php';
+include_once '../db/Task.php';
 
 class TaskGroup{
-    private $gid;
+    public $gid;
     private $title;
     /**
      *  array of Task
@@ -17,28 +17,8 @@ class TaskGroup{
         $this->priority = $groupInfo['priority'];
         $this->title = $groupInfo['title'];
         $this->tasks = $groupInfo['tasks'];
+        $this->tasks = $groupInfo['priority'];
         $this->date = $groupInfo['date'];
-    }
-    
-    function getGid(){
-        return $this->gid;
-    }
-
-
-    function getTitle(){
-        return $this->title;
-    }
-    
-    function getPriority(){
-        return $this->priority;
-    }
-    
-    function getDate(){
-        return $this->priority;
-    }
-    
-    function getTasks(){
-        return $this->tasks;
     }
 }
 ?>
