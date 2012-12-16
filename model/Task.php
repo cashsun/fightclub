@@ -2,29 +2,27 @@
 
 class Task {
 
-    public $tid;
-    private $creatorid;
+    private $tid;
+    private $creatorId;
     private $creatorName;
     private $content;
     private $exp;
     private $date;
     private $isDone = false;
 
-    function __construct($tid, $createrid, $content, $exp, $date,$isDone) {
-        $this->tid = $tid;
-        $this->creatorid = $createrid;
-        $this->content = $content;
-        $this->exp = $exp;
-        $this->date = $date;
-        $this->isDone = $isDone;
+    function __construct($taskInfo) {
+        $this->tid = $taskInfo['tid'];
+        $this->creatorId = $taskInfo['createrid'];
+        $this->content = $taskInfo['content'];
+        $this->exp = $taskInfo['exp'];
+        $this->date = $taskInfo['date'];
+        $this->isDone = $taskInfo['isdone'];
+        $this->creatorName = $taskInfo['creatorname'];
     }
     
-    /**
-     * execute after each initialization. i.e. DB connection for task
-     * @param type $creatorName 
-     */
-    function setCreatorName($creatorName){
-        $this->creatorName = $creatorName;
+    
+    function getTid(){
+        return $this->tid;
     }
     
     function getCreatorName(){
@@ -32,7 +30,7 @@ class Task {
     }
 
     function getCreaterId(){
-        return $this->creatorid;
+        return $this->creatorId;
     }
     
     function getContent() {

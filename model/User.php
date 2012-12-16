@@ -1,9 +1,8 @@
 <?php
 include_once '../db/DBadapter.php';
-include_once 'TaskGroup.php';
 
 class User{
-    public $uid;
+    private $uid;
     private $firstname;
     private $lastname;
     private $username;
@@ -18,15 +17,16 @@ class User{
      */
     private $task_groups;
     
-    function __construct($uid,$firstname,$lastname,$username,$exp,$email,$task_groups) {	
-        $this->uid = $uid;
-        $this->firstname = $firstname;
-        $this->lastname = $lastname;
-        $this->username = $username;
-        $this->email = $username;
-        $this->exp = $exp;
-        $this->task_groups = $task_groups;
+    function __construct($userInfo) {	
+        $this->uid = $userInfo['uid'];
+        $this->firstname = $userInfo['firstname'];
+        $this->lastname = $userInfo['lastname'];
+        $this->username = $userInfo['username'];
+        $this->email = $userInfo['email'];
+        $this->exp = $userInfo['exp'];
+        $this->task_groups = $userInfo['task_groups'];
     }
+    
     
     function setLevel($level){
         $this->level=$level;
@@ -34,6 +34,10 @@ class User{
     
     function setExp($exp){
         $this->exp = $exp;
+    }
+    
+    function getUid(){
+        return $this->uid;
     }
     
     function getFirstname(){

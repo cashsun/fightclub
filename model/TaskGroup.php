@@ -1,5 +1,4 @@
 <?php
-include_once '../db/DBadapter.php';
 include_once '../db/Task.php';
 
 class TaskGroup{
