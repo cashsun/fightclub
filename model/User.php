@@ -2,11 +2,11 @@
 
 class User{
     private $uid;
-    private $firstname;
-    private $lastname;
-    private $username;
-    private $exp;
-    private $email;
+    private $firstname = '';
+    private $lastname = '';
+    private $username = '';
+    private $exp = 0;
+    private $email = '';
     /**
      *real time calculated
      */
@@ -42,7 +42,7 @@ class User{
     function getFirstname(){
         return $this->firstname;
     }
-	
+
     function getLastname(){
         return $this->Lastname;
     }
