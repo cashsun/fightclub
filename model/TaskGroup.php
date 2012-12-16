@@ -19,6 +19,7 @@ class TaskGroup{
         $this->title = $groupInfo['title'];
         $this->tasks = $groupInfo['tasks'];
         $this->tasks = $groupInfo['priority'];
+        $this->date = $groupInfo['date'];
     }
 }
 ?>
