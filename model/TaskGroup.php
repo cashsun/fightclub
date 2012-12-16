@@ -11,12 +11,14 @@ class TaskGroup{
      */
     private $tasks;
     private $priority;
+    private $date;
     
-    function __construct($gid,$groupInfo) {	
-        $this->gid = $gid;
+    function __construct($groupInfo) {	
+        $this->gid = $groupInfo['gid'];
         $this->priority = $groupInfo['priority'];
         $this->title = $groupInfo['title'];
         $this->tasks = $groupInfo['tasks'];
+        $this->tasks = $groupInfo['priority'];
     }
 }
 ?>
