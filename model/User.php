@@ -1,5 +1,4 @@
 <?php
-include_once '../db/DBadapter.php';
 
 class User{
     private $uid;
