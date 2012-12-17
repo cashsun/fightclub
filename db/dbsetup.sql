@@ -1,8 +1,3 @@
-/* ONE STEP SETUP FOR DB SCHEMA */
-
-
-
-/* CREATE SCHEMA & DUMMY */
 CREATE DATABASE FIGHTDB
   DEFAULT CHARACTER SET utf8
   DEFAULT COLLATE utf8_general_ci;
@@ -45,7 +40,7 @@ uid int NOT NULL,
 tgid int NOT NULL,
 content char(140),
 ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-isDone BOOLEAN DEFAULT FALSE,
+isdone BOOLEAN DEFAULT FALSE,
 CONSTRAINT pk_otask_tid PRIMARY KEY (tid),
 CONSTRAINT fk_otask_uid FOREIGN KEY (uid) REFERENCES FIGHTDB.USER(uid) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fk_otask_tgid FOREIGN KEY (tgid) REFERENCES FIGHTDB.T_GROUP(tgid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -58,7 +53,7 @@ otid int NOT NULL,
 uid int NOT NULL,
 tgid int NOT NULL,
 ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-isDone BOOLEAN DEFAULT FALSE,
+isdone BOOLEAN DEFAULT FALSE,
 CONSTRAINT pk_rtask_tid PRIMARY KEY (rtid),
 CONSTRAINT fk_rtask_uid FOREIGN KEY (uid) REFERENCES FIGHTDB.USER(uid) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fk_rtask_tgid FOREIGN KEY (tgid) REFERENCES FIGHTDB.T_GROUP(tgid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -71,7 +66,7 @@ expid int NOT NULL AUTO_INCREMENT,
 uid int NOT NULL,
 tid int NOT NULL,
 ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-isOt BOOLEAN NOT NULL DEFAULT TRUE,
+isot BOOLEAN NOT NULL DEFAULT TRUE,
 CONSTRAINT pk_expid PRIMARY KEY (expid),
 CONSTRAINT fk_exp_uid FOREIGN KEY (uid) REFERENCES FIGHTDB.USER(uid) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fk_exp_tid FOREIGN KEY (tid) REFERENCES FIGHTDB.O_TASK(tid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -100,7 +95,9 @@ INSERT INTO FIGHTDB.FRIEND (uid, fuid) VALUES('1','2');
 
 
 
-/* CREATE PROC */
+
+/* ALL SQL QUERY STORED IN THIS FILE */
+/* CREATE A ORIGINAL TO-DO TASK */
 /* ALL SQL QUERY STORED IN THIS FILE */
 /* CREATE A ORIGINAL TO-DO TASK */
 DELIMITER // 
@@ -124,7 +121,7 @@ IN mytgid int
 BEGIN
 SELECT O_TASK.tid, O_TASK.uid, USER.username,
 USER.firstname, USER.lastname, O_TASK.content,
-COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isDone, EXP.isOt
+COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone, EXP.isOt
 FROM FIGHTDB.O_TASK LEFT JOIN FIGHTDB.USER
 ON O_TASK.uid = USER.uid
 LEFT JOIN FIGHTDB.EXP
@@ -145,7 +142,7 @@ IN mytid int
 BEGIN
 SELECT O_TASK.tid, O_TASK.uid, USER.username,
 USER.firstname, USER.lastname, O_TASK.content,
-COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isDone, EXP.isOt
+COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone, EXP.isOt
 FROM FIGHTDB.O_TASK LEFT JOIN FIGHTDB.USER
 ON O_TASK.uid = USER.uid
 LEFT JOIN FIGHTDB.EXP
@@ -165,14 +162,14 @@ IN myuid int
 ) 
 BEGIN
 SELECT O_TASK.tid, O_TASK.uid, utg.username,
-utg.firstname, utg.lastname, O_TASK.content,
-COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isDone,
-EXP.isOt, utg.tgid, utg.priority, utg.title
+utg.firstname, utg.lastname, utg.email, O_TASK.content,
+COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone,
+EXP.isOt, utg.tgid, utg.priority, utg.title, utg.exp
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority,
   T_GROUP.title, T_GROUP.uid, USER.username,
-  USER.firstname, USER.lastname
+  USER.firstname, USER.lastname, USER.email, USER.exp
   FROM FIGHTDB.T_GROUP LEFT JOIN FIGHTDB.USER
   ON T_GROUP.uid = USER.uid
   WHERE T_GROUP.uid = myuid
@@ -185,6 +182,6 @@ ON O_TASK.tid = EXP.tid
 AND
 Exp.isOt = TRUE
 GROUP BY O_TASK.tid
-ORDER BY O_TASK.tgid ASC, ts DESC;
+ORDER BY utg.priority DESC, utg.tgid ASC, O_TASK.ts DESC;
 END // 
 DELIMITER ;
