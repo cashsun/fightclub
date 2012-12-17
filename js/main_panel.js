@@ -1,4 +1,6 @@
 $(document).ready(function(){
-    alert('hehe');
+    $('.t_content').click(function(){
+        alert($(this).attr('tid'));
+    });
 });
 

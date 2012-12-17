@@ -22,7 +22,7 @@ if(isset($_GET['uid'])){
                 $groups = $user->getTaskGroups();
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
-                    echo '<div tid="'.$task->getTid().'" class="t_content">'.$task->getContent().'</div>';
+                    echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'</div>';
                 }
             ?>
         </div>

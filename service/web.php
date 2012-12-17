@@ -32,4 +32,5 @@ function getAllByUid($uid){
 
     return $user;
 }
+
 ?>

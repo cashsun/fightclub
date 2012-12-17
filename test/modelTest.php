@@ -24,7 +24,7 @@ $userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr
 $user = new User($userinfo);
 renderUser($user);
 
-$userFromDb = getAllByUid(2);
+$userFromDb = getAllByUid(1);
 renderUser($userFromDb);
 
 function renderTask(Task $cashtask){
