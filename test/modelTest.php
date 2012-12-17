@@ -24,7 +24,7 @@ $userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr
 $user = new User($userinfo);
 renderUser($user);
 
-$userFromDb = getAllByUid(1);
+$userFromDb = getAllByUid(2);
 renderUser($userFromDb);
 
 function renderTask(Task $cashtask){
@@ -44,7 +44,6 @@ function renderGroup(TaskGroup $group){
         renderTask($task);
     }
     echo '</center>';
-    echo ''.$tasks[0]->getContent().'<br/>';
     echo 'Priority: '.$group->getPriority();
     echo '<br/>';
 }

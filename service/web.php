@@ -1,9 +1,4 @@
 <?php
-include_once '../db/DBadapter.php';
-include_once '../model/User.php';
-include_once '../model/Task.php';
-include_once '../model/TaskGroup.php';
-
 function getAllByUid($uid){
     $db = new DBadapter();
     $db->connect();
@@ -25,6 +20,7 @@ function getAllByUid($uid){
                 $g_counter++;
             }
         }
+        $row['creatorname'] = $row['firstname'].' '.$row['lastname'];
         $tasks[$t_counter]=new Task($row);
         $last_row = $row;
         $t_counter++;
@@ -33,7 +29,7 @@ function getAllByUid($uid){
     $groups[$g_counter]=new TaskGroup($last_row);
     $last_row['taskgroups'] = $groups;
     $user=new User($last_row);
-    $db->disconnect();
+
     return $user;
 }
 ?>

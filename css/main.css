@@ -16,16 +16,28 @@ body{
 /*    background: url('../image/bg_paper_small.png') repeat;*/
     background-color: #f8f8f8;
 }
+#navibar{
+    position:absolute;
+    height: 10%;
+    width: 100%;
+    top: 0;
+}
+#panel_main{
+    position:absolute;
+    height: 90%;
+    width: 100%;
+    bottom: 0;
+    border-top: 2px dashed #d0d0d0; 
+}
 
 #panal_group{
     position: absolute;
-    height: 100%;
     width: 20%;
+    height: 100%;
     left: 0;
     border-right: 2px dashed #d0d0d0; 
 }
 #panal_task{
-    position: absolute;
     height: 100%;
     width: 80%;
     float: left;
