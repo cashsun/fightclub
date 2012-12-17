@@ -7,11 +7,11 @@ class Task {
     private $tid;
     private $creatorid;
     
-    private $creatorName='unknown';
+    private $creatorname='unknown';
     private $content='';
     private $exp=0;
     private $date='20-12-2012 23:00:00';
-    private $isDone = false;
+    private $isdone = false;
 
     function __construct($taskInfo) {
         $this->tid = $taskInfo['tid'];
@@ -23,9 +23,9 @@ class Task {
         if(isset($taskInfo['date']))
             $this->date = $taskInfo['date'];
         if(isset($taskInfo['isdone']))
-            $this->isDone = $taskInfo['isdone'];
+            $this->isdone = $taskInfo['isdone'];
         if(isset($taskInfo['creatorname']))
-            $this->creatorName = $taskInfo['creatorname'];
+            $this->creatorname = $taskInfo['creatorname'];
     }
     
     
@@ -34,7 +34,7 @@ class Task {
     }
     
     function getCreatorName(){
-        return $this->creatorName;
+        return $this->creatorname;
     }
 
     function getCreatorId(){
@@ -54,7 +54,7 @@ class Task {
     }
     
     function isDone(){
-        return $this->isDone;
+        return $this->isdone;
     }
 
 }

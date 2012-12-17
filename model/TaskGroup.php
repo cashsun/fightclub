@@ -2,26 +2,30 @@
 include_once 'Task.php';
 
 class TaskGroup{
-    private $gid;
-    private $title;
+    private $tgid;
+    private $title='unknown';
     /**
      *  array of Task
      * @var Task
      */
     private $tasks;
-    private $priority;
-    private $date;
+    private $priority=0;
+    private $date='20-12-2012 23:00:00';
     
     function __construct($groupInfo) {	
-        $this->gid = $groupInfo['gid'];
-        $this->priority = $groupInfo['priority'];
-        $this->title = $groupInfo['title'];
+        $this->tgid = $groupInfo['tgid'];
         $this->tasks = $groupInfo['tasks'];
-        $this->date = $groupInfo['date'];
+        
+        if(isset($groupInfo['priority']))
+            $this->priority = $groupInfo['priority'];
+        if(isset($groupInfo['title']))
+            $this->title = $groupInfo['title'];
+        if(isset($groupInfo['date']))
+            $this->date = $groupInfo['date'];
     }
     
-    function getGid(){
-        return $this->gid;
+    function getTgid(){
+        return $this->tgid;
     }
 
 

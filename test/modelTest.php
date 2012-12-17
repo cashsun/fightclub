@@ -3,6 +3,7 @@ include_once '../model/User.php';
 include_once '../model/Task.php';
 include_once '../model/TaskGroup.php';
 include_once '../db/DBadapter.php';
+include_once '../service/web.php';
 
 $taskInfo = array('tid'=>382,'creatorid'=>12312,'content'=>'Get up at 7:00 tomorrow morning','exp'=>324,'date'=>'21-12-2012 23:45:21','isdone'=>false,'creatorname'=>'Cash Sun');
 
@@ -13,7 +14,7 @@ $taskFromDb= new Task($db->getTask(1,true));
 renderTask($taskFromDb);
 
 
-$groupinfo = array('gid'=>1,'priority'=>5,'title'=>'Test List','task'=>$cashtask,'date'=>'21-12-2012 24:45:21','tasks'=>array($cashtask));
+$groupinfo = array('tgid'=>1,'priority'=>5,'title'=>'Test List','task'=>$cashtask,'date'=>'21-12-2012 24:45:21','tasks'=>array($cashtask));
 $group = new TaskGroup($groupinfo);
 renderGroup($group);
 //$GroupFromDb= new $taskFromDb($db->getTaskGroup(1));
@@ -22,6 +23,9 @@ renderGroup($group);
 $userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr.cashsun','email'=>'mr.cashsun@gmail.com','exp'=>320, 'level'=>30, 'taskgroups'=>array($group));
 $user = new User($userinfo);
 renderUser($user);
+
+//$userFromDb = User(getAllMyOriTasksByUid(1));
+//renderUser($userFromDb);
 
 function renderTask(Task $cashtask){
     echo '<h1>Task</h1>';
@@ -33,9 +37,14 @@ function renderTask(Task $cashtask){
 }
 function renderGroup(TaskGroup $group){
     echo '<h1>Group</h1>';
-    echo 'GROUP ID: '.$group->getGid().'<br/>TITLE: '.$group->getTitle().'  <br/>'.$group->getDate().'<br/>';
-    $task = $group->getTasks();
-    echo ''.$task[0]->getContent().'<br/>';
+    echo 'GROUP ID: '.$group->getTgid().'<br/>TITLE: '.$group->getTitle().'  <br/>'.$group->getDate().'<br/>';
+    $tasks = $group->getTasks();
+    echo '<center>';
+    foreach($tasks as $task){
+        renderTask($task);
+    }
+    echo '</center>';
+    echo ''.$tasks[0]->getContent().'<br/>';
     echo 'Priority: '.$group->getPriority();
     echo '<br/>';
 }
@@ -51,8 +60,9 @@ function renderUser(User $user){
     echo 'EXP: '.$user->getExp().'<br/>';
     echo 'LEVEL: '.$user->getLevel().'<br/>';
     $groups = $user->getTaskGroups();
-    $group1 = $groups[0];
-    renderGroup($group1);
+    foreach($groups as $group){
+        renderGroup($group);
+    }
     echo '-------------------------------------------<br/>';
 }
 
