@@ -12,8 +12,6 @@ class TaskGroup{
     private $priority=0;
     private $date='20-12-2012 23:00:00';
     
-    function __construct() {}
-    
     function __construct($groupInfo) {
         $this->tgid = $groupInfo['tgid'];
         

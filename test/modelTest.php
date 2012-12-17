@@ -24,8 +24,8 @@ $userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr
 $user = new User($userinfo);
 renderUser($user);
 
-//$userFromDb = User(getAllMyOriTasksByUid(1));
-//renderUser($userFromDb);
+$userFromDb = getAllByUid(1);
+renderUser($userFromDb);
 
 function renderTask(Task $cashtask){
     echo '<h1>Task</h1>';

@@ -121,13 +121,13 @@ IN mytgid int
 BEGIN
 SELECT O_TASK.tid, O_TASK.uid, USER.username,
 USER.firstname, USER.lastname, O_TASK.content,
-COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone, EXP.isOt
+COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone, EXP.isot
 FROM FIGHTDB.O_TASK LEFT JOIN FIGHTDB.USER
 ON O_TASK.uid = USER.uid
 LEFT JOIN FIGHTDB.EXP
 ON O_TASK.tid = EXP.tid
 AND
-Exp.isOt = TRUE
+Exp.isot = TRUE
 WHERE O_TASK.uid = myuid
 AND O_TASK.tgid = mytgid
 GROUP BY EXP.tid;
@@ -142,13 +142,13 @@ IN mytid int
 BEGIN
 SELECT O_TASK.tid, O_TASK.uid, USER.username,
 USER.firstname, USER.lastname, O_TASK.content,
-COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone, EXP.isOt
+COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone, EXP.isot
 FROM FIGHTDB.O_TASK LEFT JOIN FIGHTDB.USER
 ON O_TASK.uid = USER.uid
 LEFT JOIN FIGHTDB.EXP
 ON O_TASK.tid = EXP.tid
 AND
-Exp.isOt = TRUE
+Exp.isot = TRUE
 WHERE O_TASK.tid = mytid
 GROUP BY EXP.tid;
 END // 
@@ -164,7 +164,7 @@ BEGIN
 SELECT O_TASK.tid, O_TASK.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, O_TASK.content,
 COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone,
-EXP.isOt, utg.tgid, utg.priority, utg.title, utg.exp
+EXP.isot, utg.tgid, utg.priority, utg.title, utg.exp
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority,
@@ -180,7 +180,7 @@ O_TASK.tgid = utg.tgid
 LEFT JOIN FIGHTDB.EXP
 ON O_TASK.tid = EXP.tid
 AND
-Exp.isOt = TRUE
+Exp.isot = TRUE
 GROUP BY O_TASK.tid
 ORDER BY utg.priority DESC, utg.tgid ASC, O_TASK.ts DESC;
 END // 

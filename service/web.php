@@ -7,10 +7,10 @@ include_once '../model/TaskGroup.php';
 function getAllByUid($uid){
     $db = new DBadapter();
     $db->connect();
-    $result = $db->getAllMyOriTasks($uid);
+    $result = $db->getAllByUid($uid);
     $tasks = array();
     $groups = array();
-    $user = new User();
+    $user = new User(array());
     $t_counter=0;
     $g_counter=0;
     $current_tgid=-1;
@@ -22,7 +22,7 @@ function getAllByUid($uid){
             $user = new User($row);
             
         }
-    
+        
         if($row['tgid']!= $current_tgid){
             $current_tgid = $row['tgid'];
             if($g_counter!=0)
