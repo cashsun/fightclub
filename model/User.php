@@ -1,5 +1,4 @@
 <?php
-include_once '../db/DBadapter.php';
 
 class User{
     private $uid;
@@ -11,7 +10,7 @@ class User{
     /**
      *real time calculated
      */
-    private $level;
+    private $level=0;
     /**
      * array of Group(s) containing Task(s)
      */
@@ -19,17 +18,20 @@ class User{
     
     function __construct($userInfo) {	
         $this->uid = $userInfo['uid'];
-        $this->firstname = $userInfo['firstname'];
-        $this->lastname = $userInfo['lastname'];
-        $this->username = $userInfo['username'];
-        $this->email = $userInfo['email'];
-        $this->exp = $userInfo['exp'];
-        $this->task_groups = $userInfo['task_groups'];
-    }
-    
-    
-    function setLevel($level){
-        $this->level=$level;
+        if(isset($userInfo['firstname']))
+            $this->firstname = $userInfo['firstname'];
+        if(isset($userInfo['lastname']))
+            $this->lastname = $userInfo['lastname'];
+        if(isset($userInfo['username']))
+            $this->username = $userInfo['username'];
+        if(isset($userInfo['email']))
+            $this->email = $userInfo['email'];
+        if(isset($userInfo['exp']))
+            $this->exp = $userInfo['exp'];
+        if(isset($userInfo['task_groups']))
+            $this->task_groups = $userInfo['task_groups'];
+        if(isset($userInfo['level']))
+            $this->level = $userInfo['level'];
     }
     
     function setExp($exp){
