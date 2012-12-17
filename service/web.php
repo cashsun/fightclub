@@ -11,7 +11,7 @@ function getAllByUid($uid){
     $tasks = array();
     $groups = array();
     $user;
-    $last_row;
+    $last_row=array();
     $t_counter=0;
     $g_counter=0;
     $current_tgid=-1;
