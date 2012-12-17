@@ -2,15 +2,15 @@
 include_once '../model/User.php';
 include_once '../model/Task.php';
 include_once '../model/TaskGroup.php';
-//include_once '../db/DBadapter.php';
+include_once '../db/DBadapter.php';
 
 $taskInfo = array('tid'=>382,'creatorid'=>12312,'content'=>'Get up at 7:00 tomorrow morning','exp'=>324,'date'=>'21-12-2012 23:45:21','isdone'=>false,'creatorname'=>'Cash Sun');
 
 $cashtask=new Task($taskInfo);
 renderTask($cashtask);
-//$db = new DBadapter();
-//$taskFromDb= new Task($db->getTask(1,true));
-//renderTask($taskFromDb);
+$db = new DBadapter();
+$taskFromDb= new Task($db->getTask(1,true));
+renderTask($taskFromDb);
 
 
 $groupinfo = array('gid'=>1,'priority'=>5,'title'=>'Test List','task'=>$cashtask,'date'=>'21-12-2012 24:45:21','tasks'=>array($cashtask));
@@ -41,6 +41,7 @@ function renderGroup(TaskGroup $group){
 }
 
 function renderUser(User $user){
+    echo '-------------------------------------------<br/>';
     echo '<h1>User</h1>';
     echo 'UID: '.$user->getUid().'<br/>';
     echo 'FIRST: '.$user->getFirstname().'<br/>';
@@ -52,6 +53,7 @@ function renderUser(User $user){
     $groups = $user->getTaskGroups();
     $group1 = $groups[0];
     renderGroup($group1);
+    echo '-------------------------------------------<br/>';
 }
 
 ?>
