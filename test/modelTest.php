@@ -1,12 +1,11 @@
 <?php
 include_once '../model/User.php';
 include_once '../model/Task.php';
-include_once '../model/TaskGroup.php';
-include_once '../db/DBadapter.php';
 
 $taskInfo = array('tid'=>382,'createrid'=>12312,'content'=>'Get up at 7:00 tomorrow morning','exp'=>324,'date'=>'21-12-2012 23:45:21','isdone'=>false,'creatorname'=>'Cash Sun');
 
 $cashtask=new Task($taskInfo);
+
 //renderTask($cashtask);
 //$db = new $DBadapter();
 //$taskFromDb= new $taskFromDb($db->getTask(0,1));
@@ -36,3 +35,4 @@ function renderGroup($group){
     echo '<br/>';
 }
 ?>
+

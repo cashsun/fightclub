@@ -1,32 +1,23 @@
 <?php
 
 class Task {
-    /*
-     * PK
-     */
+
     private $tid;
     private $creatorId;
-    
-    private $creatorName='unknown';
-    private $content='';
-    private $exp=0;
-    private $date='20-12-2012 23:00:00';
+    private $creatorName;
+    private $content;
+    private $exp;
+    private $date;
     private $isDone = false;
 
     function __construct($taskInfo) {
         $this->tid = $taskInfo['tid'];
         $this->creatorId = $taskInfo['createrid'];
-        
-        if(isset($taskInfo['content']))
-            $this->content = $taskInfo['content'];
-        if(isset($taskInfo['exp']))
-            $this->exp = $taskInfo['exp'];
-        if(isset($taskInfo['date']))
-            $this->date = $taskInfo['date'];
-        if(isset($taskInfo['isdone']))
-            $this->isDone = $taskInfo['isdone'];
-        if(isset($taskInfo['creatorname']))
-            $this->creatorName = $taskInfo['creatorname'];
+        $this->content = $taskInfo['content'];
+        $this->exp = $taskInfo['exp'];
+        $this->date = $taskInfo['date'];
+        $this->isDone = $taskInfo['isdone'];
+        $this->creatorName = $taskInfo['creatorname'];
     }
     
     
