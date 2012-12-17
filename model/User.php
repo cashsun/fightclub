@@ -1,4 +1,7 @@
 <?php
+include_once 'TaskGroup.php';
+include_once 'Task.php';
+
 class User{
     private $uid;
     private $firstname = '';
@@ -27,8 +30,8 @@ class User{
             $this->email = $userInfo['email'];
         if(isset($userInfo['exp']))
             $this->exp = $userInfo['exp'];
-        
-        $this->taskgroups = $userInfo['taskgroups'];
+        if(isset($userInfo['taskgroups']))
+            $this->taskgroups = $userInfo['taskgroups'];
         if(isset($userInfo['level']))
             $this->level = $userInfo['level'];
     }

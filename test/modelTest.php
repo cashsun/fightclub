@@ -2,15 +2,15 @@
 include_once '../model/User.php';
 include_once '../model/Task.php';
 include_once '../model/TaskGroup.php';
-include_once '../db/DBadapter.php';
+//include_once '../db/DBadapter.php';
 
 $taskInfo = array('tid'=>382,'creatorid'=>12312,'content'=>'Get up at 7:00 tomorrow morning','exp'=>324,'date'=>'21-12-2012 23:45:21','isdone'=>false,'creatorname'=>'Cash Sun');
 
 $cashtask=new Task($taskInfo);
 renderTask($cashtask);
-$db = new DBadapter();
-$taskFromDb= new Task($db->getTask(1,true));
-renderTask($taskFromDb);
+//$db = new DBadapter();
+//$taskFromDb= new Task($db->getTask(1,true));
+//renderTask($taskFromDb);
 
 
 $groupinfo = array('gid'=>1,'priority'=>5,'title'=>'Test List','task'=>$cashtask,'date'=>'21-12-2012 24:45:21','tasks'=>array($cashtask));
@@ -51,10 +51,7 @@ function renderUser($user){
     echo 'LEVEL: '.$user->getLevel().'<br/>';
     $groups = $user->getTaskGroups().'<br/>';
     $group1 = $groups[0];
-    $tasks = $group1->getTasks();
-    $task1 = $tasks[0];
-    echo 'GROUP TITLE: '.$group1->getTitle().'<br/>';
-    echo 'TASK: '.$task1->getContent().'<br/>';
+    echo $group1;
 }
 
 ?>
