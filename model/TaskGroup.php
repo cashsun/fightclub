@@ -13,9 +13,10 @@ class TaskGroup{
     private $date='20-12-2012 23:00:00';
     
     function __construct($groupInfo) {
-        $this->tgid = $groupInfo['tgid'];
-        
-        $this->tasks = $groupInfo['tasks'];
+        if(isset($groupInfo['tgid']))
+            $this->tgid = $groupInfo['tgid'];
+        if(isset($groupInfo['tasks']))
+            $this->tasks = $groupInfo['tasks'];
         
         if(isset($groupInfo['priority']))
             $this->priority = $groupInfo['priority'];

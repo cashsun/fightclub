@@ -10,28 +10,30 @@ function getAllByUid($uid){
     $result = $db->getAllByUid($uid);
     $tasks = array();
     $groups = array();
-    $user = new User(array());
+    $user;
+    $last_row;
     $t_counter=0;
     $g_counter=0;
     $current_tgid=-1;
-    while($row =  mysql_fetch_row($result)){
-        if($current_tgid == -1)
-        {
-            //first time access
-            //copy user data
-            $user = new User($row);
-            
-        }
-        
+    while($row =  mysql_fetch_array($result)){
         if($row['tgid']!= $current_tgid){
             $current_tgid = $row['tgid'];
-            if($g_counter!=0)
-              $groups[$g_counter].setTasks($tasks);
-            $groups[++$g_counter] = new TaskGroup($row);
+            if($t_counter!=0){
+                $last_row['tasks']=$tasks;
+                $groups[$g_counter]=new TaskGroup($last_row);
+                $last_row = $row;
+                $g_counter++;
+            }
         }
-        $tasks[$t_counter++] = new Task($row);
+        $tasks[$t_counter]=new Task($row);
+        $last_row = $row;
+        $t_counter++;
     }
-    $user.setTaskGroups($groups);
+    $last_row['tasks']=$tasks;
+    $groups[$g_counter]=new TaskGroup($last_row);
+    $last_row['taskgroups'] = $groups;
+    $user=new User($last_row);
+    $db->disconnect();
     return $user;
 }
 ?>
