@@ -1,5 +1,4 @@
 <?php
-
 class User{
     private $uid;
     private $firstname = '';
@@ -14,7 +13,7 @@ class User{
     /**
      * array of Group(s) containing Task(s)
      */
-    private $task_groups;
+    private $taskgroups;
     
     function __construct($userInfo) {	
         $this->uid = $userInfo['uid'];
@@ -28,8 +27,8 @@ class User{
             $this->email = $userInfo['email'];
         if(isset($userInfo['exp']))
             $this->exp = $userInfo['exp'];
-        if(isset($userInfo['taskgroups']))
-            $this->task_groups = $userInfo['task_groups'];
+        
+        $this->taskgroups = $userInfo['taskgroups'];
         if(isset($userInfo['level']))
             $this->level = $userInfo['level'];
     }
@@ -47,7 +46,7 @@ class User{
     }
 
     function getLastname(){
-        return $this->Lastname;
+        return $this->lastname;
     }
     function getEmail(){
         return $this->email;
@@ -66,7 +65,7 @@ class User{
     }
     
     function getTaskGroups(){
-        return $this->task_groups;
+        return $this->taskgroups;
     }
 }
 ?>

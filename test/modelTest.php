@@ -7,7 +7,7 @@ include_once '../db/DBadapter.php';
 $taskInfo = array('tid'=>382,'creatorid'=>12312,'content'=>'Get up at 7:00 tomorrow morning','exp'=>324,'date'=>'21-12-2012 23:45:21','isdone'=>false,'creatorname'=>'Cash Sun');
 
 $cashtask=new Task($taskInfo);
-//renderTask($cashtask);
+renderTask($cashtask);
 $db = new DBadapter();
 $taskFromDb= new Task($db->getTask(1,true));
 renderTask($taskFromDb);
@@ -19,8 +19,9 @@ renderGroup($group);
 //$GroupFromDb= new $taskFromDb($db->getTaskGroup(1));
 //renderGroup($GroupFromDb);
 
-$userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr.cashsun','email'=>'mr.cashsun@gmail.com','exp'=>320,'taskgroups'=>array($group));
+$userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr.cashsun','email'=>'mr.cashsun@gmail.com','exp'=>320, 'level'=>30, 'taskgroups'=>array($group));
 $user = new User($userinfo);
+renderUser($user);
 
 function renderTask($cashtask){
     echo '<h1>Task</h1>';
@@ -40,7 +41,20 @@ function renderGroup($group){
 }
 
 function renderUser($user){
-    
+    echo '<h1>User</h1>';
+    echo 'UID: '.$user->getUid().'<br/>';
+    echo 'FIRST: '.$user->getFirstname().'<br/>';
+    echo 'LAST: '.$user->getLastname().'<br/>';
+    echo 'USERNAME: '.$user->getUsername().'<br/>';
+    echo 'EMAIL: '.$user->getEmail().'<br/>';
+    echo 'EXP: '.$user->getExp().'<br/>';
+    echo 'LEVEL: '.$user->getLevel().'<br/>';
+    $groups = $user->getTaskGroups().'<br/>';
+    $group1 = $groups[0];
+    $tasks = $group1->getTasks();
+    $task1 = $tasks[0];
+    echo 'GROUP TITLE: '.$group1->getTitle().'<br/>';
+    echo 'TASK: '.$task1->getContent().'<br/>';
 }
 
 ?>
