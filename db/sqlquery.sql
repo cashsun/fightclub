@@ -12,7 +12,7 @@ VALUES(uid, tgid, content);
 END // 
 DELIMITER ;
 
-/* LIST A ORIGINAL TO-DO TASK */
+/* LIST ORIGINAL TO-DO TASKS */
 DELIMITER // 
 CREATE PROCEDURE ListOriTask(
 IN myuid int,
@@ -30,6 +30,26 @@ AND
 Exp.isOt = TRUE
 WHERE O_TASK.uid = myuid
 AND O_TASK.tgid = mytgid
+GROUP BY EXP.tid;
+END // 
+DELIMITER ;
+
+/* GET A ORIGINAL TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE ListOriTask(
+IN mytid int
+) 
+BEGIN
+SELECT O_TASK.tid, O_TASK.uid, USER.username,
+USER.firstname, USER.lastname, O_TASK.content,
+COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isDone, EXP.isOt
+FROM FIGHTDB.O_TASK LEFT JOIN FIGHTDB.USER
+ON O_TASK.uid = USER.uid
+LEFT JOIN FIGHTDB.EXP
+ON O_TASK.tid = EXP.tid
+AND
+Exp.isOt = TRUE
+WHERE O_TASK.tid = mytid
 GROUP BY EXP.tid;
 END // 
 DELIMITER ;
