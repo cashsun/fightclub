@@ -53,3 +53,35 @@ WHERE O_TASK.tid = mytid
 GROUP BY EXP.tid;
 END // 
 DELIMITER ;
+
+
+/* GET GROUPS BY USER */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.GetAllMyOriTasks(
+IN myuid int
+) 
+BEGIN
+SELECT O_TASK.tid, O_TASK.uid, utg.username,
+utg.firstname, utg.lastname, O_TASK.content,
+COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isDone,
+EXP.isOt, utg.tgid, utg.priority, utg.title
+FROM
+(
+  SELECT T_GROUP.tgid, T_GROUP.priority,
+  T_GROUP.title, T_GROUP.uid, USER.username,
+  USER.firstname, USER.lastname
+  FROM FIGHTDB.T_GROUP LEFT JOIN FIGHTDB.USER
+  ON T_GROUP.uid = USER.uid
+  WHERE T_GROUP.uid = myuid
+) utg 
+LEFT JOIN FIGHTDB.O_TASK
+ON
+O_TASK.tgid = utg.tgid
+LEFT JOIN FIGHTDB.EXP
+ON O_TASK.tid = EXP.tid
+AND
+Exp.isOt = TRUE
+GROUP BY O_TASK.tid
+ORDER BY O_TASK.tgid ASC, ts DESC;
+END // 
+DELIMITER ;

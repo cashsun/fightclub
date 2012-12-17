@@ -16,7 +16,7 @@ renderTask($taskFromDb);
 $groupinfo = array('gid'=>1,'priority'=>5,'title'=>'Test List','task'=>$cashtask,'date'=>'21-12-2012 24:45:21','tasks'=>array($cashtask));
 $group = new TaskGroup($groupinfo);
 renderGroup($group);
-//$GroupFromDb= new $taskFromDb($db->getTaskGroup(1));
+$GroupFromDb= new TaskGroup($db->getTaskGroup(1));
 //renderGroup($GroupFromDb);
 
 $userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr.cashsun','email'=>'mr.cashsun@gmail.com','exp'=>320, 'level'=>30, 'taskgroups'=>array($group));
