@@ -23,7 +23,7 @@ $userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr
 $user = new User($userinfo);
 renderUser($user);
 
-function renderTask($cashtask){
+function renderTask(Task $cashtask){
     echo '<h1>Task</h1>';
     echo 'TASK ID: '.$cashtask->getTid().'<br/>CONTENT: '.$cashtask->getContent().'  <br/>'.$cashtask->getDate().'<br/>';
     echo ($cashtask->isDone()?'DONE?: true':'DONE?: false').'<br/>';
@@ -31,7 +31,7 @@ function renderTask($cashtask){
     echo 'EXP: '.$cashtask->getExp();
     echo '<br/>';
 }
-function renderGroup($group){
+function renderGroup(TaskGroup $group){
     echo '<h1>Group</h1>';
     echo 'GROUP ID: '.$group->getGid().'<br/>TITLE: '.$group->getTitle().'  <br/>'.$group->getDate().'<br/>';
     $task = $group->getTasks();
@@ -40,7 +40,7 @@ function renderGroup($group){
     echo '<br/>';
 }
 
-function renderUser($user){
+function renderUser(User $user){
     echo '<h1>User</h1>';
     echo 'UID: '.$user->getUid().'<br/>';
     echo 'FIRST: '.$user->getFirstname().'<br/>';
@@ -49,9 +49,9 @@ function renderUser($user){
     echo 'EMAIL: '.$user->getEmail().'<br/>';
     echo 'EXP: '.$user->getExp().'<br/>';
     echo 'LEVEL: '.$user->getLevel().'<br/>';
-    $groups = $user->getTaskGroups().'<br/>';
+    $groups = $user->getTaskGroups();
     $group1 = $groups[0];
-    echo $group1;
+    renderGroup($group1);
 }
 
 ?>

@@ -16,7 +16,6 @@ class Task {
     function __construct($taskInfo) {
         $this->tid = $taskInfo['tid'];
         $this->creatorid = $taskInfo['creatorid'];
-        
         if(isset($taskInfo['content']))
             $this->content = $taskInfo['content'];
         if(isset($taskInfo['exp']))

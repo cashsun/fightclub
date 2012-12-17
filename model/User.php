@@ -30,10 +30,10 @@ class User{
             $this->email = $userInfo['email'];
         if(isset($userInfo['exp']))
             $this->exp = $userInfo['exp'];
-        if(isset($userInfo['taskgroups']))
-            $this->taskgroups = $userInfo['taskgroups'];
         if(isset($userInfo['level']))
             $this->level = $userInfo['level'];
+        if(isset($userInfo['taskgroups']))
+            $this->taskgroups = $userInfo['taskgroups'];
     }
     
     function setExp($exp){
