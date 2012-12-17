@@ -5,7 +5,7 @@ class Task {
      * PK
      */
     private $tid;
-    private $creatorId;
+    private $creatorid;
     
     private $creatorName='unknown';
     private $content='';
@@ -15,7 +15,7 @@ class Task {
 
     function __construct($taskInfo) {
         $this->tid = $taskInfo['tid'];
-        $this->creatorId = $taskInfo['createrid'];
+        $this->creatorid = $taskInfo['creatorid'];
         
         if(isset($taskInfo['content']))
             $this->content = $taskInfo['content'];
@@ -38,8 +38,8 @@ class Task {
         return $this->creatorName;
     }
 
-    function getCreaterId(){
-        return $this->creatorId;
+    function getCreatorId(){
+        return $this->creatorid;
     }
     
     function getContent() {

@@ -1,7 +1,7 @@
 /* ALL SQL QUERY STORED IN THIS FILE */
 /* CREATE A ORIGINAL TO-DO TASK */
 DELIMITER // 
-CREATE PROCEDURE fightdb.CreateOriTask(
+CREATE PROCEDURE FIGHTDB.CreateOriTask(
 IN uid int,
 IN tgid int,
 IN content char(140)
@@ -14,7 +14,7 @@ DELIMITER ;
 
 /* LIST ORIGINAL TO-DO TASKS */
 DELIMITER // 
-CREATE PROCEDURE fightdb.ListOriTask(
+CREATE PROCEDURE FIGHTDB.ListOriTask(
 IN myuid int,
 IN mytgid int
 ) 
@@ -36,7 +36,7 @@ DELIMITER ;
 
 /* GET A ORIGINAL TO-DO TASK */
 DELIMITER // 
-CREATE PROCEDURE fightdb.GetOriTask(
+CREATE PROCEDURE FIGHTDB.GetOriTask(
 IN mytid int
 ) 
 BEGIN
