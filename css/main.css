@@ -18,16 +18,29 @@ body{
 }
 #navibar{
     position:absolute;
-    height: 10%;
+    height: 5%;
     width: 100%;
     top: 0;
 }
 #panel_main{
     position:absolute;
-    height: 90%;
+    height: 95%;
     width: 100%;
     bottom: 0;
     border-top: 2px dashed #d0d0d0; 
+}
+#profile_image{
+    position: absolute;
+    top: 0;
+    left: 50px;
+    width: 40px;
+    height: 40px;
+}
+
+#profile_username{
+    position: absolute;
+    left: 100px;
+    top: 10px;
 }
 
 #panal_group{
