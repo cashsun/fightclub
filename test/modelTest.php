@@ -20,6 +20,7 @@ renderGroup($group);
 //renderGroup($GroupFromDb);
 
 $userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr.cashsun','email'=>'mr.cashsun@gmail.com','exp'=>320,'taskgroups'=>array($group));
+$user = new User($userinfo);
 
 function renderTask($cashtask){
     echo '<h1>Task</h1>';
@@ -37,5 +38,10 @@ function renderGroup($group){
     echo 'Priority: '.$group->getPriority();
     echo '<br/>';
 }
+
+function renderUser($user){
+    
+}
+
 ?>
 
