@@ -28,7 +28,7 @@ class User{
             $this->email = $userInfo['email'];
         if(isset($userInfo['exp']))
             $this->exp = $userInfo['exp'];
-        if(isset($userInfo['task_groups']))
+        if(isset($userInfo['taskgroups']))
             $this->task_groups = $userInfo['task_groups'];
         if(isset($userInfo['level']))
             $this->level = $userInfo['level'];

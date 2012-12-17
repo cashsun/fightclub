@@ -8,15 +8,17 @@ $taskInfo = array('tid'=>382,'createrid'=>12312,'content'=>'Get up at 7:00 tomor
 $cashtask=new Task($taskInfo);
 renderTask($cashtask);
 //$db = new $DBadapter();
-//$taskFromDb= new $taskFromDb($db->getTask(0,1));
+//$taskFromDb= new $taskFromDb($db->getTask(1,1));
 //renderTask($taskFromDb);
 
 
 $groupinfo = array('gid'=>1,'priority'=>5,'title'=>'Test List','task'=>$cashtask,'date'=>'21-12-2012 24:45:21','tasks'=>array($cashtask));
 $group = new TaskGroup($groupinfo);
 renderGroup($group);
-//$GroupFromDb= new $taskFromDb($db->getTaskGroup(0));
+//$GroupFromDb= new $taskFromDb($db->getTaskGroup(1));
 //renderGroup($GroupFromDb);
+
+$userinfo = array('uid'=>1,'firstname'=>'Cash','lastname'=>'Sun','username'=>'mr.cashsun','email'=>'mr.cashsun@gmail.com','exp'=>320,'taskgroups'=>array($group));
 
 function renderTask($cashtask){
     echo '<h1>Task</h1>';
