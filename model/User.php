@@ -3,7 +3,7 @@ include_once 'TaskGroup.php';
 include_once 'Task.php';
 
 class User{
-    private $uid;
+    private $uid = -1;
     private $firstname = '';
     private $lastname = '';
     private $username = '';
@@ -16,10 +16,11 @@ class User{
     /**
      * array of Group(s) containing Task(s)
      */
-    private $taskgroups;
+    private $taskgroups = array();
     
     function __construct($userInfo) {	
-        $this->uid = $userInfo['uid'];
+        if(isset($userInfo['uid']))
+            $this->uid = $userInfo['uid'];
         if(isset($userInfo['firstname']))
             $this->firstname = $userInfo['firstname'];
         if(isset($userInfo['lastname']))
@@ -69,6 +70,10 @@ class User{
     
     function getTaskGroups(){
         return $this->taskgroups;
+    }
+    
+    function setTaskGroups($groups){
+        $this->taskgroups = $groups;
     }
 }
 ?>
