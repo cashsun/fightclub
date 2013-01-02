@@ -96,3 +96,43 @@ GROUP BY O_TASK.tid
 ORDER BY utg.priority DESC, utg.tgid ASC, O_TASK.ts DESC;
 END // 
 DELIMITER ;
+
+
+/* GET GROUPS BY USER */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.GetAllMyRepoTasks(
+IN myuid int
+) 
+BEGIN
+SELECT O_TASK.tid, urt.username,
+urt.firstname, urt.lastname, urt.email, O_TASK.content,
+COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone,
+EXP.isOt, urt.tgid, urt.priority, urt.title, urt.exp
+FROM
+(
+  SELECT * FROM
+  (
+    SELECT T_GROUP.tgid AS utgid, T_GROUP.uid AS utuid,
+    T_GROUP.priority, T_GROUP.title, USER.username,
+    USER.firstname, USER.lastname, USER.email, USER.exp
+    FROM FIGHTDB.T_GROUP LEFT JOIN FIGHTDB.USER
+    ON T_GROUP.uid = USER.uid
+    WHERE T_GROUP.uid = myuid
+  ) utg 
+  JOIN FIGHTDB.R_TASK
+  ON
+  R_TASK.tgid = utg.utgid
+  AND
+  R_TASK.uid = utg.utuid
+) urt
+LEFT JOIN FIGHTDB.O_TASK
+ON
+O_TASK.tid = urt.otid
+LEFT JOIN FIGHTDB.EXP
+ON O_TASK.tid = EXP.tid
+AND
+Exp.isOt = FALSE
+GROUP BY O_TASK.tid
+ORDER BY urt.priority DESC, urt.tgid ASC, O_TASK.ts DESC;
+END // 
+DELIMITER ;
