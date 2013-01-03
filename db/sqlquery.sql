@@ -66,7 +66,7 @@ END //
 DELIMITER ;
 
 
-/* GET GROUPS BY USER */
+/* GET ORI TASKS BY USER */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.GetAllMyOriTasks(
 IN myuid int
@@ -75,7 +75,7 @@ BEGIN
 SELECT O_TASK.tid, O_TASK.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, O_TASK.content,
 COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone,
-EXP.isOt, utg.tgid, utg.priority, utg.title, utg.exp
+IFNULL(EXP.isOt, TRUE), utg.tgid, utg.priority, utg.title, utg.exp
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority,
@@ -98,16 +98,16 @@ END //
 DELIMITER ;
 
 
-/* GET GROUPS BY USER */
+/* GET REPO TASKS BY USER */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.GetAllMyRepoTasks(
 IN myuid int
 ) 
 BEGIN
-SELECT O_TASK.tid, urt.username,
+SELECT urt.rtid, urt.username,
 urt.firstname, urt.lastname, urt.email, O_TASK.content,
-COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone,
-EXP.isOt, urt.tgid, urt.priority, urt.title, urt.exp
+COUNT(EXP.expid) AS expcount, urt.ts, urt.isdone,
+IFNULL(EXP.isOt, FALSE), urt.tgid, urt.priority, urt.title, urt.exp
 FROM
 (
   SELECT * FROM
@@ -129,10 +129,77 @@ LEFT JOIN FIGHTDB.O_TASK
 ON
 O_TASK.tid = urt.otid
 LEFT JOIN FIGHTDB.EXP
-ON O_TASK.tid = EXP.tid
+ON urt.rtid = EXP.tid
 AND
 Exp.isOt = FALSE
-GROUP BY O_TASK.tid
+GROUP BY urt.rtid
 ORDER BY urt.priority DESC, urt.tgid ASC, O_TASK.ts DESC;
+END // 
+DELIMITER ;
+
+
+/* GET ALL TASKS BY USER */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.GetAllMyTasks(
+IN myuid int
+) 
+BEGIN
+
+(
+  SELECT urt.rtid AS tid, urt.uid, urt.username,
+  urt.firstname, urt.lastname, urt.email, O_TASK.content,
+  COUNT(EXP.expid) AS expcount, urt.ts, urt.isdone,
+  IFNULL(EXP.isOt, FALSE), urt.tgid, urt.priority, urt.title, urt.exp
+  FROM
+  (
+    SELECT * FROM
+    (
+      SELECT T_GROUP.tgid AS utgid, T_GROUP.uid AS utuid,
+      T_GROUP.priority, T_GROUP.title, USER.username,
+      USER.firstname, USER.lastname, USER.email, USER.exp
+      FROM FIGHTDB.T_GROUP LEFT JOIN FIGHTDB.USER
+      ON T_GROUP.uid = USER.uid
+      WHERE T_GROUP.uid = myuid
+    ) utg 
+    JOIN FIGHTDB.R_TASK
+    ON
+    R_TASK.tgid = utg.utgid
+    AND
+    R_TASK.uid = utg.utuid
+  ) urt
+  LEFT JOIN FIGHTDB.O_TASK
+  ON
+  O_TASK.tid = urt.otid
+  LEFT JOIN FIGHTDB.EXP
+  ON urt.rtid = EXP.tid
+  AND
+  Exp.isOt = FALSE
+  GROUP BY urt.rtid
+)
+UNION
+(
+  SELECT O_TASK.tid, O_TASK.uid, uotg.username,
+  uotg.firstname, uotg.lastname, uotg.email, O_TASK.content,
+  COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone,
+  IFNULL(EXP.isOt, TRUE), uotg.tgid, uotg.priority, uotg.title, uotg.exp
+  FROM
+  (
+    SELECT T_GROUP.tgid, T_GROUP.priority,
+    T_GROUP.title, T_GROUP.uid, USER.username,
+    USER.firstname, USER.lastname, USER.email, USER.exp
+    FROM FIGHTDB.T_GROUP LEFT JOIN FIGHTDB.USER
+    ON T_GROUP.uid = USER.uid
+    WHERE T_GROUP.uid = myuid
+  ) uotg 
+  LEFT JOIN FIGHTDB.O_TASK
+  ON
+  O_TASK.tgid = uotg.tgid
+  LEFT JOIN FIGHTDB.EXP
+  ON O_TASK.tid = EXP.tid
+  AND
+  Exp.isOt = TRUE
+  GROUP BY O_TASK.tid
+)
+ORDER BY ts DESC;
 END // 
 DELIMITER ;
