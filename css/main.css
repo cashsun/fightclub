@@ -78,4 +78,11 @@ body{
 .t_content:hover{
     background-color: #e33091;
 }
+.hiddable{
+    opacity: 0;
+}
+#cache{
+    width: 0;
+    height: 0;
+}
 
