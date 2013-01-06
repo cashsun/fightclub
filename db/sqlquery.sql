@@ -200,6 +200,6 @@ UNION
   Exp.isOt = TRUE
   GROUP BY O_TASK.tid
 )
-ORDER BY ts DESC;
+ORDER BY priority DESC,tgid, ts DESC;
 END // 
 DELIMITER ;
