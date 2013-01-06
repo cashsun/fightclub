@@ -11,18 +11,32 @@ if(isset($_GET['uid'])){
     </div>
     <div id="panel_main">
         <div id="panal_group">
-            <?php 
-                foreach($user->getTaskGroups() as $group){
-                    echo '<div class="tg_title">'.$group->getTitle().'</div>';
+            <?php
+                $groups = $user->getTaskGroups();
+                foreach($groups as $group){
+                    echo '<div id="'.$group->getTgid().'" class="tg_title">'.$group->getTitle().'</div>';
                 }
             ?>
         </div>
         <div id="panal_task">
-            <?php 
-                $groups = $user->getTaskGroups();
+            <?php  
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
                     echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'</div>';
+                }
+            ?>
+        </div>
+        <div id="cache" class="hiddable">
+            <?php
+                $gcounter = 0;
+                while($groups[$gcounter]!=null){
+                    echo '<div id="'.$gcounter.'">';
+                   $tasks = $groups[$gcounter]->getTasks();
+                    foreach($tasks as $task){
+                        echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'</div>';
+                    }
+                    echo '</div>';
+                    $gcounter++;
                 }
             ?>
         </div>

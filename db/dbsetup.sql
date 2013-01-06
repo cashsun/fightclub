@@ -94,8 +94,11 @@ INSERT INTO FIGHTDB.O_TASK (uid, tgid, content) VALUES('2','3', 'DAILY CONTENT3'
 
 INSERT INTO FIGHTDB.R_TASK (otid, uid, tgid) VALUES('5','2','3');
 INSERT INTO FIGHTDB.FRIEND (uid, fuid) VALUES('1','2');
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 41719dec3a3d0ed323ba2979db894feca7e96a88
 /* ALL SQL QUERY STORED IN THIS FILE */
 /* CREATE A ORIGINAL TO-DO TASK */
 DELIMITER // 
@@ -298,6 +301,10 @@ UNION
   Exp.isOt = TRUE
   GROUP BY O_TASK.tid
 )
+<<<<<<< HEAD
 ORDER BY priority DESC,tgid, ts DESC;
+=======
+ORDER BY ts DESC;
+>>>>>>> 41719dec3a3d0ed323ba2979db894feca7e96a88
 END // 
 DELIMITER ;
