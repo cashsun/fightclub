@@ -2,17 +2,19 @@
 //uid by SESSION
 if(isset($_GET['uid'])){
     $user = getAllByUid($_GET['uid']);
+    $groups = $user->getTaskGroups();
 }
 ?>
 <div id="master">
     <div id="navibar">
         <img id="profile_image" src="image/profile.png" alt=""/>
         <div id="profile_username" class="username"><?php echo $user->getUsername() ?></div>
+        <div id="uid" class="username"><?php echo $user->getUid() ?></div>
     </div>
     <div id="panel_main">
-        <div id="panel_group">
+        <div id="panel_group" tgid="<?php echo $groups[0]->getTgid() ?>">
             <?php
-                $groups = $user->getTaskGroups();
+                
                 foreach($groups as $group){
                     echo '<div id="'.$group->getTgid().'" class="tg_title">'.$group->getTitle().'</div>';
                 }
