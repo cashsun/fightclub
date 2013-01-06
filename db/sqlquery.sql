@@ -23,6 +23,31 @@ WHERE O_TASK.tid = mytid;
 END // 
 DELIMITER ;
 
+
+/* CREATE A REPO TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.CreateRepoTask(
+IN uid int,
+IN tgid int,
+IN otid int
+) 
+BEGIN 
+INSERT INTO FIGHTDB.R_TASK (uid, tgid, otid)
+VALUES(uid, tgid, otid);
+END // 
+DELIMITER ;
+
+/* DELETE A REPO TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.DeleteRepoTask(
+IN myrtid int
+) 
+BEGIN 
+DELETE FROM FIGHTDB.R_TASK
+WHERE R_TASK.rtid = myrtid;
+END // 
+DELIMITER ;
+
 /* LIST ORIGINAL TO-DO TASKS */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.ListOriTask(

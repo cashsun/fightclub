@@ -94,11 +94,8 @@ INSERT INTO FIGHTDB.O_TASK (uid, tgid, content) VALUES('2','3', 'DAILY CONTENT3'
 
 INSERT INTO FIGHTDB.R_TASK (otid, uid, tgid) VALUES('5','2','3');
 INSERT INTO FIGHTDB.FRIEND (uid, fuid) VALUES('1','2');
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 41719dec3a3d0ed323ba2979db894feca7e96a88
 /* ALL SQL QUERY STORED IN THIS FILE */
 /* CREATE A ORIGINAL TO-DO TASK */
 DELIMITER // 
@@ -121,6 +118,31 @@ IN mytid int
 BEGIN 
 DELETE FROM FIGHTDB.O_TASK
 WHERE O_TASK.tid = mytid;
+END // 
+DELIMITER ;
+
+
+/* CREATE A REPO TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.CreateRepoTask(
+IN uid int,
+IN tgid int,
+IN otid int
+) 
+BEGIN 
+INSERT INTO FIGHTDB.R_TASK (uid, tgid, otid)
+VALUES(uid, tgid, otid);
+END // 
+DELIMITER ;
+
+/* DELETE A REPO TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.DeleteRepoTask(
+IN myrtid int
+) 
+BEGIN 
+DELETE FROM FIGHTDB.R_TASK
+WHERE R_TASK.rtid = myrtid;
 END // 
 DELIMITER ;
 
@@ -301,10 +323,6 @@ UNION
   Exp.isOt = TRUE
   GROUP BY O_TASK.tid
 )
-<<<<<<< HEAD
 ORDER BY priority DESC,tgid, ts DESC;
-=======
-ORDER BY ts DESC;
->>>>>>> 41719dec3a3d0ed323ba2979db894feca7e96a88
 END // 
 DELIMITER ;
