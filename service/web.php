@@ -18,6 +18,8 @@ function getAllByUid($uid){
                 $groups[$g_counter]=new TaskGroup($last_row);
                 $last_row = $row;
                 $g_counter++;
+                $t_counter = 0;
+                unset($tasks);
             }
         }
         $row['creatorname'] = $row['firstname'].' '.$row['lastname'];
@@ -29,7 +31,6 @@ function getAllByUid($uid){
     $groups[$g_counter]=new TaskGroup($last_row);
     $last_row['taskgroups'] = $groups;
     $user=new User($last_row);
-
     return $user;
 }
 

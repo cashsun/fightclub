@@ -45,14 +45,14 @@ body{
     top: 10px;
 }
 
-#panal_group{
+#panel_group{
     position: absolute;
     width: 20%;
     height: 100%;
     left: 0;
     border-right: 2px dashed #d0d0d0; 
 }
-#panal_task{
+#panel_task{
     position: absolute;
     height: 100%;
     width: 80%;
@@ -75,11 +75,18 @@ body{
     color: white;
     background-color: #e3e3e3;
 }
+#input_task{
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 21px;
+    width: 98%;
+    border: 5px solid #e3e3e3;
+}
 .t_content:hover{
     background-color: #e33091;
 }
 .hiddable{
-    opacity: 0;
+    display: none;
 }
 #cache{
     width: 0;

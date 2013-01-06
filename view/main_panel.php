@@ -10,7 +10,7 @@ if(isset($_GET['uid'])){
         <div id="profile_username" class="username"><?php echo $user->getUsername() ?></div>
     </div>
     <div id="panel_main">
-        <div id="panal_group">
+        <div id="panel_group">
             <?php
                 $groups = $user->getTaskGroups();
                 foreach($groups as $group){
@@ -18,7 +18,8 @@ if(isset($_GET['uid'])){
                 }
             ?>
         </div>
-        <div id="panal_task">
+        <div id="panel_task">
+            <input id="input_task" type="text" maxlength="140"/>
             <?php  
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
@@ -26,21 +27,19 @@ if(isset($_GET['uid'])){
                 }
             ?>
         </div>
+    </div>
         <div id="cache" class="hiddable">
             <?php
-                $gcounter = 0;
-                while($groups[$gcounter]!=null){
-                    echo '<div id="'.$gcounter.'">';
-                   $tasks = $groups[$gcounter]->getTasks();
+                foreach($groups as $group){
+                    echo '<div id="'.$group->getTgid().'">';
+                   $tasks = $group->getTasks();
                     foreach($tasks as $task){
                         echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'</div>';
                     }
                     echo '</div>';
-                    $gcounter++;
                 }
             ?>
         </div>
-    </div>
 </div>
 <script type="text/javascript" src="js/main_panel.js"></script>
 
