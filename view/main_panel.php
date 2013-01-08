@@ -24,7 +24,7 @@ if(isset($_GET['uid'])){
             <?php  
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
-                    echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'</div>';
+                    echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'<div class="delete_task">x</div></div>';
                 }
             ?>
         </div>
@@ -35,7 +35,7 @@ if(isset($_GET['uid'])){
                     echo '<div id="'.$group->getTgid().'">';
                    $tasks = $group->getTasks();
                     foreach($tasks as $task){
-                        echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'</div>';
+                        echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'<div class="delete_task">x</div></div>';
                     }
                     echo '</div>';
                 }

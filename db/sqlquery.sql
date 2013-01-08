@@ -25,13 +25,13 @@ DELIMITER ;
 /* CREATE A ORIGINAL TO-DO TASK */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateOriTask(
-IN uid int,
-IN tgid int,
-IN content char(140)
+IN myuid int,
+IN mytgid int,
+IN mycontent char(140)
 ) 
 BEGIN 
 INSERT INTO FIGHTDB.O_TASK (uid, tgid, content)
-VALUES(uid, tgid, content);
+VALUES(myuid, mytgid, mycontent);
 END // 
 DELIMITER ;
 

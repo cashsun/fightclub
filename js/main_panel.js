@@ -3,9 +3,7 @@ function activeTitles(){
 //        alert($(this).attr('tid'));
     });
 }
-$(document).ready(function(){
-    activeTitles();
-    $('.tg_title').click(function(){
+$('.tg_title').click(function(){
         $('#tgid').html($(this).attr('id'));
         var tgid = '#'+$(this).attr('id');
         $('#panel_task').fadeOut(500, function(){
@@ -13,8 +11,12 @@ $(document).ready(function(){
              $(this).append($(tgid,'#cache').html()).fadeIn(500);
              activeTitles();
         });
-    });
-    
+});
+$('.delete_task').click(function(){
+        $(this).parent();
+});
+$(document).ready(function(){
+    activeTitles();
     $(document).keypress(function(e) {
         if(e.which == 13) {
             if($('#input_task').val()!=''){
@@ -24,13 +26,12 @@ $(document).ready(function(){
                         tgid:function(){return $('#tgid').html()},
                         content:function(){return $('#input_task').val()}},
                     function(response){
-                        alert(response);
-                        if(response!=0&&response!=false && $.isNumeric(response)){
+                            alert(response);
                             var content = $('#input_task').val();
                             var tgid = $('#tgid').html();
-                            var taskStr = '<div tid="'+tgid+'"class="t_content">'+content+'</div>';
+                            var taskStr = '<div tid="'+tgid+'"class="t_content">'+content+'<div class="delete_task">x</div></div>';
                             $('#'+tgid,'#cache').append(taskStr);
-                        }
+                            $('#'+tgid,'#panel_group').click();
                     });
             }
         }
