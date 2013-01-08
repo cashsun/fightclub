@@ -9,10 +9,9 @@ if(isset($_GET['uid'])){
     <div id="navibar">
         <img id="profile_image" src="image/profile.png" alt=""/>
         <div id="profile_username" class="username"><?php echo $user->getUsername() ?></div>
-        <div id="uid" class="username"><?php echo $user->getUid() ?></div>
     </div>
     <div id="panel_main">
-        <div id="panel_group" tgid="<?php echo $groups[0]->getTgid() ?>">
+        <div id="panel_group">
             <?php
                 
                 foreach($groups as $group){
@@ -25,7 +24,7 @@ if(isset($_GET['uid'])){
             <?php  
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
-                    echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'</div>';
+                    echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'<div class="delete_task">x</div></div>';
                 }
             ?>
         </div>
@@ -36,11 +35,13 @@ if(isset($_GET['uid'])){
                     echo '<div id="'.$group->getTgid().'">';
                    $tasks = $group->getTasks();
                     foreach($tasks as $task){
-                        echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'</div>';
+                        echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'<div class="delete_task">x</div></div>';
                     }
                     echo '</div>';
                 }
+                echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
             ?>
+            <div id="uid"><?php echo $user->getUid() ?></div>
         </div>
 </div>
 <script type="text/javascript" src="js/main_panel.js"></script>

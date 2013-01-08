@@ -1,5 +1,9 @@
 <?php
+include_once '../db/DBadapter.php';
 if(isset($_POST['uid'])&&isset($_POST['tgid'])&&isset($_POST['content'])){
-    echo 'success!';
+    $db = new DBadapter();
+    $db->connect();
+    $result = $db->createOriTask($_POST['uid'],$_POST['tgid'],$_POST['content']);
+    echo $result;
 }
 ?>
