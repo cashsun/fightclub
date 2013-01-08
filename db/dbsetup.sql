@@ -101,12 +101,12 @@ INSERT INTO FIGHTDB.FRIEND (uid, fuid) VALUES('1','2');
 /* CREATE A TASK GROUP */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateTaskGroup(
-IN uid int,
-IN title char(10)
+IN myuid int,
+IN mytitle char(10)
 ) 
 BEGIN 
 INSERT INTO FIGHTDB.T_GROUP (uid, title)
-VALUES(uid, title);
+VALUES(myuid, mytitle);
 END // 
 DELIMITER ;
 
@@ -124,13 +124,13 @@ DELIMITER ;
 /* CREATE A ORIGINAL TO-DO TASK */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateOriTask(
-IN uid int,
-IN tgid int,
-IN content char(140)
+IN myuid int,
+IN mytgid int,
+IN mycontent char(140)
 ) 
 BEGIN 
 INSERT INTO FIGHTDB.O_TASK (uid, tgid, content)
-VALUES(uid, tgid, content);
+VALUES(myuid, mytgid, mycontent);
 END // 
 DELIMITER ;
 
@@ -149,13 +149,13 @@ DELIMITER ;
 /* CREATE A REPO TO-DO TASK */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateRepoTask(
-IN uid int,
-IN tgid int,
-IN otid int
+IN myuid int,
+IN mytgid int,
+IN myotid int
 ) 
 BEGIN 
 INSERT INTO FIGHTDB.R_TASK (uid, tgid, otid)
-VALUES(uid, tgid, otid);
+VALUES(myuid, mytgid, myotid);
 END // 
 DELIMITER ;
 
