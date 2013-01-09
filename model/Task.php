@@ -6,7 +6,7 @@ class Task {
      */
     private $tid;
     private $uid;
-    
+    private $otid;
     private $creatorname='unknown';
     private $content='';
     private $exp=0;
@@ -26,6 +26,8 @@ class Task {
             $this->isdone = $taskInfo['isdone'];
         if(isset($taskInfo['creatorname']))
             $this->creatorname = $taskInfo['creatorname'];
+        if(isset($taskInfo['otid']))
+            $this->creatorname = $taskInfo['otid'];
     }
     
     
@@ -56,7 +58,9 @@ class Task {
     function isDone(){
         return $this->isdone;
     }
-
+    
+    function getOtid(){
+        return $this->otid;
+    }
 }
-
 ?>

@@ -17,7 +17,6 @@ class TaskGroup{
             $this->tgid = $groupInfo['tgid'];
         if(isset($groupInfo['tasks']))
             $this->tasks = $groupInfo['tasks'];
-        
         if(isset($groupInfo['priority']))
             $this->priority = $groupInfo['priority'];
         if(isset($groupInfo['title']))

@@ -61,7 +61,6 @@ body{
 .tg_title{
     padding: 10px;
     margin: 0;
-    cursor: pointer;
     text-align: center;
     border-bottom: 2px dashed #d0d0d0; 
 }
@@ -70,7 +69,6 @@ body{
     margin-left: 10px;
     margin-right: 10px;
     padding: 5px;
-    cursor: pointer;
     text-align: center;
     color: white;
     background-color: #e3e3e3;
@@ -83,6 +81,17 @@ body{
     border: 5px solid #e3e3e3;
 }
 .t_content:hover{
+    background-color: #e33091;
+}
+.create_group{
+    text-align: center;
+    padding: 6px;
+    margin: 0;
+    text-align: center;
+    border-bottom: 2px dashed #d0d0d0; 
+}
+.hoverable:hover{
+    cursor: pointer;
     background-color: #e33091;
 }
 .hiddable{

@@ -15,16 +15,17 @@ if(isset($_GET['uid'])){
             <?php
                 
                 foreach($groups as $group){
-                    echo '<div id="'.$group->getTgid().'" class="tg_title">'.$group->getTitle().'</div>';
+                    echo '<div id="'.$group->getTgid().'" class="tg_title hoverable">'.$group->getTitle().'</div>';
                 }
             ?>
+            <div class="create_group hoverable">+</div>
         </div>
         <div id="panel_task">
             <input id="input_task" type="text" maxlength="140"/>
             <?php  
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
-                    echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'<div class="delete_task">x</div></div>';
+                    echo '<div tid="'.$task->getTid().'"class="t_content hoverable">'.$task->getContent().'<div class="delete_task">x</div></div>';
                 }
             ?>
         </div>
@@ -35,7 +36,7 @@ if(isset($_GET['uid'])){
                     echo '<div id="'.$group->getTgid().'">';
                    $tasks = $group->getTasks();
                     foreach($tasks as $task){
-                        echo '<div tid="'.$task->getTid().'"class="t_content">'.$task->getContent().'<div class="delete_task">x</div></div>';
+                        echo '<div tid="'.$task->getTid().'"class="t_content hoverable">'.$task->getContent().'<div class="delete_task">x</div></div>';
                     }
                     echo '</div>';
                 }
