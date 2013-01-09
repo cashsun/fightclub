@@ -28,7 +28,7 @@ body{
     top: 50px;
     width: 100%;
     bottom: 0;
-    border-top: 2px dashed #d0d0d0; 
+    border-top: 2px dashed #eceadf; 
     overflow-y:auto;
 }
 #profile_image{
@@ -50,7 +50,7 @@ body{
     width: 20%;
     height: 100%;
     left: 0;
-    border-right: 2px dashed #d0d0d0; 
+    border-right: 2px dashed #eceadf; 
 }
 #panel_task{
     position: absolute;
@@ -62,7 +62,7 @@ body{
     padding: 10px;
     margin: 0;
     text-align: center;
-    border-bottom: 2px dashed #d0d0d0; 
+    border-bottom: 2px dashed #eceadf; 
 }
 .t_content{
     margin: 2px;
@@ -71,24 +71,24 @@ body{
     padding: 5px;
     text-align: center;
     color: white;
-    background-color: #e3e3e3;
+    background-color: #eceadf;
 }
 #input_task{
     margin-left: 10px;
     margin-right: 10px;
     height: 21px;
     width: 98%;
-    border: 5px solid #e3e3e3;
+    border: 5px solid #eceadf;
 }
 .t_content:hover{
     background-color: #e33091;
 }
-.create_group{
+#create_group{
     text-align: center;
     padding: 6px;
     margin: 0;
     text-align: center;
-    border-bottom: 2px dashed #d0d0d0; 
+    border-bottom: 2px dashed #eceadf; 
 }
 .hoverable:hover{
     cursor: pointer;
