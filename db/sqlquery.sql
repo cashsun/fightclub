@@ -80,13 +80,13 @@ IN mytgid int
 BEGIN
 SELECT O_TASK.tid, O_TASK.uid, USER.username,
 USER.firstname, USER.lastname, O_TASK.content,
-COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone, EXP.isOt
+COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone, EXP.isot
 FROM FIGHTDB.O_TASK LEFT JOIN FIGHTDB.USER
 ON O_TASK.uid = USER.uid
 LEFT JOIN FIGHTDB.EXP
 ON O_TASK.tid = EXP.tid
 AND
-Exp.isOt = TRUE
+EXP.isot = TRUE
 WHERE O_TASK.uid = myuid
 AND O_TASK.tgid = mytgid
 GROUP BY EXP.tid;
@@ -107,7 +107,7 @@ ON O_TASK.uid = USER.uid
 LEFT JOIN FIGHTDB.EXP
 ON O_TASK.tid = EXP.tid
 AND
-Exp.isOt = TRUE
+EXP.isot = TRUE
 WHERE O_TASK.tid = mytid
 GROUP BY EXP.tid;
 END // 
@@ -123,7 +123,7 @@ BEGIN
 SELECT O_TASK.tid, O_TASK.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, O_TASK.content,
 COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone,
-IFNULL(EXP.isOt, TRUE), utg.tgid, utg.priority, utg.title, utg.exp
+IFNULL(EXP.isot, TRUE), utg.tgid, utg.priority, utg.title, utg.exp
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority,
@@ -139,7 +139,7 @@ O_TASK.tgid = utg.tgid
 LEFT JOIN FIGHTDB.EXP
 ON O_TASK.tid = EXP.tid
 AND
-Exp.isOt = TRUE
+EXP.isot = TRUE
 GROUP BY O_TASK.tid
 ORDER BY utg.priority DESC, utg.tgid ASC, O_TASK.ts DESC;
 END // 
@@ -155,7 +155,7 @@ BEGIN
 SELECT urt.rtid, urt.username,
 urt.firstname, urt.lastname, urt.email, O_TASK.content,
 COUNT(EXP.expid) AS expcount, urt.ts, urt.isdone,
-IFNULL(EXP.isOt, FALSE), urt.tgid, urt.priority, urt.title, urt.exp
+IFNULL(EXP.isot, FALSE), urt.tgid, urt.priority, urt.title, urt.exp
 FROM
 (
   SELECT * FROM
@@ -179,7 +179,7 @@ O_TASK.tid = urt.otid
 LEFT JOIN FIGHTDB.EXP
 ON urt.rtid = EXP.tid
 AND
-Exp.isOt = FALSE
+EXP.isot = FALSE
 GROUP BY urt.rtid
 ORDER BY urt.priority DESC, urt.tgid ASC, O_TASK.ts DESC;
 END // 
@@ -197,7 +197,7 @@ BEGIN
   SELECT urt.rtid AS tid, urt.uid, urt.username,
   urt.firstname, urt.lastname, urt.email, O_TASK.content,
   COUNT(EXP.expid) AS expcount, urt.ts, urt.isdone,
-  IFNULL(EXP.isOt, FALSE), urt.tgid, urt.priority, urt.title, urt.exp
+  IFNULL(EXP.isot, FALSE), urt.tgid, urt.priority, urt.title, urt.exp
   FROM
   (
     SELECT * FROM
@@ -221,7 +221,7 @@ BEGIN
   LEFT JOIN FIGHTDB.EXP
   ON urt.rtid = EXP.tid
   AND
-  Exp.isOt = FALSE
+  EXP.isot = FALSE
   GROUP BY urt.rtid
 )
 UNION
@@ -229,7 +229,7 @@ UNION
   SELECT O_TASK.tid, O_TASK.uid, uotg.username,
   uotg.firstname, uotg.lastname, uotg.email, O_TASK.content,
   COUNT(EXP.expid) AS expcount, O_TASK.ts, O_TASK.isdone,
-  IFNULL(EXP.isOt, TRUE), uotg.tgid, uotg.priority, uotg.title, uotg.exp
+  IFNULL(EXP.isot, TRUE), uotg.tgid, uotg.priority, uotg.title, uotg.exp
   FROM
   (
     SELECT T_GROUP.tgid, T_GROUP.priority,
@@ -245,7 +245,7 @@ UNION
   LEFT JOIN FIGHTDB.EXP
   ON O_TASK.tid = EXP.tid
   AND
-  Exp.isOt = TRUE
+  EXP.isot = TRUE
   GROUP BY O_TASK.tid
 )
 ORDER BY priority DESC,tgid, ts DESC;
