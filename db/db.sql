@@ -28,7 +28,7 @@ CREATE TABLE FIGHTDB.T_GROUP
 (
 tgid int NOT NULL AUTO_INCREMENT,
 uid int NOT NULL,
-title char(10) NOT NULL,
+title char(40) NOT NULL,
 ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 priority int DEFAULT 0 NOT NULL,
 CONSTRAINT pk_t_gid PRIMARY KEY (tgid),
@@ -63,8 +63,8 @@ CONSTRAINT fk_exp_uid FOREIGN KEY (uid) REFERENCES FIGHTDB.USER(uid) ON DELETE C
 CONSTRAINT fk_exp_tid FOREIGN KEY (tid) REFERENCES FIGHTDB.TASK(tid) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email) VALUES('plutoless', 'test', 'Qianze', 'Zhang', 'qz@gmail.com');
-INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email) VALUES('cashsun', 'test', 'Cash', 'Sun', 'cs@gmail.com');
+INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email) VALUES('plutoless', MD5('test'), 'Qianze', 'Zhang', 'qz@gmail.com');
+INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email) VALUES('cashsun', MD5('test'), 'Cash', 'Sun', 'cs@gmail.com');
 
 INSERT INTO FIGHTDB.T_GROUP (uid, title) VALUES('1', 'game');
 INSERT INTO FIGHTDB.T_GROUP (uid, title) VALUES('1', 'IT');
