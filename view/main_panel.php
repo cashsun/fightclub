@@ -13,9 +13,9 @@ if(isset($_GET['uid'])){
     <div id="panel_main">
         <div id="panel_group">
             <?php
-                
                 foreach($groups as $group){
-                    echo '<div id="'.$group->getTgid().'" class="tg_title hoverable">'.$group->getTitle().'<div class="delete_group">x</div></div>';
+                    if($group->getTgid()!=-1)
+                        echo '<div id="'.$group->getTgid().'" class="tg_title hoverable">'.$group->getTitle().'<div class="delete_group">x</div></div>';
                 }
             ?>
             <div id="create_group" class="hoverable">+</div>
@@ -25,7 +25,9 @@ if(isset($_GET['uid'])){
             <?php  
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
-                    echo '<div tid="'.$task->getTid().'"class="t_content hoverable">'.$task->getContent().'<div class="delete_task">x</div></div>';
+                    if($task->getContent()!=''){
+                        echo '<div tid="'.$task->getTid().'"class="t_content hoverable">'.$task->getContent().'<div class="delete_task">x</div></div>';
+                    }
                 }
             ?>
         </div>
@@ -36,11 +38,14 @@ if(isset($_GET['uid'])){
                     echo '<div id="'.$group->getTgid().'">';
                    $tasks = $group->getTasks();
                     foreach($tasks as $task){
-                        echo '<div tid="'.$task->getTid().'"class="t_content hoverable">'.$task->getContent().'<div class="delete_task">x</div></div>';
+                        if($task->getContent()!=''){
+                            echo '<div tid="'.$task->getTid().'"class="t_content hoverable">'.$task->getContent().'<div class="delete_task">x</div></div>';
+                        }
                     }
                     echo '</div>';
                 }
-                echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
+                if($groups[0]->getTgid()!=-1)
+                    echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
             ?>
             <div id="uid"><?php echo $user->getUid() ?></div>
         </div>

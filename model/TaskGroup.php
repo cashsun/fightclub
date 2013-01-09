@@ -2,8 +2,8 @@
 include_once 'Task.php';
 
 class TaskGroup{
-    private $tgid = 1;
-    private $title='unknown';
+    private $tgid = -1;
+    private $title='';
     /**
      *  array of Task
      * @var Task
