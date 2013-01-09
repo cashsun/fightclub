@@ -30,6 +30,10 @@ $(document).ready(function(){
              activeDeletes();
         });
     });
+    $('#g_dialog').dialog({ autoOpen: false });
+    $('#create_group').click(function(){
+        $('#g_dialog').dialog('open');
+    });
     $(document).keypress(function(e) {
         if(e.which == 13) {
             if($('#input_task').val()!=''){

@@ -18,7 +18,7 @@ if(isset($_GET['uid'])){
                     echo '<div id="'.$group->getTgid().'" class="tg_title hoverable">'.$group->getTitle().'</div>';
                 }
             ?>
-            <div class="create_group hoverable">+</div>
+            <div id="create_group" class="hoverable">+</div>
         </div>
         <div id="panel_task">
             <input id="input_task" type="text" maxlength="140"/>
