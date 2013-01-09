@@ -44,6 +44,7 @@ if(isset($_GET['uid'])){
             ?>
             <div id="uid"><?php echo $user->getUid() ?></div>
         </div>
+        <div id="g_dialog" title="Create Group">I'm a dialog</div>
 </div>
 <script type="text/javascript" src="js/main_panel.js"></script>
 
