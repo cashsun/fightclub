@@ -41,8 +41,12 @@ $(document).ready(function(){
                     {uid:function(){return $('#uid').html()},
                     title:function(){return $('#input_group').val()}},
                     function(response){
-                            alert(response);
+                        if(response==1){
+                            alert('success!');
                             location.reload();
+                        }else{
+                            alert(response);
+                        }
                     });
             }
         }}]);
