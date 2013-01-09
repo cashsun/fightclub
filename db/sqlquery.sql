@@ -1,9 +1,38 @@
 /* ALL SQL QUERY STORED IN THIS FILE */
+/* CREATE A USER */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.CreateUser(
+IN myusername char(20),
+mypasswd char(32),
+myfirstname char(30),
+mylastname char(30),
+myemail char(50)
+) 
+BEGIN 
+INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email)
+VALUES(myusername, mypasswd, myfirstname, mylastname, myemail);
+END // 
+DELIMITER ;
+
+/* CREATE A USER */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.ValidateUser(
+IN myusername char(20),
+mypasswd char(32)
+) 
+BEGIN 
+SELECT * FROM USER
+WHERE username = myusername
+AND
+passwd = mypasswd;
+END // 
+DELIMITER ;
+
 /* CREATE A TASK GROUP */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateTaskGroup(
 IN myuid int,
-IN mytitle char(10)
+IN mytitle char(40)
 ) 
 BEGIN 
 INSERT INTO FIGHTDB.T_GROUP (uid, title)

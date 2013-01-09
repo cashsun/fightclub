@@ -28,7 +28,7 @@ CREATE TABLE FIGHTDB.T_GROUP
 (
 tgid int NOT NULL AUTO_INCREMENT,
 uid int NOT NULL,
-title char(10) NOT NULL,
+title char(40) NOT NULL,
 ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 priority int DEFAULT 0 NOT NULL,
 CONSTRAINT pk_t_gid PRIMARY KEY (tgid),
@@ -39,7 +39,7 @@ CREATE TABLE FIGHTDB.TASK
 (
 tid int NOT NULL AUTO_INCREMENT,
 uid int NOT NULL,
-otid int NOT NULL,
+otid int NOT NULL DEFAULT 0,
 tgid int NOT NULL,
 content char(140),
 ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -63,8 +63,8 @@ CONSTRAINT fk_exp_uid FOREIGN KEY (uid) REFERENCES FIGHTDB.USER(uid) ON DELETE C
 CONSTRAINT fk_exp_tid FOREIGN KEY (tid) REFERENCES FIGHTDB.TASK(tid) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email) VALUES('plutoless', 'test', 'Qianze', 'Zhang', 'qz@gmail.com');
-INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email) VALUES('cashsun', 'test', 'Cash', 'Sun', 'cs@gmail.com');
+INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email) VALUES('plutoless', MD5('test'), 'Qianze', 'Zhang', 'qz@gmail.com');
+INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email) VALUES('cashsun', MD5('test'), 'Cash', 'Sun', 'cs@gmail.com');
 
 INSERT INTO FIGHTDB.T_GROUP (uid, title) VALUES('1', 'game');
 INSERT INTO FIGHTDB.T_GROUP (uid, title) VALUES('1', 'IT');
@@ -86,11 +86,40 @@ INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content) VALUES('2','5','3', 'DAILY C
 INSERT INTO FIGHTDB.FRIEND (uid, fuid) VALUES('1','2');
 
 /* ALL SQL QUERY STORED IN THIS FILE */
+/* CREATE A USER */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.CreateUser(
+IN myusername char(20),
+mypasswd char(32),
+myfirstname char(30),
+mylastname char(30),
+myemail char(50)
+) 
+BEGIN 
+INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email)
+VALUES(myusername, mypasswd, myfirstname, mylastname, myemail);
+END // 
+DELIMITER ;
+
+/* CREATE A USER */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.ValidateUser(
+IN myusername char(20),
+mypasswd char(32)
+) 
+BEGIN 
+SELECT * FROM USER
+WHERE username = myusername
+AND
+passwd = mypasswd;
+END // 
+DELIMITER ;
+
 /* CREATE A TASK GROUP */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateTaskGroup(
 IN myuid int,
-IN mytitle char(10)
+IN mytitle char(40)
 ) 
 BEGIN 
 INSERT INTO FIGHTDB.T_GROUP (uid, title)
