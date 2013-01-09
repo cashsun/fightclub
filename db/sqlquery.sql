@@ -76,3 +76,21 @@ GROUP BY TASK.tid
 ORDER BY priority DESC,tgid DESC, ts DESC;
 END // 
 DELIMITER ;
+
+/* GET A ORIGINAL TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.GetTask(
+IN mytid int
+) 
+BEGIN
+SELECT TASK.tid, TASK.uid, USER.username,
+USER.firstname, USER.lastname, TASK.content,
+COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone
+FROM FIGHTDB.TASK LEFT JOIN FIGHTDB.USER
+ON TASK.uid = USER.uid
+LEFT JOIN FIGHTDB.EXP
+ON TASK.tid = EXP.tid
+WHERE TASK.tid = mytid
+GROUP BY EXP.tid;
+END // 
+DELIMITER ;
