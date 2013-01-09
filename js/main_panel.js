@@ -7,11 +7,13 @@ function activeDeletes(){
     $('.delete_task').click(function(){
         var tid = $(this).parent().attr('tid');
         $.post(
-            "service/deleteTask.php",
+            "service/web/deleteTask.php",
             {tid:tid},
             function(response){
             if(response==1){
                 alert('success');
+            }else{
+                alert(response);
             }
             location.reload();
         });
@@ -30,22 +32,49 @@ $(document).ready(function(){
              activeDeletes();
         });
     });
-    $('#g_dialog').dialog({ autoOpen: false });
+    $('#g_dialog').dialog({autoOpen: false,height:400,width:700,modal:true,resizable:false,closeOnEscape: true});
+    $('#g_dialog').dialog("option", "buttons", [ 
+        {text:"OK",click:function(){
+            if($('#input_group').val()!=''){
+                $.post(
+                    "service/web/createTaskGroup.php",
+                    {uid:function(){return $('#uid').html()},
+                    title:function(){return $('#input_group').val()}},
+                    function(response){
+                            alert(response);
+                            location.reload();
+                    });
+            }
+        }}]);
     $('#create_group').click(function(){
         $('#g_dialog').dialog('open');
+    });
+    
+    $('.delete_group').click(function(){
+        var tgid = $(this).parent().attr('id');
+        $.post(
+            "service/web/deleteTaskGroup.php",
+            {tgid:tgid},
+            function(response){
+            if(response==1){
+                alert('success');
+            }else{
+                alert(response);
+            }
+            location.reload();
+        });
     });
     $(document).keypress(function(e) {
         if(e.which == 13) {
             if($('#input_task').val()!=''){
                     $.post(
-                    "service/createTask.php",
+                    "service/web/createTask.php",
                     {uid:function(){return $('#uid').html()},
                         tgid:function(){return $('#tgid').html()},
                         content:function(){return $('#input_task').val()}},
                     function(response){
                             alert(response);
                             if(response==0){
-                                
                             }
                             location.reload();
                     });

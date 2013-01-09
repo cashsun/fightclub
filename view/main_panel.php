@@ -15,7 +15,7 @@ if(isset($_GET['uid'])){
             <?php
                 
                 foreach($groups as $group){
-                    echo '<div id="'.$group->getTgid().'" class="tg_title hoverable">'.$group->getTitle().'</div>';
+                    echo '<div id="'.$group->getTgid().'" class="tg_title hoverable">'.$group->getTitle().'<div class="delete_group">x</div></div>';
                 }
             ?>
             <div id="create_group" class="hoverable">+</div>
@@ -44,7 +44,22 @@ if(isset($_GET['uid'])){
             ?>
             <div id="uid"><?php echo $user->getUid() ?></div>
         </div>
-        <div id="g_dialog" title="Create Group">I'm a dialog</div>
+    <div id="g_dialog" title="Create New Group">name:<input type="text" id="input_group" maxlength="40"/><br/><br/>
+        priority (Biggest number first):
+        <select id="g_priority">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+        
+    </div>
 </div>
 <script type="text/javascript" src="js/main_panel.js"></script>
 

@@ -80,6 +80,10 @@ body{
     width: 98%;
     border: 5px solid #eceadf;
 }
+#input_group{
+    height: 21px;
+    width: 90%
+}
 .t_content:hover{
     background-color: #e33091;
 }
