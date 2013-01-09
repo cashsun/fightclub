@@ -7,7 +7,7 @@ function activeDeletes(){
     $('.delete_task').click(function(){
         var tid = $(this).parent().attr('tid');
         $.post(
-            "service/deleteOriTask.php",
+            "service/deleteTask.php",
             {tid:tid},
             function(response){
             if(response==1){
@@ -34,7 +34,7 @@ $(document).ready(function(){
         if(e.which == 13) {
             if($('#input_task').val()!=''){
                     $.post(
-                    "service/createOriTask.php",
+                    "service/createTask.php",
                     {uid:function(){return $('#uid').html()},
                         tgid:function(){return $('#tgid').html()},
                         content:function(){return $('#input_task').val()}},

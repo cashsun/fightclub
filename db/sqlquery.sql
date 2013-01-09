@@ -43,7 +43,7 @@ IN mytid int
 ) 
 BEGIN 
 DELETE FROM FIGHTDB.TASK
-WHERE O_TASK.tid = mytid;
+WHERE TASK.tid = mytid;
 END // 
 DELIMITER ;
 
