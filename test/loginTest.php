@@ -11,7 +11,7 @@
         echo 'input password';
     }else{
         $con = new DBadapter();
-        $result = $con->getUser($_POST['username'],$_POST['password']);
+        $result = $con->login($_POST['username'],$_POST['password']);
         if($result['valid'])
           echo $result['data']['email'];
         else

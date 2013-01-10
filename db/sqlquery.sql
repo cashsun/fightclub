@@ -14,9 +14,9 @@ VALUES(myusername, mypasswd, myfirstname, mylastname, myemail);
 END // 
 DELIMITER ;
 
-/* CREATE A USER */
+/* validate a user */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.GetUser(
+CREATE PROCEDURE FIGHTDB.ValidateUser(
 IN myusername char(20),
 mypasswd char(32)
 ) 
@@ -25,6 +25,17 @@ SELECT * FROM USER
 WHERE username = myusername
 AND
 passwd = mypasswd;
+END // 
+DELIMITER ;
+
+/* get a user */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.GetUser(
+IN myuid int
+) 
+BEGIN 
+SELECT * FROM USER
+WHERE uid = myuid;
 END // 
 DELIMITER ;
 
