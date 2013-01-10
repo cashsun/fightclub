@@ -21,8 +21,10 @@ if(isset($_GET['uid'])){
             <div id="create_group" class="hoverable">+</div>
         </div>
         <div id="panel_task">
-            <input id="input_task" type="text" maxlength="140"/>
-            <?php  
+            <?php
+                if($groups[0]->getTgid()!=-1){
+                    echo '<input id="input_task" type="text" maxlength="140"/>';
+                }
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
                     if($task->getContent()!=''){
