@@ -1,0 +1,5 @@
+dbsetup.sql
+	delete all fightdb.
+
+DBadapter.php
+	change db string "fightdb" to "kilima5_fightdb"
