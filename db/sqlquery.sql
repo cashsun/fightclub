@@ -101,11 +101,11 @@ utg.tgid, utg.priority, utg.title, utg.exp
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority,
-  T_GROUP.title, T_GROUP.uid, USER.username,
+  T_GROUP.title, USER.uid, USER.username,
   USER.firstname, USER.lastname, USER.email, USER.exp
-  FROM FIGHTDB.T_GROUP LEFT JOIN FIGHTDB.USER
+  FROM FIGHTDB.T_GROUP RIGHT JOIN FIGHTDB.USER
   ON T_GROUP.uid = USER.uid
-  WHERE T_GROUP.uid = myuid
+  WHERE USER.uid = myuid
 ) utg
 LEFT JOIN FIGHTDB.TASK
 ON
