@@ -16,7 +16,7 @@ DELIMITER ;
 
 /* CREATE A USER */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.ValidateUser(
+CREATE PROCEDURE FIGHTDB.GetUser(
 IN myusername char(20),
 mypasswd char(32)
 ) 
