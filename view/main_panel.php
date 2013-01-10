@@ -13,9 +13,16 @@ if(isset($_GET['uid'])){
     <div id="panel_main">
         <div id="panel_group">
             <?php
+                $i=-1;
                 foreach($groups as $group){
-                    if($group->getTgid()!=-1)
-                        echo '<div id="'.$group->getTgid().'" class="tg_title hoverable">'.$group->getTitle().'<div class="delete_group">x</div></div>';
+                    if($group->getTgid()!=-1){
+                        $i++;
+                        $isSelect = "";
+                        if($i==0){
+                            $isSelect = " selected";
+                        }
+                        echo '<div id="'.$group->getTgid().'" class="tg_title hoverable'.$isSelect.'">'.$group->getTitle().'<div class="delete_group">x</div></div>';
+                    }
                 }
             ?>
             <div id="create_group" class="hoverable">+</div>

@@ -25,6 +25,8 @@ $(document).ready(function(){
     $('.tg_title').click(function(){
         $('#tgid').html($(this).attr('id'));
         var tgid = '#'+$(this).attr('id');
+         $('.tg_title').removeClass('selected');
+        $(this).addClass('selected');
         $('#panel_task').fadeOut(500, function(){
             $(this).html('<input id="input_task" type="text" maxlength="140"/>');
              $(this).append($(tgid,'#cache').html()).fadeIn(500);

@@ -1,5 +1,5 @@
 root { 
-    display: block;
+    display: block
 }
 body,a,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,hr{
     margin:0; padding:0;
@@ -8,19 +8,19 @@ body,a,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fi
     text-decoration: none;
     width: 100%; height: 100%;
     -webkit-font-smoothing: antialiased;
-    border:none;
+    border:none
 }
-::-moz-selection { background: #000; color: #fff; text-shadow: none; }
-::selection { background: #000; color: #fff; text-shadow: none; }
+::-moz-selection { background: #000; color: #fff; text-shadow: none }
+::selection { background: #000; color: #fff; text-shadow: none }
 body{
 /*    background: url('../image/bg_paper_small.png') repeat;*/
-    background-color: #f8f8f8;
+    background-color: #f8f8f8
 }
 #navibar{
     position:absolute;
     height: 50px;
     width: 100%;
-    top: 0;
+    top: 0
 }
 #panel_main{
     position:absolute;
@@ -29,20 +29,20 @@ body{
     width: 100%;
     bottom: 0;
     border-top: 2px dashed #eceadf; 
-    overflow-y:auto;
+    overflow-y:auto
 }
 #profile_image{
     position: absolute;
     top: 0;
     left: 50px;
     width: 40px;
-    height: 40px;
+    height: 40px
 }
 
 #profile_username{
     position: absolute;
     left: 100px;
-    top: 10px;
+    top: 10px
 }
 
 #panel_group{
@@ -50,19 +50,19 @@ body{
     width: 20%;
     height: 100%;
     left: 0;
-    border-right: 2px dashed #eceadf; 
+    border-right: 2px dashed #eceadf
 }
 #panel_task{
     position: absolute;
     height: 100%;
     width: 80%;
-    left: 20%;
+    left: 20%
 }
 .tg_title{
     padding: 10px;
     margin: 0;
     text-align: center;
-    border-bottom: 2px dashed #eceadf; 
+    border-bottom: 2px dashed #eceadf;
 }
 .t_content{
     margin: 2px;
@@ -71,43 +71,46 @@ body{
     padding: 5px;
     text-align: center;
     color: white;
-    background-color: #eceadf;
+    background-color: #eceadf
 }
 #input_task{
     margin-left: 10px;
     margin-right: 10px;
     height: 21px;
     width: 98%;
-    border: 5px solid #eceadf;
+    border: 5px solid #eceadf
 }
 #input_group{
     height: 21px;
     width: 90%
 }
 .t_content:hover{
-    background-color: #e33091;
+    background-color: #e33091
 }
 #create_group{
     text-align: center;
     padding: 6px;
     margin: 0;
     text-align: center;
-    border-bottom: 2px dashed #eceadf; 
+    border-bottom: 2px dashed #eceadf 
 }
 .hoverable:hover{
     cursor: pointer;
-    background-color: #e33091;
+    background-color: #e33091
+}
+.selected{
+    background-color: #eceadf
 }
 .hiddable{
-    display: none;
+    display: none
 }
 .delete_task,.delete_group{
     width: 20px;
     margin-left: 98%;
-    right: 0;
+    right: 0
 }
 #cache{
     width: 0;
-    height: 0;
+    height: 0
 }
 
