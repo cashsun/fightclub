@@ -70,6 +70,22 @@ $(document).ready(function(){
     });
     $(document).keypress(function(e) {
         if(e.which == 13) {
+            if($( "#g_dialog" ).dialog( "option", "modal" )){
+                if($('#input_group').val()!=''){
+                $.post(
+                    "service/web/createTaskGroup.php",
+                    {uid:function(){return $('#uid').html()},
+                    title:function(){return $('#input_group').val()}},
+                    function(response){
+                        if(response==1){
+                            alert('success!');
+                            location.reload();
+                        }else{
+                            alert(response);
+                        }
+                    });
+                }
+            }
             if($('#input_task').val()!=''){
                     $.post(
                     "service/web/createTask.php",
