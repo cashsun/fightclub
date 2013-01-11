@@ -113,7 +113,7 @@ ON
 TASK.tgid = utg.tgid
 LEFT JOIN FIGHTDB.EXP
 ON TASK.tid = EXP.tid
-GROUP BY TASK.tid
+GROUP BY (TASK.tid, utg.tgid)
 ORDER BY priority DESC,tgid DESC, ts DESC;
 END // 
 DELIMITER ;
