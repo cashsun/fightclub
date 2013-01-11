@@ -10,6 +10,17 @@ function hundleResponse(response){
         alert('Success!');
     }
 }
+function postCreatGroup(){
+    $.post(
+            "service/web/createTaskGroup.php",
+            {uid:function(){return $('#uid').html()},
+            title:function(){return $('#input_group').val()},
+            priority: function(){return $('#g_priority').val()}},
+            function(response){
+                alert(response);
+                location.reload();
+            });
+}
 function activeDeletes(){
     $('.delete_task').click(function(){
         var tid = $(this).parent().attr('tid');
@@ -42,15 +53,7 @@ $(document).ready(function(){
     $('#g_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($('#input_group').val()!=''){
-                $.post(
-                    "service/web/createTaskGroup.php",
-                    {uid:function(){return $('#uid').html()},
-                    title:function(){return $('#input_group').val()},
-                    priority: function(){return $('#g_group').val()}},
-                    function(response){
-                        alert(response);
-                        location.reload();
-                    });
+                postCreatGroup();
             }
         }}]);
     $('#create_group').click(function(){
@@ -71,14 +74,7 @@ $(document).ready(function(){
         if(e.which == 13) {
             if($( "#g_dialog" ).dialog( "option", "modal" )){
                 if($('#input_group').val()!=''){
-                $.post(
-                    "service/web/createTaskGroup.php",
-                    {uid:function(){return $('#uid').html()},
-                    title:function(){return $('#input_group').val()}},
-                    function(response){
-                        alert(response);
-                        location.reload();
-                    });
+                    postCreatGroup()
                 }
             }
             if($('#input_task').val()!=''){

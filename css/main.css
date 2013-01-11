@@ -50,6 +50,7 @@ body{
     height: 100%;
     left: 0;
     border-right: 2px dashed #eceadf;
+    overflow-x: hidden;
     overflow-y:auto
 }
 #panel_task{
