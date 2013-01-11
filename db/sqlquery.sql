@@ -43,11 +43,12 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateTaskGroup(
 IN myuid int,
-IN mytitle char(40)
+IN mytitle char(40),
+IN mypri int
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.T_GROUP (uid, title)
-VALUES(myuid, mytitle);
+INSERT INTO FIGHTDB.T_GROUP (uid, title, priority)
+VALUES(myuid, mytitle, mypri);
 END // 
 DELIMITER ;
 
@@ -94,7 +95,7 @@ IN myuid int
 ) 
 BEGIN
 
-SELECT TASK.tid, TASK.otid, TASK.uid, utg.username,
+SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,
 utg.tgid, utg.priority, utg.title, utg.exp
