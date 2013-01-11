@@ -52,6 +52,20 @@ VALUES(myuid, mytitle, mypri);
 END // 
 DELIMITER ;
 
+/* UPDATE A TASK GROUP */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.UpdateTaskGroup(
+IN mytgid int,
+IN mytitle char(40),
+IN mypri int
+) 
+BEGIN 
+UPDATE FIGHTDB.T_GROUP
+SET title = mytitle, priority = mypri
+WHERE tgid = mytgid;
+END // 
+DELIMITER ;
+
 /* DELETE A TASK GROUP */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.DeleteTaskGroup(
