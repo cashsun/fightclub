@@ -88,6 +88,19 @@ WHERE TASK.tid = mytid;
 END // 
 DELIMITER ;
 
+/* UPDATE A ORIGINAL TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.UpdateTask(
+IN mytid int,
+IN mycontent char(140)
+) 
+BEGIN 
+UPDATE FIGHTDB.TASK
+SET TASK.content = mycontent
+WHERE TASK.tid = mytid;
+END // 
+DELIMITER ;
+
 /* GET ALL TASKS BY USER */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.GetAllMyTasks(
