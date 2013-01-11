@@ -1,7 +1,14 @@
 function activeTasks(){
-        $('.t_content').click(function(){
+    $('.t_content').click(function(){
 //        alert($(this).attr('tid'));
     });
+}
+function hundleResponse(response){
+    if(response==-1){
+        alert('Operation failed!');
+    }else{
+        alert('Success!');
+    }
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
@@ -10,11 +17,7 @@ function activeDeletes(){
             "service/web/deleteTask.php",
             {tid:tid},
             function(response){
-            if(response==1){
-                alert('success');
-            }else{
-                alert(response);
-            }
+            hundleResponse(response)
             location.reload();
         });
     });
@@ -22,6 +25,7 @@ function activeDeletes(){
 $(document).ready(function(){
     activeTasks();
     activeDeletes();
+    $('#input_task').focus();
     $('.tg_title').click(function(){
         $('#tgid').html($(this).attr('id'));
         var tgid = '#'+$(this).attr('id');
@@ -41,14 +45,11 @@ $(document).ready(function(){
                 $.post(
                     "service/web/createTaskGroup.php",
                     {uid:function(){return $('#uid').html()},
-                    title:function(){return $('#input_group').val()}},
+                    title:function(){return $('#input_group').val()},
+                    priority: function(){return $('#g_group').val()}},
                     function(response){
-                        if(response==1){
-                            alert('success!');
-                            location.reload();
-                        }else{
-                            alert(response);
-                        }
+                        alert(response);
+                        location.reload();
                     });
             }
         }}]);
@@ -62,11 +63,7 @@ $(document).ready(function(){
             "service/web/deleteTaskGroup.php",
             {tgid:tgid},
             function(response){
-            if(response==1){
-                alert('success');
-            }else{
-                alert(response);
-            }
+            hundleResponse(response);
             location.reload();
         });
     });
@@ -79,12 +76,8 @@ $(document).ready(function(){
                     {uid:function(){return $('#uid').html()},
                     title:function(){return $('#input_group').val()}},
                     function(response){
-                        if(response==1){
-                            alert('success!');
-                            location.reload();
-                        }else{
-                            alert(response);
-                        }
+                        alert(response);
+                        location.reload();
                     });
                 }
             }
@@ -95,9 +88,7 @@ $(document).ready(function(){
                         tgid:function(){return $('#tgid').html()},
                         content:function(){return $('#input_task').val()}},
                     function(response){
-                            alert(response);
-                            if(response==0){
-                            }
+                            hundleResponse(response);
                             location.reload();
                     });
             }

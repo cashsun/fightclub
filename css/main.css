@@ -28,8 +28,7 @@ body{
     top: 50px;
     width: 100%;
     bottom: 0;
-    border-top: 2px dashed #eceadf; 
-    overflow-y:auto
+    border-top: 2px dashed #eceadf
 }
 #profile_image{
     position: absolute;
@@ -50,13 +49,15 @@ body{
     width: 20%;
     height: 100%;
     left: 0;
-    border-right: 2px dashed #eceadf
+    border-right: 2px dashed #eceadf;
+    overflow-y:auto
 }
 #panel_task{
     position: absolute;
     height: 100%;
     width: 80%;
-    left: 20%
+    left: 20%;
+    overflow-y:auto
 }
 .tg_title{
     padding: 10px;
