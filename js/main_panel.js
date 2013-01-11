@@ -1,6 +1,7 @@
 function activeTasks(){
     $('.t_content').click(function(){
-//        alert($(this).attr('tid'));
+        $('#tgid','#t_dialog').html($(this).attr('tid'));
+        $('#t_dialog').dialog('open');
     });
 }
 function hundleResponse(response){
@@ -10,7 +11,7 @@ function hundleResponse(response){
         alert('Success!');
     }
 }
-function postCreatGroup(){
+function postCreateGroup(){
     $.post(
             "service/web/createTaskGroup.php",
             {uid:function(){return $('#uid').html()},
@@ -20,6 +21,29 @@ function postCreatGroup(){
                 alert(response);
                 location.reload();
             });
+}
+function postCreateTask(){
+    $.post(
+        "service/web/createTask.php",
+        {uid:function(){return $('#uid').html()},
+            tgid:function(){return $('#tgid').html()},
+            content:function(){return $('#input_task').val()}},
+        function(response){
+                hundleResponse(response);
+                location.reload();
+        });
+}
+function postDeleteTaskGroup(tgid){
+        $.post(
+            "service/web/deleteTaskGroup.php",
+            {tgid:tgid},
+            function(response){
+            hundleResponse(response);
+            location.reload();
+        });
+}
+function makeAjaxCall(method, url, param){
+    //todo
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
@@ -49,44 +73,37 @@ $(document).ready(function(){
              activeDeletes();
         });
     });
-    $('#g_dialog').dialog({autoOpen: false,height:400,width:700,modal:true,resizable:false,closeOnEscape: true});
+    $('#g_dialog,#t_dialog').dialog({autoOpen: false,height:400,width:700,modal:true,resizable:false,closeOnEscape: true});
+    $('#t_dialog').dialog("option", "buttons", [ 
+        {text:"OK",click:function(){
+            if($('#update_task').val()!=''){
+                alert('update task');
+            }
+    }}]);
     $('#g_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($('#input_group').val()!=''){
-                postCreatGroup();
+                postCreateGroup();
             }
-        }}]);
+    }}]);
     $('#create_group').click(function(){
         $('#g_dialog').dialog('open');
     });
     
     $('.delete_group').click(function(){
         var tgid = $(this).parent().attr('id');
-        $.post(
-            "service/web/deleteTaskGroup.php",
-            {tgid:tgid},
-            function(response){
-            hundleResponse(response);
-            location.reload();
-        });
+        postDeleteTaskGroup(tgid);
     });
     $(document).keypress(function(e) {
         if(e.which == 13) {
-            if($( "#g_dialog" ).dialog( "option", "modal" )){
+            if($( "#g_dialog" ).dialog( "isOpen" )){
                 if($('#input_group').val()!=''){
-                    postCreatGroup()
+                    postCreateGroup()
                 }
-            }
-            if($('#input_task').val()!=''){
-                    $.post(
-                    "service/web/createTask.php",
-                    {uid:function(){return $('#uid').html()},
-                        tgid:function(){return $('#tgid').html()},
-                        content:function(){return $('#input_task').val()}},
-                    function(response){
-                            hundleResponse(response);
-                            location.reload();
-                    });
+            }else{
+                if($('#input_task').val()!=''){
+                    postCreateTask()
+                }
             }
         }
     });

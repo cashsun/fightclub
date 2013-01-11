@@ -30,7 +30,7 @@ if(isset($_GET['uid'])){
         <div id="panel_task">
             <?php
                 if($groups[0]->getTgid()!=-1){
-                    echo '<input id="input_task" type="text" maxlength="140"/>';
+                    echo '<input id="input_task" class="input" type="text" maxlength="140"/>';
                 }
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
@@ -58,7 +58,7 @@ if(isset($_GET['uid'])){
             ?>
             <div id="uid"><?php echo $user->getUid() ?></div>
         </div>
-    <div id="g_dialog" title="Create New Group">name:<input type="text" id="input_group" maxlength="40"/><br/><br/>
+    <div id="g_dialog" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
         priority (Biggest number first):
         <select id="g_priority">
             <option value="0">0</option>
@@ -72,7 +72,10 @@ if(isset($_GET['uid'])){
             <option value="8">8</option>
             <option value="9">9</option>
         </select>
-        
+    </div>
+    <div id="t_dialog" title="Update Task">
+        <div id="tid"></div>
+        content:<input type="text" class="input" id="update_task" maxlength="140"/><br/>
     </div>
 </div>
 <script type="text/javascript" src="js/main_panel.js"></script>
