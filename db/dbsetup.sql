@@ -139,6 +139,20 @@ VALUES(myuid, mytitle, mypri);
 END // 
 DELIMITER ;
 
+/* UPDATE A TASK GROUP */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.UpdateTaskGroup(
+IN mytgid int,
+IN mytitle char(40),
+IN mypri int
+) 
+BEGIN 
+UPDATE FIGHTDB.T_GROUP
+SET title = mytitle, priority = mypri
+WHERE tgid = mytgid;
+END // 
+DELIMITER ;
+
 /* DELETE A TASK GROUP */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.DeleteTaskGroup(
@@ -171,6 +185,19 @@ IN mytid int
 ) 
 BEGIN 
 DELETE FROM FIGHTDB.TASK
+WHERE TASK.tid = mytid;
+END // 
+DELIMITER ;
+
+/* UPDATE A ORIGINAL TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.UpdateTask(
+IN mytid int,
+IN mycontent char(140)
+) 
+BEGIN 
+UPDATE FIGHTDB.TASK
+SET TASK.content = mycontent
 WHERE TASK.tid = mytid;
 END // 
 DELIMITER ;

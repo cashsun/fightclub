@@ -52,6 +52,20 @@ VALUES(myuid, mytitle, mypri);
 END // 
 DELIMITER ;
 
+/* UPDATE A TASK GROUP */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.UpdateTaskGroup(
+IN mytgid int,
+IN mytitle char(40),
+IN mypri int
+) 
+BEGIN 
+UPDATE FIGHTDB.T_GROUP
+SET title = mytitle, priority = mypri
+WHERE tgid = mytgid;
+END // 
+DELIMITER ;
+
 /* DELETE A TASK GROUP */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.DeleteTaskGroup(
@@ -88,6 +102,19 @@ WHERE TASK.tid = mytid;
 END // 
 DELIMITER ;
 
+/* UPDATE A ORIGINAL TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.UpdateTask(
+IN mytid int,
+IN mycontent char(140)
+) 
+BEGIN 
+UPDATE FIGHTDB.TASK
+SET TASK.content = mycontent
+WHERE TASK.tid = mytid;
+END // 
+DELIMITER ;
+
 /* GET ALL TASKS BY USER */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.GetAllMyTasks(
@@ -98,7 +125,8 @@ BEGIN
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,
-utg.tgid, utg.priority, utg.title, utg.exp
+utg.tgid, utg.priority, utg.title, utg.exp, 
+CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority,
@@ -113,7 +141,7 @@ ON
 TASK.tgid = utg.tgid
 LEFT JOIN FIGHTDB.EXP
 ON TASK.tid = EXP.tid
-GROUP BY (TASK.tid, utg.tgid)
+GROUP BY pk
 ORDER BY priority DESC,tgid DESC, ts DESC;
 END // 
 DELIMITER ;
