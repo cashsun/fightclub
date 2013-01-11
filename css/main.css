@@ -106,8 +106,8 @@ body{
 }
 .delete_task,.delete_group{
     width: 20px;
-    margin-left: 98%;
-    right: 0
+    margin-right: 10px;
+    margin-right: auto;
 }
 #cache{
     width: 0;

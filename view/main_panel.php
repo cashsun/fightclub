@@ -35,7 +35,7 @@ if(isset($_GET['uid'])){
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
                     if($task->getContent()!=''){
-                        echo '<div tid="'.$task->getTid().'"class="t_content hoverable">'.$task->getContent().'<div class="delete_task">x</div></div>';
+                        echo '<div tid="'.$task->getTid().'"class="t_content hoverable"><div class="tt_content">'.$task->getContent().'</div><div class="delete_task">x</div></div>';
                     }
                 }
             ?>
@@ -48,7 +48,7 @@ if(isset($_GET['uid'])){
                    $tasks = $group->getTasks();
                     foreach($tasks as $task){
                         if($task->getContent()!=''){
-                            echo '<div tid="'.$task->getTid().'"class="t_content hoverable">'.$task->getContent().'<div class="delete_task">x</div></div>';
+                            echo '<div tid="'.$task->getTid().'"class="t_content hoverable"><div class="tt_content">'.$task->getContent().'</div><div class="delete_task">x</div></div>';
                         }
                     }
                     echo '</div>';
@@ -74,7 +74,7 @@ if(isset($_GET['uid'])){
         </select>
     </div>
     <div id="t_dialog" title="Update Task">
-        <div id="tid"></div>
+        <div id="tid" class="hiddable"></div>
         content:<input type="text" class="input" id="update_task" maxlength="140"/><br/>
     </div>
 </div>
