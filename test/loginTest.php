@@ -1,21 +1,13 @@
-<form action="#" method="post"> 
-    Username: <input name="username" type="text"/>
-    Password: <input name="password" type="password"/>
-    <input type="submit" value="submit"/>
-</form>
-<?php
-    include_once '../db/DBadapter.php';
-    if(!isset($_POST['username'])||$_POST['username']==''){
-        echo 'input username please';
-    }else if(!isset($_POST['password'])||$_POST['password']==''){
-        echo 'input password';
-    }else{
-        $con = new DBadapter();
-        $result = $con->login($_POST['username'],$_POST['password']);
-        if($result['valid'])
-          echo $result['data']['email'];
-        else
-          echo 'incorrect info';
-    }
-        
-?>
+<script type="text/javascript" src="js/login.js"></script>
+<div class="front-login">
+    <img style="width: 300px; margin-bottom: 10px; margin-left: 10px;" src="image/pic.jpg" alt=""/>
+    <form action="test/login.php" class="signin" method="post">
+      <div>
+        <input type="text" name="cm-name" class="input-box" value="username">
+        <input type="password" name="cm-pass" class="input-box" value="password">
+
+        <input type="submit" value="Login" class="signup">
+      </div>
+    </form>
+</div>
+
