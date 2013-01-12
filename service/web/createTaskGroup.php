@@ -6,6 +6,6 @@ if(isset($_POST['uid'])&&isset($_POST['title'])&&isset($_POST['priority'])){
     $result = $db->createTaskGroup($_POST['uid'],$_POST['title'],$_POST['priority']);
     echo $result;
 }else{
-    echo 0;
+    echo -1;
 }
 ?>

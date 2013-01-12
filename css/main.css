@@ -3,7 +3,7 @@ root {
 }
 body,a,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,hr{
     margin:0; padding:0;
-    font-family: "Microsoft YaHei","Helvetica","" ! important;
+    font-family: "Helvetica","Arial" ! important;
     font-smooth: always;
     text-decoration: none;
     width: 100%; height: 100%;
@@ -15,6 +15,12 @@ body,a,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fi
 body{
 /*    background: url('../image/bg_paper_small.png') repeat;*/
     background-color: #f8f8f8
+}
+.roundcorner{
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px
 }
 #navibar{
     position:absolute;
@@ -46,7 +52,7 @@ body{
 
 #panel_group{
     position: absolute;
-    width: 20%;
+    width: 270px;
     height: 100%;
     left: 0;
     border-right: 2px dashed #eceadf;
@@ -56,38 +62,49 @@ body{
 #panel_task{
     position: absolute;
     height: 100%;
-    width: 80%;
-    left: 20%;
+    right: 0;
     overflow-y:auto
 }
 .tg_title{
-    padding: 10px;
     margin: 0;
     text-align: center;
-    border-bottom: 2px dashed #eceadf;
+    height: 50px;
+    border-bottom: 2px dashed #eceadf
+}
+.tg_title span{
+    padding-left: 50px;
 }
 .t_content{
-    margin: 2px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 5px;
+    margin-top: 5px;
+    padding:0 5px;
+    height: 50px;
     text-align: center;
     color: white;
     background-color: #eceadf
 }
+.tg_title_text,.t_content_text{
+    height: 35px;
+    float: left;
+    padding-top: 15px
+}
+.tg_title_text{
+    width: 220px
+}
+.delete_task,.delete_group{
+    width: 50px;
+    height: 35px;
+    float:left;
+    padding-top: 15px
+}
 #input_task{
-    margin-left: 10px;
-    margin-right: 10px;
     border: 5px solid #eceadf
 }
 .input{
+    margin-top: 5px;
     height: 21px;
-    width: 95%
+    width: 95%;
 }
-.t_content:hover{
-    background-color: #e33091
-}
-#create_group{
+#create_group,#u_group{
     text-align: center;
     padding: 6px;
     margin: 0;
@@ -103,11 +120,6 @@ body{
 }
 .hiddable{
     display: none
-}
-.delete_task,.delete_group{
-    width: 20px;
-    margin-right: 10px;
-    margin-right: auto;
 }
 #cache{
     width: 0;
