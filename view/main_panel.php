@@ -1,14 +1,19 @@
-<?php 
+<?php
 //uid by SESSION
-if(isset($_GET['uid'])){
-    $user = getAllByUid($_GET['uid']);
+if(isset($_SESSION['uid'])){
+    $user = getAllByUid($_SESSION['uid']);
     $groups = $user->getTaskGroups();
 }
 ?>
 <div id="master">
     <div id="navibar">
         <img id="profile_image" src="image/profile.png" alt=""/>
-        <div id="profile_username" class="username"><?php echo $user->getUsername() ?></div>
+        <div id="profile_username" class="username">
+            <?php echo 'Welcome back, '.$user->getUsername().' '.
+                        '<a href="test/logout.php">Logout</a>';
+            
+            ?>
+        </div>
     </div>
     <div id="panel_main">
         <div id="panel_group">
