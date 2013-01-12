@@ -1,3 +1,4 @@
+<script type="text/javascript" src="js/login.js"></script>
 <div class="front-login">
     <form action="test/login.php" class="signin" method="post">
       <div>
