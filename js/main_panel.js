@@ -1,60 +1,56 @@
 function activeTasks(){
     $('.t_content').click(function(){
-        $('#tgid','#t_dialog').html($(this).attr('tid'));
+        $('#tid','#t_dialog').html($(this).attr('tid'));
+        $('#update_task').val(($('.tt_content',this).text()));
         $('#t_dialog').dialog('open');
     });
 }
-function hundleResponse(response){
-    if(response==-1){
-        alert('Operation failed!');
-    }else{
-        alert('Success!');
-    }
-}
 function postCreateGroup(){
-    $.post(
+    makeAjaxCall('post',
             "service/web/createTaskGroup.php",
             {uid:function(){return $('#uid').html()},
-            title:function(){return $('#input_group').val()},
-            priority: function(){return $('#g_priority').val()}},
-            function(response){
-                alert(response);
-                location.reload();
-            });
+            title:function(){return $.trim($('#input_group').val())},
+            priority: function(){return $('#g_priority').val()}})
 }
 function postCreateTask(){
-    $.post(
-        "service/web/createTask.php",
+    makeAjaxCall('post', "service/web/createTask.php",
         {uid:function(){return $('#uid').html()},
             tgid:function(){return $('#tgid').html()},
-            content:function(){return $('#input_task').val()}},
-        function(response){
-                hundleResponse(response);
-                location.reload();
-        });
+            content:function(){return $.trim($('#input_task').val())}});
 }
 function postDeleteTaskGroup(tgid){
-        $.post(
-            "service/web/deleteTaskGroup.php",
-            {tgid:tgid},
-            function(response){
-            hundleResponse(response);
-            location.reload();
-        });
+        makeAjaxCall('post',"service/web/deleteTaskGroup.php",{tgid:tgid}
+        );
 }
-function makeAjaxCall(method, url, param){
-    //todo
+function postUpdateTask(){
+    
+}
+function makeAjaxCall(type, url, param){
+    $.ajax({
+        url:url,
+        type:type,
+        data:param,
+        success:function(response){
+            if(response==-1){
+                alert('Operation failed!');
+            }else{
+                alert('Success!');
+            }
+        },
+        error:function(){
+            alert('Operation failed!');
+        },
+        complete:function(){
+            location.reload();
+        }
+    });
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
         var tid = $(this).parent().attr('tid');
-        $.post(
+        makeAjaxCall('post',
             "service/web/deleteTask.php",
-            {tid:tid},
-            function(response){
-            hundleResponse(response)
-            location.reload();
-        });
+            {tid:tid})
     });
 }
 $(document).ready(function(){
@@ -67,7 +63,7 @@ $(document).ready(function(){
          $('.tg_title').removeClass('selected');
         $(this).addClass('selected');
         $('#panel_task').fadeOut(500, function(){
-            $(this).html('<input id="input_task" type="text" maxlength="140"/>');
+            $(this).html('<input id="input_task" class= "input" type="text" maxlength="140"/>');
              $(this).append($(tgid,'#cache').html()).fadeIn(500);
              activeTasks();
              activeDeletes();
@@ -97,12 +93,16 @@ $(document).ready(function(){
     $(document).keypress(function(e) {
         if(e.which == 13) {
             if($( "#g_dialog" ).dialog( "isOpen" )){
-                if($('#input_group').val()!=''){
-                    postCreateGroup()
+                if($.trim($('#input_group').val())!=''){
+                    postCreateGroup();
+                }
+            }else if($( "#t_dialog" ).dialog( "isOpen" )){
+                if($.trim($('#input_task').val())!=''){
+                    postUpdateTask();
                 }
             }else{
-                if($('#input_task').val()!=''){
-                    postCreateTask()
+                if($.trim($('#input_task').val())!=''){
+                    postCreateTask();
                 }
             }
         }
