@@ -18,6 +18,7 @@ if(isset($_SESSION['uid'])){
     </div>
     <div id="panel_main">
         <div id="panel_group">
+            <img id="tg_selector" src="image/tg_selector.png"/>
             <?php
                 $i=-1;
                 foreach($groups as $group){
@@ -27,14 +28,14 @@ if(isset($_SESSION['uid'])){
                         if($i==0){
                             $isSelect = " selected";
                         }
-                        echo '<div id="'.$group->getTgid().'" class="tg_title hoverable'.$isSelect.'"><div class="tg_title_text"><span>'.$group->getTitle().'</span></div><div class="delete_group">x</div></div>';
+                        echo '<div id="'.$group->getTgid().'" class="tg_title hoverable'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
                     }
                 }
             ?>
             <div id="create_group" class="hoverable">+</div>
             <div id="u_group" class="hoverable">*</div>
         </div>
-        <div id="panel_task"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">
+        <div id="panel_task" class="hidden"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">
             <?php
                 if($groups[0]->getTgid()!=-1){
                     echo '<input id="input_task" class="input_task roundcorner" type="text" maxlength="140"/>';
@@ -48,7 +49,7 @@ if(isset($_SESSION['uid'])){
             ?></div>
         </div>
     </div>
-        <div id="cache" class="hiddable">
+        <div id="cache" class="hidden">
             <?php
                 foreach($groups as $group){
                     echo '<div id="'.$group->getTgid().'">';
@@ -65,7 +66,7 @@ if(isset($_SESSION['uid'])){
             ?>
             <div id="uid"><?php echo $user->getUid() ?></div>
         </div>
-    <div id="g_dialog" class="hiddable" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
+    <div id="g_dialog" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
         priority (Biggest number first):
         <select id="g_priority">
             <option value="0">0</option>
@@ -80,11 +81,11 @@ if(isset($_SESSION['uid'])){
             <option value="9">9</option>
         </select>
     </div>
-    <div id="t_dialog" class="hiddable" title="Update Task">
-        <div id="tid" class="hiddable"></div>
+    <div id="t_dialog" title="Update Task">
+        <div id="tid" class="hidden"></div>
         content:<input type="text" class="input" id="update_task" maxlength="140"/><br/>
     </div>
-    <div id="u_g_dialog" class="hiddable" title="Update Group">name:<input type="text" class="input" id="update_group" maxlength="40"/><br/><br/>
+    <div id="u_g_dialog" title="Update Group">name:<input type="text" class="input" id="update_group" maxlength="40"/><br/><br/>
         priority (Biggest number first):
         <select id="u_g_priority">
             <option value="0">0</option>

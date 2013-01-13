@@ -2,7 +2,7 @@ function initTasks(){
     $('.t_content_text').click(function(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
-        $('#t_dialog').removeClass('hiddable').dialog('open');
+        $('#t_dialog').dialog('open');
     }).mouseover(function(){$(this).css('color', 'white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
@@ -67,20 +67,20 @@ function resizeTaskPanel(){
     var width = windowDiv.width();
     if(width<500){
         $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',width-10);
-        $('#panel_group').css('width', 0);
+        $('#panel_group').addClass('hidden');
         $('#panel_task').css('width', width+'px');
         $('#task_wrapper').css('width', width-40+'px');
         $('.t_content_text').css('width', width-100+'px');
         $('.input_task').css('width', width-50+'px');
     }else{
         $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',500);
-        $('#panel_group').css('width', 270+'px');
-        $('#panel_group').show();
-        $('#panel_task').css('width', width-270+'px');
+        $('#panel_group').removeClass('hidden');
+        $('#panel_task').css('width', width-271+'px');
         $('#task_wrapper').css('width', width-310+'px');
         $('.t_content_text').css('width', width-370+'px');
         $('.input_task').css('width', width-320+'px');
     }
+    $('#panel_task').removeClass('hidden');
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
@@ -99,6 +99,8 @@ $(document).ready(function(){
     initTasks();
     $('#input_task').focus();
     $('.tg_title_text').click(function(){
+        var index = $('.tg_title_text').index(this);
+        $('#tg_selector').css('top', 40+index*51+'px');
         $('#tgid').html($(this).parent().attr('id'));
         var tgid = '#'+$(this).parent().attr('id');
          $('.tg_title').removeClass('selected');
@@ -113,7 +115,7 @@ $(document).ready(function(){
     $('#u_group').click(function(){
         var tgid = '#'+$('#tgid').html();
         $('#update_group').val($('.tg_title_text',tgid).text());
-        $('#u_g_dialog').removeClass('hiddable').dialog('open');
+        $('#u_g_dialog').dialog('open');
     });
     $('#t_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
@@ -135,7 +137,7 @@ $(document).ready(function(){
             }
     }}]);
     $('#create_group').click(function(){
-        $('#g_dialog').removeClass('hiddable').dialog('open');
+        $('#g_dialog').dialog('open');
     });
     
     $('.delete_group').click(function(){

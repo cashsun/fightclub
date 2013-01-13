@@ -70,7 +70,7 @@ body{
     top: 20px
 }
 #panel_group{
-    position: absolute;
+    float: left;
     width: 270px;
     height: 100%;
     left: 0;
@@ -81,10 +81,15 @@ body{
     z-index: 5;
 
 }
+#tg_selector{
+    position: fixed;
+    top: 40px;
+    z-index: 11;
+    left: 221px
+}
 #panel_task{
-    position: absolute;
+    float: left;
     height: 100%;
-    right: 0;
     overflow-y:auto;
     z-index: 10;
     -webkit-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
@@ -106,7 +111,7 @@ body{
     box-shadow: 0 1px 0 rgba(255,255,255,0.8)
 }
 .tg_title span{
-    padding-left: 50px;
+    padding-right: 50px;
 }
 .t_content{
     margin-top: 10px;
@@ -168,6 +173,6 @@ body{
 .selected{
     background-color: #ff4545
 }
-.hiddable{
+.hidden{
     display: none
 }
