@@ -66,7 +66,7 @@ function makeAjaxCall(type, url, param,callback){
             if(response==-1){
                 alert('Operation failed!');
             }
-            alert(response);
+            
             tidnew = response;
         },
         error:function(){
