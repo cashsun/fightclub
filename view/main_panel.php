@@ -13,6 +13,8 @@ if(isset($_SESSION['uid'])){
         </div>
         <div id="logout" class="button"><a href="test/logout.php">Logout</a></div>
         <div id="loadingImage"></div>
+        <div id="friends_button" class="button">Friends</div>
+        <div id="news_button" class="button">News</div>
     </div>
     <div id="panel_main">
         <img id="tg_selector" src="image/tg_selector.png"/>
@@ -48,24 +50,27 @@ if(isset($_SESSION['uid'])){
                 }
             ?></div>
         </div>
-    </div>
-        <div id="cache" class="hidden">
-            <?php
-                foreach($groups as $group){
-                    echo '<div id="'.$group->getTgid().'">';
-                   $tasks = $group->getTasks();
-                    foreach($tasks as $task){
-                        if($task->getContent()!=''){
-                            echo '<div tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task">x</div></div>';
-                        }
-                    }
-                    echo '</div>';
-                }
-                if($groups[0]->getTgid()!=-1)
-                    echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
-            ?>
-            <div id="uid"><?php echo $user->getUid() ?></div>
+        <div id="panel_social">
+            hehe
         </div>
+    </div>
+    <div id="cache" class="hidden">
+        <?php
+            foreach($groups as $group){
+                echo '<div id="'.$group->getTgid().'">';
+                $tasks = $group->getTasks();
+                foreach($tasks as $task){
+                    if($task->getContent()!=''){
+                        echo '<div tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task">x</div></div>';
+                    }
+                }
+                echo '</div>';
+            }
+            if($groups[0]->getTgid()!=-1)
+                echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
+        ?>
+        <div id="uid"><?php echo $user->getUid() ?></div>
+    </div>
     <div id="g_dialog" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
         priority (Biggest number first):
         <select id="g_priority">
