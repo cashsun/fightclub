@@ -1,9 +1,12 @@
-function activeTasks(){
+function initTasks(){
     $('.t_content_text').click(function(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
         $('#t_dialog').removeClass('hiddable').dialog('open');
+    }).mouseover(function(){$(this).css('color', 'white');
+        }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
+    activeDeletes();
 }
 function postCreateGroup(){
     makeAjaxCall('post',
@@ -25,7 +28,6 @@ function postDeleteTask(tid){
         makeAjaxCall('post',
             "service/web/deleteTask.php",
             {tid:tid})
-    
 }
 function postUpdateTask(){
     makeAjaxCall('post',"service/web/updateTask.php",{
@@ -93,12 +95,8 @@ $(document).ready(function(){
     windowDiv = $(window);
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
-    activeTasks();
-    activeDeletes();
+    initTasks();
     $('#input_task').focus();
-    $('.t_content_text').mouseover(function(){$(this).css('color', 'white');
-        }).mouseout(function(){$(this).css('color', '#8d8f90');
-        });
     $('.tg_title_text').click(function(){
         $('#tgid').html($(this).parent().attr('id'));
         var tgid = '#'+$(this).parent().attr('id');
@@ -107,8 +105,7 @@ $(document).ready(function(){
         $('#task_wrapper').fadeOut(200, function(){
             var task_content = '<input id="input_task" class= "input_task roundcorner" type="text" maxlength="140"/>'+$(tgid,'#cache').html();
              $(this).html(task_content).fadeIn(200);
-             activeTasks();
-             activeDeletes();
+             initTasks();
              resizeTaskPanel();
         });
     });

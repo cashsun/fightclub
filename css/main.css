@@ -130,6 +130,7 @@ body{
     float:left;
     padding-top: 15px;
     cursor: pointer;
+    color: #8d8f90;
 }
 .input_task{
     margin-top: 5px;
