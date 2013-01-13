@@ -1,0 +1,35 @@
+body{
+  font-family: "Helvetica Neue",Arial,sans-serif;
+}
+
+input{
+  display: inline-block;
+  width: 300px;
+  padding: 4px;
+  margin: 0;
+  outline: 0;
+  background-color: white;
+  border: 1px solid #CCC;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.signup-wrapper{
+  position: relative;
+  width: 500px;
+  top: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.signup-wrapper form .field-name{
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 3px;
+  color: #333;
+}
+
+.signup-wrapper form .holding{
+  margin-bottom: 10px;
+}

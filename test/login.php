@@ -34,7 +34,7 @@
       else
         echo 'Password Error, will turn to index page in 3 sec';
     ?>
-    <meta http-equiv="refresh" content="3; URL=../index.php">
+    <meta http-equiv="refresh" content="0; URL=../index.php">
   </div>
 </body>
 </html>
