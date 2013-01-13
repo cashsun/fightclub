@@ -100,8 +100,8 @@ IN mytgid int,
 IN mycontent char(140)
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content, privacy)
-VALUES(myuid, myotid, mytgid, mycontent, myprivacy);
+INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content)
+VALUES(myuid, myotid, mytgid, mycontent);
 END // 
 DELIMITER ;
 

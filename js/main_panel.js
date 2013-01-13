@@ -66,6 +66,7 @@ function makeAjaxCall(type, url, param,callback){
             if(response==-1){
                 alert('Operation failed!');
             }
+            alert(response);
             tidnew = response;
         },
         error:function(){
@@ -175,15 +176,6 @@ $(document).ready(function(){
             var tgid = $(this).parent().attr('id');
             postDeleteTaskGroup(tgid);
         }
-    });
-    
-    $('#friends_button').toggle(function(){
-        $('#panel_social').animate({right: 0},400,function(){
-            //load friends
-        });
-    },function(){
-        var width = $('#panel_social').width();
-        $('#panel_social').animate({right: -width},400);
     });
     
     $(window).resize(function() {
