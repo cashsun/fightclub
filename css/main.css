@@ -25,8 +25,7 @@ body{
     border-radius: 5px
 }
 #navibar{
-    position:relative;
-    float: left;
+    position:absolute;
     height: 40px;
     width: 100%;
     top: 0;
@@ -100,6 +99,21 @@ body{
     -o-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
     box-shadow: 0 4px 5px rgba(0,0,0,0.5);*/
 }
+#panel_social{
+    position: absolute;
+    right: -504px;
+    width: 500px;
+    top: 1px;
+    height: 100%;
+    overflow-y:auto;
+    z-index: 20;
+    background-color: #f8f8f8;
+    -webkit-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+    -ms-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+    -o-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+}
 .tg_title{
     margin: 0;
     text-align: center;
@@ -125,11 +139,12 @@ body{
 
 }
 .tg_title_text,.t_content_text{
-    height: 35px;
+    height: 15px;
     color: #8d8f90;
     padding-top: 15px;
-    word-wrap: break-word;
+    overflow: hidden;
     cursor: default;
+    text-overflow:ellipsis
 }
 .t_content_text{
     float: left;
@@ -191,15 +206,21 @@ body{
 .button{
      background: url('../image/a_btn.png') no-repeat;
      height:20px;
+     cursor: pointer;
      width: auto
 }
-#logout{
+#logout,#friends_button,#news_button{
     font-size: 0.7em;
-    float: left;
     padding-left: 23px;
     padding-top: 4px;
     margin-left: 5px;
     margin-top: 9px;
     width: 72px
+}
+#logout{
+    float: left;
+}
+#friends_button,#news_button{
+    float: right;
 }
 

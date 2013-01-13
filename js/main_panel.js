@@ -169,6 +169,15 @@ $(document).ready(function(){
             postDeleteTaskGroup(tgid);
         }
     });
+    
+    $('#friends_button').toggle(function(){
+        $('#panel_social').animate({right: '0px'},400,function(){
+            //load friends
+        });
+    },function(){
+        $('#panel_social').animate({right: '-504px'},400);
+    });
+    
     $(window).resize(function() {
         resizeTaskPanel();
     });
