@@ -19,8 +19,13 @@ function postCreateTask(){
             content:function(){return $.trim($('#input_task').val())}});
 }
 function postDeleteTaskGroup(tgid){
-        makeAjaxCall('post',"service/web/deleteTaskGroup.php",{tgid:tgid}
-        );
+            makeAjaxCall('post',"service/web/deleteTaskGroup.php",{tgid:tgid});
+}
+function postDeleteTask(tid){
+        makeAjaxCall('post',
+            "service/web/deleteTask.php",
+            {tid:tid})
+    
 }
 function postUpdateTask(){
     makeAjaxCall('post',"service/web/updateTask.php",{
@@ -58,37 +63,53 @@ function makeAjaxCall(type, url, param){
     });
 }
 function resizeTaskPanel(){
-    var width = $(window).width();
-    $('#panel_task').css('width', width-270+'px');
-    $('#task_wrapper').css('width', width-300+'px');
-    $('.t_content_text').css('width', width-360+'px');
-    
-    $('#input_task').css('width', width-310+'px');
-    
+    var width = windowDiv.width();
+    if(width<500){
+        $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',width-10);
+        $('#panel_group').css('width', 0);
+        $('#panel_task').css('width', width+'px');
+        $('#task_wrapper').css('width', width-40+'px');
+        $('.t_content_text').css('width', width-100+'px');
+        $('.input_task').css('width', width-50+'px');
+    }else{
+        $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',500);
+        $('#panel_group').css('width', 270+'px');
+        $('#panel_group').show();
+        $('#panel_task').css('width', width-270+'px');
+        $('#task_wrapper').css('width', width-310+'px');
+        $('.t_content_text').css('width', width-370+'px');
+        $('.input_task').css('width', width-320+'px');
+    }
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
-        var tid = $(this).parent().attr('tid');
-        makeAjaxCall('post',
-            "service/web/deleteTask.php",
-            {tid:tid})
+        if(confirm ("Delete this task?")){
+            var tid = $(this).parent().attr('tid');
+            postDeleteTask(tid);
+        }
     });
 }
 $(document).ready(function(){
+    windowDiv = $(window);
+    $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
     activeTasks();
     activeDeletes();
     $('#input_task').focus();
+    $('.t_content_text').mouseover(function(){$(this).css('color', 'white');
+        }).mouseout(function(){$(this).css('color', '#8d8f90');
+        });
     $('.tg_title_text').click(function(){
         $('#tgid').html($(this).parent().attr('id'));
         var tgid = '#'+$(this).parent().attr('id');
          $('.tg_title').removeClass('selected');
         $(this).parent().addClass('selected');
-        $('#panel_task').fadeOut(500, function(){
-            $(this).html('<div id="task_wrapper" style="margin-left: auto;margin-right: auto"><input id="input_task" class= "input" type="text" maxlength="140"/>');
-             $(this).append($(tgid,'#cache').html()+'</div>').fadeIn(500);
+        $('#task_wrapper').fadeOut(200, function(){
+            var task_content = '<input id="input_task" class= "input_task roundcorner" type="text" maxlength="140"/>'+$(tgid,'#cache').html();
+             $(this).html(task_content).fadeIn(200);
              activeTasks();
              activeDeletes();
+             resizeTaskPanel();
         });
     });
     $('#u_group').click(function(){
@@ -96,7 +117,6 @@ $(document).ready(function(){
         $('#update_group').val($('.tg_title_text',tgid).text());
         $('#u_g_dialog').removeClass('hiddable').dialog('open');
     });
-    $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:700,modal:true,resizable:false,closeOnEscape: true});
     $('#t_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($('#update_task').val()!=''){
@@ -121,8 +141,10 @@ $(document).ready(function(){
     });
     
     $('.delete_group').click(function(){
-        var tgid = $(this).parent().attr('id');
-        postDeleteTaskGroup(tgid);
+        if(confirm ("Delete this group?")){
+            var tgid = $(this).parent().attr('id');
+            postDeleteTaskGroup(tgid);
+        }
     });
     $(window).resize(function() {
         resizeTaskPanel();

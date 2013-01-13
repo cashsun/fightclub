@@ -8,12 +8,12 @@ body,a,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fi
     text-decoration: none;
     width: 100%; height: 100%;
     -webkit-font-smoothing: antialiased;
-    border:none
+    border:none;
 }
 ::-moz-selection { background: #000; color: #fff; text-shadow: none }
 ::selection { background: #000; color: #fff; text-shadow: none }
 body{
-/*    background: url('../image/bg_paper_small.png') repeat;*/
+/*    background: url('../image/wall1.png') repeat;*/
     background-color: #f8f8f8
 }
 .roundcorner{
@@ -24,17 +24,30 @@ body{
 }
 #navibar{
     position:absolute;
-    height: 50px;
+    height: 40px;
     width: 100%;
-    top: 0
+    top: 0;
+    border-bottom: 1px solid #ececec;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    -ms-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    -o-box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    z-index: 100
 }
 #panel_main{
     position:absolute;
     height: auto;
-    top: 50px;
+    top: 40px;
     width: 100%;
     bottom: 0;
-    border-top: 2px dashed #eceadf
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-touch-action: none;
 }
 #profile_image{
     position: absolute;
@@ -47,7 +60,8 @@ body{
 #profile_username{
     position: absolute;
     left: 100px;
-    top: 10px
+    top: 10px;
+    font-size: 0.9em;
 }
 
 #panel_group{
@@ -55,49 +69,73 @@ body{
     width: 270px;
     height: 100%;
     left: 0;
-    border-right: 2px dashed #eceadf;
+    border-right: 1px solid #ececec;
     overflow-x: hidden;
-    overflow-y:auto
+    overflow-y:auto;
+    background-color: #e7ebec;
+    z-index: 5;
+
 }
 #panel_task{
     position: absolute;
     height: 100%;
     right: 0;
-    overflow-y:auto
+    overflow-y:auto;
+    z-index: 10;
+    -webkit-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
+    -ms-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
+    -o-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 5px rgba(0,0,0,0.5);
 }
 .tg_title{
     margin: 0;
     text-align: center;
     height: 50px;
-    border-bottom: 2px dashed #eceadf
+    font-size: 0.9em;
+    border-bottom: 1px solid #dbe0e2;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.8)
 }
 .tg_title span{
     padding-left: 50px;
 }
 .t_content{
-    margin-top: 5px;
+    margin-top: 10px;
     padding:0 5px;
     height: 50px;
     text-align: center;
     color: white;
-    background-color: #eceadf
+    background-color: #eaeaea;
+
 }
 .tg_title_text,.t_content_text{
     height: 35px;
+    color: #8d8f90;
     float: left;
-    padding-top: 15px
+    padding-top: 15px;
+    word-wrap: break-word;
+    cursor: default  
 }
 .tg_title_text{
-    width: 220px
+    width: 220px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
 }
 .delete_task,.delete_group{
     width: 50px;
     height: 35px;
     float:left;
-    padding-top: 15px
+    padding-top: 15px;
+    cursor: pointer;
 }
-#input_task{
-    border: 5px solid #eceadf
+.input_task{
+    margin-top: 5px;
+    height: 21px;
+    margin-top: 20px;
+    border: 5px solid #eaeaea;
 }
 .input{
     margin-top: 5px;
@@ -108,20 +146,21 @@ body{
     text-align: center;
     padding: 6px;
     margin: 0;
+    color: #8d8f90;
     text-align: center;
-    border-bottom: 2px dashed #eceadf 
+    border-bottom: 1px solid #dbe0e2;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.8)
 }
 .hoverable:hover{
-    cursor: pointer;
-    background-color: #e33091
+    background-color: #ff4545;
 }
 .selected{
-    background-color: #eceadf
+    background-color: #ff4545
 }
 .hiddable{
     display: none
-}
-#cache{
-    width: 0;
-    height: 0
 }

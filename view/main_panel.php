@@ -36,7 +36,7 @@ if(isset($_SESSION['uid'])){
         <div id="panel_task"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">
             <?php
                 if($groups[0]->getTgid()!=-1){
-                    echo '<input id="input_task" class="input" type="text" maxlength="140"/>';
+                    echo '<input id="input_task" class="input_task roundcorner" type="text" maxlength="140"/>';
                 }
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
