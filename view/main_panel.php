@@ -27,15 +27,18 @@ if(isset($_SESSION['uid'])){
                         $isSelect = "";
                         if($i==0){
                             $isSelect = " selected";
-                            echo '<div id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
+                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
                         }else{
-                            echo '<div id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
+                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
                         }  
                     }
                 }
             ?>
-            <div id="create_group">+</div>
-            <div id="u_group">*</div>
+            <div id="panel_control">
+                <div id="create_group">+</div>
+                <div id="u_group">*</div>
+                <div id="history">history</div>
+            </div>
         </div>
         <div id="panel_task" class="hidden"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">
             <?php
@@ -57,7 +60,7 @@ if(isset($_SESSION['uid'])){
     <div id="cache" class="hidden">
         <?php
             foreach($groups as $group){
-                echo '<div id="'.$group->getTgid().'">';
+                echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'">';
                 $tasks = $group->getTasks();
                 foreach($tasks as $task){
                     if($task->getContent()!=''){
@@ -72,37 +75,42 @@ if(isset($_SESSION['uid'])){
         <div id="uid"><?php echo $user->getUid() ?></div>
     </div>
     <div id="g_dialog" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
-        priority (Biggest number first):
+        priority:
         <select id="g_priority">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
+            <option value="0">casual</option>
+            <option value="1">very low</option>
+            <option value="2">low</option>
+            <option value="3">minor</option>
+            <option value="4">medium</option>
+            <option value="5">important</option>
+            <option value="6">major</option>
+            <option value="7">urgent</option>
+            <option value="8">urgent+</option>
+            <option value="9">immediate</option>
         </select>
     </div>
     <div id="t_dialog" title="Update Task">
         <div id="tid" class="hidden"></div>
-        content:<input type="text" class="input" id="update_task" maxlength="140"/><br/>
+        content:<input type="text" class="input" id="update_task" maxlength="140"/><br/><br/>
+        privacy:<select id="u_t_privacy">
+            <option value="0">Only me</option>
+            <option value="1">Friends</option>
+            <option value="2">Public</option>
+        </select>
     </div>
     <div id="u_g_dialog" title="Update Group">name:<input type="text" class="input" id="update_group" maxlength="40"/><br/><br/>
-        priority (Biggest number first):
+        priority:
         <select id="u_g_priority">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
+            <option value="0">casual</option>
+            <option value="1">very low</option>
+            <option value="2">low</option>
+            <option value="3">minor</option>
+            <option value="4">medium</option>
+            <option value="5">important</option>
+            <option value="6">major</option>
+            <option value="7">urgent</option>
+            <option value="8">urgent+</option>
+            <option value="9">immediate</option>
         </select>
     </div>
 </div>

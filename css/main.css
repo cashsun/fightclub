@@ -102,7 +102,7 @@ body{
 #panel_social{
     position: absolute;
     right: -504px;
-    width: 500px;
+    width: 400px;
     top: 1px;
     height: 100%;
     overflow-y:auto;
@@ -139,7 +139,7 @@ body{
 
 }
 .tg_title_text,.t_content_text{
-    height: 15px;
+    height: 35px;
     color: #8d8f90;
     padding-top: 15px;
     overflow: hidden;
@@ -174,20 +174,36 @@ body{
     height: 21px;
     width: 95%;
 }
-#create_group,#u_group{
+#create_group,#u_group,#history{
     text-align: center;
-    padding: 6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
     margin: 0;
+    width: 89px;
+    float: left;
     color: #8d8f90;
     text-align: center;
     cursor: default;
-    border-bottom: 1px solid #dbe0e2;
+    border-right: 1px solid #dbe0e2;
+    -webkit-box-shadow: 1px 0 0 rgba(255,255,255,0.8);
+    -moz-box-shadow: 1px 0 0 rgba(255,255,255,0.8);
+    -ms-box-shadow: 1px 0 0 rgba(255,255,255,0.8);
+    -o-box-shadow: 1px 0 0 rgba(255,255,255,0.8);
+    box-shadow: 1px 0 0 rgba(255,255,255,0.8);
+    text-shadow: 1px 0 0 rgba(255,255,255,0.6)   
+}
+#panel_control{
+    position: absolute;
+    left: 0;
+    bottom:0;
+    border-top: 1px solid #dbe0e2;
+    height: 28px;
     -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
     -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
     -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
     -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
     box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-     text-shadow: 0 1px 0 rgba(255,255,255,0.6);    
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6)  
 }
 .hoverable:hover{
     background-color: #ff4545;
