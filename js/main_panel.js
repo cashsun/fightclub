@@ -77,7 +77,6 @@ function makeAjaxCall(type, url, param,callback){
         url:url,
         type:type,
         data:param,
-        datatype:'json',
         success:function(response){
             if(response==-1){
                 alert('Operation failed!');
@@ -88,8 +87,8 @@ function makeAjaxCall(type, url, param,callback){
         error:function(){
             alert('Operation failed!');
         },
-        success:function(data){
-            if(callback != null){callback(data)}
+        complete:function(){
+            if(callback != null){callback()}
             else{
                 location.reload();
             }
