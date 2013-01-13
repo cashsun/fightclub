@@ -45,7 +45,7 @@ function postUpdateTaskGroup(){
         );
 }
 function makeAjaxCall(type, url, param){
-    loaderImage.show(0);
+    $('#loaderImage').show(0);
     $.ajax({
         url:url,
         type:type,
@@ -92,8 +92,7 @@ function activeDeletes(){
 }
 $(document).ready(function(){
     windowDiv = $(window);
-    loaderImage = $('#loaderImage');
-    loaderImage.hide();
+     $('#loaderImage').hide();
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
     initTasks();

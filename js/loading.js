@@ -43,12 +43,12 @@ function continueAnimation(){
 
 function imageLoader(s, fun)//Pre-loads the sprites image
 {
-        clearTimeout(cImageTimeout);
-        cImageTimeout=0;
-        genImage = new Image();
-        genImage.onload=function (){cImageTimeout=setTimeout(fun, 0)};
-        genImage.onerror=new Function('alert(\'Could not load the image\')');
-        genImage.src=s;
+            clearTimeout(cImageTimeout);
+            cImageTimeout=0;
+            genImage = new Image();
+            genImage.onload=function (){cImageTimeout=setTimeout(fun, 0)};
+            genImage.onerror=new Function('alert(\'Could not load the image\')');
+            genImage.src=s;   
 }
 
 //The following code starts the animation
