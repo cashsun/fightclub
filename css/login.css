@@ -6,6 +6,7 @@
   top: 200px;
 }
 
+
 .ErrorMsg{
   margin-top: 0px;
   width: 100%;
@@ -33,10 +34,23 @@
   width: 50px;
   height: 32px;
   background: #E34E50;
-  border: 2px solid #E34E50;
   color: white;
-  padding: 3px 2px;
-  padding: 4px 0 4px;
+  padding: 7px 4px;
   margin-left: 1px;
-  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.front-login .register{
+  width: 50px;
+  height: 32px;
+  background: #FCBA63;
+  color: #7993B4;
+  padding: 7px 5px 9px 5px;
+  margin-left: 1px;
+  display: inline;
+}
+
+.front-login .register a{
+  text-decoration: none;
+  color: white;
 }
