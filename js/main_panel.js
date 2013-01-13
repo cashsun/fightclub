@@ -10,6 +10,20 @@ function initTasks(){
     activeDeletes();
     $('#input_task').focus();
 }
+
+function getFriendsAjaxCall(){
+    makeAjaxCall('get',
+            "service/web/getFriends.php",
+            {uid:function(){return $('#uid').html()}},
+            function(r){
+              $friend_place_holder = $('#panel_social');
+              //for(var i = 0; i < r.length; i++)
+              //alert(r);
+
+$.each(r, function(key, value) { alert(key + "=" + value); });
+            });
+}
+
 function postCreateGroup(){
     makeAjaxCall('post',
             "service/web/createTaskGroup.php",
@@ -56,6 +70,7 @@ function postUpdateTaskGroup(){
         }
         );
 }
+
 function makeAjaxCall(type, url, param,callback){
     loading_image.show(0);
     $.ajax({
@@ -176,6 +191,15 @@ $(document).ready(function(){
             var tgid = $(this).parent().attr('id');
             postDeleteTaskGroup(tgid);
         }
+    });
+    
+    $('#friends_button').toggle(function(){
+        getFriendsAjaxCall();
+        $('#panel_social').animate({right: '0px'},400,function(){
+            //load friends
+        });
+    },function(){
+        $('#panel_social').animate({right: '-504px'},400);
     });
     
     $(window).resize(function() {
