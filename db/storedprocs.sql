@@ -97,8 +97,7 @@ CREATE PROCEDURE FIGHTDB.CreateTask(
 IN myuid int,
 IN myotid int,
 IN mytgid int,
-IN mycontent char(140),
-IN myprivacy int
+IN mycontent char(140)
 ) 
 BEGIN 
 INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content, privacy)
@@ -142,7 +141,7 @@ BEGIN
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,
-utg.tgid, utg.priority, utg.title, utg.exp, TASK.privacy
+utg.tgid, utg.priority, utg.title, utg.exp, TASK.privacy,
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
 (
