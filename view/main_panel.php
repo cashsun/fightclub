@@ -9,16 +9,14 @@ if(isset($_SESSION['uid'])){
     <div id="navibar">
         <img id="profile_image" src="image/profile.png" alt=""/>
         <div id="profile_username" class="username">
-            <?php echo 'Welcome back, '.$user->getUsername().' '.
-                        '<a href="test/logout.php">Logout</a>';
-            
-            ?>
+            <?php echo 'Welcome back, '.$user->getUsername();?>
         </div>
-        <div id="loaderImage"></div>
+        <div id="logout" class="button"><a href="test/logout.php">Logout</a></div>
+        <div id="loadingImage"></div>
     </div>
     <div id="panel_main">
+        <img id="tg_selector" src="image/tg_selector.png"/>
         <div id="panel_group">
-            <img id="tg_selector" src="image/tg_selector.png"/>
             <?php
                 $i=-1;
                 foreach($groups as $group){
@@ -27,13 +25,15 @@ if(isset($_SESSION['uid'])){
                         $isSelect = "";
                         if($i==0){
                             $isSelect = " selected";
-                        }
-                        echo '<div id="'.$group->getTgid().'" class="tg_title hoverable'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
+                            echo '<div id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
+                        }else{
+                            echo '<div id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
+                        }  
                     }
                 }
             ?>
-            <div id="create_group" class="hoverable">+</div>
-            <div id="u_group" class="hoverable">*</div>
+            <div id="create_group">+</div>
+            <div id="u_group">*</div>
         </div>
         <div id="panel_task" class="hidden"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">
             <?php

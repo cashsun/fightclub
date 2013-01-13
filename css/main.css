@@ -5,10 +5,12 @@ body,a,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fi
     margin:0; padding:0;
     font-family: "Helvetica","Arial" ! important;
     font-smooth: always;
+    font-size: 0.9em;
     text-decoration: none;
     width: 100%; height: 100%;
     -webkit-font-smoothing: antialiased;
     border:none;
+    overflow: hidden;
 }
 ::-moz-selection { background: #000; color: #fff; text-shadow: none }
 ::selection { background: #000; color: #fff; text-shadow: none }
@@ -23,17 +25,18 @@ body{
     border-radius: 5px
 }
 #navibar{
-    position:absolute;
+    position:relative;
+    float: left;
     height: 40px;
     width: 100%;
     top: 0;
     border-bottom: 1px solid #ececec;
-    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    -ms-box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    -o-box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    z-index: 100
+    z-index: 10;
+    -webkit-box-shadow: 0 0px 5px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 0px 5px rgba(0,0,0,0.5);
+    -ms-box-shadow: 0 0px 5px rgba(0,0,0,0.5);
+    -o-box-shadow: 0 0px 5px rgba(0,0,0,0.5);
+    box-shadow: 0 0px 5px rgba(0,0,0,0.5);
 }
 #panel_main{
     position:absolute;
@@ -50,53 +53,52 @@ body{
     -ms-touch-action: none
 }
 #profile_image{
-    position: absolute;
-    top: 0;
-    left: 50px;
+    float: left;
+    margin-left: 50px;
     width: 40px;
     height: 40px
 }
 
 #profile_username{
-    position: absolute;
-    left: 100px;
-    top: 10px;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
     font-size: 0.9em
 }
-#loaderImage{
+#loadingImage{
     position: absolute;
     margin-left: -44px;
     left: 50%;
     top: 20px
 }
 #panel_group{
-    float: left;
+    position: absolute;
     width: 270px;
     height: 100%;
     left: 0;
-    border-right: 1px solid #ececec;
     overflow-x: hidden;
     overflow-y:auto;
     background-color: #e7ebec;
-    z-index: 5;
-
+    z-index: 5
 }
 #tg_selector{
-    position: fixed;
-    top: 40px;
-    z-index: 11;
-    left: 221px
+    position: absolute;
+    z-index: 20;
+    left: 222px
 }
 #panel_task{
-    float: left;
+    position: absolute;
+    top: 1px;
     height: 100%;
     overflow-y:auto;
-    z-index: 10;
-    -webkit-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
+    z-index: 15;
+    margin-left: 270px;
+    background-color: #f8f8f8;
+/*    -webkit-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
     -moz-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
     -ms-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
     -o-box-shadow: 0 4px 5px rgba(0,0,0,0.5);
-    box-shadow: 0 4px 5px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 5px rgba(0,0,0,0.5);*/
 }
 .tg_title{
     margin: 0;
@@ -104,11 +106,11 @@ body{
     height: 50px;
     font-size: 0.9em;
     border-bottom: 1px solid #dbe0e2;
-    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.8)
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    -o-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5)
 }
 .tg_title span{
     padding-right: 50px;
@@ -125,14 +127,18 @@ body{
 .tg_title_text,.t_content_text{
     height: 35px;
     color: #8d8f90;
-    float: left;
     padding-top: 15px;
     word-wrap: break-word;
-    cursor: default  
+    cursor: default;
+}
+.t_content_text{
+    float: left;
 }
 .tg_title_text{
     width: 220px;
+    margin-left: 50px;
     text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    font-size: 1.2em
 }
 .delete_task,.delete_group{
     width: 50px;
@@ -149,7 +155,7 @@ body{
     border: 5px solid #eaeaea;
 }
 .input{
-    margin-top: 5px;
+    margin-top: 10px;
     height: 21px;
     width: 95%;
 }
@@ -171,8 +177,28 @@ body{
     background-color: #ff4545;
 }
 .selected{
-    background-color: #ff4545
+    background-color: #ff4545;
+    background-image: url('../image/tg_text_shadow.png');
+}
+.tg_text_selected{
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+    color: white
 }
 .hidden{
     display: none
 }
+.button{
+     background: url('../image/a_btn.png') no-repeat;
+     height:20px;
+     width: auto
+}
+#logout{
+    font-size: 0.7em;
+    float: left;
+    padding-left: 23px;
+    padding-top: 4px;
+    margin-left: 5px;
+    margin-top: 9px;
+    width: 72px
+}
+
