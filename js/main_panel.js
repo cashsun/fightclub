@@ -178,14 +178,6 @@ $(document).ready(function(){
         }
     });
     
-    $('#friends_button').toggle(function(){
-        $('#panel_social').animate({right: '0px'},400,function(){
-            //load friends
-        });
-    },function(){
-        $('#panel_social').animate({right: '-504px'},400);
-    });
-    
     $(window).resize(function() {
         resizeTaskPanel();
     });
