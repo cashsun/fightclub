@@ -7,6 +7,7 @@ function initTasks(){
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
     activeDeletes();
+    $('#input_task').focus();
 }
 function postCreateGroup(){
     makeAjaxCall('post',
@@ -19,7 +20,12 @@ function postCreateTask(){
     makeAjaxCall('post', "service/web/createTask.php",
         {uid:function(){return $('#uid').html()},
             tgid:function(){return $('#tgid').html()},
-            content:function(){return $.trim($('#input_task').val())}});
+            content:function(){return $.trim($('#input_task').val())}},
+        function(){
+            var tgid = '#'+$('#tgid').html();
+            $(tgid,'#cache').prepend('<div tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task">x</div></div>');
+            $('.tg_title_text',tgid).click();
+        });
 }
 function postDeleteTaskGroup(tgid){
             makeAjaxCall('post',"service/web/deleteTaskGroup.php",{tgid:tgid});
@@ -27,7 +33,11 @@ function postDeleteTaskGroup(tgid){
 function postDeleteTask(tid){
         makeAjaxCall('post',
             "service/web/deleteTask.php",
-            {tid:tid})
+            {tid:tid},function(){
+                var tgid = '#'+$('#tgid').html();
+                $('[tid="'+tid+'"]','#cache').remove();
+                $('.tg_title_text',tgid).click();
+            })
 }
 function postUpdateTask(){
     makeAjaxCall('post',"service/web/updateTask.php",{
@@ -44,7 +54,7 @@ function postUpdateTaskGroup(){
         }
         );
 }
-function makeAjaxCall(type, url, param){
+function makeAjaxCall(type, url, param,callback){
     loading_image.show(0);
     $.ajax({
         url:url,
@@ -54,12 +64,17 @@ function makeAjaxCall(type, url, param){
             if(response==-1){
                 alert('Operation failed!');
             }
+            tidnew = response;
         },
         error:function(){
             alert('Operation failed!');
         },
         complete:function(){
-            location.reload();
+            if(callback != null){callback()}
+            else{
+                location.reload();
+            }
+            loading_image.hide(0);
         }
     });
 }
@@ -93,6 +108,7 @@ function activeDeletes(){
     });
 }
 $(document).ready(function(){
+    tidnew = -1;
     windowDiv = $(window);
     loading_image = $('#loadingImage');
     loading_image.hide();
@@ -100,7 +116,6 @@ $(document).ready(function(){
     resizeTaskPanel();
     $('#panel_group').css('background-image', 'url(image/panel_g_shadow.png)');
     initTasks();
-    $('#input_task').focus();
     $('.tg_title_text').click(function(){
         var index = $('.tg_title_text').index(this);
         if(index!=0){
@@ -114,8 +129,10 @@ $(document).ready(function(){
         $(this).addClass('tg_text_selected').parent().addClass('selected');
         $('#task_wrapper').fadeOut(200, function(){
             var task_content = '<input id="input_task" class= "input_task roundcorner" type="text" maxlength="140"/>'+$(tgid,'#cache').html();
-             $(this).html(task_content).fadeIn(200);
-             initTasks();
+             $(this).html(task_content).fadeIn(200, function(){
+                 initTasks();
+             });
+             resizeTaskPanel();
         });
     });
     $('#u_group').click(function(){
