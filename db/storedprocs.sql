@@ -97,8 +97,7 @@ CREATE PROCEDURE FIGHTDB.CreateTask(
 IN myuid int,
 IN myotid int,
 IN mytgid int,
-IN mycontent char(140),
-IN myprivacy int
+IN mycontent char(140)
 ) 
 BEGIN 
 INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content, privacy)
