@@ -2,6 +2,7 @@ function initTasks(){
     $('.t_content_text').click(function(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
+        $('#u_t_privacy').val($(this).parent().attr('privacy'));
         $('#t_dialog').dialog('open');
     }).mouseover(function(){$(this).css('color', 'white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
@@ -37,7 +38,7 @@ function postCreateTask(){
             content:function(){return $.trim($('#input_task').val())}},
         function(){
             var tgid = '#'+$('#tgid').html();
-            $(tgid,'#cache').prepend('<div tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task">x</div></div>');
+            $(tgid,'#cache').prepend('<div privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task">x</div></div>');
             $('.tg_title_text',tgid).click();
         });
 }
@@ -56,7 +57,8 @@ function postDeleteTask(tid){
 function postUpdateTask(){
     makeAjaxCall('post',"service/web/updateTask.php",{
         tid:function(){return $('#tid','#t_dialog').html()},
-        content:function(){return $('#update_task').val()}
+        content:function(){return $('#update_task').val()},
+        privacy:function(){return $('#u_t_privacy').val()}
         }
         );
 }
@@ -80,12 +82,13 @@ function makeAjaxCall(type, url, param,callback){
             if(response==-1){
                 alert('Operation failed!');
             }
+            alert(response);
             tidnew = response;
         },
         error:function(){
             alert('Operation failed!');
         },
-        complete:function(data){
+        success:function(data){
             if(callback != null){callback(data)}
             else{
                 location.reload();
@@ -96,21 +99,25 @@ function makeAjaxCall(type, url, param,callback){
 }
 function resizeTaskPanel(){
     var width = windowDiv.width();
-    if(width<500){
+    if(width<550){
+        $('#logout').hide(0);
         $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',width-10);
         $('#panel_group').addClass('hidden');
-        $('#panel_task').css({'margin-left':0,'width':width+'px'});
-        $('#task_wrapper').css('width', width-40+'px');
-        $('.t_content_text').css('width', width-100+'px');
-        $('.input_task').css('width', width-50+'px');
+        $('#panel_task').css({'margin-left':0,'width':width});
+        $('#pane_social').css({'right':-width+50,'width':width-50});
+        $('#task_wrapper').css('width', width-40);
+        $('.t_content_text').css('width', width-100);
+        $('.input_task').css('width', width-50);
         $('#tg_selector').hide();
     }else{
-        $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',500);
+        $('#logout').show(0);
+        $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',550);
         $('#panel_group').removeClass('hidden');
-        $('#panel_task').css({'margin-left':270+'px','width':width-270+'px'});
-        $('#task_wrapper').css('width', width-310+'px');
-        $('.t_content_text').css('width', width-370+'px');
-        $('.input_task').css('width', width-320+'px');
+        $('#panel_task').css({'margin-left':270,'width':width-270});
+        $('#pane_social').css({'right':-400,'width':400});
+        $('#task_wrapper').css('width', width-310);
+        $('.t_content_text').css('width', width-370);
+        $('.input_task').css('width', width-320);
         $('#tg_selector').show(0);
     }
     $('#panel_task').removeClass('hidden');
@@ -154,6 +161,7 @@ $(document).ready(function(){
     $('#u_group').click(function(){
         var tgid = '#'+$('#tgid').html();
         $('#update_group').val($('.tg_title_text',tgid).text());
+        $('#u_g_priority').val($(tgid).attr('priority'));
         $('#u_g_dialog').dialog('open');
     });
     $('#t_dialog').dialog("option", "buttons", [ 
