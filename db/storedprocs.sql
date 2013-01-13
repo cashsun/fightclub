@@ -142,7 +142,7 @@ BEGIN
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,
-utg.tgid, utg.priority, utg.title, utg.exp, TASK.privacy
+utg.tgid, utg.priority, utg.title, utg.exp, TASK.privacy,
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
 (

@@ -45,7 +45,7 @@ if(isset($_SESSION['uid'])){
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
                     if($task->getContent()!=''){
-                        echo '<div tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task">x</div></div>';
+                        echo '<div privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task">x</div></div>';
                     }
                 }
             ?></div>
@@ -61,7 +61,7 @@ if(isset($_SESSION['uid'])){
                 $tasks = $group->getTasks();
                 foreach($tasks as $task){
                     if($task->getContent()!=''){
-                        echo '<div tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task">x</div></div>';
+                        echo '<div privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task">x</div></div>';
                     }
                 }
                 echo '</div>';

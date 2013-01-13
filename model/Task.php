@@ -12,6 +12,7 @@ class Task {
     private $exp=0;
     private $date='20-12-2012 23:00:00';
     private $isdone = false;
+    private $privacy = 0;
 
     function __construct($taskInfo) {
         $this->tid = $taskInfo['tid'];
@@ -28,6 +29,8 @@ class Task {
             $this->creatorname = $taskInfo['creatorname'];
         if(isset($taskInfo['otid']))
             $this->creatorname = $taskInfo['otid'];
+        if(isset($taskInfo['privacy']))
+            $this->privacy = $taskInfo['privacy'];
     }
     
     
@@ -61,6 +64,10 @@ class Task {
     
     function getOtid(){
         return $this->otid;
+    }
+    
+    function getPrivacy(){
+        return $this->privacy;
     }
 }
 ?>
