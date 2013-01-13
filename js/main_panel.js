@@ -45,6 +45,7 @@ function postUpdateTaskGroup(){
         );
 }
 function makeAjaxCall(type, url, param){
+    loaderImage.show(0);
     $.ajax({
         url:url,
         type:type,
@@ -52,8 +53,6 @@ function makeAjaxCall(type, url, param){
         success:function(response){
             if(response==-1){
                 alert('Operation failed!');
-            }else{
-                alert('Success!');
             }
         },
         error:function(){
@@ -93,6 +92,8 @@ function activeDeletes(){
 }
 $(document).ready(function(){
     windowDiv = $(window);
+    loaderImage = $('#loaderImage');
+    loaderImage.hide();
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
     initTasks();

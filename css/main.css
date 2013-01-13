@@ -47,7 +47,7 @@ body{
     -o-user-select: none;
     user-select: none;
     -moz-user-select: -moz-none;
-    -ms-touch-action: none;
+    -ms-touch-action: none
 }
 #profile_image{
     position: absolute;
@@ -61,9 +61,14 @@ body{
     position: absolute;
     left: 100px;
     top: 10px;
-    font-size: 0.9em;
+    font-size: 0.9em
 }
-
+#loaderImage{
+    position: absolute;
+    margin-left: -44px;
+    left: 50%;
+    top: 20px
+}
 #panel_group{
     position: absolute;
     width: 270px;
@@ -122,7 +127,7 @@ body{
 }
 .tg_title_text{
     width: 220px;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6);
 }
 .delete_task,.delete_group{
     width: 50px;
@@ -154,7 +159,8 @@ body{
     -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
     -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
     -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.8)
+    box-shadow: 0 1px 0 rgba(255,255,255,0.8);
+     text-shadow: 0 1px 0 rgba(255,255,255,0.6);    
 }
 .hoverable:hover{
     background-color: #ff4545;

@@ -14,6 +14,7 @@ if(isset($_SESSION['uid'])){
             
             ?>
         </div>
+        <div id="loaderImage"></div>
     </div>
     <div id="panel_main">
         <div id="panel_group">
