@@ -11,18 +11,6 @@ function initTasks(){
     $('#input_task').focus();
 }
 
-function getFriendsAjaxCall(){
-    makeAjaxCall('get',
-            "service/web/getFriends.php",
-            {uid:function(){return $('#uid').html()}},
-            function(r){
-              $friend_place_holder = $('#panel_social');
-              //for(var i = 0; i < r.length; i++)
-              //alert(r);
-
-$.each(r, function(key, value) { alert(key + "=" + value); });
-            });
-}
 
 function postCreateGroup(){
     makeAjaxCall('post',
@@ -96,6 +84,22 @@ function makeAjaxCall(type, url, param,callback){
         }
     });
 }
+
+function jsonAjaxRequest(type, url, param,callback){
+    $.ajax({
+        url:url,
+        type:type,
+        datatype: 'json',
+        data:param,
+        success:function(response){
+          callback(response);
+        },
+        error:function(){
+            alert('Operation failed!');
+        }
+    });
+}
+
 function resizeTaskPanel(){
     var width = windowDiv.width();
     if(width<550){
