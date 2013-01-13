@@ -11,6 +11,7 @@ DROP PROCEDURE IF EXISTS FIGHTDB.DeleteTask;
 DROP PROCEDURE IF EXISTS FIGHTDB.UpdateTask;
 DROP PROCEDURE IF EXISTS FIGHTDB.GetAllMyTasks;
 DROP PROCEDURE IF EXISTS FIGHTDB.GetTask;
+DROP PROCEDURE IF EXISTS FIGHTDB.GetFriends;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -96,11 +97,12 @@ CREATE PROCEDURE FIGHTDB.CreateTask(
 IN myuid int,
 IN myotid int,
 IN mytgid int,
-IN mycontent char(140)
+IN mycontent char(140),
+IN myprivacy int
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content)
-VALUES(myuid, myotid, mytgid, mycontent);
+INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content, privacy)
+VALUES(myuid, myotid, mytgid, mycontent, myprivacy);
 END // 
 DELIMITER ;
 
@@ -119,11 +121,13 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.UpdateTask(
 IN mytid int,
-IN mycontent char(140)
+IN mycontent char(140),
+IN myprivacy int
 ) 
 BEGIN 
 UPDATE FIGHTDB.TASK
-SET TASK.content = mycontent
+SET TASK.content = mycontent,
+TASK.privacy = myprivacy
 WHERE TASK.tid = mytid;
 END // 
 DELIMITER ;
@@ -138,7 +142,7 @@ BEGIN
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,
-utg.tgid, utg.priority, utg.title, utg.exp, 
+utg.tgid, utg.priority, utg.title, utg.exp, TASK.privacy
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
 (
@@ -167,12 +171,31 @@ IN mytid int
 BEGIN
 SELECT TASK.tid, TASK.uid, USER.username,
 USER.firstname, USER.lastname, TASK.content,
-COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone
+COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone, TASK.privacy
 FROM FIGHTDB.TASK LEFT JOIN FIGHTDB.USER
 ON TASK.uid = USER.uid
 LEFT JOIN FIGHTDB.EXP
 ON TASK.tid = EXP.tid
 WHERE TASK.tid = mytid
 GROUP BY EXP.tid;
+END // 
+DELIMITER ;
+
+/* GET ALL MY FRIENDS */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.GetFriends(
+IN myuid int
+) 
+BEGIN
+
+SELECT * 
+FROM
+(
+  SELECT uid AS uidfrom, fuid AS uidto
+  FROM FIGHTDB.FRIEND
+  WHERE uid = myuid
+) ft
+LEFT JOIN FIGHTDB.USER
+ON USER.uid = ft.uidto;
 END // 
 DELIMITER ;
