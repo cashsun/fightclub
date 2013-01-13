@@ -5,16 +5,14 @@ function getFriendsAjaxCall(){
             function(r){
               $friend_place_holder = $('#panel_social');
               //for(var i = 0; i < r.length; i++)
-              //alert(r);
-
-$.each(r, function(key, value) { alert(key + "=" + value); });
+              alert(r);
             });
 }
 
 $(document).ready(function(){
     $('#friends_button').toggle(function(){
     $('#panel_social').animate({right: 0},400,function(){
-        getFriendsAjaxCall();
+        //getFriendsAjaxCall();
         //load friends
     });
     },function(){
