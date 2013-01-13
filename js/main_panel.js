@@ -9,6 +9,20 @@ function initTasks(){
     activeDeletes();
     $('#input_task').focus();
 }
+
+function getFriendsAjaxCall(){
+    makeAjaxCall('get',
+            "service/web/getFriends.php",
+            {uid:function(){return $('#uid').html()}},
+            function(r){
+              $friend_place_holder = $('#panel_social');
+              //for(var i = 0; i < r.length; i++)
+              //alert(r);
+
+$.each(r, function(key, value) { alert(key + "=" + value); });
+            });
+}
+
 function postCreateGroup(){
     makeAjaxCall('post',
             "service/web/createTaskGroup.php",
@@ -54,12 +68,14 @@ function postUpdateTaskGroup(){
         }
         );
 }
+
 function makeAjaxCall(type, url, param,callback){
     loading_image.show(0);
     $.ajax({
         url:url,
         type:type,
         data:param,
+        datatype:'json',
         success:function(response){
             if(response==-1){
                 alert('Operation failed!');
@@ -69,8 +85,8 @@ function makeAjaxCall(type, url, param,callback){
         error:function(){
             alert('Operation failed!');
         },
-        complete:function(){
-            if(callback != null){callback()}
+        complete:function(data){
+            if(callback != null){callback(data)}
             else{
                 location.reload();
             }
@@ -171,6 +187,7 @@ $(document).ready(function(){
     });
     
     $('#friends_button').toggle(function(){
+        getFriendsAjaxCall();
         $('#panel_social').animate({right: '0px'},400,function(){
             //load friends
         });

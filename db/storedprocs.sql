@@ -100,8 +100,8 @@ IN mytgid int,
 IN mycontent char(140)
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content, privacy)
-VALUES(myuid, myotid, mytgid, mycontent, myprivacy);
+INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content)
+VALUES(myuid, myotid, mytgid, mycontent);
 END // 
 DELIMITER ;
 
@@ -190,11 +190,11 @@ BEGIN
 SELECT * 
 FROM
 (
-  SELECT uid AS uidfrom, fuid AS uidto
+  SELECT *
   FROM FIGHTDB.FRIEND
   WHERE uid = myuid
 ) ft
 LEFT JOIN FIGHTDB.USER
-ON USER.uid = ft.uidto;
+ON USER.uid = ft.fuid;
 END // 
 DELIMITER ;
