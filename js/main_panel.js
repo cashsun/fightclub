@@ -38,33 +38,47 @@ function postCreateTask(){
         });
 }
 function postDeleteTaskGroup(tgid){
-            makeAjaxCall('post',{tgid:tgid,webaction:3});
+        $('.dialog').dialog('close');
+        $('#'+tgid).slideUp(200,function(){
+            $(this).remove();
+            if($('.tg_title').length==0){
+                $('#tg_selector,#task_wrapper').hide();
+            }else{
+               $('.tg_title_text').first().click(); 
+            }
+        });
+        makeAjaxCall('post',{tgid:tgid,webaction:3},function(){});
 }
 function postDeleteTask(tid){
+        var tgid = '#'+$('#tgid').html();
+        $('[tid="'+tid+'"]','#cache').remove();
+        $('.tg_title_text',tgid).click();
         makeAjaxCall('post',
-            {tid:tid,webaction:2},function(){
-                var tgid = '#'+$('#tgid').html();
-                $('[tid="'+tid+'"]','#cache').remove();
-                $('.tg_title_text',tgid).click();
-            })
+            {tid:tid,webaction:2},function(){})
 }
 function postUpdateTask(){
+    $('.dialog').dialog('close');
     makeAjaxCall('post',{
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
         privacy:function(){return $('#u_t_privacy').val()},
         webaction:4
+        },function(){
+            var tid = $('#tid','#t_dialog').html();
+            var content = $('#update_task').val();
+            var privacy = $('#u_t_privacy').val();
+            $('[tid="'+tid+'"]','#tasks_sortable').attr('privacy', privacy).children().first().html(content);
         }
         );
 }
 function postUpdateTaskGroup(){
+    $('.dialog').dialog('close');
     makeAjaxCall('post',{
         tgid:function(){return $('#tgid').html()},
         title:function(){return $.trim($('#update_group').val())},
         priority:function(){return $('#u_g_priority').val()},
         type:function(){return 0},
-        webaction:5
-        }
+        webaction:5}
         );
 }
 function makeAjaxCall(type,param,callback){
@@ -79,7 +93,6 @@ function makeAjaxCall(type,param,callback){
                 location.reload();
             }
             tidnew = response;
-            alert(response);
         },
         error:function(){
             alert('Operation failed!');
@@ -100,7 +113,7 @@ function jsonAjaxRequest(type, url, param,callback){
         type:type,
         datatype: 'json',
         data:param,
-        success:function(data, textStatus, jqXHR){
+        success:function(data){
           json = jQuery.parseJSON(data);
           callback(json);
         },

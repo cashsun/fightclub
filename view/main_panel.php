@@ -77,7 +77,7 @@ if(isset($_SESSION['uid'])){
         ?>
         <div id="uid"><?php echo $user->getUid() ?></div>
     </div>
-    <div id="g_dialog" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
+    <div id="g_dialog" class="dialog" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
         priority:
         <select id="g_priority">
             <option value="0">casual</option>
@@ -92,7 +92,7 @@ if(isset($_SESSION['uid'])){
             <option value="9">immediate</option>
         </select>
     </div>
-    <div id="t_dialog" title="Update Task">
+    <div id="t_dialog" class="dialog" title="Update Task">
         <div id="tid" class="hidden"></div>
         content:<input type="text" class="input" id="update_task" maxlength="140"/><br/><br/>
         privacy:<select id="u_t_privacy">
@@ -101,7 +101,7 @@ if(isset($_SESSION['uid'])){
             <option value="2">Public</option>
         </select>
     </div>
-    <div id="u_g_dialog" title="Update Group">name:<input type="text" class="input" id="update_group" maxlength="40"/><br/><br/>
+    <div id="u_g_dialog" class="dialog" title="Update Group">name:<input type="text" class="input" id="update_group" maxlength="40"/><br/><br/>
         priority:
         <select id="u_g_priority">
             <option value="0">casual</option>

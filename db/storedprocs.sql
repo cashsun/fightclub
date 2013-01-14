@@ -1,22 +1,22 @@
 /* ALL SQL QUERY STORED IN THIS FILE */
 
-DROP PROCEDURE IF EXISTS FIGHTDB.CreateUser;
-DROP PROCEDURE IF EXISTS FIGHTDB.ValidateUser;
-DROP PROCEDURE IF EXISTS FIGHTDB.GetUser;
-DROP PROCEDURE IF EXISTS FIGHTDB.CreateTaskGroup;
-DROP PROCEDURE IF EXISTS FIGHTDB.UpdateTaskGroup;
-DROP PROCEDURE IF EXISTS FIGHTDB.UpdateTaskGroupOrder;
-DROP PROCEDURE IF EXISTS FIGHTDB.DeleteTaskGroup;
-DROP PROCEDURE IF EXISTS FIGHTDB.CreateTask;
-DROP PROCEDURE IF EXISTS FIGHTDB.DeleteTask;
-DROP PROCEDURE IF EXISTS FIGHTDB.UpdateTask;
-DROP PROCEDURE IF EXISTS FIGHTDB.GetAllMyTasks;
-DROP PROCEDURE IF EXISTS FIGHTDB.GetTask;
-DROP PROCEDURE IF EXISTS FIGHTDB.GetFriends;
+DROP PROCEDURE IF EXISTS CreateUser;
+DROP PROCEDURE IF EXISTS ValidateUser;
+DROP PROCEDURE IF EXISTS GetUser;
+DROP PROCEDURE IF EXISTS CreateTaskGroup;
+DROP PROCEDURE IF EXISTS UpdateTaskGroup;
+DROP PROCEDURE IF EXISTS UpdateTaskGroupOrder;
+DROP PROCEDURE IF EXISTS DeleteTaskGroup;
+DROP PROCEDURE IF EXISTS CreateTask;
+DROP PROCEDURE IF EXISTS DeleteTask;
+DROP PROCEDURE IF EXISTS UpdateTask;
+DROP PROCEDURE IF EXISTS GetAllMyTasks;
+DROP PROCEDURE IF EXISTS GetTask;
+DROP PROCEDURE IF EXISTS GetFriends;
 
 /* CREATE A USER */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.CreateUser(
+CREATE PROCEDURE CreateUser(
 IN myusername char(20),
 IN mypasswd char(32),
 IN myfirstname char(30),
@@ -25,14 +25,14 @@ IN myemail char(50),
 IN myavatar int
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email, avatar)
+INSERT INTO USER (username, passwd, firstname, lastname, email, avatar)
 VALUES(myusername, mypasswd, myfirstname, mylastname, myemail, myavatar);
 END // 
 DELIMITER ;
 
 /* validate a user */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.ValidateUser(
+CREATE PROCEDURE ValidateUser(
 IN myusername char(20),
 mypasswd char(32)
 ) 
@@ -46,7 +46,7 @@ DELIMITER ;
 
 /* get a user */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.GetUser(
+CREATE PROCEDURE GetUser(
 IN myuid int
 ) 
 BEGIN 
@@ -57,7 +57,7 @@ DELIMITER ;
 
 /* CREATE A TASK GROUP */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.CreateTaskGroup(
+CREATE PROCEDURE CreateTaskGroup(
 IN myuid int,
 IN mytitle char(40),
 IN mypri int,
@@ -65,14 +65,14 @@ IN mytype int,
 IN mytorder varchar(65535)
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.T_GROUP (uid, title, priority, type, t_order)
+INSERT INTO T_GROUP (uid, title, priority, type, t_order)
 VALUES(myuid, mytitle, mypri, mytype, mytorder);
 END // 
 DELIMITER ;
 
 /* UPDATE A TASK GROUP */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.UpdateTaskGroup(
+CREATE PROCEDURE UpdateTaskGroup(
 IN mytgid int,
 IN mytitle char(40),
 IN mypri int,
@@ -80,7 +80,7 @@ IN mytype int,
 IN mytorder varchar(65535)
 ) 
 BEGIN 
-UPDATE FIGHTDB.T_GROUP
+UPDATE T_GROUP
 SET title = mytitle, priority = mypri,
 type = mytype, t_order = mytorder
 WHERE tgid = mytgid;
@@ -89,12 +89,12 @@ DELIMITER ;
 
 /* UPDATE A TASK GROUP TASK ORDER */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.UpdateTaskGroupOrder(
+CREATE PROCEDURE UpdateTaskGroupOrder(
 IN mytgid int,
 IN mytorder varchar(65535)
 ) 
 BEGIN 
-UPDATE FIGHTDB.T_GROUP
+UPDATE T_GROUP
 SET t_order = mytorder
 WHERE tgid = mytgid;
 END // 
@@ -102,49 +102,49 @@ DELIMITER ;
 
 /* DELETE A TASK GROUP */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.DeleteTaskGroup(
+CREATE PROCEDURE DeleteTaskGroup(
 IN mytgid int
 ) 
 BEGIN 
-DELETE FROM FIGHTDB.T_GROUP
+DELETE FROM T_GROUP
 WHERE T_GROUP.tgid = mytgid;
 END // 
 DELIMITER ;
 
 /* CREATE A ORIGINAL TO-DO TASK */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.CreateTask(
+CREATE PROCEDURE CreateTask(
 IN myuid int,
 IN myotid int,
 IN mytgid int,
 IN mycontent char(140)
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content)
+INSERT INTO TASK (uid, otid, tgid, content)
 VALUES(myuid, myotid, mytgid, mycontent);
 END // 
 DELIMITER ;
 
 /* DELETE A ORIGINAL TO-DO TASK */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.DeleteTask(
+CREATE PROCEDURE DeleteTask(
 IN mytid int
 ) 
 BEGIN 
-DELETE FROM FIGHTDB.TASK
+DELETE FROM TASK
 WHERE TASK.tid = mytid;
 END // 
 DELIMITER ;
 
 /* UPDATE A ORIGINAL TO-DO TASK */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.UpdateTask(
+CREATE PROCEDURE UpdateTask(
 IN mytid int,
 IN mycontent char(140),
 IN myprivacy int
 ) 
 BEGIN 
-UPDATE FIGHTDB.TASK
+UPDATE TASK
 SET TASK.content = mycontent,
 TASK.privacy = myprivacy
 WHERE TASK.tid = mytid;
@@ -153,7 +153,7 @@ DELIMITER ;
 
 /* GET ALL TASKS BY USER */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.GetAllMyTasks(
+CREATE PROCEDURE GetAllMyTasks(
 IN myuid int
 ) 
 BEGIN
@@ -168,14 +168,14 @@ FROM
   SELECT T_GROUP.tgid, T_GROUP.priority,
   T_GROUP.title, USER.uid, USER.username,
   USER.firstname, USER.lastname, USER.email, USER.exp
-  FROM FIGHTDB.T_GROUP RIGHT JOIN FIGHTDB.USER
+  FROM T_GROUP RIGHT JOIN USER
   ON T_GROUP.uid = USER.uid
   WHERE USER.uid = myuid
 ) utg
-LEFT JOIN FIGHTDB.TASK
+LEFT JOIN TASK
 ON
 TASK.tgid = utg.tgid
-LEFT JOIN FIGHTDB.EXP
+LEFT JOIN EXP
 ON TASK.tid = EXP.tid
 GROUP BY pk
 ORDER BY priority DESC,tgid DESC, ts DESC;
@@ -184,16 +184,16 @@ DELIMITER ;
 
 /* GET A ORIGINAL TO-DO TASK */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.GetTask(
+CREATE PROCEDURE GetTask(
 IN mytid int
 ) 
 BEGIN
 SELECT TASK.tid, TASK.uid, USER.username,
 USER.firstname, USER.lastname, TASK.content,
 COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone, TASK.privacy
-FROM FIGHTDB.TASK LEFT JOIN FIGHTDB.USER
+FROM TASK LEFT JOIN USER
 ON TASK.uid = USER.uid
-LEFT JOIN FIGHTDB.EXP
+LEFT JOIN EXP
 ON TASK.tid = EXP.tid
 WHERE TASK.tid = mytid
 GROUP BY EXP.tid;
@@ -202,7 +202,7 @@ DELIMITER ;
 
 /* GET ALL MY FRIENDS */
 DELIMITER // 
-CREATE PROCEDURE FIGHTDB.GetFriends(
+CREATE PROCEDURE GetFriends(
 IN myuid int
 ) 
 BEGIN
@@ -211,10 +211,10 @@ SELECT *
 FROM
 (
   SELECT *
-  FROM FIGHTDB.FRIEND
+  FROM FRIEND
   WHERE uid = myuid
 ) ft
-LEFT JOIN FIGHTDB.USER
+LEFT JOIN USER
 ON USER.uid = ft.fuid;
 END // 
 DELIMITER ;
