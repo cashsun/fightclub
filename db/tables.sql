@@ -8,6 +8,7 @@ CREATE TABLE FIGHTDB.USER
 (
 uid int NOT NULL AUTO_INCREMENT,
 exp int NOT NULL,
+avatar int NOT NULL DEFAULT 0,
 username char(20) NOT NULL,
 passwd char(32) NOT NULL,
 firstname char(30),

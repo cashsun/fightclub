@@ -17,14 +17,15 @@ DROP PROCEDURE IF EXISTS FIGHTDB.GetFriends;
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateUser(
 IN myusername char(20),
-mypasswd char(32),
-myfirstname char(30),
-mylastname char(30),
-myemail char(50)
+IN mypasswd char(32),
+IN myfirstname char(30),
+IN mylastname char(30),
+IN myemail char(50),
+IN myavatar int
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email)
-VALUES(myusername, mypasswd, myfirstname, mylastname, myemail);
+INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email, avatar)
+VALUES(myusername, mypasswd, myfirstname, mylastname, myemail, myavatar);
 END // 
 DELIMITER ;
 
