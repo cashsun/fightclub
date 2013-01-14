@@ -8,7 +8,7 @@ function getFriendsAjaxCall(){
               var htmlstr = "<ul>";
               if(r.length == 0){
                 
-                htmlstr += "You do not have any friend now.";
+                htmlstr += '<div class="message">You do not have any friend now.</div>';
               }
               for(var i = 0; i < r.length; i++)
               {
