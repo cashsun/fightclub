@@ -5,6 +5,8 @@ if(isset($_SESSION['uid'])){
     $groups = $user->getTaskGroups();
 }
 ?>
+<body onload="showPanel()">
+<div id="loadingImage"></div>
 <div id="master">
     <div id="navibar">
         <img id="profile_image" src="image/profile.png" alt=""/>
@@ -12,7 +14,6 @@ if(isset($_SESSION['uid'])){
             <?php echo 'Welcome back, '.$user->getUsername();?>
         </div>
         <div id="logout" class="button"><a href="test/logout.php">Logout</a></div>
-        <div id="loadingImage"></div>
         <div id="friends_button" class="button">Friends</div>
         <div id="news_button" class="button">News</div>
     </div>
@@ -117,6 +118,14 @@ if(isset($_SESSION['uid'])){
         </select>
     </div>
 </div>
-<script type="text/javascript" src="js/main_panel.js"></script>
-<script type="text/javascript" src="js/social_panel.js"></script>
+</body>
+<script type="text/javascript">
+    function showPanel(){
+        setTimeout(function(){
+            $('#panel_main').show('slide',{direction: "right"},500,function(){
+            loading_image.hide();
+        });
+        },300);
+}
+</script>
 

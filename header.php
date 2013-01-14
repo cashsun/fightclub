@@ -11,4 +11,6 @@
         <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
         <script type="text/javascript" src="js/loading.js"></script>
-    </head>
+        <script type="text/javascript" src="js/main_panel.js"></script>
+        <script type="text/javascript" src="js/social_panel.js"></script>
+</head>
