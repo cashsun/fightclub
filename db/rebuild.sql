@@ -85,19 +85,38 @@ INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content) VALUES('2','5','3', 'DAILY C
 
 INSERT INTO FIGHTDB.FRIEND (uid, fuid) VALUES('1','2');
 
+ALTER TABLE FIGHTDB.USER ADD avatar int NOT NULL DEFAULT 0;
+ALTER TABLE FIGHTDB.T_GROUP ADD type int NOT NULL DEFAULT 0;
+ALTER TABLE FIGHTDB.T_GROUP ADD t_order VARCHAR(65535);
+
 /* ALL SQL QUERY STORED IN THIS FILE */
+
+DROP PROCEDURE IF EXISTS FIGHTDB.CreateUser;
+DROP PROCEDURE IF EXISTS FIGHTDB.ValidateUser;
+DROP PROCEDURE IF EXISTS FIGHTDB.GetUser;
+DROP PROCEDURE IF EXISTS FIGHTDB.CreateTaskGroup;
+DROP PROCEDURE IF EXISTS FIGHTDB.UpdateTaskGroup;
+DROP PROCEDURE IF EXISTS FIGHTDB.DeleteTaskGroup;
+DROP PROCEDURE IF EXISTS FIGHTDB.CreateTask;
+DROP PROCEDURE IF EXISTS FIGHTDB.DeleteTask;
+DROP PROCEDURE IF EXISTS FIGHTDB.UpdateTask;
+DROP PROCEDURE IF EXISTS FIGHTDB.GetAllMyTasks;
+DROP PROCEDURE IF EXISTS FIGHTDB.GetTask;
+DROP PROCEDURE IF EXISTS FIGHTDB.GetFriends;
+
 /* CREATE A USER */
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateUser(
 IN myusername char(20),
-mypasswd char(32),
-myfirstname char(30),
-mylastname char(30),
-myemail char(50)
+IN mypasswd char(32),
+IN myfirstname char(30),
+IN mylastname char(30),
+IN myemail char(50),
+IN myavatar int
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email)
-VALUES(myusername, mypasswd, myfirstname, mylastname, myemail);
+INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email, avatar)
+VALUES(myusername, mypasswd, myfirstname, mylastname, myemail, myavatar);
 END // 
 DELIMITER ;
 
@@ -131,11 +150,13 @@ DELIMITER //
 CREATE PROCEDURE FIGHTDB.CreateTaskGroup(
 IN myuid int,
 IN mytitle char(40),
-IN mypri int
+IN mypri int,
+IN mytype int,
+IN mytorder varchar(65535)
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.T_GROUP (uid, title, priority)
-VALUES(myuid, mytitle, mypri);
+INSERT INTO FIGHTDB.T_GROUP (uid, title, priority, type, t_order)
+VALUES(myuid, mytitle, mypri, mytype, mytorder);
 END // 
 DELIMITER ;
 
@@ -144,11 +165,14 @@ DELIMITER //
 CREATE PROCEDURE FIGHTDB.UpdateTaskGroup(
 IN mytgid int,
 IN mytitle char(40),
-IN mypri int
+IN mypri int,
+IN mytype int,
+IN mytorder varchar(65535)
 ) 
 BEGIN 
 UPDATE FIGHTDB.T_GROUP
-SET title = mytitle, priority = mypri
+SET title = mytitle, priority = mypri, 
+type = mytype, t_order = mytorder
 WHERE tgid = mytgid;
 END // 
 DELIMITER ;
@@ -193,11 +217,13 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.UpdateTask(
 IN mytid int,
-IN mycontent char(140)
+IN mycontent char(140),
+IN myprivacy int
 ) 
 BEGIN 
 UPDATE FIGHTDB.TASK
-SET TASK.content = mycontent
+SET TASK.content = mycontent,
+TASK.privacy = myprivacy
 WHERE TASK.tid = mytid;
 END // 
 DELIMITER ;
@@ -212,7 +238,7 @@ BEGIN
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,
-utg.tgid, utg.priority, utg.title, utg.exp, 
+utg.tgid, utg.priority, utg.title, utg.exp, TASK.privacy,
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
 (
@@ -241,12 +267,31 @@ IN mytid int
 BEGIN
 SELECT TASK.tid, TASK.uid, USER.username,
 USER.firstname, USER.lastname, TASK.content,
-COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone
+COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone, TASK.privacy
 FROM FIGHTDB.TASK LEFT JOIN FIGHTDB.USER
 ON TASK.uid = USER.uid
 LEFT JOIN FIGHTDB.EXP
 ON TASK.tid = EXP.tid
 WHERE TASK.tid = mytid
 GROUP BY EXP.tid;
+END // 
+DELIMITER ;
+
+/* GET ALL MY FRIENDS */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.GetFriends(
+IN myuid int
+) 
+BEGIN
+
+SELECT * 
+FROM
+(
+  SELECT *
+  FROM FIGHTDB.FRIEND
+  WHERE uid = myuid
+) ft
+LEFT JOIN FIGHTDB.USER
+ON USER.uid = ft.fuid;
 END // 
 DELIMITER ;

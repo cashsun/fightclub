@@ -21,6 +21,7 @@ function postCreateTaskGroup(){
             {uid:function(){return $('#uid').html()},
             title:function(){return $.trim($('#input_group').val())},
             priority: function(){return $('#g_priority').val()},
+            type: function(){return 0},
             webaction:1})
 }
 function postCreateTask(){
@@ -60,6 +61,8 @@ function postUpdateTaskGroup(){
         tgid:function(){return $('#tgid').html()},
         title:function(){return $.trim($('#update_group').val())},
         priority:function(){return $('#u_g_priority').val()},
+        type:function(){return 0},
+        t_order:function(){return ""},
         webaction:5
         }
         );

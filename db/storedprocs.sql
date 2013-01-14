@@ -17,14 +17,15 @@ DROP PROCEDURE IF EXISTS FIGHTDB.GetFriends;
 DELIMITER // 
 CREATE PROCEDURE FIGHTDB.CreateUser(
 IN myusername char(20),
-mypasswd char(32),
-myfirstname char(30),
-mylastname char(30),
-myemail char(50)
+IN mypasswd char(32),
+IN myfirstname char(30),
+IN mylastname char(30),
+IN myemail char(50),
+IN myavatar int
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email)
-VALUES(myusername, mypasswd, myfirstname, mylastname, myemail);
+INSERT INTO FIGHTDB.USER (username, passwd, firstname, lastname, email, avatar)
+VALUES(myusername, mypasswd, myfirstname, mylastname, myemail, myavatar);
 END // 
 DELIMITER ;
 
@@ -58,11 +59,13 @@ DELIMITER //
 CREATE PROCEDURE FIGHTDB.CreateTaskGroup(
 IN myuid int,
 IN mytitle char(40),
-IN mypri int
+IN mypri int,
+IN mytype int,
+IN mytorder varchar(65535)
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.T_GROUP (uid, title, priority)
-VALUES(myuid, mytitle, mypri);
+INSERT INTO FIGHTDB.T_GROUP (uid, title, priority, type, t_order)
+VALUES(myuid, mytitle, mypri, mytype, mytorder);
 END // 
 DELIMITER ;
 
@@ -71,12 +74,15 @@ DELIMITER //
 CREATE PROCEDURE FIGHTDB.UpdateTaskGroup(
 IN mytgid int,
 IN mytitle char(40),
-IN mypri int
+IN mypri int,
+IN mytype int,
+IN mytorder varchar(65535)
 ) 
 BEGIN 
 UPDATE FIGHTDB.T_GROUP
 SET title = mytitle, priority = mypri
-WHERE tgid = mytgid;
+WHERE tgid = mytgid, type = mytype,
+t_order = mytorder;
 END // 
 DELIMITER ;
 

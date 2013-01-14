@@ -10,7 +10,7 @@
     }else{
         $con = new DBadapter();
         $uid = $con->register($_POST['username'],$_POST['password'],$_POST['firstname'],
-                                        $_POST['lastname'], $_POST['email']);
+                                        $_POST['lastname'], $_POST['email'], 0);
         if($uid != -1)
         {
           $_SESSION['uid'] = $uid;
