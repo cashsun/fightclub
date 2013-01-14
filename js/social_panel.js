@@ -1,10 +1,10 @@
 function getFriendsAjaxCall(){
-    jsonAjaxRequest('get',
-            "service/web/getFriends.php",
-            {uid:function(){return $('#uid').html()}},
+    jsonAjaxRequest('post',
+            "service/web/webactions.php",
+            {uid:function(){return $('#uid').html()},
+            webaction: 6},
             function(r){
               var friend_place_holder = $('#panel_social');
-              
               var htmlstr = "<ul>";
               if(r.length == 0){
                 
