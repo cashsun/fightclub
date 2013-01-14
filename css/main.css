@@ -43,6 +43,7 @@ body{
     top: 40px;
     width: 100%;
     bottom: 0;
+    overflow:hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -90,6 +91,7 @@ body{
     top: 1px;
     height: 100%;
     overflow-y:auto;
+    overflow-x: hidden;
     z-index: 15;
     margin-left: 270px;
     background-color: #f8f8f8;
@@ -108,6 +110,7 @@ body{
     overflow-y:auto;
     z-index: 20;
     background-color: #f8f8f8;
+    border-left: 1px solid #ececec;
     -webkit-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
     -moz-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
     -ms-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
@@ -136,7 +139,6 @@ body{
     text-align: center;
     color: white;
     background-color: #eaeaea;
-
 }
 .tg_title_text,.t_content_text{
     height: 35px;
@@ -153,7 +155,10 @@ body{
     width: 220px;
     margin-left: 50px;
     text-shadow: 0 1px 0 rgba(255,255,255,0.6);
-    font-size: 1.2em
+    font-size: 1.2em;
+}
+#tasks_sortable{
+    list-style-type: none;
 }
 .delete_task,.delete_group{
     width: 50px;

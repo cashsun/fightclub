@@ -1,4 +1,5 @@
 function initTasks(){
+    $('#tasks_sortable').sortable();
     $('.t_content_text').click(function(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
@@ -92,6 +93,7 @@ function resizeTaskPanel(){
         $('#pane_social').css({'right':-width+50,'width':width-50});
         $('#task_wrapper').css('width', width-40);
         $('.t_content_text').css('width', width-100);
+        $('.t_content').css('width', width-50);
         $('.input_task').css('width', width-50);
         $('#tg_selector').hide();
     }else{
@@ -102,10 +104,10 @@ function resizeTaskPanel(){
         $('#pane_social').css({'right':-400,'width':400});
         $('#task_wrapper').css('width', width-310);
         $('.t_content_text').css('width', width-370);
+        $('.t_content').css('width', width-320);
         $('.input_task').css('width', width-320);
         $('#tg_selector').show(0);
     }
-    $('#panel_task').removeClass('hidden');
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
@@ -122,6 +124,7 @@ $(document).ready(function(){
     loading_image.hide();
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
+    $('#panel_task').removeClass('hidden');
     $('#panel_group').css('background-image', 'url(image/panel_g_shadow.png)');
     initTasks();
     $('.tg_title_text').click(function(){
