@@ -45,7 +45,7 @@ function postUpdateTask(){
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
         privacy:function(){return $('#u_t_privacy').val()},
-        weaction:4
+        webaction:4
         }
         );
 }
@@ -65,7 +65,7 @@ function makeAjaxCall(type,param,callback){
         type:type,
         data:param,
         success:function(response){
-            if(response==-1){
+            if(response==-1&&response==-2){
                 alert('Operation failed!');
             }
             tidnew = response;

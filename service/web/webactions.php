@@ -21,7 +21,7 @@ if(isset($_POST['webaction'])){
         case Actions::updateTaskGroup:
             updateTaskGroup();
             break;
-        default :echo -1;
+        default :echo -2;
     }
 }else{
     echo -1;
