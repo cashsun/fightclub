@@ -17,7 +17,11 @@ if(isset($_SESSION['uid'])){
         <div id="news_button" class="button">News</div>
     </div>
     <div id="panel_main">
-        <img id="tg_selector" src="image/tg_selector.png"/>
+        <?php 
+        if($groups[0]->getTgid()!=-1){
+            echo  '<img id="tg_selector" src="image/tg_selector.png"/>';  
+        }
+        ?>
         <div id="panel_group">
             <?php
                 $i=-1;
@@ -27,7 +31,7 @@ if(isset($_SESSION['uid'])){
                         $isSelect = "";
                         if($i==0){
                             $isSelect = " selected";
-                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
+                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group">x</div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
                         }else{
                             echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
                         }  
@@ -59,14 +63,14 @@ if(isset($_SESSION['uid'])){
     <div id="cache" class="hidden">
         <?php
             foreach($groups as $group){
-                echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'"><ul id="tasks_sortable">';
+                echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'">';
                 $tasks = $group->getTasks();
                 foreach($tasks as $task){
                     if($task->getContent()!=''){
                         echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task">x</div></li>';
                     }
                 }
-                echo '</ul></div>';
+                echo '</div>';
             }
             if($groups[0]->getTgid()!=-1)
                 echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';

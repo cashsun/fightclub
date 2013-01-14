@@ -1,5 +1,10 @@
 function initTasks(){
-    $('#tasks_sortable').sortable();
+    $('#tasks_sortable').sortable({
+        update:function(){
+            var tasks = $('li',this);
+            alert(tasks.first().attr('tid'));
+        }
+    });
     $('.t_content_text').click(function(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
@@ -9,7 +14,7 @@ function initTasks(){
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
     activeDeletes();
-    $('#input_task').focus();
+    $('#input_task').val('').focus();
 }
 function postCreateTaskGroup(){
     makeAjaxCall('post',
@@ -26,7 +31,7 @@ function postCreateTask(){
             webaction:0},
         function(){
             var tgid = '#'+$('#tgid').html();
-            $(tgid,'#cache').children().prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task">x</div></li>');
+            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task">x</div></li>');
             $('.tg_title_text',tgid).click();
         });
 }
@@ -68,8 +73,10 @@ function makeAjaxCall(type,param,callback){
         success:function(response){
             if(response==-1&&response==-2){
                 alert('Operation failed!');
+                location.reload();
             }
             tidnew = response;
+            alert(response);
         },
         error:function(){
             alert('Operation failed!');
@@ -142,13 +149,9 @@ $(document).ready(function(){
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
     $('#panel_task').removeClass('hidden');
-    $('#panel_group').css('background-image', 'url(image/panel_g_shadow.png)');
     initTasks();
     $('.tg_title_text').click(function(){
         var index = $('.tg_title_text').index(this);
-        if(index!=0){
-            $('.tg_title').first().css('background-image', 'url(image/tg_shadow.png)');
-        }
         $('#tg_selector').css('top', index*51+'px');
         $('#tgid').html($(this).parent().attr('id'));
         var tgid = '#'+$(this).parent().attr('id');
@@ -156,7 +159,7 @@ $(document).ready(function(){
         $('.tg_title_text').removeClass('tg_text_selected');
         $(this).addClass('tg_text_selected').parent().addClass('selected');
         $('#tasks_sortable').fadeOut(200, function(){
-            var task_content = $(tgid,'#cache').children().html();
+            var task_content = $(tgid,'#cache').html();
              $(this).html(task_content).fadeIn(200, function(){
                  initTasks();
              });
