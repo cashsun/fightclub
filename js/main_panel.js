@@ -155,8 +155,8 @@ $(document).ready(function(){
         $('.tg_title').removeClass('selected');
         $('.tg_title_text').removeClass('tg_text_selected');
         $(this).addClass('tg_text_selected').parent().addClass('selected');
-        $('#task_wrapper').fadeOut(200, function(){
-            var task_content = '<input id="input_task" class= "input_task roundcorner" type="text" maxlength="140"/>'+$(tgid,'#cache').html();
+        $('#tasks_sortable').fadeOut(200, function(){
+            var task_content = $(tgid,'#cache').children().html();
              $(this).html(task_content).fadeIn(200, function(){
                  initTasks();
              });
