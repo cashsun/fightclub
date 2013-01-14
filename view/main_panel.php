@@ -18,12 +18,12 @@ if(isset($_SESSION['uid'])){
         <div id="news_button" class="button">News</div>
     </div>
     <div id="panel_main">
-        <?php 
-        if($groups[0]->getTgid()!=-1){
-            echo  '<img id="tg_selector" src="image/tg_selector.png"/>';  
-        }
-        ?>
         <div id="panel_group">
+            <?php 
+            if($groups[0]->getTgid()!=-1){
+                echo  '<img id="tg_selector" src="image/tg_selector.png"/>';  
+            }
+            ?>
             <?php
                 $i=-1;
                 foreach($groups as $group){
@@ -120,12 +120,12 @@ if(isset($_SESSION['uid'])){
 </div>
 </body>
 <script type="text/javascript">
-    function showPanel(){
+function showPanel(){
         setTimeout(function(){
-            $('#panel_main').show('slide',{direction: "right"},500,function(){
+            $('#panel_main').fadeIn(300,function(){
             loading_image.hide();
         });
-        },300);
+        },200);
 }
 </script>
 
