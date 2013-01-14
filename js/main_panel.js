@@ -22,6 +22,7 @@ function postCreateTaskGroup(){
             title:function(){return $.trim($('#input_group').val())},
             priority: function(){return $('#g_priority').val()},
             type: function(){return 0},
+            //todo
             webaction:1})
 }
 function postCreateTask(){
@@ -32,7 +33,7 @@ function postCreateTask(){
             webaction:0},
         function(){
             var tgid = '#'+$('#tgid').html();
-            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task">x</div></li>');
+            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
         });
 }
@@ -63,6 +64,7 @@ function postUpdateTaskGroup(){
         priority:function(){return $('#u_g_priority').val()},
         type:function(){return 0},
         t_order:function(){return ""},
+        //todo
         webaction:5
         }
         );

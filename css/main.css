@@ -171,6 +171,8 @@ body{
     padding-top: 15px;
     cursor: pointer;
     color: #8d8f90;
+    background-image: url('../image/button_close.png');
+    background-position: center center;
 }
 .input_task{
     margin-top: 5px;

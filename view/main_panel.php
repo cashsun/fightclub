@@ -31,9 +31,9 @@ if(isset($_SESSION['uid'])){
                         $isSelect = "";
                         if($i==0){
                             $isSelect = " selected";
-                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group">x</div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
+                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group"></div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
                         }else{
-                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group">x</div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
+                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group"></div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
                         }  
                     }
                 }
@@ -52,7 +52,7 @@ if(isset($_SESSION['uid'])){
                 $tasks = $groups[0]->getTasks();
                 foreach($tasks as $task){
                     if($task->getContent()!=''){
-                        echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task">x</div></li>';
+                        echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
                     }
                 }
                 echo '</ul>';
@@ -67,7 +67,7 @@ if(isset($_SESSION['uid'])){
                 $tasks = $group->getTasks();
                 foreach($tasks as $task){
                     if($task->getContent()!=''){
-                        echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task">x</div></li>';
+                        echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
                     }
                 }
                 echo '</div>';
