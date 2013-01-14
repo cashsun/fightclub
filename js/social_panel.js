@@ -1,18 +1,31 @@
 function getFriendsAjaxCall(){
-    makeAjaxCall('get',
+    jsonAjaxRequest('get',
             "service/web/getFriends.php",
             {uid:function(){return $('#uid').html()}},
             function(r){
-              $friend_place_holder = $('#panel_social');
-              //for(var i = 0; i < r.length; i++)
-              alert(r);
+              var friend_place_holder = $('#panel_social');
+              
+              var htmlstr = "<ul>";
+              if(r.length == 0){
+                
+                htmlstr += "You do not have any friend now.";
+              }
+              for(var i = 0; i < r.length; i++)
+              {
+                htmlstr += '<li><table><tr>'+'<td class="social-list-avatar" cellpadding="0" border="0" rowspan="2">'+
+                              '<img src="image/profile.png"/></td>'+
+                              '<td class="social-list-username">'+r[i].username+
+                              '</td></tr><tr><td class="social-list-fullname">'+r[i].firstname+' '+r[i].lastname+'</td></tr></table></li>';
+              }
+              htmlstr += "</ul>";
+              friend_place_holder.html(htmlstr);
             });
 }
 
 $(document).ready(function(){
     $('#friends_button').toggle(function(){
     $('#panel_social').animate({right: 0},400,function(){
-        //getFriendsAjaxCall();
+        getFriendsAjaxCall();
         //load friends
     });
     },function(){

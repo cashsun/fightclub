@@ -88,8 +88,9 @@ function jsonAjaxRequest(type, url, param,callback){
         type:type,
         datatype: 'json',
         data:param,
-        success:function(response){
-          callback(response);
+        success:function(data, textStatus, jqXHR){
+          json = jQuery.parseJSON(data);
+          callback(json);
         },
         error:function(){
             alert('Operation failed!');
@@ -193,7 +194,6 @@ $(document).ready(function(){
             postDeleteTaskGroup(tgid);
         }
     });
-    
     
     $(window).resize(function() {
         resizeTaskPanel();
