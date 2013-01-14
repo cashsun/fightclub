@@ -8,7 +8,6 @@ CREATE TABLE FIGHTDB.USER
 (
 uid int NOT NULL AUTO_INCREMENT,
 exp int NOT NULL,
-avatar int NOT NULL DEFAULT 0,
 username char(20) NOT NULL,
 passwd char(32) NOT NULL,
 firstname char(30),
@@ -86,6 +85,10 @@ INSERT INTO FIGHTDB.TASK (uid, otid, tgid, content) VALUES('2','5','3', 'DAILY C
 
 INSERT INTO FIGHTDB.FRIEND (uid, fuid) VALUES('1','2');
 
+ALTER TABLE FIGHTDB.USER ADD avatar int NOT NULL DEFAULT 0;
+ALTER TABLE FIGHTDB.T_GROUP ADD type int NOT NULL DEFAULT 0;
+ALTER TABLE FIGHTDB.T_GROUP ADD t_order VARCHAR(65535);
+
 /* ALL SQL QUERY STORED IN THIS FILE */
 
 DROP PROCEDURE IF EXISTS FIGHTDB.CreateUser;
@@ -147,11 +150,13 @@ DELIMITER //
 CREATE PROCEDURE FIGHTDB.CreateTaskGroup(
 IN myuid int,
 IN mytitle char(40),
-IN mypri int
+IN mypri int,
+IN mytype int,
+IN mytorder varchar(65535)
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.T_GROUP (uid, title, priority)
-VALUES(myuid, mytitle, mypri);
+INSERT INTO FIGHTDB.T_GROUP (uid, title, priority, type, t_order)
+VALUES(myuid, mytitle, mypri, mytype, mytorder);
 END // 
 DELIMITER ;
 
@@ -160,11 +165,14 @@ DELIMITER //
 CREATE PROCEDURE FIGHTDB.UpdateTaskGroup(
 IN mytgid int,
 IN mytitle char(40),
-IN mypri int
+IN mypri int,
+IN mytype int,
+IN mytorder varchar(65535)
 ) 
 BEGIN 
 UPDATE FIGHTDB.T_GROUP
-SET title = mytitle, priority = mypri
+SET title = mytitle, priority = mypri, 
+type = mytype, t_order = mytorder
 WHERE tgid = mytgid;
 END // 
 DELIMITER ;

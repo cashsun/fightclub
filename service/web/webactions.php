@@ -42,10 +42,10 @@ function createTask(){
     }
 }
 function createTaskGroup(){
-    if(isset($_POST['uid'])&&isset($_POST['title'])&&isset($_POST['priority'])){
+    if(isset($_POST['uid'])&&isset($_POST['title'])&&isset($_POST['priority'])&&isset($_POST['type'])){
         $db = new DBadapter();
         $db->connect();
-        $result = $db->createTaskGroup($_POST['uid'],$_POST['title'],$_POST['priority']);
+        $result = $db->createTaskGroup($_POST['uid'],$_POST['title'],$_POST['priority'], $_POST['type']);
         echo $result;
     }
 }
@@ -74,10 +74,10 @@ function updateTask(){
     }
 }
 function updateTaskGroup(){
-    if(isset($_POST['tgid'])&&isset($_POST['title'])&&isset($_POST['priority'])){
+    if(isset($_POST['tgid'])&&isset($_POST['title'])&&isset($_POST['priority'])&&isset($_POST['type'])&&isset($_POST['t_order'])){
         $db = new DBadapter();
         $db->connect();
-        $result = $db->updateTaskGroup($_POST['tgid'],$_POST['title'],$_POST['priority']);
+        $result = $db->updateTaskGroup($_POST['tgid'],$_POST['title'],$_POST['priority'], $_POST['type'],$_POST['t_order']);
         echo $result;
     }
 }

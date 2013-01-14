@@ -59,11 +59,13 @@ DELIMITER //
 CREATE PROCEDURE FIGHTDB.CreateTaskGroup(
 IN myuid int,
 IN mytitle char(40),
-IN mypri int
+IN mypri int,
+IN mytype int,
+IN mytorder varchar(65535)
 ) 
 BEGIN 
-INSERT INTO FIGHTDB.T_GROUP (uid, title, priority)
-VALUES(myuid, mytitle, mypri);
+INSERT INTO FIGHTDB.T_GROUP (uid, title, priority, type, t_order)
+VALUES(myuid, mytitle, mypri, mytype, mytorder);
 END // 
 DELIMITER ;
 
@@ -72,12 +74,15 @@ DELIMITER //
 CREATE PROCEDURE FIGHTDB.UpdateTaskGroup(
 IN mytgid int,
 IN mytitle char(40),
-IN mypri int
+IN mypri int,
+IN mytype int,
+IN mytorder varchar(65535)
 ) 
 BEGIN 
 UPDATE FIGHTDB.T_GROUP
 SET title = mytitle, priority = mypri
-WHERE tgid = mytgid;
+WHERE tgid = mytgid, type = mytype,
+t_order = mytorder;
 END // 
 DELIMITER ;
 
