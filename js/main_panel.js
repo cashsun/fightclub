@@ -152,7 +152,7 @@ $(document).ready(function(){
         $('#tg_selector').css('top', index*51+'px');
         $('#tgid').html($(this).parent().attr('id'));
         var tgid = '#'+$(this).parent().attr('id');
-        $('.tg_title').removeClass('selected');;
+        $('.tg_title').removeClass('selected');
         $('.tg_title_text').removeClass('tg_text_selected');
         $(this).addClass('tg_text_selected').parent().addClass('selected');
         $('#task_wrapper').fadeOut(200, function(){
