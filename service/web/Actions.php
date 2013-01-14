@@ -6,5 +6,6 @@ class Actions{
     const deleteTaskGroup = 3;
     const updateTask = 4;
     const updateTaskGroup = 5;
+    const getFriends = 6;
 }
 ?>

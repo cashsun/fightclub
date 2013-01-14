@@ -1,6 +1,5 @@
 <?php
     session_start();
-    include_once '../service/web.php';
     include_once '../header.php';
     include_once '../db/DBadapter.php';
 ?>

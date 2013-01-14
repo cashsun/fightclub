@@ -83,6 +83,23 @@ function makeAjaxCall(type,param,callback){
         }
     });
 }
+
+function jsonAjaxRequest(type, url, param,callback){
+    $.ajax({
+        url:url,
+        type:type,
+        datatype: 'json',
+        data:param,
+        success:function(data, textStatus, jqXHR){
+          json = jQuery.parseJSON(data);
+          callback(json);
+        },
+        error:function(){
+            alert('Operation failed!');
+        }
+    });
+}
+
 function resizeTaskPanel(){
     var width = windowDiv.width();
     if(width<550){

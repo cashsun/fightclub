@@ -21,6 +21,9 @@ if(isset($_POST['webaction'])){
         case Actions::updateTaskGroup:
             updateTaskGroup();
             break;
+        case Actions::getFriends:
+            getFriends();
+            break;
         default :echo -2;
     }
 }else{
@@ -76,6 +79,14 @@ function updateTaskGroup(){
         $db->connect();
         $result = $db->updateTaskGroup($_POST['tgid'],$_POST['title'],$_POST['priority']);
         echo $result;
+    }
+}
+function getFriends(){
+    if(isset($_POST['uid'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->getFriends($_POST['uid']);
+        echo json_encode($result);
     }
 }
 ?>
