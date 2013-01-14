@@ -10,18 +10,19 @@ function initTasks(){
     activeDeletes();
     $('#input_task').focus();
 }
-function postCreateGroup(){
+function postCreateTaskGroup(){
     makeAjaxCall('post',
-            "service/web/createTaskGroup.php",
             {uid:function(){return $('#uid').html()},
             title:function(){return $.trim($('#input_group').val())},
-            priority: function(){return $('#g_priority').val()}})
+            priority: function(){return $('#g_priority').val()},
+            webaction:1})
 }
 function postCreateTask(){
-    makeAjaxCall('post', "service/web/createTask.php",
+    makeAjaxCall('post',
         {uid:function(){return $('#uid').html()},
             tgid:function(){return $('#tgid').html()},
-            content:function(){return $.trim($('#input_task').val())}},
+            content:function(){return $.trim($('#input_task').val())},
+            webaction:0},
         function(){
             var tgid = '#'+$('#tgid').html();
             $(tgid,'#cache').prepend('<div privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task">x</div></div>');
@@ -29,44 +30,44 @@ function postCreateTask(){
         });
 }
 function postDeleteTaskGroup(tgid){
-            makeAjaxCall('post',"service/web/deleteTaskGroup.php",{tgid:tgid});
+            makeAjaxCall('post',{tgid:tgid,webaction:3});
 }
 function postDeleteTask(tid){
         makeAjaxCall('post',
-            "service/web/deleteTask.php",
-            {tid:tid},function(){
+            {tid:tid,webaction:2},function(){
                 var tgid = '#'+$('#tgid').html();
                 $('[tid="'+tid+'"]','#cache').remove();
                 $('.tg_title_text',tgid).click();
             })
 }
 function postUpdateTask(){
-    makeAjaxCall('post',"service/web/updateTask.php",{
+    makeAjaxCall('post',{
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
-        privacy:function(){return $('#u_t_privacy').val()}
+        privacy:function(){return $('#u_t_privacy').val()},
+        webaction:4
         }
         );
 }
 function postUpdateTaskGroup(){
-    makeAjaxCall('post',"service/web/updateTaskGroup.php",{
+    makeAjaxCall('post',{
         tgid:function(){return $('#tgid').html()},
         title:function(){return $.trim($('#update_group').val())},
-        priority:function(){return $('#u_g_priority').val()}
+        priority:function(){return $('#u_g_priority').val()},
+        webaction:5
         }
         );
 }
-function makeAjaxCall(type, url, param,callback){
+function makeAjaxCall(type,param,callback){
     loading_image.show(0);
     $.ajax({
-        url:url,
+        url:'service/web/webactions.php',
         type:type,
         data:param,
         success:function(response){
-            if(response==-1){
+            if(response==-1&&response==-2){
                 alert('Operation failed!');
             }
-            
             tidnew = response;
         },
         error:function(){
@@ -174,7 +175,7 @@ $(document).ready(function(){
     $('#g_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($('#input_group').val()!=''){
-                postCreateGroup();
+                postCreateTaskGroup();
             }
     }}]);
 
@@ -202,7 +203,7 @@ $(document).ready(function(){
         if(e.which == 13) {
             if($( "#g_dialog" ).dialog( "isOpen" )){
                 if($.trim($('#input_group').val())!=''){
-                    postCreateGroup();
+                    postCreateTaskGroup();
                 }
             }else if($("#t_dialog").dialog( "isOpen" )){
                 if($.trim($('#update_task').val())!=''){
