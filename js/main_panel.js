@@ -26,7 +26,7 @@ function postCreateTask(){
             webaction:0},
         function(){
             var tgid = '#'+$('#tgid').html();
-            $(tgid,'#cache').prepend('<div privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task">x</div></div>');
+            $(tgid,'#cache').children().prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task">x</div></li>');
             $('.tg_title_text',tgid).click();
         });
 }

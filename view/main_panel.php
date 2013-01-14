@@ -54,9 +54,7 @@ if(isset($_SESSION['uid'])){
                 echo '</ul>';
             ?></div>
         </div>
-        <div id="panel_social">
-            hehe
-        </div>
+        <div id="panel_social"></div>
     </div>
     <div id="cache" class="hidden">
         <?php
