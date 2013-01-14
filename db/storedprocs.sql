@@ -5,6 +5,7 @@ DROP PROCEDURE IF EXISTS FIGHTDB.ValidateUser;
 DROP PROCEDURE IF EXISTS FIGHTDB.GetUser;
 DROP PROCEDURE IF EXISTS FIGHTDB.CreateTaskGroup;
 DROP PROCEDURE IF EXISTS FIGHTDB.UpdateTaskGroup;
+DROP PROCEDURE IF EXISTS FIGHTDB.UpdateTaskGroupOrder;
 DROP PROCEDURE IF EXISTS FIGHTDB.DeleteTaskGroup;
 DROP PROCEDURE IF EXISTS FIGHTDB.CreateTask;
 DROP PROCEDURE IF EXISTS FIGHTDB.DeleteTask;
@@ -80,9 +81,22 @@ IN mytorder varchar(65535)
 ) 
 BEGIN 
 UPDATE FIGHTDB.T_GROUP
-SET title = mytitle, priority = mypri
-WHERE tgid = mytgid, type = mytype,
-t_order = mytorder;
+SET title = mytitle, priority = mypri,
+type = mytype, t_order = mytorder
+WHERE tgid = mytgid;
+END // 
+DELIMITER ;
+
+/* UPDATE A TASK GROUP TASK ORDER */
+DELIMITER // 
+CREATE PROCEDURE FIGHTDB.UpdateTaskGroupOrder(
+IN mytgid int,
+IN mytorder varchar(65535)
+) 
+BEGIN 
+UPDATE FIGHTDB.T_GROUP
+SET t_order = mytorder
+WHERE tgid = mytgid;
 END // 
 DELIMITER ;
 

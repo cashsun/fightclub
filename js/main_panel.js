@@ -63,8 +63,6 @@ function postUpdateTaskGroup(){
         title:function(){return $.trim($('#update_group').val())},
         priority:function(){return $('#u_g_priority').val()},
         type:function(){return 0},
-        t_order:function(){return ""},
-        //todo
         webaction:5
         }
         );
