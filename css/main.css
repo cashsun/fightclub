@@ -79,6 +79,7 @@ body{
     overflow-x: hidden;
     overflow-y:auto;
     background-color: #e7ebec;
+    background-image: url('../image/panel_g_shadow.png');
     z-index: 5
 }
 #tg_selector{
@@ -127,7 +128,10 @@ body{
     -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
     -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
     -o-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.5)
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+.f_first{
+    background-image: url('../image/tg_shadow.png');
 }
 .tg_title span{
     padding-right: 50px;
@@ -215,7 +219,7 @@ body{
 }
 .selected{
     background-color: #ff4545;
-    background-image: url('../image/tg_text_shadow.png');
+    background-image: url('../image/tg_selected_shadow.png');
 }
 .tg_text_selected{
     text-shadow: 0 1px 0 rgba(0,0,0,0.6);
