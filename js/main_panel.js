@@ -23,17 +23,76 @@ function initTasks(){
     }).mouseover(function(){$(this).css('color', 'white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
-    activeDeletes();
+    activeTaskDeletes();
     $('#input_task').val('').focus();
 }
+function activeTaskDeletes(){
+    $('.delete_task').click(function(){
+        if(confirm ("Delete this task?")){
+            var tid = $(this).parent().attr('tid');
+            postDeleteTask(tid);
+        }
+    });
+}
+function activeGroupDeletes(){
+    $('.delete_group').click(function(){
+            if(confirm ("Delete this group?")){
+                var tgid = $(this).parent().attr('id');
+                postDeleteTaskGroup(tgid);
+            }
+    });
+}
+function initGroups(){
+        $('.tg_title_text').click(function(){
+            var index = $('.tg_title_text').index(this);
+            $('#tg_selector').css('top', index*51);
+            $('#tgid').html($(this).parent().attr('id'));
+            var tgid = '#'+$(this).parent().attr('id');
+            $('.tg_title').removeClass('selected');
+            $('.tg_title_text').removeClass('tg_text_selected');
+            $(this).addClass('tg_text_selected').parent().addClass('selected');
+            $('#tasks_sortable').fadeOut(200, function(){
+                var task_content = $(tgid,'#cache').html();
+                $(this).html(task_content).fadeIn(200, function(){
+                    initTasks();
+                });
+            });
+        });
+        activeGroupDeletes();
+}
 function postCreateTaskGroup(){
+    $('.dialog').dialog('close');
     makeAjaxCall('post',
             {uid:function(){return $('#uid').html()},
             title:function(){return $.trim($('#input_group').val())},
             priority: function(){return $('#g_priority').val()},
             type: function(){return 0},
             //todo
-            webaction:1})
+            webaction:1},function(){
+                var priority = $('#g_priority').val();
+                var title = $.trim($('#input_group').val());
+                var groups = $('.tg_title','#panel_group');
+                var newcontent = '<div priority="'+priority+'" id="'+tgidnew+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
+                var cachecontent =  '<div priority="'+priority+'" id="'+tgidnew+'"></div>';
+                var group = groups.first();
+                for(var i=0;i<groups.length;i++){
+                    var p_temp = group.attr('priority');
+                    if(priority>=p_temp){
+                        group.before(newcontent);
+                        initGroups();
+                        $('#cache').append(cachecontent);
+                        $('#'+tgidnew).children().eq(1).click();
+                        return;
+                    }else if(i==groups.length-1){
+                        group.after(newcontent);
+                        $('#cache').append(cachecontent);
+                        $('#'+tgidnew).children().eq(1).click();
+                        return;
+                    }else{
+                        group = group.next();
+                    }
+                }
+            })
 }
 function postCreateTask(){
     makeAjaxCall('post',
@@ -68,17 +127,16 @@ function postDeleteTask(tid){
 }
 function postUpdateTask(){
     $('.dialog').dialog('close');
+    var tid = $('#tid','#t_dialog').html();
+    var content = $('#update_task').val();
+    var privacy = $('#u_t_privacy').val();
+    $('[tid="'+tid+'"]','#tasks_sortable').attr('privacy', privacy).children().first().html(content);
     makeAjaxCall('post',{
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
         privacy:function(){return $('#u_t_privacy').val()},
         webaction:4
-        },function(){
-            var tid = $('#tid','#t_dialog').html();
-            var content = $('#update_task').val();
-            var privacy = $('#u_t_privacy').val();
-            $('[tid="'+tid+'"]','#tasks_sortable').attr('privacy', privacy).children().first().html(content);
-        }
+        },function(){}
         );
 }
 function postUpdateTaskGroup(){
@@ -102,7 +160,7 @@ function makeAjaxCall(type,param,callback){
                 alert('Operation failed!');
                 location.reload();
             }
-            tidnew = response;
+            tidnew = tgidnew = response;
         },
         error:function(){
             alert('Operation failed!');
@@ -159,39 +217,17 @@ function resizeTaskPanel(){
         $('#tg_selector').show(0);
     }
 }
-function activeDeletes(){
-    $('.delete_task').click(function(){
-        if(confirm ("Delete this task?")){
-            var tid = $(this).parent().attr('tid');
-            postDeleteTask(tid);
-        }
-    });
-}
 $(document).ready(function(){
     $('#panel_main').hide();
     tidnew = -1;
+    tgidnew = -1;
     windowDiv = $(window);
     loading_image = $('#loadingImage');
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
     $('#panel_task').removeClass('hidden');
     initTasks();
-    $('.tg_title_text').click(function(){
-        var index = $('.tg_title_text').index(this);
-        $('#tg_selector').css('top', index*51+'px');
-        $('#tgid').html($(this).parent().attr('id'));
-        var tgid = '#'+$(this).parent().attr('id');
-        $('.tg_title').removeClass('selected');
-        $('.tg_title_text').removeClass('tg_text_selected');
-        $(this).addClass('tg_text_selected').parent().addClass('selected');
-        $('#tasks_sortable').fadeOut(400, function(){
-            var task_content = $(tgid,'#cache').html();
-             $(this).html(task_content).fadeIn(400, function(){
-                 initTasks();
-             });
-             resizeTaskPanel();
-        });
-    });
+    initGroups();
     $('#u_group').click(function(){
         var tgid = '#'+$('#tgid').html();
         $('#update_group').val($('.tg_title_text',tgid).text());
@@ -219,13 +255,6 @@ $(document).ready(function(){
     }}]);
     $('#create_group').click(function(){
         $('#g_dialog').dialog('open');
-    });
-    
-    $('.delete_group').click(function(){
-        if(confirm ("Delete this group?")){
-            var tgid = $(this).parent().attr('id');
-            postDeleteTaskGroup(tgid);
-        }
     });
     
     $(window).resize(function() {

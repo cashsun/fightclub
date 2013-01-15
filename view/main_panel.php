@@ -120,12 +120,12 @@ if(isset($_SESSION['uid'])){
 </div>
 </body>
 <script type="text/javascript">
-function showPanel(){
-        setTimeout(function(){
-            $('#panel_main').fadeIn(300,function(){
-            loading_image.hide();
-        });
-        },200);
-}
+    function showPanel(){
+            setTimeout(function(){
+                $('#panel_main').fadeIn(300,function(){
+                loading_image.hide();
+            });
+            },200);
+    }
 </script>
 

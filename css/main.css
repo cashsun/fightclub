@@ -77,7 +77,7 @@ body{
     height: 100%;
     left: 0;
     overflow-x: hidden;
-    overflow-y:auto;
+    overflow-y: auto;
     background-color: #e7ebec;
     background-image: url('../image/panel_g_shadow.png');
     z-index: 5
