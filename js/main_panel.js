@@ -26,6 +26,14 @@ function initTasks(){
     activeDeletes();
     $('#input_task').val('').focus();
 }
+function activeDeletes(){
+    $('.delete_task').click(function(){
+        if(confirm ("Delete this task?")){
+            var tid = $(this).parent().attr('tid');
+            postDeleteTask(tid);
+        }
+    });
+}
 function postCreateTaskGroup(){
     $('.dialog').dialog('close');
     makeAjaxCall('post',
@@ -62,9 +70,9 @@ function postCreateTaskGroup(){
                     $('.tg_title').removeClass('selected');
                     $('.tg_title_text').removeClass('tg_text_selected');
                     $(this).addClass('tg_text_selected').parent().addClass('selected');
-                    $('#tasks_sortable').fadeOut(300, function(){
+                    $('#tasks_sortable').fadeOut(200, function(){
                         var task_content = $(tgid,'#cache').html();
-                        $(this).html(task_content).fadeIn(300, function(){
+                        $(this).html(task_content).fadeIn(200, function(){
                             initTasks();
                         });
                         resizeTaskPanel();
@@ -126,9 +134,24 @@ function postUpdateTask(){
 function postUpdateTaskGroup(){
     $('.dialog').dialog('close');
     var tgid = $('#tgid').html();
-    var title = '<span>'+$.trim($('#update_group').val())+'</span>';
+    var title = $.trim($('#update_group').val());
     var priority = $('#u_g_priority').val();
-    $('#'+tgid,'#panel_group').attr('priotity', priority).children().eq(1).html(title);
+    $('#'+tgid,'#panel_group').attr('priotity', priority).children().eq(1).children().html(title);
+//    var groups = $('.tg_title','#panel_group');
+//    var group = groups.first();
+//    for(var i=0;i<groups.length;i++){
+//        var p_temp = group.attr('priority');
+//        if(priority>=p_temp){
+//            group.before($('#'+tgid,'#panel_group'));
+//            break;
+//        }else if(i==groups.length-1){
+//            $('#'+tgid,'#panel_group').before(group);
+//            break;
+//        }else{
+//            group = group.next()
+//        }
+//    }
+    $('#'+tgid,'#panel_group').children().eq(1).click();
     makeAjaxCall('post',{
         tgid:tgid,
         title:title,
@@ -205,14 +228,6 @@ function resizeTaskPanel(){
         $('#tg_selector').show(0);
     }
 }
-function activeDeletes(){
-    $('.delete_task').click(function(){
-        if(confirm ("Delete this task?")){
-            var tid = $(this).parent().attr('tid');
-            postDeleteTask(tid);
-        }
-    });
-}
 $(document).ready(function(){
     $('#panel_main').hide();
     tidnew = tgidnew= -1;
@@ -230,9 +245,9 @@ $(document).ready(function(){
         $('.tg_title').removeClass('selected');
         $('.tg_title_text').removeClass('tg_text_selected');
         $(this).addClass('tg_text_selected').parent().addClass('selected');
-        $('#tasks_sortable').fadeOut(300, function(){
+        $('#tasks_sortable').fadeOut(200, function(){
             var task_content = $(tgid,'#cache').html();
-             $(this).html(task_content).fadeIn(300, function(){
+             $(this).html(task_content).fadeIn(200, function(){
                  initTasks();
              });
              resizeTaskPanel();
