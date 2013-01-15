@@ -321,5 +321,32 @@ $(document).ready(function(){
             }
         }
     });
+    
+    $.imgpreload(['theme/images/modalClose.png']);
+    var showModal = function(title) {
+            $('<div />')
+                    .text("My close button position and button order is determined by the operating system I am being displayed in.")
+                    .appendTo("body")
+                    .dialog({
+                            title: title,
+                            modal: true,
+                            width: 400,
+                            hide: "fade",
+                            show: "fade",
+                            buttons: {
+                                    "OK": function() {
+                                            $(this).dialog("close");
+                                    },
+                                    "Cancel": function() {
+                                            $(this).dialog("close");
+                                    }
+                            }
+                    });
+    };
+    
+    	$(".modalWindows").on("click", function(e) {
+		showModal("Windows Modal");
+		e.preventDefault();
+	});
 });
 
