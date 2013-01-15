@@ -24,6 +24,8 @@ if(isset($_POST['webaction'])){
         case Actions::getFriends:
             getFriends();
             break;
+        case Actions::updateTaskGroupTaskOrder:
+            updateTaskGroupTaskOrder();
         default :echo -2;
     }
 }else{
@@ -78,6 +80,14 @@ function updateTaskGroup(){
         $db = new DBadapter();
         $db->connect();
         $result = $db->updateTaskGroup($_POST['tgid'],$_POST['title'],$_POST['priority'], $_POST['type']);
+        echo $result;
+    }
+}
+function updateTaskGroupTaskOrder(){
+    if(isset($_POST['tgid'])&&isset($_POST['t_order'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->updateTaskGroupTaskOrder($_POST['tgid'],$_POST['t_order']);
         echo $result;
     }
 }

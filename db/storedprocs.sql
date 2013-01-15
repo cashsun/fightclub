@@ -160,13 +160,13 @@ BEGIN
 
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
-COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,
-utg.tgid, utg.priority, utg.title, utg.exp, TASK.privacy,
+COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,utg.t_order,
+utg.tgid, utg.priority, utg.title, utg.exp, TASK.privacy, 
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority,
-  T_GROUP.title, USER.uid, USER.username,
+  T_GROUP.title, IFNULL(T_GROUP.t_order,"") AS t_order,USER.uid, USER.username,
   USER.firstname, USER.lastname, USER.email, USER.exp
   FROM T_GROUP RIGHT JOIN USER
   ON T_GROUP.uid = USER.uid
