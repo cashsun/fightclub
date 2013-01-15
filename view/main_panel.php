@@ -40,9 +40,9 @@ if(isset($_SESSION['uid'])){
                 }
             ?>
             <div id="panel_control">
-                <div id="create_group">+</div>
-                <div id="u_group">*</div>
-                <div id="history">history</div>
+                <div id="create_group">CREATE</div>
+                <div id="u_group">EDIT</div>
+                <div id="history">LOG</div>
             </div>
         </div>
         <div id="panel_task" class="hidden"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">

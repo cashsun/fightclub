@@ -63,11 +63,8 @@ function postDeleteTaskGroup(tgid){
         $('.dialog').dialog('close');
         $('#'+tgid).slideUp(200,function(){
             $(this).remove();
-            if($('.tg_title').length==0){
-                $('#tg_selector,#task_wrapper').hide();
-            }else{
-               $('.tg_title_text').first().click(); 
-            }
+            $('#'+tgid,'#cache').remove();
+            checkIfGroupExists();
         });
         makeAjaxCall('post',{tgid:tgid,webaction:3},function(){});
 }
@@ -107,7 +104,16 @@ function postUpdateTaskGroup(){
         type:function(){return 0},
         webaction:5},function(){});
 }
+function checkIfGroupExists(){
+    if($('.tg_title').length==0){
+        $('#tg_selector,#task_wrapper').hide(0);
+    }else{
+        $('#tg_selector,#task_wrapper').fadeIn(200);
+        $('.tg_title_text').first().click(); 
+    }
+}
 function positionGroup(){
+    $('#task_wrapper').show();     
     var title = $.trim($('#update_group').val());
     var priority = $('#u_g_priority').val();
     var groups = $('.tg_title','#panel_group');
@@ -122,6 +128,9 @@ function positionGroup(){
         $('#cache').prepend(cachecontent);
     }
     var tgcontent = '<div priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
+    if(groups.length == 0){
+        $('#panel_group').prepend(tgcontent);
+    }
     for(var i=0;i<groups.length;i++){
         var p_temp = group.attr('priority');
         if(priority>p_temp){
@@ -231,6 +240,7 @@ $(document).ready(function(){
     windowDiv = $(window);
     loading_image = $('#loadingImage');
     isNewGroup = true;
+    checkIfGroupExists()
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
     $('#panel_task').removeClass('hidden');
