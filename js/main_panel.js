@@ -2,17 +2,23 @@ function initTasks(){
     $('#tasks_sortable').sortable({
         update:function(){
             var tasks = $('li',this);
-            var t_order = '';
+            var task_order = '';
+            var cacheContent = '';
             var comma = ',';
             var task = tasks.first();
             for(var i=0;i<tasks.length;i++){
                 if(i==tasks.length-1){
                     comma = '';
                 }
-                t_order +=task.attr('tid')+comma;
+                task_order +=task.attr('tid')+comma;
+                cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+task.children().first().text()+'</div><div class="delete_task"></div></li>';
                 task = task.next();
             }
-            alert(t_order);
+            var current_tgid = $('#tgid').html();
+            $('#'+current_tgid,'#cache').html(cacheContent);
+            makeAjaxCall('post',{
+                tgid:current_tgid,
+                t_order:task_order,webaction:7},function(){});
         }
     });
     $('.t_content_text').click(function(){
@@ -95,7 +101,6 @@ function postUpdateTaskGroup(){
     var title = $.trim($('#update_group').val());
     var priority = $('#u_g_priority').val();
     isNewGroup = false;
-    $('#'+tgid).remove();
     positionGroup();
     makeAjaxCall('post',{
         tgid:tgid,
@@ -116,34 +121,45 @@ function positionGroup(){
     $('#task_wrapper').show();     
     var title = $.trim($('#update_group').val());
     var priority = $('#u_g_priority').val();
-    var groups = $('.tg_title','#panel_group');
-    var group = groups.first();
     var tgid = $('#tgid').html();
     var cachecontent = null;
-    if(isNewGroup){
-        tgid=tgidnew;
-        title = $.trim($('#input_group').val());
-        priority = $('#g_priority').val();
-        cachecontent = '<div priority="'+priority+'" id="'+tgidnew+'"></div>';
-        $('#cache').prepend(cachecontent);
-    }
-    var tgcontent = '<div priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
-    if(groups.length == 0){
-        $('#panel_group').prepend(tgcontent);
-    }
-    for(var i=0;i<groups.length;i++){
-        var p_temp = group.attr('priority');
-        if(priority>p_temp){
-            group.before(tgcontent);
-            break;
-        }else if(i==groups.length-1){
-            group.after(tgcontent);
-            break;
+    var tgcontent = null;
+    var groups = null;
+    var group = null;
+    var p_temp = null
+    if(isNewGroup || originalPriority != priority){
+        if(isNewGroup){
+            tgid=tgidnew;
+            title = $.trim($('#input_group').val());
+            priority = $('#g_priority').val();
+            cachecontent = '<div priority="'+priority+'" id="'+tgid+'"></div>';
+            $('#cache').prepend(cachecontent);
         }else{
-            group = group.next()
+            $('#'+tgid,'#group_wrapper').remove();
         }
+        tgcontent = '<div priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
+        groups = $('.tg_title','#group_wrapper');
+        if(groups.length == 0){
+            $('#group_wrapper').prepend(tgcontent);
+        }
+        group = groups.first();
+        for(var i=0;i<groups.length;i++){
+            p_temp = group.attr('priority');
+            if(priority>=p_temp){
+                group.before(tgcontent);
+                break;
+            }else if(i==groups.length-1){
+                group.after(tgcontent);
+                break;
+            }else{
+                group = group.next()
+            }
+        }
+    }else{
+        $('.tg_title_text','#'+tgid).children().text(title);
     }
-    $('#'+tgid,'#panel_group').children().eq(1).click(function(){
+    
+    $('#'+tgid,'#group_wrapper').children().eq(1).click(function(){
         var index = $('.tg_title_text').index(this);
         $('#tg_selector').css('top', index*51+'px');
         $('#tgid').html($(this).parent().attr('id'));
@@ -159,7 +175,7 @@ function positionGroup(){
             resizeTaskPanel();
         });
     }).click();
-    $('#'+tgid,'#panel_group').children().first().click(function(){
+    $('#'+tgid,'#group_wrapper').children().first().click(function(){
         if(confirm ("Delete this group?")){
             var tgid = $(this).parent().attr('id');
             postDeleteTaskGroup(tgid);
@@ -236,11 +252,18 @@ function resizeTaskPanel(){
 }
 $(document).ready(function(){
     $('#panel_main').hide();
+    $('button').button();
+    $('input.datepicker').datepicker();
     tidnew = tgidnew= -1;
     windowDiv = $(window);
     loading_image = $('#loadingImage');
     isNewGroup = true;
-    checkIfGroupExists()
+    originalPriority = 0;
+    $('#logout').click(function(){
+        location.replace("test/logout.php");
+    });
+    $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:true});
+    checkIfGroupExists();
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
     $('#panel_task').removeClass('hidden');
@@ -261,12 +284,6 @@ $(document).ready(function(){
              resizeTaskPanel();
         });
     });
-    $('#u_group').click(function(){
-        var tgid = '#'+$('#tgid').html();
-        $('#update_group').val($('.tg_title_text',tgid).text());
-        $('#u_g_priority').val($(tgid).attr('priority'));
-        $('#u_g_dialog').dialog('open');
-    });
     $('#t_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($('#update_task').val()!=''){
@@ -286,9 +303,18 @@ $(document).ready(function(){
                 postUpdateTaskGroup();
             }
     }}]);
+
+    $('#u_group').click(function(){
+        var tgid = '#'+$('#tgid').html();
+        originalPriority = $(tgid).attr('priority');
+        $('#update_group').val($('.tg_title_text',tgid).text());
+        $('#u_g_priority').val(originalPriority);
+        $('#u_g_dialog').dialog('open');
+    }).tipsy({fallback:'edit group content',gravity:'s'});
+    
     $('#create_group').click(function(){
         $('#g_dialog').dialog('open');
-    });
+    }).tipsy({fallback:'create new group',gravity:'sw'});
     
     $('.delete_group').click(function(){
         if(confirm ("Delete this group?")){
@@ -302,6 +328,7 @@ $(document).ready(function(){
     });
     $(document).keypress(function(e) {
         if(e.which == 13) {
+            e.preventDefault();
             if($( "#g_dialog" ).dialog( "isOpen" )){
                 if($.trim($('#input_group').val())!=''){
                     postCreateTaskGroup();
@@ -321,32 +348,6 @@ $(document).ready(function(){
             }
         }
     });
-    
-    $.imgpreload(['theme/images/modalClose.png']);
-    var showModal = function(title) {
-            $('<div />')
-                    .text("My close button position and button order is determined by the operating system I am being displayed in.")
-                    .appendTo("body")
-                    .dialog({
-                            title: title,
-                            modal: true,
-                            width: 400,
-                            hide: "fade",
-                            show: "fade",
-                            buttons: {
-                                    "OK": function() {
-                                            $(this).dialog("close");
-                                    },
-                                    "Cancel": function() {
-                                            $(this).dialog("close");
-                                    }
-                            }
-                    });
-    };
-    
-    	$(".modalWindows").on("click", function(e) {
-		showModal("Windows Modal");
-		e.preventDefault();
-	});
+    $.imgpreload(['image/button_close.png','theme/images/modalClose.png']);
 });
 

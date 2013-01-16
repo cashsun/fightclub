@@ -24,8 +24,8 @@ class TaskGroup{
             $this->title = $groupInfo['title'];
         if(isset($groupInfo['date']))
             $this->date = $groupInfo['date'];
-        if(isset($groupInfo['$t_order']))
-            $this->t_order = $groupInfo['$t_order'];
+        if(isset($groupInfo['t_order']))
+            $this->t_order = $groupInfo['t_order'];
     }
     
     function getTgid(){
@@ -51,6 +51,15 @@ class TaskGroup{
     
     function getTaskOrder(){
         return $this->t_order;
+    }
+    
+    function getTaskByTid($tid){
+        foreach($this->tasks as $task){
+            if($task->getTid()==$tid){
+                return $task;
+            }
+        }
+        return null;
     }
 }
 ?>

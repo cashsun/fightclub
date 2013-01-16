@@ -1,7 +1,7 @@
 root { 
     display: block
 }
-body,a,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,hr{
+body,a,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,textarea,hr{
     margin:0; padding:0;
     font-family: "Helvetica","Arial" ! important;
     font-smooth: always;
@@ -73,19 +73,25 @@ body{
 }
 #panel_group{
     position: absolute;
-    width: 270px;
+    width: 290px;
     height: 100%;
     left: 0;
-    overflow-x: hidden;
     overflow-y: auto;
     background-color: #e7ebec;
+    z-index: 5;
     background-image: url('../image/panel_g_shadow.png');
-    z-index: 5
+}
+#group_wrapper{
+    margin-bottom: 29px;
+    width: 270px;
+    overflow-y: auto;
+    cursor: auto;
+    z-index: 19;
 }
 #tg_selector{
     position: absolute;
     z-index: 20;
-    left: 222px
+    left: 222px;
 }
 #panel_task{
     position: absolute;
@@ -154,9 +160,10 @@ body{
 }
 .t_content_text{
     float: left;
+    font-size: 1.2em;
 }
 .tg_title_text{
-    width: 220px;
+    width: auto;
     margin-left: 50px;
     text-shadow: 0 1px 0 rgba(255,255,255,0.6);
     font-size: 1.2em;
@@ -204,17 +211,19 @@ body{
     text-shadow: 1px 0 0 rgba(255,255,255,0.6)   
 }
 #panel_control{
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom:0;
+    z-index: 21;
     border-top: 1px solid #dbe0e2;
+    background-color: #e7ebec;
+    background-image: url('../image/panel_g_shadow.png');
     height: 28px;
-    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.8);
-    text-shadow: 0 1px 0 rgba(255,255,255,0.6)  
+    -webkit-box-shadow: 0 -1px 0 rgba(255,255,255,0.8);
+    -moz-box-shadow: 0 -1px 0 rgba(255,255,255,0.8);
+    -ms-box-shadow: 0 -1px 0 rgba(255,255,255,0.8);
+    -o-box-shadow: 0 -1px 0 rgba(255,255,255,0.8);
+    box-shadow: 0 -1px 0 rgba(255,255,255,0.8)
 }
 .hoverable:hover{
     background-color: #ff4545;
@@ -230,24 +239,24 @@ body{
 .hidden{
     display: none
 }
-.button{
-     background: url('../image/a_btn.png') no-repeat;
-     height:20px;
-     cursor: pointer;
-     width: auto
-}
 #logout,#friends_button,#news_button{
-    font-size: 0.7em;
-    padding-left: 23px;
-    padding-top: 4px;
-    margin-left: 5px;
-    margin-top: 9px;
-    width: 72px
-}
-#logout{
+    width: 72px;
+    height:25px; 
     float: left;
+    margin-top: 7px
 }
 #friends_button,#news_button{
-    float: right;
+    float: right
+}
+#logout{
+    margin-left: 10px
+}
+#friends_button{
+    margin-right: 20px
+}
+#news_button{
+    margin-right: 10px
+}
+input.datepicker{
 }
 

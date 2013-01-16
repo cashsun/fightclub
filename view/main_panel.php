@@ -4,6 +4,25 @@ if(isset($_SESSION['uid'])){
     $user = getAllByUid($_SESSION['uid']);
     $groups = $user->getTaskGroups();
 }
+function echoSortedTasks(TaskGroup $group){
+    $order = $group->getTaskOrder();
+    if($order==''){
+        $tasks = $group->getTasks();
+        foreach($tasks as $task){
+            if($task->getContent()!=''){
+                echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
+            }
+        }
+    }else{
+        $tidlist=  explode(',', $order);
+        foreach($tidlist as $tid){
+            $task = $group->getTaskByTid($tid);
+            if($task!=null && $task->getContent()!=''){
+                echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
+            }
+        }
+    }
+}
 ?>
 <body onload="showPanel()">
 <div id="loadingImage"></div>
@@ -11,11 +30,11 @@ if(isset($_SESSION['uid'])){
     <div id="navibar">
         <img id="profile_image" src="image/profile.png" alt=""/>
         <div id="profile_username" class="username">
-            <?php echo 'Welcome back, '.$user->getUsername();?>
+            <?php echo 'Welcome back, '.$user->getUsername()?>
         </div>
-        <div id="logout" class="button"><a href="test/logout.php">Logout</a></div>
-        <div id="friends_button" class="button">Friends</div>
-        <div id="news_button" class="button">News</div>
+        <button id="logout">Logout</button>
+        <button id="friends_button" class="button">Friends</button>
+        <button id="news_button" class="button">News</button>
     </div>
     <div id="panel_main">
         <div id="panel_group">
@@ -24,6 +43,7 @@ if(isset($_SESSION['uid'])){
                 echo  '<img id="tg_selector" src="image/tg_selector.png"/>';  
             }
             ?>
+            <div id="group_wrapper">
             <?php
                 $i=-1;
                 foreach($groups as $group){
@@ -39,6 +59,7 @@ if(isset($_SESSION['uid'])){
                     }
                 }
             ?>
+            </div>
             <div id="panel_control">
                 <div id="create_group">CREATE</div>
                 <div id="u_group">EDIT</div>
@@ -50,12 +71,7 @@ if(isset($_SESSION['uid'])){
                 if($groups[0]->getTgid()!=-1){
                     echo '<input id="input_task" class="input_task roundcorner" type="text" maxlength="140"/><ul id="tasks_sortable">';
                 }
-                $tasks = $groups[0]->getTasks();
-                foreach($tasks as $task){
-                    if($task->getContent()!=''){
-                        echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
-                    }
-                }
+                echoSortedTasks($groups[0]);
                 echo '</ul>';
             ?></div>
         </div>
@@ -65,16 +81,12 @@ if(isset($_SESSION['uid'])){
         <?php
             foreach($groups as $group){
                 echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'">';
-                $tasks = $group->getTasks();
-                foreach($tasks as $task){
-                    if($task->getContent()!=''){
-                        echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
-                    }
-                }
+               echoSortedTasks($group);
                 echo '</div>';
             }
-            if($groups[0]->getTgid()!=-1)
-                echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
+            
+            echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
+            
         ?>
         <div id="uid"><?php echo $user->getUid() ?></div>
     </div>
