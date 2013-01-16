@@ -31,6 +31,7 @@ function initTasks(){
     });
     activeDeletes();
     $('#input_task').val('').focus();
+    $('#tg_selector').show();
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
@@ -141,18 +142,26 @@ function positionGroup(){
         groups = $('.tg_title','#group_wrapper');
         if(groups.length == 0){
             $('#group_wrapper').prepend(tgcontent);
-        }
-        group = groups.first();
-        for(var i=0;i<groups.length;i++){
-            p_temp = group.attr('priority');
-            if(priority>=p_temp){
-                group.before(tgcontent);
-                break;
-            }else if(i==groups.length-1){
-                group.after(tgcontent);
-                break;
-            }else{
-                group = group.next()
+        }else{
+            group = groups.first();
+            for(var i=0;i<groups.length;i++){
+                p_temp = group.attr('priority');
+                if(priority>p_temp){
+                    group.before(tgcontent);
+                    break;
+                }else if(priority==p_temp){
+                    if(group.attr('id')>tgid){
+                        group.after(tgcontent);
+                    }else{
+                        group.before(tgcontent);
+                    }
+                    break;
+                }else if(i==groups.length-1){
+                    group.after(tgcontent);
+                    break;
+                }else{
+                    group = group.next()
+                }
             }
         }
     }else{
@@ -181,7 +190,6 @@ function positionGroup(){
             postDeleteTaskGroup(tgid);
         }
     });
-    checkIfGroupExists();
 }
 function makeAjaxCall(type,param,callback){
     loading_image.show(0);
