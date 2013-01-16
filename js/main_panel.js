@@ -180,7 +180,8 @@ function positionGroup(){
             var tgid = $(this).parent().attr('id');
             postDeleteTaskGroup(tgid);
         }
-    });   
+    });
+    checkIfGroupExists();
 }
 function makeAjaxCall(type,param,callback){
     loading_image.show(0);
@@ -263,11 +264,11 @@ $(document).ready(function(){
         location.replace("test/logout.php");
     });
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:true});
-    checkIfGroupExists();
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     resizeTaskPanel();
     $('#panel_task').removeClass('hidden');
     initTasks();
+    checkIfGroupExists();
     $('.tg_title_text').click(function(){
         var index = $('.tg_title_text').index(this);
         $('#tg_selector').css('top', index*51+'px');

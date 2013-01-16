@@ -38,11 +38,7 @@ function echoSortedTasks(TaskGroup $group){
     </div>
     <div id="panel_main">
         <div id="panel_group">
-            <?php 
-            if($groups[0]->getTgid()!=-1){
-                echo  '<img id="tg_selector" src="image/tg_selector.png"/>';  
-            }
-            ?>
+            <img id="tg_selector" src="image/tg_selector.png"/> 
             <div id="group_wrapper">
             <?php
                 $i=-1;
@@ -67,10 +63,9 @@ function echoSortedTasks(TaskGroup $group){
             </div>
         </div>
         <div id="panel_task" class="hidden"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">
+        <input id="input_task" class="input_task roundcorner" type="text" maxlength="140"/>    
             <?php
-                if($groups[0]->getTgid()!=-1){
-                    echo '<input id="input_task" class="input_task roundcorner" type="text" maxlength="140"/><ul id="tasks_sortable">';
-                }
+                echo '<ul id="tasks_sortable">';
                 echoSortedTasks($groups[0]);
                 echo '</ul>';
             ?></div>
