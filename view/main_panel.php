@@ -36,7 +36,7 @@ function echoSortedTasks(TaskGroup $group){
         <button id="friends_button" class="button">Friends</button>
         <button id="news_button" class="button">News</button>
     </div>
-    <div id="panel_main">
+    <div id="panel_main" class="hidden">
         <div id="panel_group">
             <img id="tg_selector" src="image/tg_selector.png"/> 
             <div id="group_wrapper">

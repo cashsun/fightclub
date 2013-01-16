@@ -15,11 +15,11 @@
         {
           $_SESSION['uid'] = $uid;
           echo 'user created uid = '.$uid.', will login in 3 seconds'.
-                  '<meta http-equiv="refresh" content="3; URL=../index.php">';
+                  '<meta http-equiv="refresh" content="0; URL=../index.php">';
         }
         else
           echo 'user creation error, will return to register page'.
-                  '<meta http-equiv="refresh" content="3; URL=register.php">';
+                  '<meta http-equiv="refresh" content="0; URL=register.php">';
     }
         
 ?>

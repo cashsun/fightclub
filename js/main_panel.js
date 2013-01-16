@@ -33,6 +33,24 @@ function initTasks(){
     $('#input_task').val('').focus();
     $('#tg_selector').show();
 }
+function initTaskGroups(){
+    $('.tg_title_text').click(function(){
+        var index = $('.tg_title_text').index(this);
+        $('#tg_selector').css('top', index*51+'px');
+        $('#tgid').html($(this).parent().attr('id'));
+        var tgid = '#'+$(this).parent().attr('id');
+        $('.tg_title').removeClass('selected');
+        $('.tg_title_text').removeClass('tg_text_selected');
+        $(this).addClass('tg_text_selected').parent().addClass('selected');
+        $('#tasks_sortable').fadeOut(200, function(){
+            var task_content = $(tgid,'#cache').html();
+             $(this).html(task_content).fadeIn(200, function(){
+                 initTasks();
+             });
+             resizeTaskPanel();
+        });
+    });
+}
 function activeDeletes(){
     $('.delete_task').click(function(){
         if(confirm ("Delete this task?")){
@@ -76,9 +94,11 @@ function postDeleteTaskGroup(tgid){
         makeAjaxCall('post',{tgid:tgid,webaction:3},function(){});
 }
 function postDeleteTask(tid){
-        var tgid = '#'+$('#tgid').html();
-        $('[tid="'+tid+'"]','#cache').remove();
-        $('.tg_title_text',tgid).click();
+        $('[tid="'+tid+'"]','#tasks_sortable').slideUp(200, function(){
+            $(this).remove();
+            $('li[tid="'+tid+'"]','#cache').remove();
+            $('#input_task').focus();
+        })
         makeAjaxCall('post',
             {tid:tid,webaction:2},function(){})
 }
@@ -150,7 +170,8 @@ function positionGroup(){
                     group.before(tgcontent);
                     break;
                 }else if(priority==p_temp){
-                    if(group.attr('id')>tgid){
+                    var id_temp = group.attr('id');
+                    if(id_temp>tgid){
                         group.after(tgcontent);
                     }else{
                         group.before(tgcontent);
@@ -168,22 +189,8 @@ function positionGroup(){
         $('.tg_title_text','#'+tgid).children().text(title);
     }
     
-    $('#'+tgid,'#group_wrapper').children().eq(1).click(function(){
-        var index = $('.tg_title_text').index(this);
-        $('#tg_selector').css('top', index*51+'px');
-        $('#tgid').html($(this).parent().attr('id'));
-        var tgid = '#'+$(this).parent().attr('id');
-        $('.tg_title').removeClass('selected');
-        $('.tg_title_text').removeClass('tg_text_selected');
-        $(this).addClass('tg_text_selected').parent().addClass('selected');
-        $('#tasks_sortable').fadeOut(200, function(){
-            var task_content = $(tgid,'#cache').html();
-            $(this).html(task_content).fadeIn(200, function(){
-                initTasks();
-            });
-            resizeTaskPanel();
-        });
-    }).click();
+    initTaskGroups();
+    $('#'+tgid,'#group_wrapper').children().eq(1).click();
     $('#'+tgid,'#group_wrapper').children().first().click(function(){
         if(confirm ("Delete this group?")){
             var tgid = $(this).parent().attr('id');
@@ -260,7 +267,6 @@ function resizeTaskPanel(){
     }
 }
 $(document).ready(function(){
-    $('#panel_main').hide();
     $('button').button();
     $('input.datepicker').datepicker();
     tidnew = tgidnew= -1;
@@ -276,23 +282,8 @@ $(document).ready(function(){
     resizeTaskPanel();
     $('#panel_task').removeClass('hidden');
     initTasks();
+    initTaskGroups();
     checkIfGroupExists();
-    $('.tg_title_text').click(function(){
-        var index = $('.tg_title_text').index(this);
-        $('#tg_selector').css('top', index*51+'px');
-        $('#tgid').html($(this).parent().attr('id'));
-        var tgid = '#'+$(this).parent().attr('id');
-        $('.tg_title').removeClass('selected');
-        $('.tg_title_text').removeClass('tg_text_selected');
-        $(this).addClass('tg_text_selected').parent().addClass('selected');
-        $('#tasks_sortable').fadeOut(200, function(){
-            var task_content = $(tgid,'#cache').html();
-             $(this).html(task_content).fadeIn(200, function(){
-                 initTasks();
-             });
-             resizeTaskPanel();
-        });
-    });
     $('#t_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($('#update_task').val()!=''){
