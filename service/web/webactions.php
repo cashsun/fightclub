@@ -26,8 +26,8 @@ if(isset($_POST['webaction'])){
             break;
         case Actions::updateTaskGroupTaskOrder:
             updateTaskGroupTaskOrder();
-        case Actions::completeTask:
-            completeTask();
+        case Actions::toogleTaskComplete:
+            toogleTaskComplete();
         default :echo -2;
     }
 }else{
@@ -101,11 +101,11 @@ function getFriends(){
         echo json_encode($result);
     }
 }
-function completeTask(){
-    if(isset($_POST['tid'])){
+function toogleTaskComplete(){
+    if(isset($_POST['tid'], $_POST['isdone'])){
         $db = new DBadapter();
         $db->connect();
-        $result = $db->completeTask($_POST['tid']);
+        $result = $db->completeTask($_POST['tid'], $_POST['isdone']);
         echo $result;
     }
 }

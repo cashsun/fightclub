@@ -10,7 +10,7 @@ DROP PROCEDURE IF EXISTS DeleteTaskGroup;
 DROP PROCEDURE IF EXISTS CreateTask;
 DROP PROCEDURE IF EXISTS DeleteTask;
 DROP PROCEDURE IF EXISTS UpdateTask;
-DROP PROCEDURE IF EXISTS CompleteTask;
+DROP PROCEDURE IF EXISTS ToogleTaskComplete;
 DROP PROCEDURE IF EXISTS GetAllMyTasks;
 DROP PROCEDURE IF EXISTS GetTask;
 DROP PROCEDURE IF EXISTS GetFriends;
@@ -154,22 +154,40 @@ DELIMITER ;
 
 /* COMPLETE A ORIGINAL TO-DO TASK */
 DELIMITER // 
-CREATE PROCEDURE CompleteTask(
-IN mytid int
+CREATE PROCEDURE ToogleTaskComplete(
+IN mytid int,
+IN myisdone boolean
 ) 
 BEGIN
-DECLARE rowno INTEGER;
-SELECT COUNT(*) into @rowno
+DECLARE taskrow INTEGER;
+DECLARE isdone boolean;
+DECLARE privacy INTEGER;
+SELECT COUNT(*), TASK.isdone, TASK.privacy
+into @rowno, @isdone, @privacy
 FROM TASK
-WHERE TASK.privacy != 0
-AND TASK.tid = mytid;
+WHERE TASK.tid = mytid;
 IF @rowno = 0 THEN
+  /* NO RECORD EXISTS */
   SELECT (-1) AS status;
 ELSE
-  UPDATE TASK
-  SET TASK.isdone = TRUE
-  WHERE TASK.tid = mytid;
-  SELECT (1) AS status;
+  IF @privacy != 0 THEN
+    /* IF ALREADY PUBLISHED */
+    IF(myisdone != @isdone) AND (myisdone = FALSE) THEN
+      /* NOT ALLOWED WHEN PUBLISHED */
+      SELECT (-1) AS status;
+    ELSE
+      UPDATE TASK
+      SET TASK.isdone = myisdone
+      WHERE TASK.tid = mytid;
+      SELECT (1) AS status;
+    END IF;
+  ELSE
+    /* IS PRIVATE, OK TO MODIFY */
+    UPDATE TASK
+    SET TASK.isdone = myisdone
+    WHERE TASK.tid = mytid;
+    SELECT (1) AS status;
+  END IF;
 END IF;
 END // 
 DELIMITER ;
