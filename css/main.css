@@ -110,7 +110,7 @@ body{
 }
 #panel_social{
     position: absolute;
-    right: -504px;
+    right: -404px;
     width: 400px;
     top: 1px;
     height: 100%;
@@ -174,8 +174,8 @@ body{
 .delete_task,.delete_group{
     width: 50px;
     height: 35px;
-    float:left;
     padding-top: 15px;
+    float:left;
     cursor: pointer;
     color: #8d8f90;
     background-image: url('../image/button_close.png');
@@ -256,6 +256,13 @@ body{
 }
 #news_button{
     margin-right: 10px
+}
+.isDone{
+    padding: 0;
+    float: left;
+    width: 50px;
+    height: 35px;
+    padding-top: 20px;
 }
 
 

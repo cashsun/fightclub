@@ -4,13 +4,21 @@ if(isset($_SESSION['uid'])){
     $user = getAllByUid($_SESSION['uid']);
     $groups = $user->getTaskGroups();
 }
+function echoTask(Task $task){
+    
+    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner">
+      <div class="isDone"><select class="done" data-highlight="true">
+      <option value="0"></option>
+      <option value="1"></option>
+      </select></div><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
+}
 function echoSortedTasks(TaskGroup $group){
     $order = $group->getTaskOrder();
     if($order==''){
         $tasks = $group->getTasks();
         foreach($tasks as $task){
             if($task->getContent()!=''){
-                echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
+                echoTask($task);
             }
         }
     }else{
@@ -18,7 +26,7 @@ function echoSortedTasks(TaskGroup $group){
         foreach($tidlist as $tid){
             $task = $group->getTaskByTid($tid);
             if($task!=null && $task->getContent()!=''){
-                echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner"><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
+                echoTask($task);
             }
         }
     }
@@ -26,7 +34,7 @@ function echoSortedTasks(TaskGroup $group){
 ?>
 <body onload="showPanel()">
 <div id="loadingImage"></div>
-<div id="master">
+<div id="master" class="hidden">
     <div id="navibar">
         <img id="profile_image" src="image/profile.png" alt=""/>
         <div id="profile_username" class="username">
@@ -36,7 +44,7 @@ function echoSortedTasks(TaskGroup $group){
         <button id="friends_button" class="button">Friends</button>
         <button id="news_button" class="button">News</button>
     </div>
-    <div id="panel_main" class="hidden">
+    <div id="panel_main">
         <div id="panel_group">
             <img id="tg_selector" src="image/tg_selector.png"/> 
             <div id="group_wrapper">
@@ -62,7 +70,7 @@ function echoSortedTasks(TaskGroup $group){
                 <div id="history">LOG</div>
             </div>
         </div>
-        <div id="panel_task" class="hidden"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">
+        <div id="panel_task"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">
         <input id="input_task" class="input_task roundcorner" type="text" maxlength="140"/>    
             <?php
                 echo '<ul id="tasks_sortable">';
@@ -76,10 +84,9 @@ function echoSortedTasks(TaskGroup $group){
         <?php
             foreach($groups as $group){
                 echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'">';
-               echoSortedTasks($group);
+                echoSortedTasks($group);
                 echo '</div>';
             }
-            
             echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
             
         ?>
@@ -129,10 +136,13 @@ function echoSortedTasks(TaskGroup $group){
 <script type="text/javascript">
     function showPanel(){
             setTimeout(function(){
-                $('#panel_main').fadeIn(300,function(){
-                loading_image.hide();
+                $('#master').fadeIn(300,function(){
+                loading_image.fadeOut(100,function(){
+                    $('panel_main').show(300);
+                });
             });
             },200);
     }
 </script>
+<script type="text/javascript" src="js/loading.js"></script>
 

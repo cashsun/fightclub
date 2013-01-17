@@ -30,6 +30,6 @@ $(document).ready(function(){
     });
     },function(){
         var width = $('#panel_social').width();
-        $('#panel_social').animate({right: -width},400);
+        $('#panel_social').animate({right: -width-4},400);
     });
 });

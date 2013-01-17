@@ -1,24 +1,7 @@
 function initTasks(){
     $('#tasks_sortable').sortable({
         update:function(){
-            var tasks = $('li',this);
-            var task_order = '';
-            var cacheContent = '';
-            var comma = ',';
-            var task = tasks.first();
-            for(var i=0;i<tasks.length;i++){
-                if(i==tasks.length-1){
-                    comma = '';
-                }
-                task_order +=task.attr('tid')+comma;
-                cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+task.children().first().text()+'</div><div class="delete_task"></div></li>';
-                task = task.next();
-            }
-            var current_tgid = $('#tgid').html();
-            $('#'+current_tgid,'#cache').html(cacheContent);
-            makeAjaxCall('post',{
-                tgid:current_tgid,
-                t_order:task_order,webaction:7},function(){});
+            updateTaskOrderAndCache();
         }
     });
     $('.t_content_text').click(function(){
@@ -29,9 +12,35 @@ function initTasks(){
     }).mouseover(function(){$(this).css('color', 'white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
+    $('.ui-slider-handle').tipsy({fallback:'Done?',gravity:'n',fade:true});
     activeDeletes();
     $('#input_task').val('').focus();
     $('#tg_selector').show();
+}
+function updateTaskOrderAndCache(){
+    var current_tgid = $('#tgid').html();
+    var tasks = $('li','#tasks_sortable');
+    var task_order = '';
+    var cacheContent = '';
+    var comma = ',';
+    var task = tasks.first();
+    for(var i=0;i<tasks.length;i++){
+        if(i==tasks.length-1){
+            comma = '';
+        }
+        task_order +=task.attr('tid')+comma;
+        var selected = '<option value="0" selected="selected"></option><option value="1"></option>';
+        if($('select',task).val()==1){
+            selected = '<option value="0"></option><option value="1" selected="true"></option>';
+        }
+        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="isDone"><select class="done" data-highlight="true">'+selected+'</select></div><div class="t_content_text">'+
+            task.children().eq(1).text()+'</div><div class="delete_task"></div></li>';
+        task = task.next();
+    }
+    $('#'+current_tgid,'#cache').html(cacheContent);
+    makeAjaxCall('post',{
+        tgid:current_tgid,
+        t_order:task_order,webaction:7},function(){});
 }
 function initTaskGroups(){
     $('.tg_title_text').click(function(){
@@ -44,12 +53,31 @@ function initTaskGroups(){
         $(this).addClass('tg_text_selected').parent().addClass('selected');
         $('#tasks_sortable').fadeOut(200, function(){
             var task_content = $(tgid,'#cache').html();
-             $(this).html(task_content).fadeIn(200, function(){
-                 initTasks();
+             $(this).html(task_content);
+             $('.isDone select','#tasks_sortable').each(function(i,item) {
+                $(item).toggleSwitch({
+                        highlight: $(item).data("highlight"),
+                        width: 25,
+                        change:function(){
+                        checkIfDone(item);
+                        updateTaskOrderAndCache();}
+                });
              });
-             resizeTaskPanel();
+            $(this).fadeIn(200, function(){
+                 initTasks();
+                 updateTaskOrderAndCache();
+            });
+            resizeTaskPanel();
         });
     });
+}
+function checkIfDone(item){
+    var opac = 1;
+    var isDone = $(item).val();
+    if(isDone==1){
+        opac = 0.2;
+    }
+    $(item).parent().siblings('.t_content_text').css('opacity',opac); 
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
@@ -80,7 +108,8 @@ function postCreateTask(){
             webaction:0},
         function(){
             var tgid = '#'+$('#tgid').html();
-            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="t_content_text">'+$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
+            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="isDone"><select class="done" data-highlight="true"><option value="0"></option><option value="1"></option></select></div><div class="t_content_text">'
++$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
         });
 }
@@ -100,20 +129,24 @@ function postDeleteTask(tid){
             $('#input_task').focus();
         })
         makeAjaxCall('post',
-            {tid:tid,webaction:2},function(){})
+            {tid:tid,webaction:2},function(){
+                updateTaskOrderAndCache();
+            })
 }
 function postUpdateTask(){
     $('.dialog').dialog('close');
     var tid = $('#tid','#t_dialog').html();
     var content = $('#update_task').val();
     var privacy = $('#u_t_privacy').val();
-    $('[tid="'+tid+'"]','#tasks_sortable').attr('privacy', privacy).children().first().html(content);
+    $('[tid="'+tid+'"]','#tasks_sortable').attr('privacy', privacy).children().eq(1).html(content);
     makeAjaxCall('post',{
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
         privacy:function(){return $('#u_t_privacy').val()},
         webaction:4
-        },function(){}
+        },function(){
+            updateTaskOrderAndCache();
+        }
         );
 }
 function postUpdateTaskGroup(){
@@ -202,6 +235,7 @@ function makeAjaxCall(type,param,callback){
     loading_image.show(0);
     $.ajax({
         url:'service/web/webactions.php',
+        timeout:6000,
         type:type,
         data:param,
         success:function(response){
@@ -249,7 +283,7 @@ function resizeTaskPanel(){
         $('#panel_task').css({'margin-left':0,'width':width});
         $('#pane_social').css({'right':-width+50,'width':width-50});
         $('#task_wrapper').css('width', width-40);
-        $('.t_content_text').css('width', width-100);
+        $('.t_content_text').css('width', width-150);
         $('.t_content').css('width', width-50);
         $('.input_task').css('width', width-50);
         $('#tg_selector').hide();
@@ -258,9 +292,9 @@ function resizeTaskPanel(){
         $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',550);
         $('#panel_group').removeClass('hidden');
         $('#panel_task').css({'margin-left':270,'width':width-270});
-        $('#pane_social').css({'right':-400,'width':400});
+        $('#pane_social').css({'right':-404,'width':400});
         $('#task_wrapper').css('width', width-310);
-        $('.t_content_text').css('width', width-370);
+        $('.t_content_text').css('width', width-420);
         $('.t_content').css('width', width-320);
         $('.input_task').css('width', width-320);
         $('#tg_selector').show(0);
@@ -274,14 +308,16 @@ $(document).ready(function(){
     loading_image = $('#loadingImage');
     isNewGroup = true;
     originalPriority = 0;
+    $('#tg_selector').click(function(){
+        $('#panel_group').hide();
+    });
     $('#logout').click(function(){
         location.replace("test/logout.php");
     });
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:true});
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
-    resizeTaskPanel();
+//    resizeTaskPanel();
     $('#panel_task').removeClass('hidden');
-    initTasks();
     initTaskGroups();
     checkIfGroupExists();
     $('#t_dialog').dialog("option", "buttons", [ 

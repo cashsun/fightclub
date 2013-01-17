@@ -33,5 +33,4 @@ function getAllByUid($uid){
     $user=new User($last_row);
     return $user;
 }
-
 ?>

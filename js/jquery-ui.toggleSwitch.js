@@ -21,7 +21,7 @@ jQuery.fn.toggleSwitch = function (params) {
         $(selectObj).find("option").each(function (i, item) {
             $contain.append("<label>" + $(item).text() + "</label>");
         }).end().addClass("ui-toggle-switch");
-
+//        $('label',$contain).hide();
         // generate slider with established options
         var $slider = $("<div />").slider({
             min: 0,
@@ -35,7 +35,7 @@ jQuery.fn.toggleSwitch = function (params) {
                     toggleValue(self.parentNode, roundedVal);
                 }, 11);
             },
-            range: (options.highlight && !$(selectObj).data("hideHighlight")) ? "max" : null
+            range: (options.highlight && !$(selectObj).data("hideHighlight")) ? "min" : 0
         }).width(options.width);
 
         // put slider in the middle
@@ -54,7 +54,14 @@ jQuery.fn.toggleSwitch = function (params) {
 
         function toggleValue(slideContain, index) {
             $(slideContain).find("label").eq(index).addClass("ui-state-active").siblings("label").removeClass("ui-state-active");
-            $(slideContain).parent().find("option").eq(index).attr("selected", true);
+            if(index==0){
+                $(slideContain).parent().find("option").eq(0).attr("selected", true);
+                $(slideContain).parent().find("option").eq(1).attr("selected", false);
+            }else{
+                $(slideContain).parent().find("option").eq(1).attr("selected", true);
+                $(slideContain).parent().find("option").eq(0).attr("selected", false);
+            }
+
             $(slideContain).find(".ui-slider").slider("value", index * 100);
         }
 
