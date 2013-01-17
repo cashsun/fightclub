@@ -8,5 +8,6 @@ class Actions{
     const updateTaskGroup = 5;
     const getFriends = 6;
     const updateTaskGroupTaskOrder = 7;
+    const completeTask = 8;
 }
 ?>
