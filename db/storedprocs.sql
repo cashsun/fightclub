@@ -10,6 +10,7 @@ DROP PROCEDURE IF EXISTS DeleteTaskGroup;
 DROP PROCEDURE IF EXISTS CreateTask;
 DROP PROCEDURE IF EXISTS DeleteTask;
 DROP PROCEDURE IF EXISTS UpdateTask;
+DROP PROCEDURE IF EXISTS CompleteTask;
 DROP PROCEDURE IF EXISTS GetAllMyTasks;
 DROP PROCEDURE IF EXISTS GetTask;
 DROP PROCEDURE IF EXISTS GetFriends;
@@ -148,6 +149,28 @@ UPDATE TASK
 SET TASK.content = mycontent,
 TASK.privacy = myprivacy
 WHERE TASK.tid = mytid;
+END // 
+DELIMITER ;
+
+/* COMPLETE A ORIGINAL TO-DO TASK */
+DELIMITER // 
+CREATE PROCEDURE CompleteTask(
+IN mytid int
+) 
+BEGIN
+DECLARE rowno INTEGER;
+SELECT COUNT(*) into @rowno
+FROM TASK
+WHERE TASK.privacy != 0
+AND TASK.tid = mytid;
+IF @rowno = 0 THEN
+  SELECT (-1) AS status;
+ELSE
+  UPDATE TASK
+  SET TASK.isdone = TRUE
+  WHERE TASK.tid = mytid;
+  SELECT (1) AS status;
+END IF;
 END // 
 DELIMITER ;
 
