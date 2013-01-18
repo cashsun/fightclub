@@ -17,6 +17,7 @@ function initTasks(){
     $('#input_task').val('').focus();
     $('#tg_selector').show();
 }
+//update t_order and cache
 function sync(){
     var current_tgid = $('#tgid').html();
     var tasks = $('li','#tasks_sortable');
@@ -29,9 +30,9 @@ function sync(){
             comma = '';
         }
         task_order +=task.attr('tid')+comma;
-        var selected = '<option value="0" selected="selected"></option><option value="1"></option>';
+        var selected = '<option value="0" selected></option><option value="1"></option>';
         if($('select',task).val()==1){
-            selected = '<option value="0"></option><option value="1" selected="true"></option>';
+            selected = '<option value="0"></option><option value="1" selected></option>';
         }
         cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="isDone"><select class="done" data-highlight="true">'+selected+'</select></div><div class="t_content_text">'+
             task.children().eq(1).text()+'</div><div class="delete_task"></div></li>';
@@ -59,13 +60,18 @@ function initTaskGroups(isFromClick){
                         highlight: $(item).data("highlight"),
                         width: 25,
                         change:function(){
-                        checkIfDone(item);
-                        sync();}
+                            makeAjaxCall('post',
+                            {tid:function(){return $(item).parent().parent().attr('tid')},
+                             isdone:function(){return $(item).val()},
+                            webaction:8},function(){
+                                sync();
+                                checkIfDone(item);
+                            });
+                        }
                 });
              });
             $(this).fadeIn(200, function(){
                  initTasks();
-                 sync();
             });
             resizeTaskPanel(isFromClick);
         });
@@ -78,7 +84,6 @@ function checkIfDone(item){
         opac = 0.2;
     }
     $(item).parent().siblings('.t_content_text').css('opacity',opac); 
-    
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
@@ -241,13 +246,13 @@ function makeAjaxCall(type,param,callback){
         data:param,
         success:function(response){
             if(response==-1&&response==-2){
-                alert('Operation failed!');
+                
                 location.reload();
             }
             tidnew =tgidnew= response;
         },
         error:function(){
-            alert('Operation failed!');
+            
         },
         complete:function(){
             if(callback != null){callback();}

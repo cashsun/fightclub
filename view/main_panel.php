@@ -5,11 +5,18 @@ if(isset($_SESSION['uid'])){
     $groups = $user->getTaskGroups();
 }
 function echoTask(Task $task){
-    
+    $isDone = $task->isDone();
+    if($isDone==0){
+        $option0 = 'selected';
+        $option1 = '';
+    }else{
+        $option0 = '';
+        $option1 = 'selected';
+    }
     echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner">
       <div class="isDone"><select class="done" data-highlight="true">
-      <option value="0"></option>
-      <option value="1"></option>
+      <option value="0" '.$option0.'></option>
+      <option value="1" '.$option1.'></option>
       </select></div><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
 }
 function echoSortedTasks(TaskGroup $group){

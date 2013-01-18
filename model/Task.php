@@ -11,7 +11,7 @@ class Task {
     private $content='';
     private $exp=0;
     private $date='20-12-2012 23:00:00';
-    private $isdone = false;
+    private $isdone = 0;
     private $privacy = 0;
 
     function __construct($taskInfo) {
