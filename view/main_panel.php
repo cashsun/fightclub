@@ -42,7 +42,7 @@ function echoSortedTasks(TaskGroup $group){
         </div>
         <button id="logout">Logout</button>
         <button id="friends_button" class="button">Friends</button>
-        <button id="news_button" class="button">News</button>
+        <button id="group_button" class="button">Group</button>
     </div>
     <div id="panel_main">
         <div id="panel_group">

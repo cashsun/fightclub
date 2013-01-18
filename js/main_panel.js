@@ -1,7 +1,7 @@
 function initTasks(){
     $('#tasks_sortable').sortable({
         update:function(){
-            updateTaskOrderAndCache();
+            sync();
         }
     });
     $('.t_content_text').click(function(){
@@ -17,7 +17,7 @@ function initTasks(){
     $('#input_task').val('').focus();
     $('#tg_selector').show();
 }
-function updateTaskOrderAndCache(){
+function sync(){
     var current_tgid = $('#tgid').html();
     var tasks = $('li','#tasks_sortable');
     var task_order = '';
@@ -42,7 +42,7 @@ function updateTaskOrderAndCache(){
         tgid:current_tgid,
         t_order:task_order,webaction:7},function(){});
 }
-function initTaskGroups(){
+function initTaskGroups(isFromClick){
     $('.tg_title_text').click(function(){
         var index = $('.tg_title_text').index(this);
         $('#tg_selector').css('top', index*51+'px');
@@ -60,14 +60,14 @@ function initTaskGroups(){
                         width: 25,
                         change:function(){
                         checkIfDone(item);
-                        updateTaskOrderAndCache();}
+                        sync();}
                 });
              });
             $(this).fadeIn(200, function(){
                  initTasks();
-                 updateTaskOrderAndCache();
+                 sync();
             });
-            resizeTaskPanel();
+            resizeTaskPanel(isFromClick);
         });
     });
 }
@@ -78,6 +78,7 @@ function checkIfDone(item){
         opac = 0.2;
     }
     $(item).parent().siblings('.t_content_text').css('opacity',opac); 
+    
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
@@ -130,7 +131,7 @@ function postDeleteTask(tid){
         })
         makeAjaxCall('post',
             {tid:tid,webaction:2},function(){
-                updateTaskOrderAndCache();
+                sync();
             })
 }
 function postUpdateTask(){
@@ -145,7 +146,7 @@ function postUpdateTask(){
         privacy:function(){return $('#u_t_privacy').val()},
         webaction:4
         },function(){
-            updateTaskOrderAndCache();
+            sync();
         }
         );
 }
@@ -222,7 +223,7 @@ function positionGroup(){
         $('.tg_title_text','#'+tgid).children().text(title);
     }
     
-    initTaskGroups();
+    initTaskGroups(false);
     $('#'+tgid,'#group_wrapper').children().eq(1).click();
     $('#'+tgid,'#group_wrapper').children().first().click(function(){
         if(confirm ("Delete this group?")){
@@ -274,33 +275,58 @@ function jsonAjaxRequest(type, url, param,callback){
     });
 }
 
-function resizeTaskPanel(){
+function resizeTaskPanel(isFromClick){
     var width = windowDiv.width();
     if(width<550){
-        $('#logout').hide(0);
-        $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',width-10);
-        $('#panel_group').addClass('hidden');
-        $('#panel_task').css({'margin-left':0,'width':width});
-        $('#pane_social').css({'right':-width+50,'width':width-50});
-        $('#task_wrapper').css('width', width-40);
-        $('.t_content_text').css('width', width-150);
-        $('.t_content').css('width', width-50);
-        $('.input_task').css('width', width-50);
-        $('#tg_selector').hide();
+        hideGroupPanel(isFromClick)
     }else{
-        $('#logout').show(0);
+        showGroupPanel(isFromClick);
+    }
+}
+function showGroupPanel(isFromClick){
+        var animaTime = (isFromClick==true?300:0);
+        var width = windowDiv.width();
+        showGroup = true;
+        if(!isFromClick){
+            $('#logout').show(0);
+        }
         $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',550);
         $('#panel_group').removeClass('hidden');
-        $('#panel_task').css({'margin-left':270,'width':width-270});
+        $('#task_wrapper').animate({width:width-310},animaTime);
+        $('.t_content_text').animate({width:width-420},animaTime);
+        $('.t_content').animate({width:width-320},animaTime);
+        $('.input_task').animate({width:width-320},animaTime);
+        $('#panel_task').animate({marginLeft:270,width:width-270},animaTime);
         $('#pane_social').css({'right':-404,'width':400});
-        $('#task_wrapper').css('width', width-310);
-        $('.t_content_text').css('width', width-420);
-        $('.t_content').css('width', width-320);
-        $('.input_task').css('width', width-320);
         $('#tg_selector').show(0);
+}
+function hideGroupPanel(isFromClick){
+        var animaTime = (isFromClick==true?300:0)
+        var width = windowDiv.width();
+        showGroup = false;
+        if(!isFromClick){
+            $('#logout').hide(0);
+        }
+        $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',width-10);
+        $('#panel_task').animate({marginLeft:0,width:width},animaTime,function(){
+            $('#panel_group').addClass('hidden');
+        });
+        $('#task_wrapper').animate({width:width-40},animaTime);
+        $('.t_content_text').animate({width:width-150},animaTime);
+        $('.t_content').animate({width:width-50},animaTime);
+        $('.input_task').animate({width:width-50},animaTime);
+        $('#pane_social').css({'right':-width+50,'width':width-50});
+        $('#tg_selector').hide();    
+}
+function toggleGroupPanel(){
+    if(showGroup){
+        hideGroupPanel(true);
+    }else{
+        showGroupPanel(true);
     }
 }
 $(document).ready(function(){
+    showGroup = true;
     $('button').button();
     $('input.datepicker').datepicker();
     tidnew = tgidnew= -1;
@@ -314,11 +340,14 @@ $(document).ready(function(){
     $('#logout').click(function(){
         location.replace("test/logout.php");
     });
+    $('#group_button').click(function(){
+        toggleGroupPanel();
+    })
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:true});
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
-//    resizeTaskPanel();
+
     $('#panel_task').removeClass('hidden');
-    initTaskGroups();
+    initTaskGroups(false);
     checkIfGroupExists();
     $('#t_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){

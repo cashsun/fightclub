@@ -239,13 +239,13 @@ body{
 .hidden{
     display: none
 }
-#logout,#friends_button,#news_button{
+#logout,#friends_button,#news_button,#group_button{
     width: 72px;
     height:25px; 
     float: left;
     margin-top: 7px
 }
-#friends_button,#news_button{
+#friends_button,#group_button{
     float: right
 }
 #logout{
@@ -254,7 +254,7 @@ body{
 #friends_button{
     margin-right: 20px
 }
-#news_button{
+#group_button{
     margin-right: 10px
 }
 .isDone{
@@ -262,7 +262,7 @@ body{
     float: left;
     width: 50px;
     height: 35px;
-    padding-top: 20px;
+    padding-top: 20px
 }
 
 
