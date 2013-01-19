@@ -4,20 +4,16 @@ function getFriendsAjaxCall(){
             {uid:function(){return $('#uid').html()},
             webaction: 6},
             function(r){
-              var friend_place_holder = $('#panel_social');
-              var htmlstr = "<ul>";
+              var friend_place_holder = $('#tabs-1','#social_tabs');
+              var htmlstr = "";
               if(r.length == 0){
                 
                 htmlstr += '<div class="message">You do not have any friend now.</div>';
               }
               for(var i = 0; i < r.length; i++)
               {
-                htmlstr += '<li><table><tr>'+'<td class="social-list-avatar" cellpadding="0" border="0" rowspan="2">'+
-                              '<img src="image/profile.png"/></td>'+
-                              '<td class="social-list-username">'+r[i].username+
-                              '</td></tr><tr><td class="social-list-fullname">'+r[i].firstname+' '+r[i].lastname+'</td></tr></table></li>';
+                htmlstr +=  '<img src="image/profile.png"/></td>'+r[i].username+r[i].firstname+' '+r[i].lastname;
               }
-              htmlstr += "</ul>";
               friend_place_holder.html(htmlstr);
             });
 }

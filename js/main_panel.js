@@ -84,6 +84,8 @@ function initTaskGroups(isFromClick){
             });
             resizeTaskPanel(isFromClick);
         });
+    }).dblclick(function(){
+        alert('double click')
     });
 }
 function checkIfDoneSingle(item){
@@ -385,8 +387,7 @@ $(document).ready(function(){
     
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:true});
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
-
-    $('#panel_task').removeClass('hidden');
+    $('#social_tabs').tabs();
     initTaskGroups(false);
     checkIfGroupExists();
     if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){

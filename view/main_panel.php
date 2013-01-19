@@ -79,7 +79,21 @@ function echoSortedTasks(TaskGroup $group){
                 echo '</ul>';
             ?></div>
         </div>
-        <div id="panel_social"></div>
+        <div id="panel_social">
+            <div id="social_tabs">
+                <ul>
+                <li><a href="#tabs-1">Friends</a></li>
+                <li><a href="#tabs-2">News</a></li>
+                <li><a href="#tabs-3">Backyard</a></li>
+                </ul>
+                <div class="tab" id="tabs-1">
+                </div>
+                <div class="tab" id="tabs-2">
+                </div>
+                <div class="tab" id="tabs-3">
+                </div>
+            </div>
+        </div>
     </div>
     <div id="cache" class="hidden">
         <?php

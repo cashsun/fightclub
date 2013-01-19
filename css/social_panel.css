@@ -1,41 +1,28 @@
-#panel_social ul{
+#panel_social{
+    position: absolute;
+    right: -404px;
+    width: 400px;
+    top: 1px;
+    height: 100%;
+    z-index: 20;
+    background-color: #f8f8f8;
+/*    border-left: 1px solid #ececec;*/
+    -webkit-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+    -ms-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+    -o-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 4px rgba(0,0,0,0.5);
 }
-
-#panel_social ul .message{
-  margin-top: 250px;
-  font-size: 20px;
-  text-align: center;
-  color:grey;
+#social_tabs{
+    height: 100%;
 }
-
-#panel_social ul li{
-  height: 50px;
-  color: grey;
-  padding: 10px;
-  margin-left: 100px;
+#social_tabs ul{
+    height: 30px;
 }
-
-#panel_social ul li .social-list-avatar{
-  width: 50px;
+#social_tabs li{
+    width:auto;
 }
-
-#panel_social ul li .social-list-avatar img{
-  height: 50px;
-}
-#panel_social ul li .social-list-username{
-  
-}
-
-#panel_social ul li .social-list-fullname{
-  font-size: 20px;
-}
-
-
-#panel_social ul li  table{
-  display: table;
-}
-
-#panel_social ul li  td{
-  text-align: left;
-  display:table-cell
+.tab{
+    height: 100%;
+    overflow-y:auto;
 }
