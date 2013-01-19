@@ -61,8 +61,8 @@ jQuery.fn.toggleSwitch = function (params) {
                 $(slideContain).parent().find("option").eq(1).attr("selected", true);
                 $(slideContain).parent().find("option").eq(0).attr("selected", false);
             }
-
             $(slideContain).find(".ui-slider").slider("value", index * 100);
+            $contain.find("label").eq(index).click();
         }
 
         // initialise selected option
