@@ -51,7 +51,12 @@ CREATE PROCEDURE GetUser(
 IN myuid int
 ) 
 BEGIN 
-SELECT * FROM USER
+SELECT USER.uid,
+USER.exp, USER.username,
+USER.firstname,
+USER.lastname, USER.email,
+USER.avatar
+FROM USER
 WHERE uid = myuid;
 END // 
 DELIMITER ;
@@ -255,7 +260,7 @@ BEGIN
 
 SELECT ft.uid, ft.fuid,
 USER.exp, USER.username,
-USER.passwd, USER.firstname,
+USER.firstname,
 USER.lastname, USER.email,
 USER.avatar
 FROM
