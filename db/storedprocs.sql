@@ -207,11 +207,11 @@ BEGIN
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,utg.t_order,
-utg.tgid, utg.priority, utg.title, utg.exp, TASK.privacy, 
+utg.tgid, utg.priority, utg.title, utg.exp, utg.type, TASK.privacy, 
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
 (
-  SELECT T_GROUP.tgid, T_GROUP.priority,
+  SELECT T_GROUP.tgid, T_GROUP.priority, T_GROUP.type,
   T_GROUP.title, IFNULL(T_GROUP.t_order,"") AS t_order,USER.uid, USER.username,
   USER.firstname, USER.lastname, USER.email, USER.exp
   FROM T_GROUP RIGHT JOIN USER
@@ -253,7 +253,11 @@ IN myuid int
 ) 
 BEGIN
 
-SELECT * 
+SELECT ft.uid, ft.fuid,
+USER.exp, USER.username,
+USER.passwd, USER.firstname,
+USER.lastname, USER.email,
+USER.avatar
 FROM
 (
   SELECT *
