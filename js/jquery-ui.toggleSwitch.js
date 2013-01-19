@@ -35,7 +35,7 @@ jQuery.fn.toggleSwitch = function (params) {
                     toggleValue(self.parentNode, roundedVal);
                 }, 11);
             },
-            range: (options.highlight && !$(selectObj).data("hideHighlight")) ? "min" : 0
+            range: (options.highlight && !$(selectObj).data("hideHighlight")) ? "max" : 0
         }).width(options.width);
 
         // put slider in the middle

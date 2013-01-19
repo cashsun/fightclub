@@ -1,9 +1,4 @@
 function initTasks(){
-    $('#tasks_sortable').sortable({
-        update:function(){
-            sync();
-        }
-    });
     $('.t_content_text').click(function(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
@@ -12,11 +7,13 @@ function initTasks(){
     }).mouseover(function(){$(this).css('color', 'white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
-    $('.ui-slider-handle').tipsy({fallback:'Done?',gravity:'n',fade:true});
+    $('input[type="checkbox"]','.isDone').tipsy({fallback:'Done?',gravity:'s',fade:true,offset:2});
     activeDeletes();
+    initIsDone();
     $('#input_task').val('').focus();
     $('#tg_selector').show();
 }
+
 //update t_order and cache
 function sync(){
     var current_tgid = $('#tgid').html();
@@ -30,11 +27,12 @@ function sync(){
             comma = '';
         }
         task_order +=task.attr('tid')+comma;
-        var selected = '<option value="0" selected></option><option value="1"></option>';
-        if($('select',task).val()==1){
-            selected = '<option value="0"></option><option value="1" selected></option>';
+        var checked = '';
+        var tcheckbox = task.children().eq(0).find('input');
+        if(tcheckbox.is(':checked')){
+            checked = 'checked';
         }
-        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="isDone"><select class="done" data-highlight="true">'+selected+'</select></div><div class="t_content_text">'+
+        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="isDone"><input type="checkbox" '+checked+'/></div><div class="t_content_text">'+
             task.children().eq(1).text()+'</div><div class="delete_task"></div></li>';
         task = task.next();
     }
@@ -42,6 +40,20 @@ function sync(){
     makeAjaxCall('post',{
         tgid:current_tgid,
         t_order:task_order,webaction:7},function(){});
+}
+function initIsDone(){
+    $('input[type="checkbox"]','.isDone').change(function(){
+        var tcheckbox = $(this);
+        var tid = tcheckbox.parent().parent().attr('tid');
+        var isdone = 0;
+        if(tcheckbox.is(':checked')){isdone = 1};
+        makeAjaxCall('post',
+        {tid:tid,
+            isdone:isdone,
+            webaction:8},function(){
+                checkIfDoneSingle(tcheckbox);
+            });
+    });
 }
 function initTaskGroups(isFromClick){
     $('.tg_title_text').click(function(){
@@ -55,35 +67,37 @@ function initTaskGroups(isFromClick){
         $('#tasks_sortable').fadeOut(200, function(){
             var task_content = $(tgid,'#cache').html();
              $(this).html(task_content);
-             $('.isDone select','#tasks_sortable').each(function(i,item) {
-                $(item).toggleSwitch({
-                        highlight: $(item).data("highlight"),
-                        width: 25,
-                        change:function(){
-                            makeAjaxCall('post',
-                            {tid:function(){return $(item).parent().parent().attr('tid')},
-                             isdone:function(){return $(item).val()},
-                            webaction:8},function(){
-                                sync();
-                                checkIfDone(item);
-                            });
-                        }
+             checkIfDoneMulti();
+              $('#tasks_sortable').sortable({
+                    update:function(){
+                        sync();
+                    }
                 });
-             });
             $(this).fadeIn(200, function(){
-                 initTasks();
+                initTasks();
             });
             resizeTaskPanel(isFromClick);
         });
     });
 }
-function checkIfDone(item){
+function checkIfDoneSingle(item){
     var opac = 1;
-    var isDone = $(item).val();
+    var isDone =0 
+    if($(item).is(':checked')){
+        isDone=1;
+    }
     if(isDone==1){
         opac = 0.2;
     }
     $(item).parent().siblings('.t_content_text').css('opacity',opac); 
+}
+function checkIfDoneMulti(){
+    var tcheckboxes = $('input[type="checkbox"]','#tasks_sortable');
+    var tcb = null;
+    for(var i=0;i<tcheckboxes.length;i++){
+        tcb = tcheckboxes.eq(i);
+        checkIfDoneSingle(tcb);
+    }
 }
 function activeDeletes(){
     $('.delete_task').click(function(){
@@ -114,7 +128,7 @@ function postCreateTask(){
             webaction:0},
         function(){
             var tgid = '#'+$('#tgid').html();
-            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="isDone"><select class="done" data-highlight="true"><option value="0"></option><option value="1"></option></select></div><div class="t_content_text">'
+            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="isDone"><input type="checkbox"/></div><div class="t_content_text">'
 +$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
         });
@@ -227,7 +241,6 @@ function positionGroup(){
     }else{
         $('.tg_title_text','#'+tgid).children().text(title);
     }
-    
     initTaskGroups(false);
     $('#'+tgid,'#group_wrapper').children().eq(1).click();
     $('#'+tgid,'#group_wrapper').children().first().click(function(){
@@ -245,9 +258,8 @@ function makeAjaxCall(type,param,callback){
         type:type,
         data:param,
         success:function(response){
-            if(response==-1&&response==-2){
-                
-                location.reload();
+            if(response==-1||response==-2){
+//                location.reload();
             }
             tidnew =tgidnew= response;
         },
@@ -283,8 +295,10 @@ function jsonAjaxRequest(type, url, param,callback){
 function resizeTaskPanel(isFromClick){
     var width = windowDiv.width();
     if(width<550){
+        showGroup = false;
         hideGroupPanel(isFromClick)
     }else{
+        showGroup = true;
         showGroupPanel(isFromClick);
     }
 }
@@ -292,9 +306,6 @@ function showGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?300:0);
         var width = windowDiv.width();
         showGroup = true;
-        if(!isFromClick){
-            $('#logout').show(0);
-        }
         $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',550);
         $('#panel_group').removeClass('hidden');
         $('#task_wrapper').animate({width:width-310},animaTime);
@@ -304,14 +315,15 @@ function showGroupPanel(isFromClick){
         $('#panel_task').animate({marginLeft:270,width:width-270},animaTime);
         $('#pane_social').css({'right':-404,'width':400});
         $('#tg_selector').show(0);
+        if(!isFromClick){
+            $('#logout').show(0);
+            $('.ui-toggle-switch').find('label').eq(0).click();
+        }
 }
 function hideGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?300:0)
         var width = windowDiv.width();
         showGroup = false;
-        if(!isFromClick){
-            $('#logout').hide(0);
-        }
         $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',width-10);
         $('#panel_task').animate({marginLeft:0,width:width},animaTime,function(){
             $('#panel_group').addClass('hidden');
@@ -321,7 +333,11 @@ function hideGroupPanel(isFromClick){
         $('.t_content').animate({width:width-50},animaTime);
         $('.input_task').animate({width:width-50},animaTime);
         $('#pane_social').css({'right':-width+50,'width':width-50});
-        $('#tg_selector').hide();    
+        $('#tg_selector').hide();
+        if(!isFromClick){
+            $('#logout').hide(0);
+            $('.ui-toggle-switch').find('label').eq(1).click();
+        }
 }
 function toggleGroupPanel(){
     if(showGroup){
@@ -345,9 +361,15 @@ $(document).ready(function(){
     $('#logout').click(function(){
         location.replace("test/logout.php");
     });
-    $('#group_button').click(function(){
-        toggleGroupPanel();
-    })
+    $('#show_group').each(function(i,item) {
+                $(item).toggleSwitch({
+                        highlight: $(item).data("highlight"),
+                        width: 25
+                });
+    });
+    $('.ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
+    $('.ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
+    
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:true});
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
 

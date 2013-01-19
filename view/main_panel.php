@@ -6,18 +6,12 @@ if(isset($_SESSION['uid'])){
 }
 function echoTask(Task $task){
     $isDone = $task->isDone();
-    if($isDone==0){
-        $option0 = 'selected';
-        $option1 = '';
-    }else{
-        $option0 = '';
-        $option1 = 'selected';
+    $option = '';
+    if($isDone==1){
+        $option = 'checked';
     }
     echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner">
-      <div class="isDone"><select class="done" data-highlight="true">
-      <option value="0" '.$option0.'></option>
-      <option value="1" '.$option1.'></option>
-      </select></div><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
+      <div class="isDone"><input type="checkbox" '.$option.'/></div><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
 }
 function echoSortedTasks(TaskGroup $group){
     $order = $group->getTaskOrder();
@@ -49,7 +43,7 @@ function echoSortedTasks(TaskGroup $group){
         </div>
         <button id="logout">Logout</button>
         <button id="friends_button" class="button">Friends</button>
-        <button id="group_button" class="button">Group</button>
+        <div id="group_button"><select data-highlight="true" id="show_group"><option>on</option><option>off</option></select></div>
     </div>
     <div id="panel_main">
         <div id="panel_group">
