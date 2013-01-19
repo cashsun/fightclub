@@ -28,11 +28,15 @@ function sync(){
         }
         task_order +=task.attr('tid')+comma;
         var checked = '';
+        var isNonIE8 = '';
         var tcheckbox = task.children().eq(0).find('input');
         if(tcheckbox.is(':checked')){
-            checked = 'checked';
+            checked='checked'
         }
-        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="isDone"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div class="t_content_text">'+
+        if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
+            isNonIE8 = 'isDoneNonIE8';
+        }
+        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div class="t_content_text">'+
             task.children().eq(1).text()+'</div><div class="delete_task"></div></li>';
         task = task.next();
     }
@@ -52,7 +56,7 @@ function initIsDone(){
         {tid:tid,
             isdone:isdone,
             webaction:8},function(){
-            sync();
+                sync();
             });
     });
 }
@@ -86,9 +90,12 @@ function checkIfDoneSingle(item){
     var opac = 1;
     if($(item).is(':checked')){
         opac = 0.2;
-        $(item).parent().addClass('checked');
+        if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
+            $(item).parent().addClass('checked');
+        }
+        
     }else{
-        $(item).parent().removeClass('checked');
+        $(item).parent().removeClass('checked'); 
     }
     $(item).parent().siblings('.t_content_text').css('opacity',opac); 
 }
@@ -378,6 +385,9 @@ $(document).ready(function(){
     $('#panel_task').removeClass('hidden');
     initTaskGroups(false);
     checkIfGroupExists();
+    if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
+        $('.isDone').addClass('isDoneNonIE8');
+    }
     $('#t_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($('#update_task').val()!=''){
