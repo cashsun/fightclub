@@ -136,7 +136,11 @@ function postCreateTask(){
             webaction:0},
         function(){
             var tgid = '#'+$('#tgid').html();
-            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="isDone"><input class="isdone_checkbox" type="checkbox"/></div><div class="t_content_text">'
+            var isNonIE8 = '';
+            if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
+                isNonIE8 = 'isDoneNonIE8';
+             }
+            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div class="t_content_text">'
 +$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
         });
@@ -267,7 +271,7 @@ function makeAjaxCall(type,param,callback){
         data:param,
         success:function(response){
             if(response==-1){
-//                location.reload();
+                location.reload();
             }
             tidnew =tgidnew= response;
         },
