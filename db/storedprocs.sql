@@ -80,11 +80,12 @@ IN mypri int,
 IN mytype int,
 IN mytorder varchar(65535)
 ) 
-BEGIN 
+BEGIN
 UPDATE T_GROUP
 SET title = mytitle, priority = mypri,
 type = mytype, t_order = mytorder
 WHERE tgid = mytgid;
+SELECT ROW_COUNT() AS rows_affected;
 END // 
 DELIMITER ;
 
@@ -98,6 +99,7 @@ BEGIN
 UPDATE T_GROUP
 SET t_order = mytorder
 WHERE tgid = mytgid;
+SELECT ROW_COUNT() AS rows_affected;
 END // 
 DELIMITER ;
 
@@ -109,6 +111,7 @@ IN mytgid int
 BEGIN 
 DELETE FROM T_GROUP
 WHERE T_GROUP.tgid = mytgid;
+SELECT ROW_COUNT() AS rows_affected;
 END // 
 DELIMITER ;
 
@@ -134,6 +137,7 @@ IN mytid int
 BEGIN 
 DELETE FROM TASK
 WHERE TASK.tid = mytid;
+SELECT ROW_COUNT() AS rows_affected;
 END // 
 DELIMITER ;
 
@@ -149,6 +153,7 @@ UPDATE TASK
 SET TASK.content = mycontent,
 TASK.privacy = myprivacy
 WHERE TASK.tid = mytid;
+SELECT ROW_COUNT() AS rows_affected;
 END // 
 DELIMITER ;
 
