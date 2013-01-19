@@ -32,7 +32,7 @@ function sync(){
         if(tcheckbox.is(':checked')){
             checked = 'checked';
         }
-        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="isDone"><input type="checkbox" '+checked+'/></div><div class="t_content_text">'+
+        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="isDone"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div class="t_content_text">'+
             task.children().eq(1).text()+'</div><div class="delete_task"></div></li>';
         task = task.next();
     }
@@ -42,8 +42,9 @@ function sync(){
         t_order:task_order,webaction:7},function(){});
 }
 function initIsDone(){
-    $('input[type="checkbox"]','.isDone').change(function(){
+    $('input[type="checkbox"]','.isDone').change(function(){       
         var tcheckbox = $(this);
+        checkIfDoneSingle(tcheckbox);
         var tid = tcheckbox.parent().parent().attr('tid');
         var isdone = 0;
         if(tcheckbox.is(':checked')){isdone = 1};
@@ -51,7 +52,7 @@ function initIsDone(){
         {tid:tid,
             isdone:isdone,
             webaction:8},function(){
-                checkIfDoneSingle(tcheckbox);
+            sync();
             });
     });
 }
@@ -67,6 +68,7 @@ function initTaskGroups(isFromClick){
         $('#tasks_sortable').fadeOut(200, function(){
             var task_content = $(tgid,'#cache').html();
              $(this).html(task_content);
+             sync();
              checkIfDoneMulti();
               $('#tasks_sortable').sortable({
                     update:function(){
@@ -82,12 +84,11 @@ function initTaskGroups(isFromClick){
 }
 function checkIfDoneSingle(item){
     var opac = 1;
-    var isDone =0 
     if($(item).is(':checked')){
-        isDone=1;
-    }
-    if(isDone==1){
         opac = 0.2;
+        $(item).parent().addClass('checked');
+    }else{
+        $(item).parent().removeClass('checked');
     }
     $(item).parent().siblings('.t_content_text').css('opacity',opac); 
 }
@@ -128,7 +129,7 @@ function postCreateTask(){
             webaction:0},
         function(){
             var tgid = '#'+$('#tgid').html();
-            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="isDone"><input type="checkbox"/></div><div class="t_content_text">'
+            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="isDone"><input class="isdone_checkbox" type="checkbox"/></div><div class="t_content_text">'
 +$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
         });
@@ -258,7 +259,7 @@ function makeAjaxCall(type,param,callback){
         type:type,
         data:param,
         success:function(response){
-            if(response==-1||response==-2){
+            if(response==-1){
 //                location.reload();
             }
             tidnew =tgidnew= response;
@@ -367,6 +368,7 @@ $(document).ready(function(){
                         width: 25
                 });
     });
+    $('#group_button').tipsy({fallback:'Group panel',gravity:'n',fade:true,offset:0});
     $('.ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
     $('.ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
     
@@ -440,6 +442,6 @@ $(document).ready(function(){
             }
         }
     });
-    $.imgpreload(['image/button_close.png','theme/images/modalClose.png']);
+    $.imgpreload(['image/checkbox.png','image/checkbox_checked.png','image/button_close.png','theme/images/modalClose.png']);
 });
 

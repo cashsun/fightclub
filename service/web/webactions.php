@@ -28,7 +28,7 @@ if(isset($_POST['webaction'])){
             updateTaskGroupTaskOrder();
         case Actions::toggleTaskComplete:
             toggleTaskComplete();
-        default :echo -2;
+        default :echo -1;
     }
 }else{
     echo -1;

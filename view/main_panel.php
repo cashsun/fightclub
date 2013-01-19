@@ -11,7 +11,7 @@ function echoTask(Task $task){
         $option = 'checked';
     }
     echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner">
-      <div class="isDone"><input type="checkbox" '.$option.'/></div><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
+      <div class="isDone"><input class="isdone_checkbox" type="checkbox" '.$option.'/></div><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
 }
 function echoSortedTasks(TaskGroup $group){
     $order = $group->getTaskOrder();

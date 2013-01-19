@@ -267,7 +267,17 @@ body{
     float: left;
     width: 50px;
     height: 35px;
-    padding-top: 20px
+    padding-top: 15px;
+    background-image: url('../image/checkbox.png');
+    background-position: center center;
+}
+.checked{
+    background-image: url('../image/checkbox_checked.png');
+}
+.isdone_checkbox{
+    cursor:pointer;
+    opacity:0;
+    
 }
 
 
