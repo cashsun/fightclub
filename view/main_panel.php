@@ -33,9 +33,9 @@ function echoSortedTasks(TaskGroup $group){
     }
 }
 ?>
-<body onload="showPanel()">
+<body >
 <div id="loadingImage"></div>
-<div id="master" class="hidden">
+<div id="master" >
     <div id="navibar">
         <img id="profile_image" src="image/profile.png" alt=""/>
         <div id="profile_username" class="username">
@@ -57,9 +57,9 @@ function echoSortedTasks(TaskGroup $group){
                         $isSelect = "";
                         if($i==0){
                             $isSelect = " selected";
-                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group"></div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
+                            echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group"></div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
                         }else{
-                            echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group"></div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
+                            echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group"></div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
                         }  
                     }
                 }
@@ -98,7 +98,7 @@ function echoSortedTasks(TaskGroup $group){
     <div id="cache" class="hidden">
         <?php
             foreach($groups as $group){
-                echo '<div priority="'.$group->getPriority().'" id="'.$group->getTgid().'">';
+                echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'">';
                 echoSortedTasks($group);
                 echo '</div>';
             }
@@ -120,6 +120,17 @@ function echoSortedTasks(TaskGroup $group){
             <option value="7">urgent</option>
             <option value="8">urgent+</option>
             <option value="9">immediate</option>
+        </select><br/><br/>
+        type:
+        <select id="g_type">
+            <option value="0">Work</option>
+            <option value="1">Education</option>
+            <option value="2">Business</option>
+            <option value="3">Finance</option>
+            <option value="4">Travel</option>
+            <option value="5">Sports</option>
+            <option value="6">Entertainment</option>
+            <option value="7">Lifestyle</option>
         </select>
     </div>
     <div id="t_dialog" class="dialog" title="Update Task">
@@ -144,6 +155,17 @@ function echoSortedTasks(TaskGroup $group){
             <option value="7">urgent</option>
             <option value="8">urgent+</option>
             <option value="9">immediate</option>
+        </select><br/><br/>
+        type:
+        <select id="u_g_type">
+            <option value="0">Work</option>
+            <option value="1">Education</option>
+            <option value="2">Business</option>
+            <option value="3">Finance</option>
+            <option value="4">Travel</option>
+            <option value="5">Sports</option>
+            <option value="6">Entertainment</option>
+            <option value="7">Lifestyle</option>
         </select>
     </div>
 </div>

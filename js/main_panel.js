@@ -7,10 +7,9 @@ function initTasks(){
     }).mouseover(function(){$(this).css('color', 'white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
-    $('input[type="checkbox"]','.isDone').tipsy({fallback:'Done?',gravity:'s',fade:true,offset:2});
     activeDeletes();
     initIsDone();
-    $('#input_task').val('').focus();
+    if(!$("#u_g_dialog").dialog( "isOpen" )){$('#input_task').val('').focus();}
     $('#tg_selector').show();
 }
 
@@ -85,7 +84,7 @@ function initTaskGroups(isFromClick){
             resizeTaskPanel(isFromClick);
         });
     }).dblclick(function(){
-        alert('double click')
+        $('#u_group').click();
     });
 }
 function checkIfDoneSingle(item){
@@ -124,7 +123,7 @@ function postCreateTaskGroup(){
             {uid:function(){return $('#uid').html()},
             title:function(){return $.trim($('#input_group').val())},
             priority: function(){return $('#g_priority').val()},
-            type: function(){return 0},
+            type: function(){return $('#g_type').val()},
             //todo
             webaction:1},function(){
                 positionGroup();
@@ -188,13 +187,14 @@ function postUpdateTaskGroup(){
     var tgid = $('#tgid').html();
     var title = $.trim($('#update_group').val());
     var priority = $('#u_g_priority').val();
+    var gtype = $('#u_g_type').val();
     isNewGroup = false;
     positionGroup();
     makeAjaxCall('post',{
         tgid:tgid,
         title:title,
         priority:priority,
-        type:function(){return 0},
+        type:gtype,
         webaction:5},function(){});
 }
 function checkIfGroupExists(){
@@ -208,6 +208,7 @@ function checkIfGroupExists(){
 function positionGroup(){
     $('#task_wrapper').show();     
     var title = $.trim($('#update_group').val());
+    var type = $('#u_g_type').val();
     var priority = $('#u_g_priority').val();
     var tgid = $('#tgid').html();
     var cachecontent = null;
@@ -220,12 +221,13 @@ function positionGroup(){
             tgid=tgidnew;
             title = $.trim($('#input_group').val());
             priority = $('#g_priority').val();
-            cachecontent = '<div priority="'+priority+'" id="'+tgid+'"></div>';
+            type = $('#g_type').val();
+            cachecontent = '<div gtype="'+type+'" priority="'+priority+'" id="'+tgid+'"></div>';
             $('#cache').prepend(cachecontent);
         }else{
             $('#'+tgid,'#group_wrapper').remove();
         }
-        tgcontent = '<div priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
+        tgcontent = '<div gtype="'+type+'" priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
         groups = $('.tg_title','#group_wrapper');
         if(groups.length == 0){
             $('#group_wrapper').prepend(tgcontent);
@@ -238,9 +240,7 @@ function positionGroup(){
                     break;
                 }else if(priority==p_temp){
                     var id_temp = group.attr('id');
-                    if(id_temp>tgid){
-                        group.after(tgcontent);
-                    }else{
+                    if(id_temp<tgid){
                         group.before(tgcontent);
                     }
                     break;
@@ -254,6 +254,8 @@ function positionGroup(){
         }
     }else{
         $('.tg_title_text','#'+tgid).children().text(title);
+        $('#'+tgid,'#group_wrapper').attr('gtype',type);
+        $('#'+tgid,'#cache').attr('gtype',type);
     }
     initTaskGroups(false);
     $('#'+tgid,'#group_wrapper').children().eq(1).click();
@@ -418,6 +420,7 @@ $(document).ready(function(){
         originalPriority = $(tgid).attr('priority');
         $('#update_group').val($('.tg_title_text',tgid).text());
         $('#u_g_priority').val(originalPriority);
+        $('#u_g_type').val($(tgid).attr('gtype'));
         $('#u_g_dialog').dialog('open');
     }).tipsy({fallback:'edit group content',gravity:'s'});
     

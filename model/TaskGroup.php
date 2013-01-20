@@ -12,6 +12,7 @@ class TaskGroup{
     private $priority=0;
     private $date='20-12-2012 23:00:00';
     private $t_order = '';
+    private $type = 0;
     
     function __construct($groupInfo) {
         if(isset($groupInfo['tgid']))
@@ -26,6 +27,8 @@ class TaskGroup{
             $this->date = $groupInfo['date'];
         if(isset($groupInfo['t_order']))
             $this->t_order = $groupInfo['t_order'];
+        if(isset($groupInfo['type']))
+            $this->type = $groupInfo['type'];
     }
     
     function getTgid(){
@@ -60,6 +63,10 @@ class TaskGroup{
             }
         }
         return null;
+    }
+    
+    function getGType(){
+        return $this->type;
     }
 }
 ?>
