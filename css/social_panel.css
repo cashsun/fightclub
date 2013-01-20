@@ -18,11 +18,17 @@
 }
 #social_tabs ul{
     height: 30px;
+    border-bottom: none;
 }
 #social_tabs li{
-    width:auto;
+    background-color: #eaeaea
+}
+#social_tabs .ui-state-active{
+    background: none;
+    border-bottom: none;
 }
 .tab{
     height: 100%;
     overflow-y:auto;
+    background:none;
 }
