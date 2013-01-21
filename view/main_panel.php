@@ -33,9 +33,9 @@ function echoSortedTasks(TaskGroup $group){
     }
 }
 ?>
-<body >
+<body onload="showPanel()">
 <div id="loadingImage"></div>
-<div id="master" >
+<div id="master" class="hidden">
     <div id="navibar">
         <img id="profile_image" src="image/profile.png" alt=""/>
         <div id="profile_username" class="username">
@@ -175,7 +175,7 @@ function echoSortedTasks(TaskGroup $group){
             setTimeout(function(){
                 $('#master').fadeIn(300,function(){
                 loading_image.fadeOut(100,function(){
-                    $('panel_main').show(300);
+                    $('#input_task').focus();
                 });
             });
             },200);
