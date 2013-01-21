@@ -4,7 +4,7 @@ function initTasks(){
         $('#update_task').val(($(this).text()));
         $('#u_t_privacy').val($(this).parent().attr('privacy'));
         $('#t_dialog').dialog('open');
-    }).mouseover(function(){$(this).css('color', 'white');
+    }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
     activeDeletes();
@@ -90,7 +90,7 @@ function initTaskGroups(isFromClick){
 function checkIfDoneSingle(item){
     var opac = 1;
     if($(item).is(':checked')){
-        opac = 0.2;
+        opac = 0.4;
         if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
             $(item).parent().addClass('checked');
         }
@@ -266,7 +266,7 @@ function positionGroup(){
         }
     });
 }
-function makeAjaxCall(type,param,callback){
+function makeAjaxCall(type,param,callback,successCallback){
     loading_image.show(0);
     $.ajax({
         url:'service/web/webactions.php',
@@ -276,6 +276,8 @@ function makeAjaxCall(type,param,callback){
         success:function(response){
             if(response==-1){
                 location.reload();
+            }else if(successCallback!=null){
+                successCallback(response);
             }
             tidnew =tgidnew= response;
         },
@@ -319,7 +321,7 @@ function resizeTaskPanel(isFromClick){
     }
 }
 function showGroupPanel(isFromClick){
-        var animaTime = (isFromClick==true?300:0);
+        var animaTime = (isFromClick==true?200:0);
         var width = windowDiv.width();
         showGroup = true;
         $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',550);
@@ -337,7 +339,7 @@ function showGroupPanel(isFromClick){
         }
 }
 function hideGroupPanel(isFromClick){
-        var animaTime = (isFromClick==true?300:0)
+        var animaTime = (isFromClick==true?200:0)
         var width = windowDiv.width();
         showGroup = false;
         $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',width-10);
