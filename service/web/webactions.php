@@ -95,10 +95,11 @@ function updateTaskGroupTaskOrder(){
 }
 function getFriends(){
     if(isset($_POST['uid'])){
-        $db = new DBadapter();
-        $db->connect();
-        $result = $db->getFriends($_POST['uid']);
-        echo json_encode($result);
+//        $db = new DBadapter();
+//        $db->connect();
+//        $result = $db->getFriends($_POST['uid']);
+//        echo json_encode($result);
+		
     }
 }
 function toggleTaskComplete(){
