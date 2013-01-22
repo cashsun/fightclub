@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $('#social_tabs').tabs();
     $('#friends_button').toggle(function(){
     $('#panel_social').animate({right: 0},300,function(){
         //ftype=0,friends only ||ftype=1, people I follow

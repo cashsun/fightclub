@@ -32,3 +32,18 @@
     overflow-y:auto;
     background:none;
 }
+#input_friend{
+    width:100%;
+    border: 5px solid #eaeaea
+}
+.friend_box{
+    width: 180px;
+    margin-top: 30px;
+    float:left
+}
+#friends_radios .ui-state-active{
+    background: #0a54a5 none
+}
+#friends_radios label{
+    width:60px
+}

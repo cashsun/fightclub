@@ -331,7 +331,7 @@ function showGroupPanel(isFromClick){
         $('.t_content').animate({width:width-320},animaTime);
         $('.input_task').animate({width:width-320},animaTime);
         $('#panel_task').animate({marginLeft:270,width:width-270},animaTime);
-        $('#pane_social').css({'right':-404,'width':400});
+        $('#panel_social').css({'right':-404,'width':400});
         $('#tg_selector').show(0);
         if(!isFromClick){
             $('#logout').show(0);
@@ -350,7 +350,7 @@ function hideGroupPanel(isFromClick){
         $('.t_content_text').animate({width:width-150},animaTime);
         $('.t_content').animate({width:width-50},animaTime);
         $('.input_task').animate({width:width-50},animaTime);
-        $('#pane_social').css({'right':-width+50,'width':width-50});
+        $('#panel_social').css({'right':-width+50,'width':width-50});
         $('#tg_selector').hide();
         if(!isFromClick){
             $('#logout').hide(0);
@@ -391,7 +391,6 @@ $(document).ready(function(){
     
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:true});
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
-    $('#social_tabs').tabs();
     initTaskGroups(false);
     checkIfGroupExists();
     if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
