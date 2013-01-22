@@ -1,10 +1,12 @@
 $(document).ready(function(){
     $('#social_tabs').tabs();
+    $("#friends_radios").buttonset();
+    $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});
     $('#friends_button').toggle(function(){
     $('#panel_social').animate({right: 0},300,function(){
         //ftype=0,friends only ||ftype=1, people I follow
         makeSocialAjaxCall('get','view/friends.php',{ftype:0},function(resp){
-            $('#tabs-1').html(resp);
+            $('#friends_wrapper').html(resp);
         },function(){});
     });
     },function(){
@@ -28,13 +30,11 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback){
             }
         },
         error:function(){
-            alert(3);
         },
         complete:function(){
             if(callback != null){callback();}
             else{
-                alert(2)
-//                location.reload();
+                location.reload();
             }
             loading_image.hide(0);
         }

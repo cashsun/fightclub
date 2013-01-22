@@ -385,11 +385,11 @@ $(document).ready(function(){
                         width: 25
                 });
     });
-    $('#group_button').tipsy({fallback:'Group panel',gravity:'n',fade:true,offset:0});
+    $('#group_button').tipsy({fallback:'Group panel',gravity:'n',fade:false,offset:0});
     $('.ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
     $('.ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
     
-    $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:true});
+    $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:false});
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     initTaskGroups(false);
     checkIfGroupExists();
