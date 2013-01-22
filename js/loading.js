@@ -15,6 +15,10 @@ function startAnimation(){
         document.getElementById('loadingImage').style.backgroundImage='url('+cImageSrc+')';
         document.getElementById('loadingImage').style.width=cWidth+'px';
         document.getElementById('loadingImage').style.height=cHeight+'px';
+        
+        document.getElementById('social_loading').style.backgroundImage='url('+cImageSrc+')';
+        document.getElementById('social_loading').style.width=cWidth+'px';
+        document.getElementById('social_loading').style.height=cHeight+'px';
 
         //FPS = Math.round(100/(maxSpeed+2-speed));
         FPS = Math.round(100/cSpeed);
@@ -37,7 +41,7 @@ function continueAnimation(){
         }
 
         document.getElementById('loadingImage').style.backgroundPosition=(-cXpos)+'px 0';
-
+        document.getElementById('social_loading').style.backgroundPosition=(-cXpos)+'px 0';
         setTimeout('continueAnimation()', SECONDS_BETWEEN_FRAMES*1000);
 }
 

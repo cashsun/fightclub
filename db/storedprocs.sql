@@ -292,18 +292,18 @@ DELIMITER ;
 /* SEARCH FRIENDS */
 DELIMITER // 
 CREATE PROCEDURE SearchFriends(
-IN myinput VARCHAR(30)
+IN myuid int,
+IN myinput VARCHAR(50)
 ) 
 BEGIN
-
 SELECT USER.uid,
 USER.exp, USER.username,
 USER.firstname,
 USER.lastname, USER.email,
 USER.avatar
 FROM USER
-WHERE username = myinput
-OR firstname = myinput
-OR lastname = myinput;
+WHERE uid != myuid AND (username LIKE CONCAT('"%', myinput, '%"')
+OR firstname LIKE CONCAT('"%', myinput, '%"')
+OR lastname LIKE CONCAT('"%', myinput, '%"'));
 END // 
 DELIMITER ;

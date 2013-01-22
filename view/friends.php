@@ -8,11 +8,17 @@
     function getFriends($uid,$ftype){
         $db = new DBadapter();
         $db->connect();
-        if($ftype==0){
+        switch($ftype){
+        case 0:
             $result = $db->getFriends($uid);
-        }else{
-            
+            break;
+        case 1:
+            $result = $db->searchFriends($uid,$_GET['key']);
+            break;
+        default:
+            break;
         }
+        
         $friends = Array();
         $counter = 0;
         while($row =  mysql_fetch_array($result)){
@@ -25,8 +31,8 @@
     function echoFriend($friend){
         echo '<div class="friend_box"><div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div></div>';
     }
-    if($friends[0]==null){
-        echo '<br/><br/>Oops,you don\'t have any friend<br/><br/>T3T';
+    if(!isset($friends[0])){
+        echo '<br/><br/>Oops, no result.<br/><br/>T3T';
     }else{
         foreach($friends as $friend){
             echoFriend($friend);

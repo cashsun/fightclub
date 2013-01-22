@@ -47,3 +47,8 @@
 #friends_radios label{
     width:60px
 }
+#social_loading{
+    position: absolute;
+    margin-top: 200px;
+    margin-left: 130px
+}
