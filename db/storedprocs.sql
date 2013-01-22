@@ -302,8 +302,8 @@ USER.firstname,
 USER.lastname, USER.email,
 USER.avatar
 FROM USER
-WHERE uid != myuid AND (username LIKE CONCAT('"%', myinput, '%"')
-OR firstname LIKE CONCAT('"%', myinput, '%"')
-OR lastname LIKE CONCAT('"%', myinput, '%"'));
+WHERE uid != myuid AND (LOWER(username) LIKE CONCAT('%', LOWER(myinput), '%')
+OR LOWER(firstname) LIKE CONCAT('%', LOWER(myinput), '%')
+OR LOWER(lastname) LIKE CONCAT('%', LOWER(myinput), '%'));
 END // 
 DELIMITER ;
