@@ -14,6 +14,8 @@ DROP PROCEDURE IF EXISTS ToogleTaskComplete;
 DROP PROCEDURE IF EXISTS GetAllMyTasks;
 DROP PROCEDURE IF EXISTS GetTask;
 DROP PROCEDURE IF EXISTS GetFriends;
+DROP PROCEDURE IF EXISTS AddFriends;
+DROP PROCEDURE IF EXISTS SearchFriends;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -271,5 +273,37 @@ FROM
 ) ft
 LEFT JOIN USER
 ON USER.uid = ft.fuid;
+END // 
+DELIMITER ;
+
+
+/* ADD FRIEND */
+DELIMITER // 
+CREATE PROCEDURE AddFriends(
+IN myuid int,
+IN myfuid int
+) 
+BEGIN
+INSERT INTO FRIEND (uid, fuid)
+VALUES(myuid, myfuid);
+END // 
+DELIMITER ;
+
+/* SEARCH FRIENDS */
+DELIMITER // 
+CREATE PROCEDURE SearchFriends(
+IN myinput VARCHAR(30)
+) 
+BEGIN
+
+SELECT USER.uid,
+USER.exp, USER.username,
+USER.firstname,
+USER.lastname, USER.email,
+USER.avatar
+FROM USER
+WHERE username = myinput
+OR firstname = myinput
+OR lastname = myinput;
 END // 
 DELIMITER ;
