@@ -3,7 +3,7 @@ root {
 }
 body,a,a:visited,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ol,ul,th,td,p,blockquote,pre,form,fieldset,legend,textarea,hr{
     margin:0; padding:0;
-    font-family: "Helvetica","Arial" ! important;
+    font-family: "Microsoft Yahei","Helvetica","Arial" ! important;
     font-smooth: always;
     font-size: 0.9em;
     text-decoration: none;
@@ -253,7 +253,7 @@ body{
 }
 #group_button{
     margin-right: 5px;
-    width:95px;
+    width:100px;
     margin-top: 10px; 
 }
 #group_button label{

@@ -19,6 +19,8 @@ $(document).ready(function(){
             showSocial = false; 
     }
 });
+});
+
 
 function makeSocialAjaxCall(type,url,param,successCallback,callback){
     $('#social_loading').show(0);
