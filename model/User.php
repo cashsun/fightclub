@@ -10,6 +10,7 @@ class User{
     private $exp = 0;
     private $email = '';
     private $avatar = 0;
+    private $isfriend = false;
     /**
      *real time calculated
      */
@@ -38,6 +39,8 @@ class User{
             $this->taskgroups = $userInfo['taskgroups'];
         if(isset($userInfo['avatar']))
             $this->avatar = $userInfo['avatar'];
+        if(isset($userInfo['fuid']))
+            $this->isfriend = true;
     }
     
     function setExp($exp){
@@ -81,6 +84,10 @@ class User{
     
     function getAvatar(){
         return $this->avatar;
+    }
+    
+    function isFriend(){
+        return $this->isfriend;
     }
 }
 ?>

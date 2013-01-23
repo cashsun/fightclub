@@ -1,3 +1,23 @@
 $(document).ready(function(){
-
+    $('.add_friend').button().click(function(){
+        var uid = $('#uid').html();
+        var fuid = $(this).attr('uid');
+        makeAjaxCall('post',{uid:uid,fuid:fuid,webaction:9},function(){},function(r){
+            if(r==-1){
+                alert('You are already friends.')
+            }
+            getFriends();
+        });
+    });
+    
+    $('.unfollow_friend').button().click(function(){
+        var uid = $('#uid').html();
+        var fuid = $(this).attr('uid');
+        makeAjaxCall('post',{uid:uid,fuid:fuid,webaction:10},function(){},function(r){
+            if(r==-1||r==0){
+                alert('You are not following this user.')
+            }
+            getFriends();
+        });
+    });
 });

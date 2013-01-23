@@ -64,7 +64,6 @@
     width: 100%;
     height: 80px;
     margin-top: 30px;
-    float:left;
     font-family: "Helvetica","Arial" ! important
 }
 .friend_image{
@@ -86,4 +85,28 @@
 .f_fullname{
     font-size: 1.1em;
     margin-top: 5px;
+}
+.isfriend{
+    position: relative;
+    height: 45px;
+    color: #8d8f90;
+    font-size: 0.9em;
+}
+.isfriend span{
+    position: absolute;
+    bottom:0
+}
+.isfriend .ui-button{
+    width: 50px;
+    height: 20px
+}
+/*button.unfollow_friend.ui-button{
+    background: #ff4545 none;
+    border:1px solid #ab1e1e;
+}*/
+#friends_wrapper .ui-state-active{
+    background: #168dd9;
+}
+.isfriend .ui-button span{
+    margin-bottom: 2px
 }

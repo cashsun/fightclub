@@ -26,8 +26,16 @@ if(isset($_POST['webaction'])){
             break;
         case Actions::updateTaskGroupTaskOrder:
             updateTaskGroupTaskOrder();
+            break;
         case Actions::toggleTaskComplete:
             toggleTaskComplete();
+            break;
+        case Actions::addFriend:
+            addFriend();
+            break;
+        case Actions::unfollowFriend:
+            unfollowFriend();
+            break;
         default :echo -1;
     }
 }else{
@@ -107,6 +115,24 @@ function toggleTaskComplete(){
         $db = new DBadapter();
         $db->connect();
         $result = $db->toggleTaskComplete($_POST['tid'], $_POST['isdone']);
+        echo $result;
+    }
+}
+function addFriend(){
+    if(isset($_POST['uid'], $_POST['fuid'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->addFriend($_POST['uid'], $_POST['fuid']);
+        echo $result;
+    }else{
+        echo -1;
+    }
+}
+function unfollowFriend(){
+    if(isset($_POST['uid'])&&isset($_POST['fuid'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->unfollowFriend($_POST['uid'],$_POST['fuid']);
         echo $result;
     }
 }

@@ -9,5 +9,7 @@ class Actions{
     const getFriends = 6;
     const updateTaskGroupTaskOrder = 7;
     const toggleTaskComplete = 8;
+    const addFriend = 9;
+    const unfollowFriend = 10;
 }
 ?>

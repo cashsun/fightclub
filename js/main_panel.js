@@ -126,7 +126,7 @@ function postCreateTaskGroup(){
             //todo
             webaction:1},function(){
                 positionGroup(true);
-            })
+            },function(response){tgidnew = response})
 }
 function postCreateTask(){
     makeAjaxCall('post',
@@ -143,7 +143,7 @@ function postCreateTask(){
             $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div class="t_content_text">'
 +$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
-        });
+        },function(response){tidnew = response});
 }
 function postDeleteTaskGroup(tgid){
         $('.dialog').dialog('close');
@@ -302,12 +302,11 @@ function makeAjaxCall(type,param,callback,successCallback){
         type:type,
         data:param,
         success:function(response){
-            if(response==-1){
-                location.reload();
-            }else if(successCallback!=null){
+            if(successCallback!=null){
                 successCallback(response);
+            }else if(response == -1){
+                location.reload();
             }
-            tidnew =tgidnew= response;
         },
         error:function(){
             
@@ -321,23 +320,6 @@ function makeAjaxCall(type,param,callback,successCallback){
         }
     });
 }
-
-function jsonAjaxRequest(type, url, param,callback){
-    $.ajax({
-        url:url,
-        type:type,
-        datatype: 'json',
-        data:param,
-        success:function(data){
-          json = jQuery.parseJSON(data);
-          callback(json);
-        },
-        error:function(){
-            alert('Operation failed!');
-        }
-    });
-}
-
 function resizeTaskPanel(isFromClick){
     var width = windowDiv.width();
     if(width<550){

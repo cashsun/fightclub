@@ -14,7 +14,8 @@ DROP PROCEDURE IF EXISTS ToogleTaskComplete;
 DROP PROCEDURE IF EXISTS GetAllMyTasks;
 DROP PROCEDURE IF EXISTS GetTask;
 DROP PROCEDURE IF EXISTS GetFriends;
-DROP PROCEDURE IF EXISTS AddFriends;
+DROP PROCEDURE IF EXISTS AddFriend;
+DROP PROCEDURE IF EXISTS UnfollowFriend;
 DROP PROCEDURE IF EXISTS SearchFriends;
 DROP PROCEDURE IF EXISTS UpdateAvatar;
 
@@ -172,7 +173,7 @@ IN mytid int,
 IN myisdone boolean
 ) 
 BEGIN
-DECLARE taskrow INTEGER;
+DECLARE rowno INTEGER;
 DECLARE isdone boolean;
 DECLARE privacy INTEGER;
 SELECT COUNT(*), TASK.isdone, TASK.privacy
@@ -183,9 +184,9 @@ IF @rowno = 0 THEN
   /* NO RECORD EXISTS */
   SELECT (-1) AS status;
 ELSE
-  IF @privacy != 0 THEN
+  IF @privacy <> 0 THEN
     /* IF ALREADY PUBLISHED */
-    IF(myisdone != @isdone) AND (myisdone = FALSE) THEN
+    IF(myisdone <> @isdone) AND (myisdone = FALSE) THEN
       /* NOT ALLOWED WHEN PUBLISHED */
       SELECT (-1) AS status;
     ELSE
@@ -260,8 +261,7 @@ CREATE PROCEDURE GetFriends(
 IN myuid int
 ) 
 BEGIN
-
-SELECT ft.uid, ft.fuid,
+SELECT USER.uid, ft.fuid,
 USER.exp, USER.username,
 USER.firstname,
 USER.lastname, USER.email,
@@ -278,15 +278,38 @@ END //
 DELIMITER ;
 
 
-/* ADD FRIEND */
+/* ADD A FRIEND */
 DELIMITER // 
-CREATE PROCEDURE AddFriends(
+CREATE PROCEDURE AddFriend(
 IN myuid int,
 IN myfuid int
 ) 
 BEGIN
-INSERT INTO FRIEND (uid, fuid)
-VALUES(myuid, myfuid);
+DECLARE rowno INTEGER;
+SELECT COUNT(*)
+INTO @rowno
+FROM FRIEND f
+WHERE f.uid = myuid AND f.fuid = myfuid;
+IF @rowno <> 0 THEN
+    SELECT (-1) AS status;
+ELSE
+    INSERT INTO FRIEND (uid, fuid)
+    VALUES(myuid, myfuid);
+    SELECT (1) AS status;
+END IF;
+END // 
+DELIMITER ;
+
+/* UNFOLLOW I.E DELETE A FRIEND */
+DELIMITER // 
+CREATE PROCEDURE UnfollowFriend(
+IN myuid int,
+IN myfuid int
+) 
+BEGIN 
+DELETE FROM FRIEND
+WHERE FRIEND.uid = myuid AND FRIEND.fuid = myfuid;
+SELECT ROW_COUNT() AS rows_affected;
 END // 
 DELIMITER ;
 
@@ -297,13 +320,14 @@ IN myuid int,
 IN myinput VARCHAR(50)
 ) 
 BEGIN
-SELECT USER.uid,
-USER.exp, USER.username,
-USER.firstname,
-USER.lastname, USER.email,
-USER.avatar
-FROM USER
-WHERE uid != myuid AND (LOWER(username) LIKE CONCAT('%', LOWER(myinput), '%')
+SELECT uid,
+exp, username,
+firstname,
+lastname, email, 
+avatar,fuid
+FROM USER u 
+LEFT JOIN (SELECT fuid FROM friend WHERE uid = myuid) f ON u.uid = f.fuid
+WHERE uid <> myuid AND (LOWER(username) LIKE CONCAT('%', LOWER(myinput), '%')
 OR LOWER(firstname) LIKE CONCAT('%', LOWER(myinput), '%')
 OR LOWER(lastname) LIKE CONCAT('%', LOWER(myinput), '%'));
 END // 
