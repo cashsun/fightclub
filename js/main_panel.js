@@ -119,7 +119,7 @@ function activeDeletes(){
 function postCreateTaskGroup(){
     $('.dialog').dialog('close');
     makeAjaxCall('post',
-            {uid:function(){return $('#uid').html()},
+            {uid:uid,
             title:function(){return $.trim($('#input_group').val())},
             priority: function(){return $('#g_priority').val()},
             type: function(){return $('#g_type').val()},
@@ -130,7 +130,7 @@ function postCreateTaskGroup(){
 }
 function postCreateTask(){
     makeAjaxCall('post',
-        {uid:function(){return $('#uid').html()},
+        {uid:uid,
             tgid:function(){return $('#tgid').html()},
             content:function(){return $.trim($('#input_task').val())},
             webaction:0},
@@ -375,6 +375,7 @@ function toggleGroupPanel(){
     }
 }
 $(document).ready(function(){
+    uid = $('#uid').html();
     showGroup = true;
     $('button').button();
     $('input.datepicker').datepicker();
@@ -406,7 +407,7 @@ $(document).ready(function(){
                     $("#tasks_sortable div:contains('" + text + "')").parent().addClass('highlight');
             }						
     });
-    $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
+    $('.dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     initTaskGroups(false);
     checkIfGroupExists();
     if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
@@ -440,6 +441,20 @@ $(document).ready(function(){
         $('#u_g_type').val($(tgid).attr('gtype'));
         $('#u_g_dialog').dialog('open');
     }).tipsy({fallback:'edit group content',gravity:'s'});
+    
+    $('#profile_image').click(function(){
+        $('#user_dialog').dialog('open');
+    }).tipsy({fallback:'change Avatar',gravity:'n'});
+    
+    $('.avatar').click(function(){
+        var avatar = $(this).attr('pid');
+        $('#profile_image').attr('src','image/'+avatar+'.png');
+        $('#user_dialog').dialog('close');
+        makeAjaxCall('post',{
+        uid:uid,
+        avatar:avatar,
+        webaction:11},function(){});
+    });
     
     $('#create_group').click(function(){
         $('#g_dialog').dialog('open');

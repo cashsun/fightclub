@@ -36,6 +36,9 @@ if(isset($_POST['webaction'])){
         case Actions::unfollowFriend:
             unfollowFriend();
             break;
+        case Actions::updateAvatar:
+            updateAvatar();
+            break;
         default :echo -1;
     }
 }else{
@@ -133,6 +136,14 @@ function unfollowFriend(){
         $db = new DBadapter();
         $db->connect();
         $result = $db->unfollowFriend($_POST['uid'],$_POST['fuid']);
+        echo $result;
+    }
+}
+function updateAvatar(){
+    if(isset($_POST['uid'])&&isset($_POST['avatar'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->updateAvatar($_POST['uid'],$_POST['avatar']);
         echo $result;
     }
 }

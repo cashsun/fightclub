@@ -56,7 +56,8 @@ body{
     float: left;
     margin-left: 50px;
     width: 40px;
-    height: 40px
+    height: 40px;
+    cursor: pointer
 }
 
 #profile_username{
@@ -281,4 +282,10 @@ body{
 }
 .highlight{
     background-color: #ff4545;
+}
+.avatar{
+    float: left;
+    margin-left: 8px;
+    margin-top: 8px;
+    cursor: pointer
 }

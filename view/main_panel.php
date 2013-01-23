@@ -215,6 +215,13 @@ function getAllByUid($uid){
         <br/><br/><br/>
         <div style="font-size: 0.7em">You can open this dialog by double clicking the group.</div>
     </div>
+    <div id="user_dialog" class="dialog" title="Avatar">
+        <?php 
+            for($i=0;$i>-15;$i--){
+                echo '<div pid="'.$i.'" class="avatar"><img src="image/'.$i.'.png" alt=""/></div>';
+            }
+        ?>
+    </div>
 </div>
 </body>
 <script type="text/javascript">

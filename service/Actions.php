@@ -11,5 +11,6 @@ class Actions{
     const toggleTaskComplete = 8;
     const addFriend = 9;
     const unfollowFriend = 10;
+    const updateAvatar = 11;
 }
 ?>
