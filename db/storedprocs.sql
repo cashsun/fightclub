@@ -16,6 +16,7 @@ DROP PROCEDURE IF EXISTS GetTask;
 DROP PROCEDURE IF EXISTS GetFriends;
 DROP PROCEDURE IF EXISTS AddFriends;
 DROP PROCEDURE IF EXISTS SearchFriends;
+DROP PROCEDURE IF EXISTS UpdateAvatar;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -305,5 +306,18 @@ FROM USER
 WHERE uid != myuid AND (LOWER(username) LIKE CONCAT('%', LOWER(myinput), '%')
 OR LOWER(firstname) LIKE CONCAT('%', LOWER(myinput), '%')
 OR LOWER(lastname) LIKE CONCAT('%', LOWER(myinput), '%'));
+END // 
+DELIMITER ;
+
+/* UPDATE AVATAR */
+DELIMITER // 
+CREATE PROCEDURE UpdateAvatar(
+IN myuid int,
+IN myavatar int
+) 
+BEGIN
+UPDATE USER
+SET avatar = myavatar
+WHERE uid = myuid;
 END // 
 DELIMITER ;
