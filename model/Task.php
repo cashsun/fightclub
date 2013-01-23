@@ -9,7 +9,7 @@ class Task {
     private $otid;
     private $creatorname='unknown';
     private $content='';
-    private $exp=0;
+    private $texp=0;
     private $date='20-12-2012 23:00:00';
     private $isdone = 0;
     private $privacy = 0;
@@ -19,8 +19,8 @@ class Task {
         $this->uid = $taskInfo['uid'];
         if(isset($taskInfo['content']))
             $this->content = $taskInfo['content'];
-        if(isset($taskInfo['exp']))
-            $this->exp = $taskInfo['exp'];
+        if(isset($taskInfo['texp']))
+            $this->texp = $taskInfo['texp'];
         if(isset($taskInfo['date']))
             $this->date = $taskInfo['date'];
         if(isset($taskInfo['isdone']))
@@ -50,8 +50,8 @@ class Task {
         return $this->content;
     }
     
-    function getExp(){
-        return $this->exp;
+    function getTExp(){
+        return $this->texp;
     }
     
     function getDate(){

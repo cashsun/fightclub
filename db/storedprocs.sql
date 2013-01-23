@@ -273,7 +273,7 @@ FROM
   WHERE uid = myuid
 ) ft
 LEFT JOIN USER
-ON USER.uid = ft.fuid;
+ON USER.uid = ft.fuid ORDER BY USER.firstname;
 END // 
 DELIMITER ;
 

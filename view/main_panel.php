@@ -105,7 +105,7 @@ function getAllByUid($uid){
             <div id="create_group"></div>
             <div id="panel_control">
                 <div id="u_group">EDIT</div>
-                <div id="history">LOG</div>
+                <div id="option">OPTION</div>
             </div>
         </div>
         <div id="panel_task"><div id="task_wrapper" style="margin-left: auto;margin-right: auto">
@@ -180,7 +180,7 @@ function getAllByUid($uid){
     </div>
     <div id="t_dialog" class="dialog" title="Update Task">
         <div id="tid" class="hidden"></div>
-        content:<br/><textarea rows="5" cols="70" id="update_task" maxlength="140"></textarea><br/><br/>
+        content:<br/><textarea rows="5" cols="60" id="update_task" maxlength="140"></textarea><br/><br/>
         privacy:<select id="u_t_privacy">
             <option value="0">Only me</option>
             <option value="1">Friends</option>
@@ -215,17 +215,36 @@ function getAllByUid($uid){
         <br/><br/><br/>
         <div style="font-size: 0.7em">You can open this dialog by double clicking the group.</div>
     </div>
-    <div id="user_dialog" class="dialog" title="Avatar">
+    <div id="avatar_dialog" class="dialog" title="Avatar">
         <?php 
             for($i=0;$i>-15;$i--){
                 echo '<div pid="'.$i.'" class="avatar"><img src="image/'.$i.'.png" alt=""/></div>';
             }
         ?>
     </div>
+    <div id="user_dialog" class="dialog" title="User">
+        <div id="user_tabs">
+                <ul>
+                <li><a href="#utabs-1">Info</a></li>
+                <li><a href="#utabs-2">Stats</a></li>
+                <li><a href="#utabs-3">History</a></li>
+                </ul>
+                <div class="tab" id="utabs-1">
+                    coming soon.
+                </div>
+                <div class="tab" id="utabs-2">
+                    coming soon.
+                </div>
+                <div class="tab" id="utabs-3">
+                    coming soon.
+                </div>
+        </div>
+    </div>
 </div>
 </body>
 <script type="text/javascript">
-    function showPanel(){
+
+        function showPanel(){
             setTimeout(function(){
                 $('#master').fadeIn(300,function(){
                 loading_image.fadeOut(100,function(){
@@ -233,7 +252,8 @@ function getAllByUid($uid){
                 });
             });
             },200);
-    }
+        }
+
 </script>
 <script type="text/javascript" src="js/loading.js"></script>
 

@@ -23,7 +23,7 @@
 #social_tabs li{
     background-color: #eaeaea
 }
-#social_tabs .ui-state-active{
+#social_tabs .ui-state-active,#user_tabs .ui-state-active{
     background: none;
     border-bottom: none;
 }
@@ -86,9 +86,13 @@
     font-size: 1.1em;
     margin-top: 5px;
 }
+.f_exp{
+    color: #8d8f90;
+    font-size: 0.9em
+}
 .isfriend{
     position: relative;
-    height: 45px;
+    height: 31px;
     color: #8d8f90;
     font-size: 0.9em;
 }

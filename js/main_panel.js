@@ -119,7 +119,7 @@ function activeDeletes(){
 function postCreateTaskGroup(){
     $('.dialog').dialog('close');
     makeAjaxCall('post',
-            {uid:uid,
+            {uid:function(){return $('#uid').html()},
             title:function(){return $.trim($('#input_group').val())},
             priority: function(){return $('#g_priority').val()},
             type: function(){return $('#g_type').val()},
@@ -130,7 +130,7 @@ function postCreateTaskGroup(){
 }
 function postCreateTask(){
     makeAjaxCall('post',
-        {uid:uid,
+        {uid:function(){return $('#uid').html()},
             tgid:function(){return $('#tgid').html()},
             content:function(){return $.trim($('#input_task').val())},
             webaction:0},
@@ -334,7 +334,7 @@ function showGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?200:0);
         var width = windowDiv.width();
         showGroup = true;
-        $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',550);
+        $('.dialog').dialog('option','width',500);
         $('#panel_group').removeClass('hidden');
         $('#task_wrapper').animate({width:width-310},animaTime);
         $('.t_content_text').animate({width:width-420},animaTime);
@@ -352,7 +352,7 @@ function hideGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?200:0)
         var width = windowDiv.width();
         showGroup = false;
-        $('#g_dialog,#t_dialog,#u_g_dialog').dialog('option','width',width-10);
+        $('.dialog').dialog('option','width',width-25);
         $('#panel_task').animate({marginLeft:0,width:width},animaTime,function(){
             $('#panel_group').addClass('hidden');
         });
@@ -375,7 +375,6 @@ function toggleGroupPanel(){
     }
 }
 $(document).ready(function(){
-    uid = $('#uid').html();
     showGroup = true;
     $('button').button();
     $('input.datepicker').datepicker();
@@ -407,7 +406,7 @@ $(document).ready(function(){
                     $("#tasks_sortable div:contains('" + text + "')").parent().addClass('highlight');
             }						
     });
-    $('.dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
+    $('.dialog').dialog({autoOpen: false,height:500,width:500,modal:true,resizable:false,closeOnEscape: true});
     initTaskGroups(false);
     checkIfGroupExists();
     if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
@@ -442,16 +441,16 @@ $(document).ready(function(){
         $('#u_g_dialog').dialog('open');
     }).tipsy({fallback:'edit group content',gravity:'s'});
     
+    $('#user_tabs').tabs();
     $('#profile_image').click(function(){
-        $('#user_dialog').dialog('open');
+        $('#avatar_dialog').dialog('open');
     }).tipsy({fallback:'change Avatar',gravity:'n'});
-    
     $('.avatar').click(function(){
         var avatar = $(this).attr('pid');
         $('#profile_image').attr('src','image/'+avatar+'.png');
-        $('#user_dialog').dialog('close');
+        $('#avatar_dialog').dialog('close');
         makeAjaxCall('post',{
-        uid:uid,
+        uid:function(){return $('#uid').html();},
         avatar:avatar,
         webaction:11},function(){});
     });
@@ -459,6 +458,10 @@ $(document).ready(function(){
     $('#create_group').click(function(){
         $('#g_dialog').dialog('open');
     }).tipsy({fallback:'create new group',gravity:'nw'});
+    
+    $('#option').click(function(){
+        $('#user_dialog').dialog('open');
+    }).tipsy({fallback:'user options',gravity:'s'});
     
     $('.delete_group').click(function(){
         if(confirm ("Delete this group?")){
