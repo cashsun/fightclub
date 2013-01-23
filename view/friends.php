@@ -37,7 +37,7 @@ return $friends;
 function echoFriend($friend){
     echo '<div class="friend_box">';
     echoProfilePic($friend);
-    echo '<div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div></div>';
+    echo '<div class="f_info"><div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div></div></div>';
 }
 function echoProfilePic($friend){
     echo '<img class="friend_image" src="image/'.$friend->getAvatar().'.png" alt=""/>';

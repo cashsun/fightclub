@@ -102,8 +102,8 @@ function getAllByUid($uid){
                 }
             ?>
             </div>
+            <div id="create_group"></div>
             <div id="panel_control">
-                <div id="create_group">CREATE</div>
                 <div id="u_group">EDIT</div>
                 <div id="history">LOG</div>
             </div>

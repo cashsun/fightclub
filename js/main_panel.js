@@ -390,6 +390,13 @@ $(document).ready(function(){
     $('.ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
     
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:false});
+    $('#input_task').keyup(function() {
+            text = $(this).val();
+            $('#tasks_sortable li').removeClass('highlight');
+            if($.trim(text)!=''){
+                    $("#tasks_sortable div:contains('" + text + "')").addClass('highlight');
+            }						
+    });
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
     initTaskGroups(false);
     checkIfGroupExists();

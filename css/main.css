@@ -82,7 +82,6 @@ body{
     background-image: url('../image/panel_g_shadow.png');
 }
 #group_wrapper{
-    margin-bottom: 29px;
     width: 270px;
     overflow-y: auto;
     cursor: auto;
@@ -119,6 +118,15 @@ body{
     -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
     -o-box-shadow: 0 1px 0 rgba(255,255,255,0.5);
     box-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+#create_group{
+    color: #8d8f90;
+    height: 50px;
+    width: 270px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+    font-size: 0.9em;
+    cursor: pointer;
+    background: url('../image/button_add.png') no-repeat center center;
 }
 .f_first{
     background-image: url('../image/tg_shadow.png');
@@ -181,12 +189,12 @@ body{
     height: 21px;
     width: 95%;
 }
-#create_group,#u_group,#history{
+#u_group,#history{
     text-align: center;
     padding-top: 6px;
     padding-bottom: 6px;
     margin: 0;
-    width: 89px;
+    width: 134px;
     float: left;
     color: #8d8f90;
     text-align: center;
@@ -268,4 +276,7 @@ body{
 .isdone_checkbox{
     cursor:pointer;
     opacity:0;
+}
+.hightlight{
+    background-color: #d99216;
 }

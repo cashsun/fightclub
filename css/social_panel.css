@@ -36,11 +36,6 @@
     width:100%;
     border: 5px solid #eaeaea
 }
-.friend_box{
-    width: 180px;
-    margin-top: 30px;
-    float:left
-}
 #friends_radios label{
     width:60px;
 }
@@ -58,4 +53,31 @@
     position: absolute;
     margin-top: 200px;
     margin-left: 130px
+}
+.friend_box{
+    width: 100%;
+    height: 80px;
+    margin-top: 30px;
+    float:left;
+    font-family: "Helvetica","Arial" ! important
+}
+.friend_image{
+    height: 80px;
+    width: 80px; 
+    float: left;
+}
+.f_info{
+    width: auto;
+    height: 80px;
+    font-size: 0.8em;
+    float: left;
+    margin-left: 5px;
+}
+.f_username{
+    color: #8d8f90;
+    font-size: 0.9em
+}
+.f_fullname{
+    font-size: 1.1em;
+    margin-top: 5px;
 }
