@@ -721,8 +721,8 @@ td.ui-datepicker-unselectable {
 
 /* TOGGLE SWITCH CONTROL */
 select.ui-toggle-switch { display: none; }
-.ui-toggle-switch, .ui-toggle-switch .ui-slider, .ui-toggle-switch label { display: inline-block; *display: inline; zoom: 1; }
-.ui-toggle-switch label { text-transform: uppercase; margin: 0 8px; font-weight: bold; border: 0; font-size: 0.8em; opacity: 0.5; filter: alpha(opacity=50); }
+.ui-toggle-switch, .ui-toggle-switch .ui-slider, .ui-toggle-switch label { display: inline-block; zoom: 1; }
+.ui-toggle-switch label { text-transform: uppercase; margin: 0 8px; border: 0; font-size: 0.8em; opacity: 0.5; filter: alpha(opacity=50); }
 .ui-toggle-switch label:first-child { margin-left: 0; }
 .ui-toggle-switch label.ui-state-active { opacity: 1; filter: alpha(opacity=100); }
 .ui-toggle-switch .ui-slider { margin: 0 8px; }

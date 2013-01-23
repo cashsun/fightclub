@@ -180,7 +180,7 @@ function getAllByUid($uid){
     </div>
     <div id="t_dialog" class="dialog" title="Update Task">
         <div id="tid" class="hidden"></div>
-        content:<input type="text" class="input" id="update_task" maxlength="140"/><br/><br/>
+        content:<br/><textarea rows="5" cols="70" id="update_task" maxlength="140"></textarea><br/><br/>
         privacy:<select id="u_t_privacy">
             <option value="0">Only me</option>
             <option value="1">Friends</option>
@@ -212,6 +212,8 @@ function getAllByUid($uid){
             <option value="6">Entertainment</option>
             <option value="7">Lifestyle</option>
         </select>
+        <br/><br/><br/>
+        <div style="font-size: 0.7em">You can open this dialog by double clicking the group.</div>
     </div>
 </div>
 </body>

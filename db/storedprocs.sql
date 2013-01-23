@@ -16,7 +16,7 @@ DROP PROCEDURE IF EXISTS GetTask;
 DROP PROCEDURE IF EXISTS GetFriends;
 DROP PROCEDURE IF EXISTS AddFriend;
 DROP PROCEDURE IF EXISTS UnfollowFriend;
-DROP PROCEDURE IF EXISTS SearchFriends;
+DROP PROCEDURE IF EXISTS SearchUsers;
 DROP PROCEDURE IF EXISTS UpdateAvatar;
 
 /* CREATE A USER */
@@ -315,7 +315,7 @@ DELIMITER ;
 
 /* SEARCH FRIENDS */
 DELIMITER // 
-CREATE PROCEDURE SearchFriends(
+CREATE PROCEDURE SearchUsers(
 IN myuid int,
 IN myinput VARCHAR(50)
 ) 
@@ -326,7 +326,7 @@ firstname,
 lastname, email, 
 avatar,fuid
 FROM USER u 
-LEFT JOIN (SELECT fuid FROM friend WHERE uid = myuid) f ON u.uid = f.fuid
+LEFT JOIN (SELECT fuid FROM FRIEND WHERE uid = myuid) f ON u.uid = f.fuid
 WHERE uid <> myuid AND (LOWER(username) LIKE CONCAT('%', LOWER(myinput), '%')
 OR LOWER(firstname) LIKE CONCAT('%', LOWER(myinput), '%')
 OR LOWER(lastname) LIKE CONCAT('%', LOWER(myinput), '%'));

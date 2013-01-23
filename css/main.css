@@ -1,7 +1,7 @@
 root { 
     display: block
 }
-body,a,a:visited,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ol,ul,th,td,p,blockquote,pre,form,fieldset,legend,textarea,hr{
+body,a,a:visited,canvas,h1,h2,h3,h4,h5,h6,dl,dt,dd,ol,ul,th,td,p,blockquote,pre,form,fieldset,legend,hr{
     margin:0; padding:0;
     font-family: "Microsoft Yahei","Helvetica","Arial" ! important;
     font-smooth: always;
@@ -155,6 +155,8 @@ body{
 .t_content_text{
     float: left;
     font-size: 1.2em;
+    height: 22px;
+    margin-bottom: 13px;
 }
 .tg_title_text{
     width: auto;

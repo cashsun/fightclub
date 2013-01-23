@@ -13,11 +13,13 @@ $(document).ready(function(){
     $('.unfollow_friend').button().click(function(){
         var uid = $('#uid').html();
         var fuid = $(this).attr('uid');
-        makeAjaxCall('post',{uid:uid,fuid:fuid,webaction:10},function(){},function(r){
-            if(r==-1||r==0){
-                alert('You are not following this user.')
-            }
-            getFriends();
-        });
+        if(confirm ("Unfollow this user?")){
+            makeAjaxCall('post',{uid:uid,fuid:fuid,webaction:10},function(){},function(r){
+                if(r==-1||r==0){
+                    alert('You are not following this user.')
+                }
+                getFriends();
+            });
+        }
     });
 });
