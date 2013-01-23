@@ -4,10 +4,11 @@ $(document).ready(function(){
     $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});
     $('#friends_button').toggle(function(){
     $('#panel_social').animate({right: 0},300,function(){
-        //ftype=0,friends only ||ftype=1, search
-        makeSocialAjaxCall('get','view/friends.php',{ftype:0},function(resp){
-            $('#friends_wrapper').html(resp);
+        $('#friends_wrapper').hide(0,function(){
+            makeSocialAjaxCall('get','view/friends.php',{ftype:0},function(resp){
+            $('#friends_wrapper').html(resp).fadeIn(200);
         },function(){});
+        })
     });
     },function(){
         var width = $('#panel_social').width();
@@ -16,7 +17,7 @@ $(document).ready(function(){
 });
 
 function makeSocialAjaxCall(type,url,param,successCallback,callback){
-    social_loading.show(0);
+    $('#social_loading').show(0);
     $.ajax({
         url:url,
         timeout:6000,
@@ -36,7 +37,7 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback){
             else{
                 location.reload();
             }
-            social_loading.hide(0);
+            $('#social_loading').hide(0);
         }
     });
 }

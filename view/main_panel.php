@@ -4,6 +4,9 @@ if(isset($_SESSION['uid'])){
     $user = getAllByUid($_SESSION['uid']);
     $groups = $user->getTaskGroups();
 }
+function echoProfilePic($user){
+    echo '<img id="profile_image" src="image/'.$user->getAvatar().'.png" alt=""/>';
+}
 function echoTask(Task $task){
     $isDone = $task->isDone();
     $option = '';
@@ -71,7 +74,7 @@ function getAllByUid($uid){
 <div id="loadingImage"></div>
 <div id="master" class="hidden">
     <div id="navibar">
-        <img id="profile_image" src="image/profile.png" alt=""/>
+        <?php echoProfilePic($user);?>
         <div id="profile_username" class="username">
             <?php echo 'Welcome back, '.$user->getUsername()?>
         </div>
@@ -114,7 +117,7 @@ function getAllByUid($uid){
             ?></div>
         </div>
         <div id="panel_social">
-            <div id="social_loading"></div>
+            <div id="social_loading" class="hidden"></div>
             <div id="social_tabs">
                 <ul>
                 <li><a href="#tabs-1">Friends</a></li>

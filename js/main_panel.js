@@ -371,8 +371,6 @@ $(document).ready(function(){
     tidnew = tgidnew= -1;
     windowDiv = $(window);
     loading_image = $('#loadingImage');
-    social_loading = $('#social_loading');
-    social_loading.hide();
     isNewGroup = true;
     originalPriority = 0;
     $('#tg_selector').click(function(){
@@ -462,12 +460,14 @@ $(document).ready(function(){
                 }
             }else if($('#input_friend').is(':focus')){
                 if($.trim($('#input_friend').val())!=''){
-                    makeSocialAjaxCall('get','view/friends.php',{
+                    $('#friends_wrapper').hide(0,function(){
+                        makeSocialAjaxCall('get','view/friends.php',{
                         ftype:1,
                         key:function(){return $.trim($('#input_friend').val())}
                     },function(resp){
-                        $('#friends_wrapper').html(resp);
+                        $('#friends_wrapper').html(resp).fadeIn(200);
                     },function(){});
+                    })
                 }
             }
         }

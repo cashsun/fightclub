@@ -9,6 +9,7 @@ class User{
     private $username = '';
     private $exp = 0;
     private $email = '';
+    private $avatar = 0;
     /**
      *real time calculated
      */
@@ -35,6 +36,8 @@ class User{
             $this->level = $userInfo['level'];
         if(isset($userInfo['taskgroups']))
             $this->taskgroups = $userInfo['taskgroups'];
+        if(isset($userInfo['avatar']))
+            $this->avatar = $userInfo['avatar'];
     }
     
     function setExp($exp){
@@ -74,6 +77,10 @@ class User{
     
     function setTaskGroups($groups){
         $this->taskgroups = $groups;
+    }
+    
+    function getAvatar(){
+        return $this->avatar;
     }
 }
 ?>

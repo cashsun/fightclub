@@ -41,11 +41,18 @@
     margin-top: 30px;
     float:left
 }
-#friends_radios .ui-state-active{
-    background: #0a54a5 none
-}
 #friends_radios label{
-    width:60px
+    width:60px;
+}
+#friends_radios .ui-button{
+    height: 10px
+}
+#friends_radios .ui-state-active{
+    background: #0a54a5 none;
+    height: 11px;
+}
+#friends_radios .ui-corner-left{
+    margin-right: -5px;
 }
 #social_loading{
     position: absolute;
