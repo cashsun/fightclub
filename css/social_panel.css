@@ -47,7 +47,13 @@
     height: 11px;
 }
 #friends_radios .ui-corner-left{
-    margin-right: -5px;
+    margin-right: -5px
+}
+#friends_radios .ui-corner-right{
+    margin-left: -1px
+}
+#friends_wrapper{
+    padding-bottom: 80px
 }
 #social_loading{
     position: absolute;

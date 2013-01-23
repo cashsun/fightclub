@@ -118,7 +118,6 @@ function activeDeletes(){
 }
 function postCreateTaskGroup(){
     $('.dialog').dialog('close');
-    isNewGroup=true;
     makeAjaxCall('post',
             {uid:function(){return $('#uid').html()},
             title:function(){return $.trim($('#input_group').val())},
@@ -126,7 +125,7 @@ function postCreateTaskGroup(){
             type: function(){return $('#g_type').val()},
             //todo
             webaction:1},function(){
-                positionGroup();
+                positionGroup(true);
             })
 }
 function postCreateTask(){
@@ -188,8 +187,7 @@ function postUpdateTaskGroup(){
     var title = $.trim($('#update_group').val());
     var priority = $('#u_g_priority').val();
     var gtype = $('#u_g_type').val();
-    isNewGroup = false;
-    positionGroup();
+    positionGroup(false);
     makeAjaxCall('post',{
         tgid:tgid,
         title:title,
@@ -205,7 +203,7 @@ function checkIfGroupExists(){
         $('.tg_title_text').first().click(); 
     }
 }
-function positionGroup(){
+function positionGroup(isNewGroup){
     $('#task_wrapper').show();     
     var title = $.trim($('#update_group').val());
     var type = $('#u_g_type').val();
@@ -216,21 +214,18 @@ function positionGroup(){
     var groups = null;
     var group = null;
     var p_temp = null
-    if(isNewGroup || originalPriority != priority){
-        if(isNewGroup){
+    if(isNewGroup){
             tgid=tgidnew;
             title = $.trim($('#input_group').val());
             priority = $('#g_priority').val();
             type = $('#g_type').val();
             cachecontent = '<div gtype="'+type+'" priority="'+priority+'" id="'+tgid+'"></div>';
             $('#cache').prepend(cachecontent);
-        }else{
-            $('#'+tgid,'#group_wrapper').remove();
-        }
+        
         tgcontent = '<div gtype="'+type+'" priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
         groups = $('.tg_title','#group_wrapper');
         if(groups.length == 0){
-            $('#group_wrapper').prepend(tgcontent);
+            $('#group_wrapper').append(tgcontent);
         }else{
             group = groups.first();
             for(var i=0;i<groups.length;i++){
@@ -239,9 +234,11 @@ function positionGroup(){
                     group.before(tgcontent);
                     break;
                 }else if(priority==p_temp){
-                    var id_temp = group.attr('id');
+                    id_temp = group.attr('id');
                     if(id_temp<tgid){
                         group.before(tgcontent);
+                    }else{
+                        group.after(tgcontent);
                     }
                     break;
                 }else if(i==groups.length-1){
@@ -253,9 +250,40 @@ function positionGroup(){
             }
         }
     }else{
-        $('.tg_title_text','#'+tgid).children().text(title);
-        $('#'+tgid,'#group_wrapper').attr('gtype',type);
-        $('#'+tgid,'#cache').attr('gtype',type);
+        if(originalPriority==priority){
+            $('.tg_title_text','#'+tgid).children().text(title);
+            $('#'+tgid,'#group_wrapper').attr('gtype',type);
+            $('#'+tgid,'#cache').attr('gtype',type);
+        }else{
+            $('#'+tgid,'#group_wrapper').remove();
+            tgcontent = '<div gtype="'+type+'" priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
+            groups = $('.tg_title','#group_wrapper');
+            if(groups.length == 0){
+            $('#group_wrapper').append(tgcontent);
+            }else{
+                group = groups.first();
+                for(var i=0;i<groups.length;i++){
+                    p_temp = group.attr('priority');
+                    if(priority>p_temp){
+                        group.before(tgcontent);
+                        break;
+                    }else if(priority==p_temp){
+                        id_temp = group.attr('id');
+                        if(id_temp<tgid){
+                            group.before(tgcontent);
+                        }else{
+                            group.after(tgcontent);
+                        }
+                        break;
+                    }else if(i==groups.length-1){
+                        group.after(tgcontent);
+                        break;
+                    }else{
+                        group = group.next()
+                    }
+                }
+            }
+        }
     }
     initTaskGroups(false);
     $('#'+tgid,'#group_wrapper').children().eq(1).click();
@@ -371,7 +399,6 @@ $(document).ready(function(){
     tidnew = tgidnew= -1;
     windowDiv = $(window);
     loading_image = $('#loadingImage');
-    isNewGroup = true;
     originalPriority = 0;
     $('#tg_selector').click(function(){
         $('#panel_group').hide();
@@ -394,7 +421,7 @@ $(document).ready(function(){
             text = $(this).val();
             $('#tasks_sortable li').removeClass('highlight');
             if($.trim(text)!=''){
-                    $("#tasks_sortable div:contains('" + text + "')").addClass('highlight');
+                    $("#tasks_sortable div:contains('" + text + "')").parent().addClass('highlight');
             }						
     });
     $('#g_dialog,#t_dialog,#u_g_dialog').dialog({autoOpen: false,height:400,width:500,modal:true,resizable:false,closeOnEscape: true});
@@ -434,7 +461,7 @@ $(document).ready(function(){
     
     $('#create_group').click(function(){
         $('#g_dialog').dialog('open');
-    }).tipsy({fallback:'create new group',gravity:'sw'});
+    }).tipsy({fallback:'create new group',gravity:'nw'});
     
     $('.delete_group').click(function(){
         if(confirm ("Delete this group?")){

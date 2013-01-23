@@ -13,7 +13,7 @@ function echoTask(Task $task){
     if($isDone==1){
         $option = 'checked';
     }
-    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'"class="t_content hoverable roundcorner">
+    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner">
       <div class="isDone"><input class="isdone_checkbox" type="checkbox" '.$option.'/></div><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
 }
 function echoSortedTasks(TaskGroup $group){
