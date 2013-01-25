@@ -55,9 +55,7 @@ function initIsDone(){
         makeAjaxCall('post',
         {tid:tid,
             isdone:isdone,
-            webaction:8},function(){
-//                sync();
-            });
+            webaction:8},function(){});
     });
 }
 function initTaskGroups(isFromClick){

@@ -114,7 +114,7 @@
         
         function getMyFollows($uid){            
             $this->connect();
-            $query = sprintf("CALL GetMyFollow(%s)", mysql_real_escape_string($uid));
+            $query = sprintf("CALL GetMyFollows(%s)", mysql_real_escape_string($uid));
             $results = mysql_query($query) or die(mysql_error());
             return $results;
         }
