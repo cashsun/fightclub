@@ -18,6 +18,7 @@ DROP PROCEDURE IF EXISTS AddFriend;
 DROP PROCEDURE IF EXISTS UnfollowFriend;
 DROP PROCEDURE IF EXISTS SearchUsers;
 DROP PROCEDURE IF EXISTS UpdateAvatar;
+DROP PROCEDURE IF EXISTS GetAllFriendTasks;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -344,5 +345,36 @@ UPDATE USER
 SET avatar = myavatar
 WHERE uid = myuid;
 SELECT ROW_COUNT() AS rows_affected;
+END // 
+DELIMITER ;
+
+/* GET ALL FRIEND'S TASKS */
+DELIMITER // 
+CREATE PROCEDURE GetAllFriendTasks(
+IN myfuid int
+) 
+BEGIN
+SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
+utg.firstname, utg.lastname, utg.email, TASK.content,
+COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,utg.t_order,
+utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
+CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
+FROM
+(
+  SELECT T_GROUP.tgid, T_GROUP.priority, T_GROUP.type,
+  T_GROUP.title, IFNULL(T_GROUP.t_order,"") AS t_order,USER.uid, USER.username,
+  USER.firstname, USER.lastname, USER.email, USER.exp, USER.avatar
+  FROM T_GROUP RIGHT JOIN USER
+  ON T_GROUP.uid = USER.uid
+  WHERE USER.uid = myfuid
+) utg
+LEFT JOIN TASK
+ON
+TASK.tgid = utg.tgid
+AND TASK.privacy > 0
+LEFT JOIN EXP
+ON TASK.tid = EXP.tid
+GROUP BY pk
+ORDER BY priority DESC,tgid DESC, ts DESC;
 END // 
 DELIMITER ;

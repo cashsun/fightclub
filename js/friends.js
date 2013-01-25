@@ -9,7 +9,6 @@ $(document).ready(function(){
             getFriends();
         });
     });
-    
     $('.unfollow_friend').button().click(function(){
         var uid = $('#uid').html();
         var fuid = $(this).attr('uid');
@@ -21,5 +20,9 @@ $(document).ready(function(){
                 getFriends();
             });
         }
+    });
+    $('.friend_image').click(function(){
+        var fuid = $(this).attr('uid');
+        getFriendLists(fuid);
     });
 });

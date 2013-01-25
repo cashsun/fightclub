@@ -44,7 +44,7 @@ function echoFriend($friend){
     echo '<div class="f_info"><div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div><div class="f_exp">Exp '.$friend->getExp().'</div>'.$isfriend.'</div></div>';
 }
 function echoProfilePic($friend){
-    echo '<img class="friend_image" src="image/'.$friend->getAvatar().'.png" alt=""/>';
+    echo '<img uid='.$friend->getUid().' class="friend_image" src="image/'.$friend->getAvatar().'.png" alt=""/>';
 }
 ?>
 <script type="text/javascript" src="js/friends.js"></script>

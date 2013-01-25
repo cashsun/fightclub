@@ -217,7 +217,7 @@ function getAllByUid($uid){
     </div>
     <div id="avatar_dialog" class="dialog" title="Avatar">
         <?php 
-            for($i=0;$i>-15;$i--){
+            for($i=0;$i>-48;$i--){
                 echo '<div pid="'.$i.'" class="avatar"><img src="image/'.$i.'.png" alt=""/></div>';
             }
         ?>

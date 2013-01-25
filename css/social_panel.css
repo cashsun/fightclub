@@ -70,6 +70,12 @@
     height: 80px;
     width: 80px; 
     float: left;
+    cursor: pointer
+}
+.friend_image_l{
+    height: 100px;
+    width: 100px;
+    float: left
 }
 .f_info{
     width: auto;
@@ -113,4 +119,43 @@
 }
 .isfriend .ui-button span{
     margin-bottom: 2px
+}
+#f_group_wrapper{
+    margin-top: 50px;
+    color: #8d8f90;
+    font-size: 11px;
+}
+.f_group{
+    font-size: 13px;
+    width: 76px;
+    padding-right: 4px;
+    padding-left: 3px;
+    height: 14px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    text-align: center;
+    margin-top: 30px;
+    background: url('../image/f_group_back.png') no-repeat center center;
+    color: #fff;
+    margin-bottom: 5px;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+}
+.f_task{
+    background-color: #eaeaea;
+    width: auto;
+    padding-top: 7px;
+    padding-right: 15px;
+    padding-left: 10px;
+    height: 25px;
+    color: #8d8f90;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 20px;
+    text-overflow:ellipsis;
+    text-align: center;
+    overflow: hidden;
+    font-size: 12px;
+    cursor: pointer
 }

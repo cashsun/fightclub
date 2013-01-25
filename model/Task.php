@@ -4,8 +4,8 @@ class Task {
     /*
      * PK
      */
-    private $tid;
-    private $uid;
+    private $tid = -1;
+    private $uid = -1;
     private $otid;
     private $creatorname='unknown';
     private $content='';
@@ -15,8 +15,10 @@ class Task {
     private $privacy = 0;
 
     function __construct($taskInfo) {
-        $this->tid = $taskInfo['tid'];
+        
         $this->uid = $taskInfo['uid'];
+        if(isset($taskInfo['tid']))
+            $this->tid = $taskInfo['tid'];
         if(isset($taskInfo['content']))
             $this->content = $taskInfo['content'];
         if(isset($taskInfo['texp']))
