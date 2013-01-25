@@ -2,13 +2,18 @@ $(document).ready(function(){
     showSocial = false;
     $('#social_tabs').tabs();
     $("#friends_radios").buttonset().change(function(){
-//        alert($('label[aria-pressed=true]',this).attr('for').charAt(5));
+        var ftype = $('label[aria-pressed=true]',this).attr('for').charAt(5);
+        switch(ftype){
+            case 0:getMyFollows();break;
+            case 1:getMyFriends();break;
+            case 2:getMyFans();break;
+        }
     });
     $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});
     $('#club_button').click(function(){  
         if(!showSocial){
             $('#panel_social').animate({right: 0},300,function(){
-                getFriends();
+                $('#radio1').click();
             });
         }else{
                 var width = $('#panel_social').width();
@@ -16,15 +21,31 @@ $(document).ready(function(){
                 showSocial = false; 
         }
     });
+    $('#radio0').click(function(){
+        getMyFollows();
+    });
     $('#radio1').click(function(){
-        $(this).attr('checked','checked');
-        getFriends();
-    })
+        getMyFriends();
+    });
 });
 
-function getFriends(){
+function getMyFollows(){
         $('#friends_wrapper').hide(0,function(){
             makeSocialAjaxCall('get','view/friends.php',{ftype:0},function(resp){
+                $('#friends_wrapper').html(resp).fadeIn(200);
+                },function(){showSocial = true});
+        });
+}
+function getMyFriends(){
+        $('#friends_wrapper').hide(0,function(){
+            makeSocialAjaxCall('get','view/friends.php',{ftype:1},function(resp){
+                $('#friends_wrapper').html(resp).fadeIn(200);
+                },function(){showSocial = true});
+        });
+}
+function getMyFans(){
+        $('#friends_wrapper').hide(0,function(){
+            makeSocialAjaxCall('get','view/friends.php',{ftype:2},function(resp){
                 $('#friends_wrapper').html(resp).fadeIn(200);
                 },function(){showSocial = true});
         });
