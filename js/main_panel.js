@@ -496,7 +496,7 @@ $(document).ready(function(){
                 if($.trim($('#input_friend').val())!=''){
                     $('#friends_wrapper').hide(0,function(){
                         makeSocialAjaxCall('get','view/friends.php',{
-                        ftype:1,
+                        ftype:3,
                         key:function(){return $.trim($('#input_friend').val())}
                     },function(resp){
                         $('#friends_wrapper').html(resp).fadeIn(200);

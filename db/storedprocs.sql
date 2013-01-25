@@ -13,7 +13,9 @@ DROP PROCEDURE IF EXISTS UpdateTask;
 DROP PROCEDURE IF EXISTS ToogleTaskComplete;
 DROP PROCEDURE IF EXISTS GetAllMyTasks;
 DROP PROCEDURE IF EXISTS GetTask;
-DROP PROCEDURE IF EXISTS GetFriends;
+DROP PROCEDURE IF EXISTS GetMyFollows;
+DROP PROCEDURE IF EXISTS GetMyFans;
+DROP PROCEDURE IF EXISTS GetMyFriends;
 DROP PROCEDURE IF EXISTS AddFriend;
 DROP PROCEDURE IF EXISTS UnfollowFriend;
 DROP PROCEDURE IF EXISTS SearchUsers;
@@ -256,9 +258,9 @@ GROUP BY EXP.tid;
 END // 
 DELIMITER ;
 
-/* GET ALL MY FRIENDS */
+/* GET ALL PEOPLE I FOLLOW */
 DELIMITER // 
-CREATE PROCEDURE GetFriends(
+CREATE PROCEDURE GetMyFollows(
 IN myuid int
 ) 
 BEGIN
@@ -272,6 +274,54 @@ FROM
   SELECT *
   FROM FRIEND
   WHERE uid = myuid
+) ft
+LEFT JOIN USER
+ON USER.uid = ft.fuid ORDER BY USER.firstname;
+END // 
+DELIMITER ;
+
+/* GET ALL MY FANS */
+DELIMITER // 
+CREATE PROCEDURE GetMyFans(
+IN myuid int
+)
+BEGIN
+SELECT USER.uid, ft.fuid,
+USER.exp, USER.username,
+USER.firstname,
+USER.lastname, USER.email,
+USER.avatar
+FROM
+(
+  SELECT *
+  FROM FRIEND
+  WHERE fuid = myuid
+) ft
+LEFT JOIN USER
+ON USER.uid = ft.uid ORDER BY USER.firstname;
+END // 
+DELIMITER ;
+
+/* GET ALL MY FRIENDS */
+DELIMITER // 
+CREATE PROCEDURE GetMyFriends(
+IN myuid int
+)
+BEGIN
+SELECT USER.uid, ft.fuid,
+USER.exp, USER.username,
+USER.firstname,
+USER.lastname, USER.email,
+USER.avatar
+FROM
+(
+  SELECT FRIEND1.uid, FRIEND1.fuid
+  FROM 
+  (SELECT * FROM FRIEND WHERE uid = myuid ) FRIEND1
+  JOIN 
+  (SELECT * FROM FRIEND WHERE fuid = myuid ) FRIEND2
+  ON
+  FRIEND1.fuid = FRIEND2.uid
 ) ft
 LEFT JOIN USER
 ON USER.uid = ft.fuid ORDER BY USER.firstname;
