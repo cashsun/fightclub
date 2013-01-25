@@ -3,7 +3,7 @@
     include_once('../db/DBadapter.php');
     include_once('../model/User.php');
     if(isset($_SESSION['uid'])&&isset($_GET['ftype'])){
-        $friends = getFriends($_SESSION['uid'], $_GET['ftype']);
+        $friends = getList($_SESSION['uid'], $_GET['ftype']);
     }
     if(!isset($friends[0])){
         echo '<br/><br/>Oops, no result.<br/><br/>T3T';
@@ -13,14 +13,20 @@
         }
     }
     
-function getFriends($uid,$ftype){
+function getList($uid,$ftype){
     $db = new DBadapter();
     $db->connect();
     switch($ftype){
     case 0:
-        $result = $db->getFriends($uid);
+        $result = $db->getMyFollows($uid);
         break;
     case 1:
+        $result = $db->getMyFriends($uid);
+        break;
+    case 2:
+        $result = $db->getMyFans($uid);
+        break;
+    case 3:
         $result = $db->searchUsers($uid,$_GET['key']);
         break;
     default:
