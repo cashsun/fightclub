@@ -23,11 +23,11 @@ DROP PROCEDURE IF EXISTS GetAllFriendTasks;
 /* CREATE A USER */
 DELIMITER // 
 CREATE PROCEDURE CreateUser(
-IN myusername char(20),
-IN mypasswd char(32),
-IN myfirstname char(30),
-IN mylastname char(30),
-IN myemail char(50),
+IN myusername char(20) CHARACTER SET utf8,
+IN mypasswd char(32) CHARACTER SET utf8,
+IN myfirstname char(30) CHARACTER SET utf8,
+IN mylastname char(30) CHARACTER SET utf8,
+IN myemail char(50) CHARACTER SET utf8,
 IN myavatar int
 ) 
 BEGIN 
@@ -39,8 +39,8 @@ DELIMITER ;
 /* validate a user */
 DELIMITER // 
 CREATE PROCEDURE ValidateUser(
-IN myusername char(20),
-mypasswd char(32)
+IN myusername char(20) CHARACTER SET utf8,
+mypasswd char(32) CHARACTER SET utf8
 ) 
 BEGIN 
 SELECT * FROM USER
@@ -70,10 +70,10 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE CreateTaskGroup(
 IN myuid int,
-IN mytitle char(40),
+IN mytitle char(40) CHARACTER SET utf8,
 IN mypri int,
 IN mytype int,
-IN mytorder varchar(65535)
+IN mytorder varchar(65535) CHARACTER SET utf8
 ) 
 BEGIN 
 INSERT INTO T_GROUP (uid, title, priority, type, t_order)
@@ -85,10 +85,10 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE UpdateTaskGroup(
 IN mytgid int,
-IN mytitle char(40),
+IN mytitle char(40) CHARACTER SET utf8,
 IN mypri int,
 IN mytype int,
-IN mytorder varchar(65535)
+IN mytorder varchar(65535) CHARACTER SET utf8
 ) 
 BEGIN
 UPDATE T_GROUP
@@ -103,7 +103,7 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE UpdateTaskGroupOrder(
 IN mytgid int,
-IN mytorder varchar(65535)
+IN mytorder varchar(65535) CHARACTER SET utf8
 ) 
 BEGIN 
 UPDATE T_GROUP
@@ -131,7 +131,7 @@ CREATE PROCEDURE CreateTask(
 IN myuid int,
 IN myotid int,
 IN mytgid int,
-IN mycontent char(140)
+IN mycontent char(140) CHARACTER SET utf8
 ) 
 BEGIN 
 INSERT INTO TASK (uid, otid, tgid, content)
@@ -155,7 +155,7 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE UpdateTask(
 IN mytid int,
-IN mycontent char(140),
+IN mycontent char(140) CHARACTER SET utf8,
 IN myprivacy int
 ) 
 BEGIN 
@@ -318,7 +318,7 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE SearchUsers(
 IN myuid int,
-IN myinput VARCHAR(50)
+IN myinput VARCHAR(50) CHARACTER SET utf8
 ) 
 BEGIN
 SELECT uid,
