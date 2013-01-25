@@ -51,6 +51,9 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
     color: white;
     background-color: #eaeaea;
 }
+.handle{width: 45px;height: 50px;float: left;
+    background: url('../image/handle.png') no-repeat 0 center;cursor: n-resize;
+    border-right: 2px dotted #f8f8f8}
 .tg_title_text,.t_content_text{
     height: 20px;
     color: #8d8f90;
@@ -147,20 +150,20 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
 .hidden{
     display: none
 }
-#logout,#friends_button,#news_button,#group_button{
+#logout,#club_button,#news_button,#group_button{
     width: 72px;
     height:25px; 
     float: left;
     margin-top: 7px
 }
-#friends_button,#group_button{
+#club_button,#group_button{
     float: right
 }
 #logout{
     margin-left: 10px
 }
-#friends_button{
-    margin-right: 20px
+#club_button{
+    margin-right: 15px;width: 65px
 }
 #group_button{
     margin-right: 5px;

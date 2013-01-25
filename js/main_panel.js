@@ -28,15 +28,15 @@ function sync(){
         task_order +=task.attr('tid')+comma;
         var checked = '';
         var isNonIE8 = '';
-        var tcheckbox = task.children().eq(0).find('input');
+        var tcheckbox = task.children().eq(1).find('input');
         if(tcheckbox.is(':checked')){
             checked='checked'
         }
         if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
             isNonIE8 = 'isDoneNonIE8';
         }
-        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div class="t_content_text">'+
-            task.children().eq(1).text()+'</div><div class="delete_task"></div></li>';
+        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="handle"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div class="t_content_text">'+
+            task.children().eq(2).text()+'</div><div class="delete_task"></div></li>';
         task = task.next();
     }
     $('#'+current_tgid,'#cache').html(cacheContent);
@@ -48,6 +48,7 @@ function initIsDone(){
     $('input[type="checkbox"]','.isDone').change(function(){       
         var tcheckbox = $(this);
         checkIfDoneSingle(tcheckbox);
+        positionIsDone(tcheckbox);
         var tid = tcheckbox.parent().parent().attr('tid');
         var isdone = 0;
         if(tcheckbox.is(':checked')){isdone = 1};
@@ -55,7 +56,7 @@ function initIsDone(){
         {tid:tid,
             isdone:isdone,
             webaction:8},function(){
-                sync();
+//                sync();
             });
     });
 }
@@ -76,7 +77,8 @@ function initTaskGroups(isFromClick){
               $('#tasks_sortable').sortable({
                     update:function(){
                         sync();
-                    }
+                    },
+                    handle:'.handle'
                 });
             $(this).fadeIn(200, function(){
                 initTasks();
@@ -89,16 +91,42 @@ function initTaskGroups(isFromClick){
 }
 function checkIfDoneSingle(item){
     var opac = 1;
+    var text_dec = 'none';
     if($(item).is(':checked')){
         opac = 0.4;
+        text_dec = 'line-through';
         if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
             $(item).parent().addClass('checked');
         }
-        
     }else{
         $(item).parent().removeClass('checked'); 
     }
-    $(item).parent().siblings('.t_content_text').css('opacity',opac); 
+    $(item).parent().parent().css('opacity',opac);
+    $(item).parent().siblings('.t_content_text').css('text-decoration',text_dec); 
+}
+function positionIsDone(item){
+    var target = $(item).parent().parent();
+    var clone = target.clone(true).hide();
+    if($(item).is(':checked')){
+        target.slideUp(300,function(){
+            $('#tasks_sortable').append(clone);
+            clone.slideDown(300,function(){
+                checkIfDoneMulti();
+                sync();
+            })
+            target.remove();
+        });
+    }else{
+        target.slideUp(300,function(){
+            $('#tasks_sortable').prepend(clone);
+            checkIfDoneMulti();
+            clone.slideDown(300,function(){
+                sync();
+            })
+            target.remove()
+        });
+    }
+    
 }
 function checkIfDoneMulti(){
     var tcheckboxes = $('input[type="checkbox"]','#tasks_sortable');
@@ -140,7 +168,7 @@ function postCreateTask(){
             if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
                 isNonIE8 = 'isDoneNonIE8';
              }
-            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div class="t_content_text">'
+            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="handle"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div class="t_content_text">'
 +$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
         },function(response){tidnew = response});
@@ -170,7 +198,7 @@ function postUpdateTask(){
     var tid = $('#tid','#t_dialog').html();
     var content = $('#update_task').val();
     var privacy = $('#u_t_privacy').val();
-    $('[tid="'+tid+'"]','#tasks_sortable').attr('privacy', privacy).children().eq(1).html(content);
+    $('[tid="'+tid+'"]','#tasks_sortable').attr('privacy', privacy).children().eq(2).html(content);
     makeAjaxCall('post',{
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
@@ -334,10 +362,11 @@ function showGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?200:0);
         var width = windowDiv.width();
         showGroup = true;
+        showSocial = false;
         $('.dialog').dialog('option','width',500);
         $('#panel_group').removeClass('hidden');
         $('#task_wrapper').animate({width:width-310},animaTime);
-        $('.t_content_text').animate({width:width-420},animaTime);
+        $('.t_content_text').animate({width:width-467},animaTime);
         $('.t_content').animate({width:width-320},animaTime);
         $('.input_task').animate({width:width-320},animaTime);
         $('#panel_task').animate({marginLeft:270,width:width-270},animaTime);
@@ -352,12 +381,13 @@ function hideGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?200:0)
         var width = windowDiv.width();
         showGroup = false;
+        showSocial = false;
         $('.dialog').dialog('option','width',width-25);
         $('#panel_task').animate({marginLeft:0,width:width},animaTime,function(){
             $('#panel_group').addClass('hidden');
         });
         $('#task_wrapper').animate({width:width-40},animaTime);
-        $('.t_content_text').animate({width:width-150},animaTime);
+        $('.t_content_text').animate({width:width-217},animaTime);
         $('.t_content').animate({width:width-50},animaTime);
         $('.input_task').animate({width:width-50},animaTime);
         $('#panel_social').css({'right':-width+50,'width':width-50});

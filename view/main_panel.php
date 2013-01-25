@@ -13,7 +13,7 @@ function echoTask(Task $task){
     if($isDone==1){
         $option = 'checked';
     }
-    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner">
+    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner"><div class="handle"></div>
       <div class="isDone"><input class="isdone_checkbox" type="checkbox" '.$option.'/></div><div class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
 }
 function echoSortedTasks(TaskGroup $group){
@@ -79,7 +79,7 @@ function getAllByUid($uid){
             <?php echo 'Welcome back, '.$user->getUsername()?>
         </div>
         <button id="logout">Logout</button>
-        <button id="friends_button" class="button">Friends</button>
+        <button id="club_button" class="button">Club</button>
         <div id="group_button"><select data-highlight="true" id="show_group"><option>on</option><option>off</option></select></div>
     </div>
     <div id="panel_main">
@@ -127,7 +127,7 @@ function getAllByUid($uid){
                 <div class="tab" id="tabs-1">
                     <input type="text" class="roundcorner" maxlength="50" id="input_friend"/>
                     <div id="friends_radios">
-                        <input type="radio" class="radio" id="radio1" name="radio" checked="checked"/><label for="radio1">Friends</label>
+                        <input type="radio" class="radio" id="radio1" name="radio" /><label for="radio1">Friends</label>
                         <input type="radio" class="radio" id="radio2" name="radio" /><label for="radio2">Follow</label>
                         <input type="radio" class="radio" id="radio3" name="radio" /><label for="radio3">All</label>
                     </div>

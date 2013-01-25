@@ -5,7 +5,7 @@ $(document).ready(function(){
 //        alert($('label[aria-pressed=true]',this).attr('for').charAt(5));
     });
     $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});
-    $('#friends_button').click(function(){  
+    $('#club_button').click(function(){  
         if(!showSocial){
             $('#panel_social').animate({right: 0},300,function(){
                 getFriends();
@@ -51,7 +51,7 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback){
             }
         },
         error:function(){
-            $('#friends_wrapper').html('server error. Try again later.')
+            $('#friends_wrapper').html('server error. Try again later.').fadeIn(200);
         },
         complete:function(){
             if(callback != null){callback();}
