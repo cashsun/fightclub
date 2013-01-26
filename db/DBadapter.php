@@ -332,9 +332,11 @@
         function fighto($uid, $tid){
             $this->connect();
             $query = sprintf("CALL Fighto(%s,%s)", mysql_real_escape_string($uid),mysql_real_escape_string($tid));   
-            if(mysql_query($query) or die(mysql_error()))
+            if($result=mysql_query($query) or die(mysql_error()))
+            {
               $row = mysql_fetch_assoc($result);
               return $row['status'];
+            }
             else
               return -1;
         }
