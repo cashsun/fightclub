@@ -85,7 +85,7 @@ class Task {
     }
     
     function isLiked(){
-        return $this->isliked;
+        return ($this->isliked==0)?false:true;
     }
 }
 ?>

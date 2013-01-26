@@ -436,7 +436,7 @@ SELECT utg.fuid, myfuid AS uid, TASK.tid, TASK.otid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS texp, TASK.tstamp, TASK.isdone,utg.t_order,
 utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
-CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk, (EXP1.expid IS NOT NULL) AS liked
+CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk, (EXP1.expid IS NOT NULL) AS isliked
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority, T_GROUP.type,
