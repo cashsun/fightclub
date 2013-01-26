@@ -23,6 +23,7 @@ DROP PROCEDURE IF EXISTS SearchUsers;
 DROP PROCEDURE IF EXISTS UpdateAvatar;
 DROP PROCEDURE IF EXISTS GetAllFriendTasks;
 DROP PROCEDURE IF EXISTS Fighto;
+DROP PROCEDURE IF EXISTS GetUserTasks;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -415,11 +416,12 @@ DELIMITER ;
 
 /* GET ALL FRIEND'S TASKS */
 DELIMITER // 
-CREATE PROCEDURE GetAllFriendTasks(
-IN myfuid int
+CREATE PROCEDURE GetUserTasks(
+IN myfuid int,
+IN myuid int
 ) 
 BEGIN
-SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
+SELECT utg.fuid, TASK.tid, TASK.otid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS texp, TASK.tstamp, TASK.isdone,utg.t_order,
 utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
@@ -427,11 +429,22 @@ CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority, T_GROUP.type,
-  T_GROUP.title, IFNULL(T_GROUP.t_order,"") AS t_order,USER.uid, USER.username,
-  USER.firstname, USER.lastname, USER.email, USER.exp, USER.avatar
-  FROM T_GROUP RIGHT JOIN USER
-  ON T_GROUP.uid = USER.uid
-  WHERE USER.uid = myfuid
+  T_GROUP.title, IFNULL(T_GROUP.t_order,"") AS t_order, uf.username,
+  uf.firstname, uf.lastname, uf.email, uf.exp, uf.avatar, uf.fuid
+  FROM T_GROUP RIGHT JOIN 
+  (
+    SELECT * FROM
+    USER
+    LEFT JOIN
+    (
+      SELECT fuid FROM
+      FRIEND
+      WHERE uid = myuid AND fuid = myfuid
+    )f
+    ON USER.uid = f.fuid
+    WHERE USER.uid = myfuid
+  )uf
+  ON T_GROUP.uid = uf.uid
 ) utg
 LEFT JOIN TASK
 ON
