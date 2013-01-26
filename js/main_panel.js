@@ -155,7 +155,7 @@ function activeDeletes(){
 function postCreateTaskGroup(){
     $('.dialog').dialog('close');
     var title = $.trim($('#input_group').val());
-    var priority = $('#g_priority').slider('value');
+    var priority = $('#g_priority > span').slider('value');
     var gtype = $('#g_type').val();
     makeAjaxCall('post',
             {uid:function(){return $('#uid').html()},
@@ -480,6 +480,7 @@ $(document).ready(function(){
     }}]);
     $('#g_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
+                alert("click");
             if($('#input_group').val()!=''){
                 postCreateTaskGroup();
             }
