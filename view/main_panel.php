@@ -180,12 +180,14 @@ function getAllByUid($uid){
     </div>
     <div id="t_dialog" class="dialog" title="Update Task">
         <div id="tid" class="hidden"></div>
-        content:<br/><textarea rows="5" cols="60" id="update_task" maxlength="140"></textarea><br/><br/>
-        privacy:<select id="u_t_privacy">
+        Content:<br/><textarea rows="5" cols="60" id="update_task" maxlength="140"></textarea><br/><br/>
+        Privacy:<select id="u_t_privacy">
             <option value="0">Only me</option>
             <option value="1">Friends</option>
             <option value="2">Public</option>
-        </select>
+        </select><br/><br/>
+        Deadline:<br/>
+        <div id="u_t_deadline"><input type="text" id="deadline_date"/><input type="text" id="deadline_time"/></div>
     </div>
     <div id="u_g_dialog" class="dialog" title="Update Group">name:<input type="text" class="input" id="update_group" maxlength="40"/><br/><br/>
         priority:

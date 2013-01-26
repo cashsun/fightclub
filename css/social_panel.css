@@ -134,6 +134,7 @@
     padding-top: 3px;
     padding-bottom: 3px;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow:ellipsis;
     text-align: center;
     margin-top: 30px;
@@ -144,15 +145,17 @@
 }
 .f_task{
     background-color: #eaeaea;
-    width: auto;
+    width:auto;
     padding-top: 7px;
     padding-right: 15px;
     padding-left: 10px;
-    height: 25px;
+    height: 20px;
+    padding-bottom: 5px;
     color: #8d8f90;
     margin-bottom: 10px;
-    margin-right: 10px;
     margin-left: 20px;
+    margin-right: 10px;
+    white-space: nowrap;
     text-overflow:ellipsis;
     text-align: center;
     overflow: hidden;

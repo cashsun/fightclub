@@ -10,9 +10,10 @@ class Task {
     private $creatorname='unknown';
     private $content='';
     private $texp=0;
-    private $date='20-12-2012 23:00:00';
+    private $tstamp='20-12-2012 23:00:00';
     private $isdone = 0;
     private $privacy = 0;
+    private $deadline = '0000-00-00 00:00:00';
 
     function __construct($taskInfo) {
         
@@ -23,8 +24,8 @@ class Task {
             $this->content = $taskInfo['content'];
         if(isset($taskInfo['texp']))
             $this->texp = $taskInfo['texp'];
-        if(isset($taskInfo['date']))
-            $this->date = $taskInfo['date'];
+        if(isset($taskInfo['tstamp']))
+            $this->tstamp = $taskInfo['tstamp'];
         if(isset($taskInfo['isdone']))
             $this->isdone = $taskInfo['isdone'];
         if(isset($taskInfo['creatorname']))
@@ -33,6 +34,8 @@ class Task {
             $this->creatorname = $taskInfo['otid'];
         if(isset($taskInfo['privacy']))
             $this->privacy = $taskInfo['privacy'];
+        if(isset($taskInfo['deadline']))
+            $this->deadline = $taskInfo['deadline'];
     }
     
     
@@ -56,8 +59,17 @@ class Task {
         return $this->texp;
     }
     
+    function getTstamp(){
+        return $this->tstamp;
+    }
+    
     function getDate(){
-        return $this->date;
+        $strArray = explode(' ', $this->deadline);
+        return $strArray[0];
+    }
+    function getTime(){
+        $strArray = explode(' ', $this->deadline);
+        return $strArray[1];
     }
     
     function isDone(){

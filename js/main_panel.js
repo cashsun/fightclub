@@ -3,6 +3,8 @@ function initTasks(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
         $('#u_t_privacy').val($(this).parent().attr('privacy'));
+//        $('#deadline_date').val('2013-1-13');
+//        $('#deadline_time').val('00:00:00');
         $('#t_dialog').dialog('open');
     }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
@@ -196,6 +198,7 @@ function postUpdateTask(){
     var tid = $('#tid','#t_dialog').html();
     var content = $('#update_task').val();
     var privacy = $('#u_t_privacy').val();
+    var deadline = $('#deadline_date').val()+' '+$('#deadline_time').val();
     $('[tid="'+tid+'"]','#tasks_sortable').attr('privacy', privacy).children().eq(2).html(content);
     makeAjaxCall('post',{
         tid:function(){return $('#tid','#t_dialog').html()},
@@ -435,6 +438,8 @@ $(document).ready(function(){
             }						
     });
     $('.dialog').dialog({autoOpen: false,height:500,width:500,modal:true,resizable:false,closeOnEscape: true});
+    $('#deadline_date').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#deadline_time').timepicker({ 'timeFormat': 'H:i:s' });
     initTaskGroups(false);
     checkIfGroupExists();
     if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
