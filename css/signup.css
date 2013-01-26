@@ -2,9 +2,13 @@ body{
   font-family: "Helvetica Neue",Arial,sans-serif;
 }
 
-input{
+.body-wrapper{
+  
+}
+
+.signup-wrapper input{
   display: inline-block;
-  width: 300px;
+  width: 150px;
   padding: 4px;
   margin: 0;
   outline: 0;
@@ -15,12 +19,19 @@ input{
   border-radius: 3px;
 }
 
+.tutorial-wrapper{
+  position: absolute;
+  float: left;
+  top: 200px;
+  overflow: hidden;
+}
+
 .signup-wrapper{
-  position: relative;
+  position: absolute;
   width: 500px;
   top: 200px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 100px;
+  float: left;
 }
 
 .signup-wrapper form .field-name{
@@ -32,4 +43,8 @@ input{
 
 .signup-wrapper form .holding{
   margin-bottom: 10px;
+}
+
+.signup-wrapper error-msg{
+  
 }
