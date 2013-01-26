@@ -10,7 +10,7 @@ function initTasks(){
     }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
-    $('.texp').tipsy({gravity:'s',fade:false,offset:-12});
+    $('.texp').tipsy({gravity:'s',fade:false,offset:-10});
     activeDeletes();
     initIsDone();
     if(!$("#u_g_dialog").dialog( "isOpen" )){$('#input_task').val('').focus();}
@@ -80,7 +80,6 @@ function initTaskGroups(isFromClick){
         $('#tasks_sortable').fadeOut(200, function(){
             var task_content = $(tgid,'#cache').html();
              $(this).html(task_content);
-             sync();
              checkIfDoneMulti();
               $('#tasks_sortable').sortable({
                     update:function(){
@@ -93,7 +92,8 @@ function initTaskGroups(isFromClick){
             });
             resizeTaskPanel(isFromClick);
         });
-    }).dblclick(function(){
+    }).dblclick(function(e){
+        e.preventDefault();
         $('#u_group').click();
     });
 }
@@ -227,7 +227,7 @@ function postUpdateTaskGroup(){
     $('.dialog').dialog('close');
     var tgid = $('#tgid').html();
     var title = $.trim($('#update_group').val());
-    var priority = $('#u_g_priority').val();
+    var priority = $('#u_g_priority > span').slider('option');
     var gtype = $('#u_g_type').val();
     positionGroup(false);
     makeAjaxCall('post',{
@@ -437,11 +437,21 @@ $(document).ready(function(){
                         width: 25
                 });
     });
+    var priorityMap = new Array("casual","very low","low","minor","medium","important","major","urgent","urgent","immediate");
     $('#u_g_priority > span').each(function(){
-        $(this).slider({range:"min",animate:true,min:0,max:9,step:1,orientation:'horizontal'});
+        $(this).slider({
+            range:"min",animate:false,min:0,max:9,step:1,orientation:'horizontal',
+            stop:function(){},
+            slide:function(){},
+            change:function(){
+                var index=$(this).slider('value');
+                $('#u_g_phint').html(priorityMap[index]);
+            },
+            start:function(){},
+            create:function(){}
+        });
     });
-    $('#u_g_priority > span').slider('value',0);
-    
+
     $('#group_button').tipsy({fallback:'Group panel',gravity:'n',fade:false,offset:0});
     $('.ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
     $('.ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
@@ -488,7 +498,7 @@ $(document).ready(function(){
         var tgid = '#'+$('#tgid').html();
         originalPriority = $(tgid).attr('priority');
         $('#update_group').val($('.tg_title_text',tgid).text());
-        $('#u_g_priority').val(originalPriority);
+        $('#u_g_priority > span').slider('value',originalPriority);
         $('#u_g_type').val($(tgid).attr('gtype'));
         $('#u_g_dialog').dialog('open');
     }).tipsy({fallback:'edit group content',gravity:'s'});

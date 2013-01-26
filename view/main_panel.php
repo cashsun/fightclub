@@ -199,7 +199,7 @@ function getAllByUid($uid){
         priority:
         <div id="u_g_priority">
             <span></span>
-        </div><br/><br/>
+        </div><br/><div id="u_g_phint"></div><br/><br/>
         type:
         <select id="u_g_type">
             <option value="0">Work</option>
