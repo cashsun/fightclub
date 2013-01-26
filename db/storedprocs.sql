@@ -264,7 +264,7 @@ CREATE PROCEDURE GetMyFollows(
 IN myuid int
 ) 
 BEGIN
-SELECT myuid AS uid, ft.fuid,
+SELECT USER.uid, ft.fuid,
 USER.exp, USER.username,
 USER.firstname,
 USER.lastname, USER.email,
@@ -274,16 +274,6 @@ FROM
   SELECT *
   FROM FRIEND
   WHERE uid = myuid
-  AND frid NOT IN
-  (
-    SELECT FRIEND1.frid
-    FROM 
-    (SELECT * FROM FRIEND WHERE uid = myuid ) FRIEND1
-    JOIN 
-    (SELECT * FROM FRIEND WHERE fuid = myuid ) FRIEND2
-    ON
-    FRIEND1.fuid = FRIEND2.uid
-  )
 ) ft
 LEFT JOIN USER
 ON USER.uid = ft.fuid ORDER BY USER.firstname;
@@ -296,7 +286,7 @@ CREATE PROCEDURE GetMyFans(
 IN myuid int
 )
 BEGIN
-SELECT ft.uid, myuid AS fuid,
+SELECT ft.uid,
 USER.exp, USER.username,
 USER.firstname,
 USER.lastname, USER.email,
