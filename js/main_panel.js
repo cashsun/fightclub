@@ -383,7 +383,6 @@ function showGroupPanel(isFromClick){
         $('.t_content').animate({width:width-320},animaTime);
         $('.input_task').animate({width:width-320},animaTime);
         $('#panel_task').animate({marginLeft:270,width:width-270},animaTime);
-        $('#panel_social').css({'right':-404,'width':400});
         $('#tg_selector').show(0);
         if(!isFromClick){
             $('#logout').show(0);
@@ -403,7 +402,6 @@ function hideGroupPanel(isFromClick){
         $('.t_content_text').animate({width:width-282},animaTime);
         $('.t_content').animate({width:width-50},animaTime);
         $('.input_task').animate({width:width-50},animaTime);
-        $('#panel_social').css({'right':-width+50,'width':width-50});
         $('#tg_selector').hide();
         if(!isFromClick){
             $('#logout').hide(0);
