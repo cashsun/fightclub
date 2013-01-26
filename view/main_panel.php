@@ -159,18 +159,9 @@ function getAllByUid($uid){
     </div>
     <div id="g_dialog" class="dialog" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
         priority:
-        <select id="g_priority">
-            <option value="0">casual</option>
-            <option value="1">very low</option>
-            <option value="2">low</option>
-            <option value="3">minor</option>
-            <option value="4">medium</option>
-            <option value="5">important</option>
-            <option value="6">major</option>
-            <option value="7">urgent</option>
-            <option value="8">urgent+</option>
-            <option value="9">immediate</option>
-        </select><br/><br/>
+        <div id="g_priority">
+            <span></span>
+        </div><br/><div style="font-style: italic;font-size: 0.8em" id="g_phint">casual</div><br/><br/>
         type:
         <select id="g_type">
             <option value="0">Work</option>
@@ -199,7 +190,7 @@ function getAllByUid($uid){
         priority:
         <div id="u_g_priority">
             <span></span>
-        </div><br/><br/>
+        </div><br/><div style="font-style: italic;font-size: 0.8em" id="u_g_phint"></div><br/><br/>
         type:
         <select id="u_g_type">
             <option value="0">Work</option>
