@@ -421,11 +421,11 @@ IN myfuid int,
 IN myuid int
 ) 
 BEGIN
-SELECT utg.fuid, TASK.tid, TASK.otid, utg.username,
+SELECT utg.fuid, myfuid AS uid, TASK.tid, TASK.otid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS texp, TASK.tstamp, TASK.isdone,utg.t_order,
 utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
-CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
+CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk, (EXP1.expid IS NOT NULL) AS liked
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority, T_GROUP.type,
@@ -451,6 +451,12 @@ ON
 TASK.tgid = utg.tgid
 AND TASK.privacy > 0
 LEFT JOIN EXP
+ON TASK.tid = EXP.tid
+LEFT JOIN
+(
+  SELECT expid FROM EXP
+  WHERE uid = myuid
+)EXP1
 ON TASK.tid = EXP.tid
 GROUP BY pk
 ORDER BY priority DESC,tgid DESC, tstamp DESC;

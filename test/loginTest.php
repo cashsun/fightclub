@@ -7,7 +7,7 @@
         <input type="password" name="cm-pass" class="input-box" value="password">
 
         <input type="submit" value="Login" class="signup">
-        <div class ="register"><a href="test/registerTest.php">Register</a></div>
+        <div class ="register"><a href="test/register.php">Register</a></div>
       </div>
     </form>
 </div>

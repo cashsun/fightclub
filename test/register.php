@@ -4,6 +4,9 @@
     
     /* define variables for fields */
     
+    $first = true;
+    if(isset($_POST['first']))
+      $first = false;
     $submit = false;
     $username = false;
     $passwd = false;
@@ -12,7 +15,7 @@
     $lastname = false;
     $email = false;
     
-    if(isset($_POST['first']))
+    if(!$first)
     {
       if(isset($_POST['username'])&&$_POST['username']!='')
         $username = true;
@@ -67,7 +70,7 @@ if($submit)
       </div>
       <div class="error-msg">
       <?php
-      if(!$username)
+      if(!$username&&!$first)
         echo 'Username Emptry or Error';
       ?>
       </div>
@@ -80,7 +83,7 @@ if($submit)
         <input name="password" type="password"/>
       </div>
       <?php
-      if(!$passwd)
+      if(!$passwd&&!$first)
         echo 'Password Empty or Error';
       ?>
     </div>
@@ -92,7 +95,7 @@ if($submit)
         <input name="password2" type="password"/>
       </div>
       <?php
-      if(!$repasswd)
+      if(!$repasswd&&!$first)
         echo 'Re-enter Password Not Match';
       ?>
     </div>
@@ -101,7 +104,7 @@ if($submit)
         First Name
       </div>
       <?php
-      if(!$firstname)
+      if(!$firstname&&!$first)
         echo 'First Name Emptry or Error';
       ?>
       <div class="holding">
@@ -116,7 +119,7 @@ if($submit)
         <input name="lastname" value="<?php if($lastname) echo $_POST['lastname'];?>" type="text"/>
       </div>
       <?php
-      if(!$lastname)
+      if(!$lastname&&!$first)
         echo 'Last Name Emptry or Error';
       ?>
     </div>
@@ -128,7 +131,7 @@ if($submit)
         <input name="email" value="<?php if($email) echo $_POST['email'];?>" type="email"/>
       </div>
       <?php
-      if(!$email)
+      if(!$email&&!$first)
         echo 'Email Empty or Error';
       ?>
     </div>
