@@ -84,10 +84,10 @@ function deleteTaskGroup(){
     }   
 }
 function updateTask(){
-    if(isset($_POST['tid'])&&isset($_POST['content'])&&isset($_POST['privacy'])){
+    if(isset($_POST['tid'])&&isset($_POST['content'])&&isset($_POST['privacy'])&&isset($_POST['deadline'])){
         $db = new DBadapter();
         $db->connect();
-        $result = $db->updateTask($_POST['tid'],$_POST['content'],$_POST['privacy']);
+        $result = $db->updateTask($_POST['tid'],$_POST['content'],$_POST['privacy'], $_POST['deadline']);
         echo $result;
     }
 }

@@ -204,6 +204,7 @@ function postUpdateTask(){
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
         privacy:function(){return $('#u_t_privacy').val()},
+        deadline:function(){return deadline},
         webaction:4
         },function(){
             sync();

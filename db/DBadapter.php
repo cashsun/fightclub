@@ -273,12 +273,13 @@
 
         }
         
-        function updateTask($tid, $content, $privacy){            
+        function updateTask($tid, $content, $privacy, $time){            
             $this->connect();
-            $query = sprintf("CALL UpdateTask(%s, '%s', %s)",
+            $query = sprintf("CALL UpdateTask(%s, '%s', %s, '%s')",
                                 mysql_real_escape_string($tid),
                                 mysql_real_escape_string($content),
-                                mysql_real_escape_string($privacy));     
+                                mysql_real_escape_string($privacy),
+                                date("Y-m-d H:i:s", strtotime(mysql_real_escape_string($time))));     
             if($result = mysql_query($query) or die(mysql_error()))
             {
               $row = mysql_fetch_assoc($result);

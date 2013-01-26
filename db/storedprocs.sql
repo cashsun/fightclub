@@ -22,6 +22,7 @@ DROP PROCEDURE IF EXISTS UnfollowFriend;
 DROP PROCEDURE IF EXISTS SearchUsers;
 DROP PROCEDURE IF EXISTS UpdateAvatar;
 DROP PROCEDURE IF EXISTS GetAllFriendTasks;
+DROP PROCEDURE IF EXISTS Fighto;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -159,13 +160,15 @@ DELIMITER //
 CREATE PROCEDURE UpdateTask(
 IN mytid int,
 IN mycontent char(140) CHARACTER SET utf8,
-IN myprivacy int
+IN myprivacy int,
+IN mydeadline TIMESTAMP
 ) 
 BEGIN 
 UPDATE TASK
 SET TASK.content = mycontent,
 TASK.privacy = myprivacy,
-TASK.lastupdate = now()
+TASK.lastupdate = now(),
+TASK.deadline = mydeadline
 WHERE TASK.tid = mytid;
 SELECT ROW_COUNT() AS rows_affected;
 END // 
@@ -220,7 +223,7 @@ BEGIN
 
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
-COUNT(EXP.expid) AS expcount, TASK.tstamp, TASK.isdone,utg.t_order,
+COUNT(EXP.expid) AS expcount, TASK.tstamp, TASK.deadline, TASK.isdone,utg.t_order,
 utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
