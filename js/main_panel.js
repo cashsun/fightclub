@@ -154,14 +154,16 @@ function activeDeletes(){
 }
 function postCreateTaskGroup(){
     $('.dialog').dialog('close');
+    var title = $.trim($('#input_group').val());
+    var priority = $('#g_priority').slider('value');
+    var gtype = $('#g_type').val();
     makeAjaxCall('post',
             {uid:function(){return $('#uid').html()},
-            title:function(){return $.trim($('#input_group').val())},
-            priority: function(){return $('#g_priority').val()},
-            type: function(){return $('#g_type').val()},
-            //todo
+            title:title,
+            priority: priority,
+            type: gtype,
             webaction:1},function(){
-                positionGroup(true);
+                positionGroup(true,tgidnew,title,priority,gtype);
             },function(response){tgidnew = response})
 }
 function postCreateTask(){
@@ -227,9 +229,9 @@ function postUpdateTaskGroup(){
     $('.dialog').dialog('close');
     var tgid = $('#tgid').html();
     var title = $.trim($('#update_group').val());
-    var priority = $('#u_g_priority > span').slider('option');
+    var priority = $('#u_g_priority > span').slider('value');
     var gtype = $('#u_g_type').val();
-    positionGroup(false);
+    positionGroup(false,tgid,title,priority,gtype);
     makeAjaxCall('post',{
         tgid:tgid,
         title:title,
@@ -245,12 +247,8 @@ function checkIfGroupExists(){
         $('.tg_title_text').first().click(); 
     }
 }
-function positionGroup(isNewGroup){
+function positionGroup(isNewGroup,tgid,title,priority,gtype){
     $('#task_wrapper').show();     
-    var title = $.trim($('#update_group').val());
-    var type = $('#u_g_type').val();
-    var priority = $('#u_g_priority').val();
-    var tgid = $('#tgid').html();
     var cachecontent = null;
     var tgcontent = null;
     var groups = null;
@@ -260,11 +258,11 @@ function positionGroup(isNewGroup){
             tgid=tgidnew;
             title = $.trim($('#input_group').val());
             priority = $('#g_priority').val();
-            type = $('#g_type').val();
-            cachecontent = '<div gtype="'+type+'" priority="'+priority+'" id="'+tgid+'"></div>';
+            gtype = $('#g_type').val();
+            cachecontent = '<div gtype="'+gtype+'" priority="'+priority+'" id="'+tgid+'"></div>';
             $('#cache').prepend(cachecontent);
         
-        tgcontent = '<div gtype="'+type+'" priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
+        tgcontent = '<div gtype="'+gtype+'" priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
         groups = $('.tg_title','#group_wrapper');
         if(groups.length == 0){
             $('#group_wrapper').append(tgcontent);
@@ -294,11 +292,11 @@ function positionGroup(isNewGroup){
     }else{
         if(originalPriority==priority){
             $('.tg_title_text','#'+tgid).children().text(title);
-            $('#'+tgid,'#group_wrapper').attr('gtype',type);
-            $('#'+tgid,'#cache').attr('gtype',type);
+            $('#'+tgid,'#group_wrapper').attr('gtype',gtype);
+            $('#'+tgid,'#cache').attr('gtype',gtype);
         }else{
             $('#'+tgid,'#group_wrapper').remove();
-            tgcontent = '<div gtype="'+type+'" priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
+            tgcontent = '<div gtype="'+gtype+'" priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
             groups = $('.tg_title','#group_wrapper');
             if(groups.length == 0){
             $('#group_wrapper').append(tgcontent);
@@ -417,6 +415,7 @@ function toggleGroupPanel(){
     }
 }
 var loading_image;
+var priorityMap;
 $(document).ready(function(){
     showGroup = true;
     $('button').button();
@@ -437,18 +436,17 @@ $(document).ready(function(){
                         width: 25
                 });
     });
-    var priorityMap = new Array("casual","very low","low","minor","medium","important","major","urgent","urgent","immediate");
-    $('#u_g_priority > span').each(function(){
+    priorityMap = new Array("casual","very low","low","minor","medium","important","major","urgent","urgent+","immediate");
+    $('#g_priority > span,#u_g_priority > span').each(function(){
         $(this).slider({
             range:"min",animate:false,min:0,max:9,step:1,orientation:'horizontal',
-            stop:function(){},
-            slide:function(){},
-            change:function(){
+            slide:function(){
                 var index=$(this).slider('value');
-                $('#u_g_phint').html(priorityMap[index]);
-            },
-            start:function(){},
-            create:function(){}
+                $('#g_phint,#u_g_phint').html(priorityMap[index]);
+            },stop:function(){
+                var index=$(this).slider('value');
+                $('#g_phint,#u_g_phint').html(priorityMap[index]);
+            }
         });
     });
 

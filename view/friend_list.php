@@ -9,15 +9,13 @@
     if($friend!=null && $friend->getUid()!=-1){
         echoFriend($friend);
         $groups = $friend->getTaskGroups();
+        echo '<div id="f_group_wrapper">';
         if($groups[0]->getTgid()!=-1){
-            echo '<div id="f_group_wrapper">';
             foreach($groups as $group){
                 echoFriendGroup($group);
             }
-            echo '</div>';
-        }else{
-            echo 'No task shared by this user.';
         }
+        echo '</div>';
     }else{
         echo -1;
     }
