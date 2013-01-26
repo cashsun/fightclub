@@ -2,6 +2,7 @@ var socialLoading;
 $(document).ready(function(){
     socialLoading = $('#social_loading');
     showSocial = false;
+    setTimeout("checkTexp()",10000);
     $('#social_tabs').tabs();
     $("#friends_radios").buttonset();
     $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});
@@ -26,7 +27,6 @@ $(document).ready(function(){
         getMyFans();
     });
 });
-
 function getMyFollows(){
         $('#friends_wrapper').hide(0,function(){
             makeSocialAjaxCall('get','view/friends.php',{ftype:0},function(resp){
@@ -80,4 +80,8 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback){
             socialLoading.hide(0);
         }
     });
+}
+function checkTexp(){
+    
+    setTimeout("checkTexp()",10000);
 }
