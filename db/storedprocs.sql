@@ -13,6 +13,7 @@ DROP PROCEDURE IF EXISTS UpdateTask;
 DROP PROCEDURE IF EXISTS ToogleTaskComplete;
 DROP PROCEDURE IF EXISTS GetAllMyTasks;
 DROP PROCEDURE IF EXISTS GetTask;
+DROP PROCEDURE IF EXISTS GetFriends;
 DROP PROCEDURE IF EXISTS GetMyFollows;
 DROP PROCEDURE IF EXISTS GetMyFans;
 DROP PROCEDURE IF EXISTS GetMyFriends;
@@ -318,7 +319,7 @@ CREATE PROCEDURE GetMyFriends(
 IN myuid int
 )
 BEGIN
-SELECT myuid AS uid, ft.fuid,
+SELECT myuid AS fuid, ft.fuid AS uid,
 USER.exp, USER.username,
 USER.firstname,
 USER.lastname, USER.email,
