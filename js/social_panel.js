@@ -1,19 +1,12 @@
 $(document).ready(function(){
     showSocial = false;
     $('#social_tabs').tabs();
-    $("#friends_radios").buttonset().change(function(){
-        var ftype = $('label[aria-pressed=true]',this).attr('for').charAt(5);
-        switch(ftype){
-            case 0:getMyFollows();break;
-            case 1:getMyFriends();break;
-            case 2:getMyFans();break;
-        }
-    });
+    $("#friends_radios").buttonset();
     $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});
     $('#club_button').click(function(){  
         if(!showSocial){
             $('#panel_social').animate({right: 0},300,function(){
-                $('#radio1').click();
+                $('#radio0').click();
             });
         }else{
                 var width = $('#panel_social').width();
@@ -26,6 +19,9 @@ $(document).ready(function(){
     });
     $('#radio1').click(function(){
         getMyFriends();
+    });
+    $('#radio2').click(function(){
+        getMyFans();
     });
 });
 

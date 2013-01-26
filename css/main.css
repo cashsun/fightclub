@@ -50,6 +50,7 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
     text-align: center;
     color: white;
     background-color: #eaeaea;
+    z-index: 21
 }
 .handle{width: 45px;height: 50px;float: left;
     background: url('../image/handle.png') no-repeat 0 center;cursor: n-resize;
