@@ -39,6 +39,9 @@ if(isset($_POST['webaction'])){
         case Actions::updateAvatar:
             updateAvatar();
             break;
+        case Actions::fighto:
+            fighto();
+            break;
         default :echo -1;
     }
 }else{
@@ -147,4 +150,14 @@ function updateAvatar(){
         echo $result;
     }
 }
+
+function fighto(){
+    if(isset($_POST['uid'])&&isset($_POST['tid'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->fighto($_POST['uid'],$_POST['tid']);
+        echo $result;
+    }
+}
+
 ?>

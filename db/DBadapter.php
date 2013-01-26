@@ -327,6 +327,15 @@
             else
               return -1;       
         }
+        
+        function fighto($uid, $tid){
+            $this->connect();
+            $query = sprintf("CALL Fighto(%s)", mysql_real_escape_string($tid));   
+            if(mysql_query($query) or die(mysql_error()))
+              return $this->last_insert_id();
+            else
+              return -1;  
+        }
 
     }
 ?>
