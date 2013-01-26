@@ -26,6 +26,14 @@
         <input name="password" type="password"/>
       </div>
     </div>
+    <div class="prompt-passwd2">
+      <div class="field-name">
+        Re-enter Password
+      </div>
+      <div class="holding">
+        <input name="password2" type="password"/>
+      </div>
+    </div>
     <div class="prompt-firstname">
       <div class="field-name">
         First Name

@@ -218,7 +218,7 @@ BEGIN
 
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
-COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,utg.t_order,
+COUNT(EXP.expid) AS expcount, TASK.tstamp, TASK.isdone,utg.t_order,
 utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
@@ -236,7 +236,7 @@ TASK.tgid = utg.tgid
 LEFT JOIN EXP
 ON TASK.tid = EXP.tid
 GROUP BY pk
-ORDER BY priority DESC,tgid DESC, ts DESC;
+ORDER BY priority DESC,tgid DESC, tstamp DESC;
 END // 
 DELIMITER ;
 
@@ -248,7 +248,7 @@ IN mytid int
 BEGIN
 SELECT TASK.tid, TASK.uid, USER.username,
 USER.firstname, USER.lastname, TASK.content,
-COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone, TASK.privacy
+COUNT(EXP.expid) AS expcount, TASK.tstamp, TASK.isdone, TASK.privacy
 FROM TASK LEFT JOIN USER
 ON TASK.uid = USER.uid
 LEFT JOIN EXP
@@ -264,7 +264,7 @@ CREATE PROCEDURE GetMyFollows(
 IN myuid int
 ) 
 BEGIN
-SELECT USER.uid, ft.fuid,
+SELECT USER.uid, ft.uid,
 USER.exp, USER.username,
 USER.firstname,
 USER.lastname, USER.email,
@@ -273,7 +273,17 @@ FROM
 (
   SELECT *
   FROM FRIEND
-  WHERE uid = myuid
+  WHERE fuid = myuid
+  AND frid NOT IN
+  (
+    SELECT FRIEND1.frid
+    FROM 
+    (SELECT * FROM FRIEND WHERE uid = myuid ) FRIEND1
+    JOIN 
+    (SELECT * FROM FRIEND WHERE fuid = myuid ) FRIEND2
+    ON
+    FRIEND1.fuid = FRIEND2.uid
+  )
 ) ft
 LEFT JOIN USER
 ON USER.uid = ft.fuid ORDER BY USER.firstname;
@@ -406,7 +416,7 @@ IN myfuid int
 BEGIN
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
-COUNT(EXP.expid) AS expcount, TASK.ts, TASK.isdone,utg.t_order,
+COUNT(EXP.expid) AS expcount, TASK.tstamp, TASK.isdone,utg.t_order,
 utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
@@ -425,6 +435,6 @@ AND TASK.privacy > 0
 LEFT JOIN EXP
 ON TASK.tid = EXP.tid
 GROUP BY pk
-ORDER BY priority DESC,tgid DESC, ts DESC;
+ORDER BY priority DESC,tgid DESC, tstamp DESC;
 END // 
 DELIMITER ;
