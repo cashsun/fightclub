@@ -255,10 +255,6 @@ function positionGroup(isNewGroup,tgid,title,priority,gtype){
     var group = null;
     var p_temp = null
     if(isNewGroup){
-            tgid=tgidnew;
-            title = $.trim($('#input_group').val());
-            priority = $('#g_priority').val();
-            gtype = $('#g_type').val();
             cachecontent = '<div gtype="'+gtype+'" priority="'+priority+'" id="'+tgid+'"></div>';
             $('#cache').prepend(cachecontent);
         
@@ -480,7 +476,6 @@ $(document).ready(function(){
     }}]);
     $('#g_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
-                alert("click");
             if($('#input_group').val()!=''){
                 postCreateTaskGroup();
             }
