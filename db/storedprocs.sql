@@ -164,7 +164,8 @@ IN myprivacy int
 BEGIN 
 UPDATE TASK
 SET TASK.content = mycontent,
-TASK.privacy = myprivacy
+TASK.privacy = myprivacy,
+TASK.lastupdate = now()
 WHERE TASK.tid = mytid;
 SELECT ROW_COUNT() AS rows_affected;
 END // 
@@ -437,5 +438,17 @@ LEFT JOIN EXP
 ON TASK.tid = EXP.tid
 GROUP BY pk
 ORDER BY priority DESC,tgid DESC, tstamp DESC;
+END // 
+DELIMITER ;
+
+/* GET ALL FRIEND'S TASKS */
+DELIMITER // 
+CREATE PROCEDURE Fighto(
+IN myuid int,
+IN mytid int
+) 
+BEGIN
+INSERT INTO EXP (uid, tid)
+VALUES(myuid, mytid);
 END // 
 DELIMITER ;

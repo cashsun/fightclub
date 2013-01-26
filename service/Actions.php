@@ -12,5 +12,6 @@ class Actions{
     const addFriend = 9;
     const unfollowFriend = 10;
     const updateAvatar = 11;
+    const fighto = 12;
 }
 ?>
