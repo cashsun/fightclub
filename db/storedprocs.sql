@@ -421,6 +421,17 @@ IN myfuid int,
 IN myuid int
 ) 
 BEGIN
+DECLARE privacylevel INTEGER;
+DECLARE isfans BOOLEAN;
+SET @privacylevel = 1;
+
+SELECT (COUNT(*)>0) into @isfans FROM FRIEND
+WHERE fuid = myuid AND uid = myfuid; 
+
+IF(@isfans = TRUE) THEN
+  SET @privacylevel = 0;
+END IF;
+
 SELECT utg.fuid, myfuid AS uid, TASK.tid, TASK.otid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS texp, TASK.tstamp, TASK.isdone,utg.t_order,
@@ -449,7 +460,7 @@ FROM
 LEFT JOIN TASK
 ON
 TASK.tgid = utg.tgid
-AND TASK.privacy > 0
+AND TASK.privacy > @privacylevel
 LEFT JOIN EXP
 ON TASK.tid = EXP.tid
 LEFT JOIN
