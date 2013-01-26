@@ -106,8 +106,8 @@
             return $results;
         }
         
-        function getAllByFuid($fuid){
-            $query = sprintf("CALL GetAllFriendTasks(%s)", mysql_real_escape_string($fuid));
+        function getAllByFuid($fuid,$uid){
+            $query = sprintf("CALL GetUserTasks(%s,%s)", mysql_real_escape_string($fuid),mysql_real_escape_string($uid));
             $results = mysql_query($query) or die(mysql_error());
             return $results;
         }

@@ -23,6 +23,6 @@ $(document).ready(function(){
     });
     $('.friend_image').click(function(){
         var fuid = $(this).attr('uid');
-        getFriendLists(fuid);
+        getUserLists(fuid);
     });
 });

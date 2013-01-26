@@ -4,7 +4,7 @@
     include_once('../model/User.php');
     $friend = null;
     if(isset($_SESSION['uid'])&&isset($_GET['fuid'])){
-        $friend = getAllByFuid($_GET['fuid']);
+        $friend = getAllByFuid($_GET['fuid'],$_SESSION['uid']);
     }else{die(-1);}
     if($friend!=null && $friend->getUid()!=-1){
         echoFriend($friend);
@@ -45,10 +45,10 @@ function echoFriend($friend){
 function echoProfilePic($friend){
     echo '<img uid='.$friend->getUid().' class="friend_image_l" src="image/'.$friend->getAvatar().'.png" alt=""/>';
 }
-function getAllByFuid($fuid){
+function getAllByFuid($fuid,$uid){
     $db = new DBadapter();
     $db->connect();
-    $result = $db->getAllByFuid($fuid);
+    $result = $db->getAllByFuid($fuid,$uid);
     $tasks = array();
     $groups = array();
     $user=null;

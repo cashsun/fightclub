@@ -1,7 +1,6 @@
 <?php
 
 class Task {
-
     private $tid = -1;
     private $uid = -1;
     private $otid;

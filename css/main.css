@@ -224,3 +224,7 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
     margin-top: 8px;
     cursor: pointer
 }
+#u_g_priority span{
+    width: 200px;
+    margin-top: 20px;
+}

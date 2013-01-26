@@ -197,18 +197,9 @@ function getAllByUid($uid){
     </div>
     <div id="u_g_dialog" class="dialog" title="Update Group">name:<input type="text" class="input" id="update_group" maxlength="40"/><br/><br/>
         priority:
-        <select id="u_g_priority">
-            <option value="0">casual</option>
-            <option value="1">very low</option>
-            <option value="2">low</option>
-            <option value="3">minor</option>
-            <option value="4">medium</option>
-            <option value="5">important</option>
-            <option value="6">major</option>
-            <option value="7">urgent</option>
-            <option value="8">urgent+</option>
-            <option value="9">immediate</option>
-        </select><br/><br/>
+        <div id="u_g_priority">
+            <span></span>
+        </div><br/><br/>
         type:
         <select id="u_g_type">
             <option value="0">Work</option>

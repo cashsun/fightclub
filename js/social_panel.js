@@ -48,7 +48,7 @@ function getMyFans(){
                 },function(){showSocial = true});
         });
 }
-function getFriendLists(fuid){
+function getUserLists(fuid){
         $('#friends_wrapper').hide(0,function(){
             makeSocialAjaxCall('get','view/friend_list.php',{fuid:fuid},function(resp){
                 $('#friends_wrapper').html(resp).show('slide',{direction:"right"},200);

@@ -215,7 +215,7 @@ function postUpdateTask(){
     makeAjaxCall('post',{
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
-        privacy:function(){return $('#u_t_privacy').val()},
+        privacy:privacy,
         deadline:function(){return deadline},
         webaction:4
         },function(){
@@ -437,6 +437,11 @@ $(document).ready(function(){
                         width: 25
                 });
     });
+    $('#u_g_priority > span').each(function(){
+        $(this).slider({range:"min",animate:true,min:0,max:9,step:1,orientation:'horizontal'});
+    });
+    $('#u_g_priority > span').slider('value',0);
+    
     $('#group_button').tipsy({fallback:'Group panel',gravity:'n',fade:false,offset:0});
     $('.ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
     $('.ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
