@@ -6,7 +6,7 @@ $(document).ready(function(){
             if(r==-1){
                 alert('You are already friends.')
             }
-            getFriends();
+            $('#radio0').click();
         });
     });
     $('.unfollow_friend').button().click(function(){
@@ -17,7 +17,7 @@ $(document).ready(function(){
                 if(r==-1||r==0){
                     alert('You are not following this user.')
                 }
-                getFriends();
+                $('#radio0').click();
             });
         }
     });
