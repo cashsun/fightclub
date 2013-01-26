@@ -1,4 +1,6 @@
+var socialLoading;
 $(document).ready(function(){
+    socialLoading = $('#social_loading');
     showSocial = false;
     $('#social_tabs').tabs();
     $("#friends_radios").buttonset();
@@ -54,7 +56,7 @@ function getFriendLists(fuid){
         });
 }
 function makeSocialAjaxCall(type,url,param,successCallback,callback){
-    $('#social_loading').show(0);
+    socialLoading.show(0);
     $.ajax({
         url:url,
         timeout:6000,
@@ -75,7 +77,7 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback){
             else{
                 location.reload();
             }
-            $('#social_loading').hide(0);
+            socialLoading.hide(0);
         }
     });
 }

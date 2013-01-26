@@ -10,10 +10,15 @@ function echoProfilePic($user){
 function echoTask(Task $task){
     $isDone = $task->isDone();
     $option = '';
+    $ribbon = '';
     if($isDone==1){
         $option = 'checked';
     }
-    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner"><div class="handle"></div>
+    switch($task->getPrivacy()){
+        case 1:$ribbon=' shared_f';break;
+        case 2:$ribbon=' shared_g';break;
+    }
+    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner'.$ribbon.'"><div class="handle"></div>
       <div class="isDone"><input class="isdone_checkbox" type="checkbox" '.$option.'/></div><div dead_date="'.$task->getDate().'" dead_time="'.$task->getTime().'" class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
 }
 function echoSortedTasks(TaskGroup $group){
@@ -245,7 +250,6 @@ function getAllByUid($uid){
 </div>
 </body>
 <script type="text/javascript">
-
         function showPanel(){
             setTimeout(function(){
                 $('#master').fadeIn(300,function(){
@@ -255,7 +259,6 @@ function getAllByUid($uid){
             });
             },200);
         }
-
 </script>
 <script type="text/javascript" src="js/loading.js"></script>
 

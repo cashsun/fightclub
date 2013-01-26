@@ -14,11 +14,11 @@ function initTasks(){
     if(!$("#u_g_dialog").dialog( "isOpen" )){$('#input_task').val('').focus();}
     $('#tg_selector').show();
 }
-
+var tasks;
 //update t_order and cache
 function sync(){
     var current_tgid = $('#tgid').html();
-    var tasks = $('li','#tasks_sortable');
+    tasks = $('li','#tasks_sortable');
     var task_order = '';
     var cacheContent = '';
     var comma = ',';
@@ -29,6 +29,7 @@ function sync(){
         }
         task_order +=task.attr('tid')+comma;
         var checked = '';
+        var ribbon = '';
         var isNonIE8 = '';
         var tcheckbox = task.children().eq(1).find('input');
         if(tcheckbox.is(':checked')){
@@ -37,7 +38,11 @@ function sync(){
         if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
             isNonIE8 = 'isDoneNonIE8';
         }
-        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="handle"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div dead_date="'+task.children().eq(2).attr('dead_date')+'" dead_time="'+task.children().eq(2).attr('dead_time')+'" class="t_content_text">'+
+        switch(parseInt(task.attr('privacy'))){
+            case 1:ribbon=' shared_f';break;
+            case 2:ribbon=' shared_g';break;
+        }
+        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner'+ribbon+'"><div class="handle"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div dead_date="'+task.children().eq(2).attr('dead_date')+'" dead_time="'+task.children().eq(2).attr('dead_time')+'" class="t_content_text">'+
             task.children().eq(2).text()+'</div><div class="delete_task"></div></li>';
         task = task.next();
     }
@@ -199,7 +204,11 @@ function postUpdateTask(){
     var content = $('#update_task').val();
     var privacy = $('#u_t_privacy').val();
     var deadline = $('#deadline_date').val()+' '+$('#deadline_time').val();
-    $('[tid="'+tid+'"]','#tasks_sortable').attr('privacy', privacy).children().eq(2).html(content);
+    var task = $('[tid="'+tid+'"]','#tasks_sortable');
+    var t_text = task.children().eq(2);
+    task.attr('privacy', privacy);
+    t_text.attr('dead_date', $('#deadline_date').val()).attr('dead_time', $('#deadline_time').val()).html(content);
+    switch(parseInt(privacy)){case 0:task.removeClass('shared_f shared_g');break;case 1:task.removeClass('shared_g').addClass('shared_f');break;case 2:task.removeClass('shared_f').addClass('shared_g');break;}
     makeAjaxCall('post',{
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
@@ -368,7 +377,7 @@ function showGroupPanel(isFromClick){
         $('.dialog').dialog('option','width',500);
         $('#panel_group').removeClass('hidden');
         $('#task_wrapper').animate({width:width-310},animaTime);
-        $('.t_content_text').animate({width:width-467},animaTime);
+        $('.t_content_text').animate({width:width-497},animaTime);
         $('.t_content').animate({width:width-320},animaTime);
         $('.input_task').animate({width:width-320},animaTime);
         $('#panel_task').animate({marginLeft:270,width:width-270},animaTime);
@@ -389,7 +398,7 @@ function hideGroupPanel(isFromClick){
             $('#panel_group').addClass('hidden');
         });
         $('#task_wrapper').animate({width:width-40},animaTime);
-        $('.t_content_text').animate({width:width-217},animaTime);
+        $('.t_content_text').animate({width:width-227},animaTime);
         $('.t_content').animate({width:width-50},animaTime);
         $('.input_task').animate({width:width-50},animaTime);
         $('#panel_social').css({'right':-width+50,'width':width-50});
@@ -406,6 +415,7 @@ function toggleGroupPanel(){
         showGroupPanel(true);
     }
 }
+var loading_image;
 $(document).ready(function(){
     showGroup = true;
     $('button').button();
@@ -440,7 +450,7 @@ $(document).ready(function(){
     });
     $('.dialog').dialog({autoOpen: false,height:500,width:500,modal:true,resizable:false,closeOnEscape: true});
     $('#deadline_date').datepicker({dateFormat: 'yy-mm-dd'});
-    $('#deadline_time').timepicker({ 'timeFormat': 'H:i:s' });
+    $('#deadline_time').timepicker({'timeFormat': 'H:i:s'});
     initTaskGroups(false);
     checkIfGroupExists();
     if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
@@ -540,6 +550,5 @@ $(document).ready(function(){
             }
         }
     });
-    $.imgpreload(['image/checkbox.png','image/checkbox_checked.png','image/button_close.png','theme/images/modalClose.png']);
+    $.imgpreload(['image/checkbox.png','image/checkbox_checked.png','image/button_close.png','theme/images/modalClose.png','image/ribbon_f.png','image/ribbon_g.png']);
 });
-

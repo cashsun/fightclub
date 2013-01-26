@@ -144,6 +144,16 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
     background-color: #ff4545;
     background-image: url('../image/tg_selected_shadow.png');
 }
+.shared_f{
+    background-image: url('../image/ribbon_f.png');
+    background-position: 100% center;
+    background-repeat: no-repeat
+}
+.shared_g{
+    background-image: url('../image/ribbon_g.png');
+    background-position: 100% center;
+    background-repeat: no-repeat
+}
 .tg_text_selected{
     text-shadow: 0 1px 0 rgba(0,0,0,0.6);
     color: white
