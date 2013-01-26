@@ -31,7 +31,7 @@ function echoFriendGroup($group){
     }
 }
 function echoFriendTask($task){
-    echo '<div class="f_task roundcorner">'.$task->getContent().'</div>';
+    echo '<div class="f_task roundcorner"><div class="f_task_text">'.$task->getContent().'</div><div class="fighto like"></div></div>';
 }
 function echoFriend($friend){
     echo '<div class="friend_box">';

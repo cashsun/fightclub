@@ -223,7 +223,7 @@ BEGIN
 
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
-COUNT(EXP.expid) AS expcount, TASK.tstamp, TASK.deadline, TASK.isdone,utg.t_order,
+COUNT(EXP.expid) AS texp, TASK.tstamp, TASK.deadline, TASK.isdone,utg.t_order,
 utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM
@@ -421,7 +421,7 @@ IN myfuid int
 BEGIN
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
-COUNT(EXP.expid) AS expcount, TASK.tstamp, TASK.isdone,utg.t_order,
+COUNT(EXP.expid) AS texp, TASK.tstamp, TASK.isdone,utg.t_order,
 utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
 CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
 FROM

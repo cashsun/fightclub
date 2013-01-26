@@ -154,6 +154,18 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
     background-position: 100% center;
     background-repeat: no-repeat
 }
+.texp{
+    width: 50px;
+    height: 34px;
+    padding-top: 16px;
+    font-size: 0.8em;
+    color: #8d8f90;
+    float: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    background: url('../image/exp.png') no-repeat center center   
+}
 .tg_text_selected{
     text-shadow: 0 1px 0 rgba(0,0,0,0.6);
     color: white
