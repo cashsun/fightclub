@@ -3,8 +3,8 @@ function initTasks(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
         $('#u_t_privacy').val($(this).parent().attr('privacy'));
-//        $('#deadline_date').val('2013-1-13');
-//        $('#deadline_time').val('00:00:00');
+        $('#deadline_date').val($(this).attr('dead_date'));
+        $('#deadline_time').val($(this).attr('dead_time'));
         $('#t_dialog').dialog('open');
     }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
@@ -37,7 +37,7 @@ function sync(){
         if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
             isNonIE8 = 'isDoneNonIE8';
         }
-        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="handle"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div class="t_content_text">'+
+        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner"><div class="handle"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div dead_date="'+task.children().eq(2).attr('dead_date')+'" dead_time="'+task.children().eq(2).attr('dead_time')+'" class="t_content_text">'+
             task.children().eq(2).text()+'</div><div class="delete_task"></div></li>';
         task = task.next();
     }
