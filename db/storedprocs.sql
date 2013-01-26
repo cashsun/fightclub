@@ -444,7 +444,7 @@ ORDER BY priority DESC,tgid DESC, tstamp DESC;
 END // 
 DELIMITER ;
 
-/* GET ALL FRIEND'S TASKS */
+/* ADD 1 EXP TO A TASK */
 DELIMITER // 
 CREATE PROCEDURE Fighto(
 IN myuid int,

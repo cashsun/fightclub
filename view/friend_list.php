@@ -31,12 +31,16 @@ function echoFriendGroup($group){
     }
 }
 function echoFriendTask($task){
-    echo '<div class="f_task roundcorner"><div class="f_task_text">'.$task->getContent().'</div><div class="fighto like"></div></div>';
+    echo '<div class="f_task roundcorner"><div class="f_task_text">'.$task->getContent().'</div><div tid="'.$task->getTid().'" class="fighto like"></div></div>';
 }
 function echoFriend($friend){
     echo '<div class="friend_box">';
     echoProfilePic($friend);
-    echo '<div class="f_info"><div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div><div class="f_exp">Exp '.$friend->getExp().'</div></div></div>';
+    $isfriend = '<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="unfollow_friend">DEL</button></span></div>';
+    if(!$friend->isFriend()){
+        $isfriend='<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="add_friend">ADD</button></span></div>';
+    }
+    echo '<div class="f_info"><div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div><div class="f_exp">Exp '.$friend->getExp().'</div>'.$isfriend.'</div></div>';
 }
 function echoProfilePic($friend){
     echo '<img uid='.$friend->getUid().' class="friend_image_l" src="image/'.$friend->getAvatar().'.png" alt=""/>';

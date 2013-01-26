@@ -81,7 +81,8 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
 }
 #tasks_sortable{
     list-style-type: none;
-    margin: 0;padding: 0
+    margin: 0;padding: 0;
+    padding-bottom: 50px
 }
 .delete_task,.delete_group{
     width: 50px;

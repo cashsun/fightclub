@@ -1,9 +1,7 @@
 <?php
 
 class Task {
-    /*
-     * PK
-     */
+
     private $tid = -1;
     private $uid = -1;
     private $otid;
@@ -14,7 +12,8 @@ class Task {
     private $isdone = 0;
     private $privacy = 0;
     private $deadline = '0000-00-00 00:00:00';
-
+    private $isliked = 0;
+    
     function __construct($taskInfo) {
         
         $this->uid = $taskInfo['uid'];
@@ -36,6 +35,8 @@ class Task {
             $this->privacy = $taskInfo['privacy'];
         if(isset($taskInfo['deadline']))
             $this->deadline = $taskInfo['deadline'];
+        if(isset($taskInfo['isliked']))
+            $this->isliked = $taskInfo['isliked'];
     }
     
     
@@ -82,6 +83,10 @@ class Task {
     
     function getPrivacy(){
         return $this->privacy;
+    }
+    
+    function isLiked(){
+        return $this->isliked;
     }
 }
 ?>

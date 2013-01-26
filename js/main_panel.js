@@ -2,7 +2,8 @@ function initTasks(){
     $('.t_content_text').click(function(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
-        $('#u_t_privacy').val($(this).parent().attr('privacy'));
+        var p = $(this).parent().attr('privacy');
+        $('#privacy'+p).click();
         $('#deadline_date').val($(this).attr('dead_date'));
         $('#deadline_time').val($(this).attr('dead_time'));
         $('#t_dialog').dialog('open');
@@ -175,7 +176,7 @@ function postCreateTask(){
             if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
                 isNonIE8 = 'isDoneNonIE8';
              }
-            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="handle"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div class="t_content_text">'
+            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="handle"></div><div original-title="❤" class="texp">0</div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
 +$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
         },function(response){tidnew = response});
@@ -204,7 +205,7 @@ function postUpdateTask(){
     $('.dialog').dialog('close');
     var tid = $('#tid','#t_dialog').html();
     var content = $('#update_task').val();
-    var privacy = $('#u_t_privacy').val();
+    var privacy = $('#u_t_privacy :radio:checked').val();
     var deadline = $('#deadline_date').val()+' '+$('#deadline_time').val();
     var task = $('[tid="'+tid+'"]','#tasks_sortable');
     var t_text = task.children().eq(3);
@@ -449,6 +450,8 @@ $(document).ready(function(){
             }						
     });
     $('.dialog').dialog({autoOpen: false,height:500,width:500,modal:true,resizable:false,closeOnEscape: true});
+    $('#u_t_privacy').buttonset();
+    
     $('#deadline_date').datepicker({dateFormat: 'yy-mm-dd'});
     $('#deadline_time').timepicker({'timeFormat': 'H:i:s'});
     initTaskGroups(false);

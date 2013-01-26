@@ -331,7 +331,7 @@
         
         function fighto($uid, $tid){
             $this->connect();
-            $query = sprintf("CALL Fighto(%s)", mysql_real_escape_string($tid));   
+            $query = sprintf("CALL Fighto(%s,%s)", mysql_real_escape_string($uid),mysql_real_escape_string($tid));   
             if(mysql_query($query) or die(mysql_error()))
               return $this->last_insert_id();
             else
