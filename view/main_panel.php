@@ -241,7 +241,7 @@ function getAllByUid($uid){
                 });
             });
             },200);
-            checkTexp();
+            checkChange();
         }
 </script>
 <script type="text/javascript" src="js/loading.js"></script>

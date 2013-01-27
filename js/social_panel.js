@@ -84,7 +84,7 @@ var texparray;
 var temp_tid;
 var temp_texp;
 var cacheitem;
-function checkTexp(){
+function checkChange(){
     var tgid = $('#tgid').html();
     makeAjaxCall('post',{tgid:tgid,webaction:13},function(){
         setTimeout("checkTexp()",10000);
