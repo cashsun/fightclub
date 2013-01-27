@@ -87,7 +87,7 @@ var cacheitem;
 function checkChange(){
     var tgid = $('#tgid').html();
     makeAjaxCall('post',{tgid:tgid,webaction:13},function(){
-//        setTimeout("checkChange()",10000);
+        setTimeout("checkChange()",10000);
     },function(r){
         texparray = $.parseJSON(r);
         for(var i=0;i<texparray.length;i++){
