@@ -395,9 +395,10 @@ lastname, email,
 avatar,fuid
 FROM USER u 
 LEFT JOIN (SELECT fuid FROM FRIEND WHERE uid = myuid) f ON u.uid = f.fuid
-WHERE uid <> myuid AND (LOWER(username) LIKE CONCAT('%', LOWER(myinput), '%')
-OR LOWER(firstname) LIKE CONCAT('%', LOWER(myinput), '%')
-OR LOWER(lastname) LIKE CONCAT('%', LOWER(myinput), '%'));
+WHERE uid <> myuid AND
+(LOWER(CONCAT(firstname, ' ', lastname)) LIKE CONCAT('%', LOWER(myinput), '%')
+OR LOWER(CONCAT(lastname, ' ', firstname)) LIKE CONCAT('%', LOWER(myinput), '%')
+OR LOWER(username) LIKE CONCAT('%', LOWER(myinput), '%'));
 END // 
 DELIMITER ;
 
