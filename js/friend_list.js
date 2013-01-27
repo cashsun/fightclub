@@ -2,6 +2,12 @@ $(document).ready(function(){
     $('.f_task_text').click(function(){
         alert($(this).text());
     });
+    $('.f_toggle').toggleSwitch({
+			highlight: false,
+			width: 25
+    });
+    $('#group_button .ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
+    $('#group_button .ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
     $('.fighto').click(function(){
         var tid = $(this).attr('tid');
         if(!$(this).hasClass('liked')){

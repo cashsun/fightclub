@@ -1,8 +1,17 @@
 <?php
+session_start();
 include_once '../../db/DBadapter.php';
 include_once '../Actions.php';
-if(isset($_POST['webaction'])){
-    switch ($_POST['webaction']){
+include_once '../../view/friend_list.php';
+if(isset($_SESSION['uid'])){
+    $action = -1;
+    if(isset($_POST['webaction'])){
+        $action= $_POST['webaction'];
+    }
+    if(isset($_GET['webaction'])){
+        $action= $_GET['webaction'];
+    }
+    switch ($action){
         case Actions::createTask:
             createTask();
             break;
@@ -44,6 +53,9 @@ if(isset($_POST['webaction'])){
             break;
         case Actions::gettexpbytgid:
             getTexpbyTgid();
+            break;
+        case Actions::GET_USER_TASKS:
+            getUserTasks();
             break;
         default :echo -1;
     }
@@ -174,6 +186,17 @@ function getTexpbyTgid(){
             $counter++;
         }
         echo json_encode($jsonArray);
+    }
+}
+function getUserTasks(){
+    if(isset($_GET['fuid'])){
+        $user = getAllByFuid($_GET['fuid'],$_SESSION['uid']);
+        $groups = $user->getTaskGroups();
+        if($groups[0]->getTgid()!=-1){
+            foreach($groups as $group){
+                echoFriendGroup($group);
+            }
+        }
     }
 }
 ?>

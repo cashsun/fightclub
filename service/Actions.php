@@ -14,5 +14,6 @@ class Actions{
     const updateAvatar = 11;
     const fighto = 12;
     const gettexpbytgid = 13;
+    const GET_USER_TASKS = 14;
 }
 ?>

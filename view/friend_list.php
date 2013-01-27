@@ -42,7 +42,7 @@ function echoFriend($friend){
     if(!$friend->isFriend()){
         $isfriend='<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="add_friend"><img src="image/addfriend.png" alt=""/></button></span></div>';
     }
-    echo '<div class="f_info"><div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div><div class="f_exp">Exp '.$friend->getExp().'</div>'.$isfriend.'</div></div>';
+    echo '<div class="f_info"><div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div><div class="f_exp">Exp '.$friend->getExp().'</div>'.$isfriend.'</div><div id="f_opt"><select class="f_toggle"><option>Tasks</option><option>Follows</option></select></div></div>';
 }
 function echoProfilePic($friend){
     echo '<img uid='.$friend->getUid().' class="friend_image_l" src="image/'.$friend->getAvatar().'.png" alt=""/>';

@@ -16,16 +16,18 @@
 #social_tabs{
     height: 100%;
 }
-#social_tabs ul{
+#social_tabs ul.ui-tabs-nav{
     height: 30px;
-    border-bottom: none;
 }
 #social_tabs li{
-    background-color: #eaeaea
+    background-color: #eaeaea; 
+    margin-top: 1px
 }
-#social_tabs .ui-state-active,#user_tabs .ui-state-active{
+#social_tabs li.ui-state-active,#user_tabs .ui-state-active{
     background: none;
-    border-bottom: none;
+}
+#social_tabs .tab{
+    background: none ! important;
 }
 .tab{
     height: 100%;
@@ -45,6 +47,7 @@
 #friends_radios .ui-state-active{
     background: #168dd9 none;
     height: 11px;
+    border-bottom: none
 }
 #friends_radios .ui-corner-left{
     margin-right: -5px
@@ -114,7 +117,7 @@
     background: #ff4545 none;
     border:1px solid #ab1e1e;
 }*/
-#friends_wrapper .ui-state-active{
+#friends_radios .ui-state-active{
     background: #168dd9;
 }
 .isfriend .ui-button span{
@@ -195,4 +198,14 @@
 }
 .liked{
     background: url('../image/liked.png') no-repeat center center;
+}
+#f_opt{
+    float: left;
+    height: 20px;
+    font-size: 0.8em;
+    margin-top: 90px
+}
+#f_opt .ui-state-active{
+    background: none;
+    border: none;
 }

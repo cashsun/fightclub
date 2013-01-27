@@ -382,7 +382,7 @@ function showGroupPanel(isFromClick){
         $('#tg_selector').show(0);
         if(!isFromClick){
             $('#logout').show(0);
-            $('.ui-toggle-switch').find('label').eq(0).click();
+            $('#group_button .ui-toggle-switch').find('label').eq(0).click();
         }
 }
 function hideGroupPanel(isFromClick){
@@ -401,7 +401,7 @@ function hideGroupPanel(isFromClick){
         $('#tg_selector').hide();
         if(!isFromClick){
             $('#logout').hide(0);
-            $('.ui-toggle-switch').find('label').eq(1).click();
+            $('#group_button .ui-toggle-switch').find('label').eq(1).click();
         }
 }
 function toggleGroupPanel(){
@@ -448,8 +448,8 @@ $(document).ready(function(){
     });
 
     $('#group_button').tipsy({fallback:'Group panel',gravity:'n',fade:false,offset:0});
-    $('.ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
-    $('.ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
+    $('#group_button .ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
+    $('#group_button .ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
     
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:false});
     $('#input_task').keyup(function() {

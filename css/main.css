@@ -37,9 +37,6 @@ background-color: #f8f8f8}
 box-shadow: 0 1px 0 rgba(255,255,255,0.5)}
 #create_group{color: #8d8f90;height: 50px;width: 270px;text-shadow: 0 1px 0 rgba(255,255,255,0.6);font-size: 0.9em;
 cursor: pointer;background: url('../image/button_add.png') no-repeat center center}
-.f_first{
-    background-image: url('../image/tg_shadow.png');
-}
 .tg_title span{
     padding-right: 50px;
 }
