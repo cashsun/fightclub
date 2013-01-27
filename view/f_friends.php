@@ -18,7 +18,7 @@ function getList($fuid,$ftype){
     $db->connect();
     switch($ftype){
     case 0:
-        /* to-do */
+        $result = $db->getUserFollows($fuid, $_SESSION['uid']);
         break;
     case 1:
         

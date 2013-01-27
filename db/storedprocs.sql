@@ -17,6 +17,7 @@ DROP PROCEDURE IF EXISTS GetFriends;
 DROP PROCEDURE IF EXISTS GetMyFollows;
 DROP PROCEDURE IF EXISTS GetMyFans;
 DROP PROCEDURE IF EXISTS GetMyFriends;
+DROP PROCEDURE IF EXISTS GetUserFollows;
 DROP PROCEDURE IF EXISTS AddFriend;
 DROP PROCEDURE IF EXISTS UnfollowFriend;
 DROP PROCEDURE IF EXISTS SearchUsers;
@@ -52,9 +53,8 @@ mypasswd char(32) CHARACTER SET utf8
 ) 
 BEGIN 
 SELECT * FROM USER
-WHERE username = myusername
-AND
-passwd = mypasswd;
+WHERE ((username = myusername AND passwd = mypasswd)
+OR (email = myusername AND passwd = mypasswd));
 END // 
 DELIMITER ;
 
@@ -344,6 +344,33 @@ FROM
 ) ft
 LEFT JOIN USER
 ON USER.uid = ft.fuid ORDER BY USER.firstname;
+END // 
+DELIMITER ;
+
+
+/* GET ALL PEOPLE THE USER FOLLOW */
+DELIMITER // 
+CREATE PROCEDURE GetUserFollows(
+IN myfuid int,
+IN myuid int
+) 
+BEGIN
+SELECT USER.uid, FRIEND.fuid,
+USER.exp, USER.username,
+USER.firstname,
+USER.lastname, USER.email,
+USER.avatar
+FROM
+(
+  SELECT *
+  FROM FRIEND
+  WHERE uid = myfuid AND fuid!=myuid
+) ft
+LEFT JOIN USER
+ON USER.uid = ft.fuid
+LEFT JOIN FRIEND
+ON USER.uid = FRIEND.fuid AND FRIEND.uid = myuid
+ORDER BY USER.firstname;
 END // 
 DELIMITER ;
 
