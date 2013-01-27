@@ -42,6 +42,9 @@ if(isset($_POST['webaction'])){
         case Actions::fighto:
             fighto();
             break;
+        case Actions::gettexpbytgid:
+            getTexpbyTgid();
+            break;
         default :echo -1;
     }
 }else{
@@ -159,5 +162,18 @@ function fighto(){
         echo $result;
     }
 }
-
+function getTexpbyTgid(){
+    if(isset($_POST['tgid'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->getTexpByTgid($_POST['tgid']);
+        $jsonArray = Array();
+        $counter = 0;
+        while($row = mysql_fetch_assoc($result)){
+            $jsonArray[$counter] = $row;
+            $counter++;
+        }
+        echo json_encode($jsonArray);
+    }
+}
 ?>

@@ -13,5 +13,6 @@ class Actions{
     const unfollowFriend = 10;
     const updateAvatar = 11;
     const fighto = 12;
+    const gettexpbytgid = 13;
 }
 ?>

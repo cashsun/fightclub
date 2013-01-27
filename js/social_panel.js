@@ -2,7 +2,6 @@ var socialLoading;
 $(document).ready(function(){
     socialLoading = $('#social_loading');
     showSocial = false;
-    setTimeout("checkTexp()",10000);
     $('#social_tabs').tabs();
     $("#friends_radios").buttonset();
     $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});
@@ -81,7 +80,24 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback){
         }
     });
 }
+var texparray;
+var temp_tid;
+var temp_texp;
+var cacheitem;
 function checkTexp(){
-    
-    setTimeout("checkTexp()",10000);
+    var tgid = $('#tgid').html();
+    makeAjaxCall('post',{tgid:tgid,webaction:13},function(){
+        setTimeout("checkTexp()",10000);
+    },function(r){
+        texparray = $.parseJSON(r);
+        for(var i=0;i<texparray.length;i++){
+            temp_tid = texparray[i].tid;
+            temp_texp = texparray[i].texp;
+            cacheitem = $('li[tid="'+temp_tid+'"]','#cache').children().eq(1);
+            if(cacheitem.html()!=temp_texp){
+                $('li[tid="'+temp_tid+'"]','#tasks_sortable').children().eq(1).html(temp_texp);
+                sync();
+            }
+        }
+    });
 }
