@@ -32,17 +32,17 @@ function echoSortedTasks(TaskGroup $group){
         }
     }else{
         $tidlist=  explode(',', $order);
-        housekeeping($tasks, $tidlist);
         foreach($tidlist as $tid){
             $task = $group->getTaskByTid($tid);
             if($task!=null && $task->getContent()!=''){
                 echoTask($task);
             }
         }
+        housekeeping($tasks, $tidlist);
     }
 }
 
-function housekeeping(Task $tasks, $tidlist)
+function housekeeping($tasks, $tidlist)
 {
   if(sizeof($tidlist)!=sizeof($tasks))
   {
