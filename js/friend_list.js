@@ -8,20 +8,23 @@ $(document).ready(function(){
 			width: 25
     });
     $('#f_opt .ui-toggle-switch').find('label').eq(0).click(function(){
-        socialLoading.show(0);
         $('#f_group_wrapper').hide(0,function(){
-            makeAjaxCall('get',{
-            fuid:function(){return $('#f_opt').parent().attr('fuid');},
-            webaction:14},function(){socialLoading.hide(0);checkIfEmpty();
-            },function(r){
-                        if(r==-1){
-                            $('#f_group_wrapper').html('oops, try again later.')}
-                        else{
-                            $('#f_group_wrapper').html(r).fadeIn(200);
-                        }
-            });
+            socialLoading.show(0,function(){
+                makeAjaxCall('get',{
+                fuid:function(){return $('#f_opt').parent().attr('fuid');},
+                webaction:14},function(){socialLoading.hide(0,function(){
+                    checkIfEmpty();
+                });
+                },function(r){
+                            if(r==-1){
+                                $('#f_group_wrapper').html('oops, try again later.')}
+                            else{
+                                $('#f_group_wrapper').html(r).fadeIn(200);
+                            }
+                            showSocial = true;
+                });
+            }); 
         });
-        
     });
     $('#f_opt .ui-toggle-switch').find('label').eq(1).click(function(){
         $('#f_group_wrapper').hide(0,function(){

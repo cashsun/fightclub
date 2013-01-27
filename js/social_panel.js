@@ -9,6 +9,7 @@ $(document).ready(function(){
         if(!showSocial){
             $('#panel_social').animate({right: 0},300,function(){
                 $('#radio0').click();
+                showSocial = true;
             });
         }else{
                 var width = $('#panel_social').width();
@@ -69,7 +70,7 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback){
                 }
             },
             error:function(){
-                $('#friends_wrapper').html('server error. Try again later.').fadeIn(200);
+                $('#friends_wrapper').html('<div style="font-size:0.8em;text-align:center;margin-top:50px">server error. Try again later.</div>').fadeIn(200);
             },
             complete:function(){
                 if(callback != null){callback();}

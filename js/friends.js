@@ -29,20 +29,19 @@ function initBtns(){
         unfollowFriend(fuid);
         }
     });
+    showSocial = true;
 }
 function addFriend(fuid){
-    makeAjaxCall('post',{fuid:fuid,webaction:9},function(){},function(r){
+    makeAjaxCall('post',{fuid:fuid,webaction:9},function(){initBtns()},function(r){
             if(r==-1){
-                alert('You are already friends.')
+                alert('You are already friends.');
             }
-            initBtns()
     });
 }
 function unfollowFriend(fuid){ 
-            makeAjaxCall('post',{fuid:fuid,webaction:10},function(){},function(r){
+            makeAjaxCall('post',{fuid:fuid,webaction:10},function(){initBtns()},function(r){
                 if(r==-1||r==0){
-                    alert('You are not following this user.')
+                    alert('You are not following this user.');
                 }
-                initBtns();
             });
 }
