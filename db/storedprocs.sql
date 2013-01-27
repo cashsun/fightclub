@@ -433,11 +433,11 @@ IF(@isfans = TRUE) THEN
   SET @privacylevel = 0;
 END IF;
 
-SELECT utg.fuid, myfuid AS uid, TASK.tid, TASK.otid, utg.username,
-utg.firstname, utg.lastname, utg.email, TASK.content,
-COUNT(EXP.expid) AS texp, TASK.tstamp, TASK.isdone,utg.t_order,
-utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
-CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk, (EXP1.expid IS NOT NULL) AS isliked
+SELECT utg.fuid, myfuid AS uid, TASK1.tid, TASK1.otid, utg.username,
+utg.firstname, utg.lastname, utg.email, TASK1.content,
+COUNT(EXP.expid) AS texp, TASK1.tstamp, TASK1.isdone,utg.t_order,
+utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK1.privacy, 
+CONCAT(CONCAT(IFNULL(TASK1.tid, 'NULL'), ' '),utg.tgid) AS pk, (EXP1.expid IS NOT NULL) AS isliked
 FROM
 (
   SELECT T_GROUP.tgid, T_GROUP.priority, T_GROUP.type,
@@ -458,18 +458,22 @@ FROM
   )uf
   ON T_GROUP.uid = uf.uid
 ) utg
-LEFT JOIN TASK
-ON
-TASK.tgid = utg.tgid
-AND TASK.privacy > @privacylevel
-LEFT JOIN EXP
-ON TASK.tid = EXP.tid
-LEFT JOIN
+LEFT JOIN 
 (
-  SELECT expid FROM EXP
-  WHERE uid = myuid
-)EXP1
-ON TASK.tid = EXP.tid
+  SELECT * FROM
+  TASK
+  WHERE privacy > @privacylevel
+  AND uid = myfuid
+)TASK1
+ON
+TASK1.tgid = utg.tgid
+LEFT JOIN EXP
+ON TASK1.tid = EXP.tid
+LEFT JOIN
+EXP EXP1
+ON TASK1.tid = EXP1.tid
+AND
+EXP1.uid = myuid
 GROUP BY pk
 ORDER BY priority DESC,tgid DESC, tstamp DESC;
 END // 
