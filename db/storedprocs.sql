@@ -25,6 +25,8 @@ DROP PROCEDURE IF EXISTS GetAllFriendTasks;
 DROP PROCEDURE IF EXISTS Fighto;
 DROP PROCEDURE IF EXISTS GetUserTasks;
 DROP PROCEDURE IF EXISTS GetTexpByTgid;
+DROP PROCEDURE IF EXISTS CreateComment;
+DROP PROCEDURE IF EXISTS DeleteComment;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -521,3 +523,29 @@ WHERE T_GROUP.tgid = mytgid
 GROUP BY TASK.tid;
 END // 
 DELIMITER ;
+
+/* CREATE COMMENT */
+DELIMITER // 
+CREATE PROCEDURE CreateComment(
+IN myuid int,
+IN mytid int,
+IN mycontent char(140) CHARACTER SET utf8
+) 
+BEGIN
+INSERT INTO COMMENT (uid, tid, content)
+VALUES(myuid, mytid, mycontent);
+END // 
+DELIMITER ;
+
+/* CREATE COMMENT */
+DELIMITER // 
+CREATE PROCEDURE DeleteComment(
+IN mycommentid int
+) 
+BEGIN
+DELETE FROM COMMENT
+WHERE commentid = mycommentid;
+SELECT ROW_COUNT() AS rows_affected;
+END // 
+DELIMITER ;
+

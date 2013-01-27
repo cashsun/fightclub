@@ -12,49 +12,55 @@ if(isset($_SESSION['uid'])){
         $action= $_GET['webaction'];
     }
     switch ($action){
-        case Actions::createTask:
+        case Actions::CREATE_TASK:
             createTask();
             break;
-        case Actions::createTaskGroup:
+        case Actions::CREATE_TASK_GROUP:
             createTaskGroup();
             break;
-        case Actions::deleteTask:
+        case Actions::DELETE_TASK:
             deleteTask();
             break;
-        case Actions::deleteTaskGroup:
+        case Actions::DELETE_TASK_GROUP:
             deleteTaskGroup();
             break;
-        case Actions::updateTask:
+        case Actions::UPDATE_TASK:
             updateTask();
             break;
-        case Actions::updateTaskGroup:
+        case Actions::UPDATE_TASK_GROUP:
             updateTaskGroup();
             break;
-        case Actions::getFriends:
+        case Actions::GET_FRIENDS:
             getFriends();
             break;
-        case Actions::updateTaskGroupTaskOrder:
+        case Actions::UPDATE_TASK_GROUP_TASK_ORDER:
             updateTaskGroupTaskOrder();
             break;
-        case Actions::toggleTaskComplete:
+        case Actions::TOOGLE_TASK_COMPLETE:
             toggleTaskComplete();
             break;
-        case Actions::addFriend:
+        case Actions::ADD_FRIEND:
             addFriend();
             break;
-        case Actions::unfollowFriend:
+        case Actions::UNFOLLOW_FRIEND:
             unfollowFriend();
             break;
-        case Actions::updateAvatar:
+        case Actions::UPDATE_AVATAR:
             updateAvatar();
             break;
-        case Actions::fighto:
+        case Actions::FIGHTO:
             fighto();
             break;
-        case Actions::gettexpbytgid:
+        case Actions::GET_TEXP_BY_TGID:
             getTexpbyTgid();
             break;
         case Actions::GET_USER_TASKS:
+            getUserTasks();
+            break;
+        case Actions::CREATE_COMMENT:
+            getUserTasks();
+            break;
+        case Actions::DELETE_COMMENT:
             getUserTasks();
             break;
         default :echo -1;
@@ -197,6 +203,22 @@ function getUserTasks(){
                 echoFriendGroup($group);
             }
         }
+    }
+}
+function createComment(){
+    if(isset($_POST['tid'])&&isset($_POST['content'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->CreateComment($_SESSION['uid'], $_POST['tid'], $_POST['content']);
+        echo $result;
+    }
+}
+function deleteComment(){
+    if(isset($_POST['commentid'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->DeleteComment($_POST['commentid']);
+        echo $result;
     }
 }
 ?>
