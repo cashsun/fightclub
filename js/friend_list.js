@@ -25,7 +25,7 @@ $(document).ready(function(){
     if($('#f_group_wrapper').html()==''){
         $('#f_group_wrapper').html('No task shared by this user.');
     }
-    $('.f_group .f_task_text').tipsy({gravity:'s',fade:false,offset:0});
+    $('.f_group').tipsy({gravity:'s',fade:false,offset:0});
     
         $('.add_friend').button().click(function(){
         var uid = $('#uid').html();

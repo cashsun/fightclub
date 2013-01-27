@@ -170,12 +170,12 @@
 }
 .f_task_texp{
     position: absolute;
-    width: 20px;
+    width: 25px;
     font-size: 0.8em;
     left: 0;
     height: 18px;
     padding-top: 9px;
-    padding-left: 10px;
+    padding-left: 5px;
     padding-bottom: 5px;
     color: #ff4545;
     white-space: nowrap;

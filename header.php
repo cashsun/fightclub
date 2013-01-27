@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Fighto Club</title>
+        <title>Fighto! Club</title>
         <link rel="shortcut icon" href="favicon.ico" />
         <link rel="stylesheet" href="theme/jquery-ui.css"/>
         <link rel="stylesheet" href="css/main.css"/>

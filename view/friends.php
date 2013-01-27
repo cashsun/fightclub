@@ -43,9 +43,9 @@ return $friends;
 function echoFriend($friend){
     echo '<div class="friend_box">';
     echoProfilePic($friend);
-    $isfriend = '<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="unfollow_friend">DEL</button></span></div>';
+    $isfriend = '<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="unfollow_friend"><img src="image/delfriend.png" alt=""/></button></span></div>';
     if(!$friend->isFriend()){
-        $isfriend='<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="add_friend">ADD</button></span></div>';
+        $isfriend='<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="add_friend"><img src="image/addfriend.png" alt=""/></button></span></div>';
     }
     echo '<div class="f_info"><div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div><div class="f_exp">Exp '.$friend->getExp().'</div>'.$isfriend.'</div></div>';
 }
