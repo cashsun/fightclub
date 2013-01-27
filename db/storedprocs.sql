@@ -459,7 +459,9 @@ FROM
   ON T_GROUP.uid = uf.uid
 ) utg
 LEFT JOIN 
-(
+TASK
+ON privacy > @privacylevel
+AND uid = myfuid
   SELECT * FROM
   TASK
   WHERE privacy > @privacylevel

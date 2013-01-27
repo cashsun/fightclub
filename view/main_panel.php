@@ -23,8 +23,8 @@ function echoTask(Task $task){
 }
 function echoSortedTasks(TaskGroup $group){
     $order = $group->getTaskOrder();
+    $tasks = $group->getTasks();
     if($order==''){
-        $tasks = $group->getTasks();
         foreach($tasks as $task){
             if($task->getContent()!=''){
                 echoTask($task);
@@ -32,6 +32,7 @@ function echoSortedTasks(TaskGroup $group){
         }
     }else{
         $tidlist=  explode(',', $order);
+        housekeeping($tasks, $tidlist);
         foreach($tidlist as $tid){
             $task = $group->getTaskByTid($tid);
             if($task!=null && $task->getContent()!=''){
@@ -40,6 +41,22 @@ function echoSortedTasks(TaskGroup $group){
         }
     }
 }
+
+function housekeeping(Task $tasks, $tidlist)
+{
+  if(sizeof($tidlist)!=sizeof($tasks))
+  {
+    $db = new DBadapter();
+    $db->connect();
+    foreach($tasks as $task){
+        $tid = $task->getTid();
+        if(!in_array($tid, $tidlist)){
+          $db->deleteTask($tid);
+        }
+    }
+  }
+}
+
 function getAllByUid($uid){
     $db = new DBadapter();
     $db->connect();
