@@ -257,7 +257,6 @@ function getAllByUid($uid){
                 });
             });
             },200);
-            
         }
 </script>
 <script type="text/javascript" src="js/loading.js"></script>
