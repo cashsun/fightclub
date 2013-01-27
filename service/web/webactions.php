@@ -149,20 +149,20 @@ function toggleTaskComplete(){
     }
 }
 function addFriend(){
-    if(isset($_POST['uid'], $_POST['fuid'])){
+    if(isset($_SESSION['uid'], $_POST['fuid'])){
         $db = new DBadapter();
         $db->connect();
-        $result = $db->addFriend($_POST['uid'], $_POST['fuid']);
+        $result = $db->addFriend($_SESSION['uid'], $_POST['fuid']);
         echo $result;
     }else{
         echo -1;
     }
 }
 function unfollowFriend(){
-    if(isset($_POST['uid'])&&isset($_POST['fuid'])){
+    if(isset($_SESSION['uid'])&&isset($_POST['fuid'])){
         $db = new DBadapter();
         $db->connect();
-        $result = $db->unfollowFriend($_POST['uid'],$_POST['fuid']);
+        $result = $db->unfollowFriend($_SESSION['uid'],$_POST['fuid']);
         echo $result;
     }
 }

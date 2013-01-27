@@ -3,21 +3,15 @@ $(function(){
 });
 
 var index = {
-    
-    
     init : function()
     {
         var inputBox = $('.front-login .input-box');
         
         //attach relevant listeners
         index.attachListeners(inputBox);
-        
-
     },
-    
     attachListeners : function(inputBox)
     {
-      
       inputBox.focus(
         function(){
           if(($(this).attr('name')=='cm-name' && $(this).val()=='username or email') || ($(this).attr('name')=='cm-pass' && $(this).val()=='password') )
@@ -36,6 +30,5 @@ var index = {
           }
         }
       );
-      
     }
 }

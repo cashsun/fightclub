@@ -62,10 +62,15 @@ function initIsDone(){
         var tid = tcheckbox.parent().parent().attr('tid');
         var isdone = 0;
         if(tcheckbox.is(':checked')){isdone = 1};
-        makeAjaxCall('post',
-        {tid:tid,
-            isdone:isdone,
-            webaction:8},function(){});
+            makeAjaxCall('post',
+            {tid:tid,
+                isdone:isdone,
+                webaction:8},function(){},function(r){
+                    if(r==-1){
+                        alert('you cannot undone public task!');
+                        location.reload();
+                    }
+                });
     });
 }
 function initTaskGroups(isFromClick){
@@ -415,6 +420,11 @@ var loading_image;
 var priorityMap;
 $(document).ready(function(){
     showGroup = true;
+    $('#panel_task').click(function(){
+        if(showSocial){
+            $('#club_button').click();
+        }
+    })
     $('button').button();
     $('input.datepicker').datepicker();
     tidnew = tgidnew= -1;
@@ -563,5 +573,5 @@ $(document).ready(function(){
             }
         }
     });
-    $.imgpreload(['image/checkbox.png','image/checkbox_checked.png','image/button_close.png','theme/images/modalClose.png','image/ribbon_f.png','image/ribbon_g.png']);
+    $.imgpreload(['image/checkbox.png','image/checkbox_checked.png','image/button_close.png','theme/images/modalClose.png','image/delfriend.png','image/addfriend.png','image/ribbon_f.png','image/ribbon_g.png']);
 });
