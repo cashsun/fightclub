@@ -148,7 +148,7 @@ function getAllByUid($uid){
                 <div class="tab" id="tabs-1">
                     <input type="text" class="roundcorner" maxlength="50" id="input_friend"/>
                     <div id="friends_radios">
-                        <input type="radio" class="radio" id="radio0" name="radio" /><label for="radio0">Follow</label>
+                        <input type="radio" class="radio" id="radio0" name="radio" /><label for="radio0">Follows</label>
                         <input type="radio" class="radio" id="radio1" name="radio" /><label for="radio1">Friends</label>
                         <input type="radio" class="radio" id="radio2" name="radio" /><label for="radio2">Fans</label>
                     </div>

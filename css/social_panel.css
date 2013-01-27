@@ -202,8 +202,11 @@
 #f_opt{
     float: left;
     height: 20px;
+    width: 100%;
     font-size: 0.8em;
-    margin-top: 90px
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center
 }
 #f_opt .ui-state-active{
     background: none;

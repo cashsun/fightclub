@@ -28,7 +28,6 @@ $(document).ready(function(){
 });
 function getMyFollows(){
         $('#friends_wrapper').hide(0,function(){
-            var uid = $('#uid','#cache').html();
             makeSocialAjaxCall('get','view/friends.php',{ftype:0},function(resp){
                 $('#friends_wrapper').html(resp).fadeIn(200);
                 },function(){showSocial = true});
@@ -56,29 +55,30 @@ function getUserLists(fuid){
         });
 }
 function makeSocialAjaxCall(type,url,param,successCallback,callback){
-    socialLoading.show(0);
-    $.ajax({
-        url:url,
-        timeout:6000,
-        type:type,
-        data:param,
-        success:function(response){
-            if(response==-1){
-                location.reload();
-            }else if(successCallback!=null){
-                successCallback(response);
+    socialLoading.show(0,function(){
+        $.ajax({
+            url:url,
+            timeout:6000,
+            type:type,
+            data:param,
+            success:function(response){
+                if(response==-1){
+                    location.reload();
+                }else if(successCallback!=null){
+                    successCallback(response);
+                }
+            },
+            error:function(){
+                $('#friends_wrapper').html('server error. Try again later.').fadeIn(200);
+            },
+            complete:function(){
+                if(callback != null){callback();}
+                else{
+                    location.reload();
+                }
+                socialLoading.hide(0);
             }
-        },
-        error:function(){
-            $('#friends_wrapper').html('server error. Try again later.').fadeIn(200);
-        },
-        complete:function(){
-            if(callback != null){callback();}
-            else{
-                location.reload();
-            }
-            socialLoading.hide(0);
-        }
+        });
     });
 }
 var texparray;
