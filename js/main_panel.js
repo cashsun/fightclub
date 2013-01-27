@@ -437,12 +437,9 @@ $(document).ready(function(){
     $('#logout').click(function(){
         location.replace("test/logout.php");
     });
-    $('#show_group').each(function(i,item) {
-                $(item).toggleSwitch({
-                        highlight: $(item).data("highlight"),
-                        width: 25
-                });
-    });
+    
+
+    
     priorityMap = new Array("casual","very low","low","minor","medium","important","major","urgent","urgent+","immediate");
     $('#g_priority > span,#u_g_priority > span').each(function(){
         $(this).slider({
@@ -457,10 +454,6 @@ $(document).ready(function(){
         });
     });
 
-    $('#group_button').tipsy({fallback:'Group panel',gravity:'n',fade:false,offset:0});
-    $('#group_button .ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
-    $('#group_button .ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
-    
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:false});
     $('#input_task').keyup(function() {
             text = $(this).val();
@@ -471,7 +464,14 @@ $(document).ready(function(){
     });
     $('.dialog').dialog({autoOpen: false,height:500,width:500,modal:true,resizable:false,closeOnEscape: true});
     $('#u_t_privacy').buttonset();
-    
+    $('#show_group').toggleSwitch({
+            highlight: true,
+            width: 25,
+            callback:function(i){
+                if(i==0){showGroupPanel(true)}else{hideGroupPanel(true)}
+            }
+    });
+    $('#group_button').tipsy({fallback:'Group panel',gravity:'n',fade:false,offset:0});
     $('#deadline_date').datepicker({dateFormat: 'yy-mm-dd'});
     $('#deadline_time').timepicker({'timeFormat': 'H:i:s'});
     initTaskGroups(false);

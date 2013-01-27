@@ -32,7 +32,7 @@ jQuery.fn.toggleSwitch = function (params) {
                 var roundedVal = Math.round(ui.value / 100);
                 var self = this;
                 window.setTimeout(function () {
-                    toggleValue(self.parentNode, roundedVal);
+                        toggleValue(self.parentNode, roundedVal);
                 }, 11);
             },
             range: (options.highlight && !$(selectObj).data("hideHighlight")) ? "max" : 0
@@ -55,14 +55,17 @@ jQuery.fn.toggleSwitch = function (params) {
         function toggleValue(slideContain, index) {
             $(slideContain).find("label").eq(index).addClass("ui-state-active").siblings("label").removeClass("ui-state-active");
             if(index==0){
-                $(slideContain).parent().find("option").eq(0).attr("selected", true);
-                $(slideContain).parent().find("option").eq(1).attr("selected", false);
+            $(slideContain).parent().find("option").eq(0).attr("selected", true);
+            $(slideContain).parent().find("option").eq(1).attr("selected", false);
             }else{
                 $(slideContain).parent().find("option").eq(1).attr("selected", true);
                 $(slideContain).parent().find("option").eq(0).attr("selected", false);
             }
             $(slideContain).find(".ui-slider").slider("value", index * 100);
             $contain.find("label").eq(index).click();
+            if(options.callback!=null){
+                options.callback(index);
+            }
         }
 
         // initialise selected option
