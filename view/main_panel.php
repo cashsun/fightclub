@@ -93,7 +93,7 @@ function getAllByUid($uid){
 ?>
 <body onload="showPanel()">
 <div id="loadingImage"></div>
-<div id="master">
+<div id="master" class="hidden">
     <div id="navibar">
         <?php echoProfilePic($user);?>
         <div id="profile_username" class="username">
