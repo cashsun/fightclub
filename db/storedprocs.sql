@@ -39,9 +39,28 @@ IN mylastname char(30) CHARACTER SET utf8,
 IN myemail char(50) CHARACTER SET utf8,
 IN myavatar int
 ) 
-BEGIN 
-INSERT INTO USER (username, passwd, firstname, lastname, email, avatar)
-VALUES(myusername, mypasswd, myfirstname, mylastname, myemail, myavatar);
+BEGIN
+DECLARE existU BOOLEAN;
+DECLARE existM BOOLEAN;
+DECLARE uid INTEGER;
+DECLARE tgid INTEGER;
+SELECT (COUNT(*)>0) INTO @existU
+FROM USER WHERE username = myusername;
+SELECT (COUNT(*)>0) INTO @existM
+FROM USER WHERE email = myemail;
+IF (@existM = TRUE OR @existU =TRUE) THEN
+  SELECT 0 AS uid, @existM AS existM, @existU as existU;
+ELSE
+  INSERT INTO USER (username, passwd, firstname, lastname, email, avatar)
+  VALUES(myusername, mypasswd, myfirstname, mylastname, myemail, myavatar);
+  SELECT LAST_INSERT_ID() AS uid into @uid;
+  INSERT INTO T_GROUP (uid, title, priority, type) 
+    VALUES(@uid, 'My First Task Group', 0, 0);
+  SELECT LAST_INSERT_ID() AS tgid into @tgid;
+  INSERT INTO TASK(uid, tgid, content)
+    VALUES(@uid, @tgid, 'Buy some milk');
+  SELECT @uid as uid;
+END IF;
 END // 
 DELIMITER ;
 
