@@ -38,20 +38,19 @@ function echoSortedTasks(TaskGroup $group){
                 echoTask($task);
             }
         }
-        housekeeping($tasks, $tidlist);
     }
 }
 
 function housekeeping($tasks, $tidlist)
 {
-  if(sizeof($tidlist)!=sizeof($tasks))
-  {
+  if(sizeof($tidlist)!=sizeof($tasks)){
     $db = new DBadapter();
     $db->connect();
     foreach($tasks as $task){
         $tid = $task->getTid();
         if(!in_array($tid, $tidlist)){
-          $db->deleteTask($tid);
+          $result=$db->deleteTask($tid);
+          echo $result;
         }
     }
   }
@@ -94,7 +93,7 @@ function getAllByUid($uid){
 ?>
 <body onload="showPanel()">
 <div id="loadingImage"></div>
-<div id="master" class="hidden">
+<div id="master">
     <div id="navibar">
         <?php echoProfilePic($user);?>
         <div id="profile_username" class="username">
