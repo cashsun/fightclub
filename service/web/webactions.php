@@ -2,7 +2,7 @@
 session_start();
 include_once '../../db/DBadapter.php';
 include_once '../Actions.php';
-include_once '../../view/friend_list.php';
+include_once '../../model/User.php';
 if(isset($_SESSION['uid'])){
     $action = -1;
     if(isset($_POST['webaction'])){
@@ -220,5 +220,55 @@ function deleteComment(){
         $result = $db->DeleteComment($_POST['commentid']);
         echo $result;
     }
+}
+function echoFriendGroup($group){
+    $tasks = $group->getTasks();
+    if($tasks[0]->getTid()!=-1){
+        echo '<div original-title="'.$group->getTitle().'" class="f_group">'.$group->getTitle().'</div>';
+        foreach($tasks as $task){
+            echoFriendTask($task);
+        }
+    }
+}
+function echoFriendTask($task){
+    $isliked = ' like';
+    if($task->isLiked()){
+        $isliked = ' liked';
+    }
+    echo '<div class="f_task roundcorner"><div class="f_task_texp">'.$task->getTexp().'</div><div class="f_task_text">'.$task->getContent().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
+}
+function getAllByFuid($fuid,$uid){
+    $db = new DBadapter();
+    $db->connect();
+    $result = $db->getAllByFuid($fuid,$uid);
+    $tasks = array();
+    $groups = array();
+    $user=null;
+    $last_row=array();
+    $t_counter=0;
+    $g_counter=0;
+    $current_tgid=-1;
+    while($row =  mysql_fetch_array($result)){
+        if($row['tgid']!= $current_tgid){
+            $current_tgid = $row['tgid'];
+            if($t_counter!=0){
+                $last_row['tasks']=$tasks;
+                $groups[$g_counter]=new TaskGroup($last_row);
+                $last_row = $row;
+                $g_counter++;
+                $t_counter = 0;
+                unset($tasks);
+            }
+        }
+        $row['creatorname'] = $row['firstname'].' '.$row['lastname'];
+        $tasks[$t_counter]=new Task($row);
+        $last_row = $row;
+        $t_counter++;
+    }
+    $last_row['tasks']=$tasks;
+    $groups[$g_counter]=new TaskGroup($last_row);
+    $last_row['taskgroups'] = $groups;
+    $user=new User($last_row);
+    return $user;
 }
 ?>

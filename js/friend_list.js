@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    checkIfEmpty();
     $('.f_task_text').click(function(){
         alert($(this).text());
     });
@@ -6,8 +7,22 @@ $(document).ready(function(){
 			highlight: false,
 			width: 25
     });
-    $('#group_button .ui-toggle-switch').find('label').eq(0).click(function(){showGroupPanel(true)});
-    $('#group_button .ui-toggle-switch').find('label').eq(1).click(function(){hideGroupPanel(true)});
+    $('#f_opt .ui-toggle-switch').find('label').eq(0).click(function(){
+        $('#f_group_wrapper').hide(0,function(){socialLoading.show(0)});
+        makeAjaxCall('get',{
+            fuid:function(){return $('#f_opt').parent().attr('fuid');},
+            webaction:14},function(){socialLoading.hide(0);checkIfEmpty();
+        },function(r){
+                    if(r==-1){
+                        $('#f_group_wrapper').html('oops, try again later.')}
+                    else{
+                        $('#f_group_wrapper').html(r).fadeIn(200);
+                    }
+            });
+    });
+    $('#f_opt .ui-toggle-switch').find('label').eq(1).click(function(){
+        
+    });
     $('.fighto').click(function(){
         var tid = $(this).attr('tid');
         if(!$(this).hasClass('liked')){
@@ -28,9 +43,7 @@ $(document).ready(function(){
             });
         }
     }).tipsy({fallback:'FIGHTO!',gravity:'s',fade:false,offset:0});
-    if($('#f_group_wrapper').html()==''){
-        $('#f_group_wrapper').html('No task shared by this user.');
-    }
+
     $('.f_group').tipsy({gravity:'s',fade:false,offset:0});
     
         $('.add_friend').button().click(function(){
@@ -55,7 +68,13 @@ $(document).ready(function(){
             });
         }
     });
- 
 });
+function checkIfEmpty(){
+    if($('#f_group_wrapper').html()==''){
+        $('#f_group_wrapper').html('No task shared by this user.');
+        return true;
+    }
+    return false;
+}
 
 

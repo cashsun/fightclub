@@ -36,7 +36,7 @@ function echoFriendTask($task){
     echo '<div class="f_task roundcorner"><div class="f_task_texp">'.$task->getTexp().'</div><div class="f_task_text">'.$task->getContent().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
 }
 function echoFriend($friend){
-    echo '<div class="friend_box">';
+    echo '<div fuid="'.$friend->getUid().'" class="friend_box">';
     echoProfilePic($friend);
     $isfriend = '<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="unfollow_friend"><img src="image/delfriend.png" alt=""/></button></span></div>';
     if(!$friend->isFriend()){
