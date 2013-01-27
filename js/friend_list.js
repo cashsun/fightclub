@@ -5,10 +5,12 @@ $(document).ready(function(){
     $('.fighto').click(function(){
         var tid = $(this).attr('tid');
         if(!$(this).hasClass('liked')){
+            var oriexp = $(this).prev().prev().html();
+            $(this).prev().prev().html(parseInt(oriexp)+1);
             makeAjaxCall('post',{
             uid:function(){return $('#uid').html();},
             tid:tid,
-            webaction:12},function(){},function(r){if(r==-1){alert('you have already FIGHTOed this task.')}});
+            webaction:12},function(){},function(r){if(r==-1){alert('you have already FIGHTOed this task.')} });
         }
         if ($.browser.webkit) {
             $(this).addClass('liked').animate({zoom:'150%',top:'-5px',right:'-5px'},0,function(){

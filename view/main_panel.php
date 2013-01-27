@@ -23,8 +23,8 @@ function echoTask(Task $task){
 }
 function echoSortedTasks(TaskGroup $group){
     $order = $group->getTaskOrder();
+    $tasks = $group->getTasks();
     if($order==''){
-        $tasks = $group->getTasks();
         foreach($tasks as $task){
             if($task->getContent()!=''){
                 echoTask($task);
@@ -40,6 +40,22 @@ function echoSortedTasks(TaskGroup $group){
         }
     }
 }
+
+function housekeeping($tasks, $tidlist)
+{
+  if(sizeof($tidlist)!=sizeof($tasks)){
+    $db = new DBadapter();
+    $db->connect();
+    foreach($tasks as $task){
+        $tid = $task->getTid();
+        if(!in_array($tid, $tidlist)){
+          $result=$db->deleteTask($tid);
+          echo $result;
+        }
+    }
+  }
+}
+
 function getAllByUid($uid){
     $db = new DBadapter();
     $db->connect();
@@ -241,6 +257,7 @@ function getAllByUid($uid){
                 });
             });
             },200);
+            checkChange();
         }
 </script>
 <script type="text/javascript" src="js/loading.js"></script>

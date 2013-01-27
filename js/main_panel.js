@@ -89,6 +89,7 @@ function initTaskGroups(isFromClick){
                 });
             $(this).fadeIn(200, function(){
                 initTasks();
+                sync();
             });
             resizeTaskPanel(isFromClick);
         });
@@ -181,7 +182,7 @@ function postCreateTask(){
             $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="handle"></div><div original-title="❤" class="texp">0</div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
 +$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
-        },function(response){tidnew = response});
+        },function(response){tidnew = response;});
 }
 function postDeleteTaskGroup(tgid){
         $('.dialog').dialog('close');

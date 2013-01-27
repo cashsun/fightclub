@@ -33,7 +33,7 @@ function echoFriendTask($task){
     if($task->isLiked()){
         $isliked = ' liked';
     }
-    echo '<div class="f_task roundcorner"><div class="f_task_text">'.$task->getContent().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
+    echo '<div class="f_task roundcorner"><div class="f_task_texp">'.$task->getTexp().'</div><div class="f_task_text">'.$task->getContent().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
 }
 function echoFriend($friend){
     echo '<div class="friend_box">';
