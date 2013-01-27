@@ -87,14 +87,14 @@ var cacheitem;
 function checkChange(){
     var tgid = $('#tgid').html();
     makeAjaxCall('post',{tgid:tgid,webaction:13},function(){
-        setTimeout("checkTexp()",10000);
+//        setTimeout("checkChange()",10000);
     },function(r){
         texparray = $.parseJSON(r);
         for(var i=0;i<texparray.length;i++){
             temp_tid = texparray[i].tid;
             temp_texp = texparray[i].texp;
             cacheitem = $('li[tid="'+temp_tid+'"]','#cache').children().eq(1);
-            if(cacheitem.html()!=temp_texp){
+            if(parseInt(cacheitem.html())!=temp_texp){
                 $('li[tid="'+temp_tid+'"]','#tasks_sortable').children().eq(1).html(temp_texp);
                 sync();
             }

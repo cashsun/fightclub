@@ -155,7 +155,8 @@
 }
 .f_task_text{
     position: absolute;
-    width: 270px;
+    width: 260px;
+    left:20px;
     height: 20px;
     padding-top: 7px;
     padding-left: 10px;
@@ -166,6 +167,21 @@
     text-align: center;
     overflow: hidden;
     font-size: 12px;
+}
+.f_task_texp{
+    position: absolute;
+    width: 20px;
+    font-size: 0.8em;
+    left: 0;
+    height: 20px;
+    padding-top: 7px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    color: #ff4545;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    text-align: center;
+    overflow: hidden
 }
 .fighto{
     position: absolute;
