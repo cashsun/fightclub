@@ -167,11 +167,11 @@ function postCreateTaskGroup(){
                 positionGroup(true,tgidnew,title,priority,gtype);
             },function(response){tgidnew = response})
 }
-function postCreateTask(){
+function postCreateTask(content){
     makeAjaxCall('post',
         {uid:function(){return $('#uid').html()},
             tgid:function(){return $('#tgid').html()},
-            content:function(){return $.trim($('#input_task').val())},
+            content:content,
             webaction:0},
         function(){
             var tgid = '#'+$('#tgid').html();
@@ -180,7 +180,7 @@ function postCreateTask(){
                 isNonIE8 = 'isDoneNonIE8';
              }
             $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="handle"></div><div original-title="❤" class="texp">0</div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
-+$.trim($('#input_task').val())+'</div><div class="delete_task"></div></li>');
++content+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
         },function(response){tidnew = response;});
 }
@@ -528,7 +528,7 @@ $(document).ready(function(){
     });
     
     $(window).resize(function() {
-        resizeTaskPanel();
+        resizeTaskPanel(false);
     });
     $(document).keypress(function(e) {
         if(e.which == 13) {
@@ -547,7 +547,7 @@ $(document).ready(function(){
                 }
             }else if($('#input_task').is(':focus')){
                 if($.trim($('#input_task').val())!=''){
-                    postCreateTask();
+                    postCreateTask($.trim($('#input_task').val()));
                 }
             }else if($('#input_friend').is(':focus')){
                 if($.trim($('#input_friend').val())!=''){
