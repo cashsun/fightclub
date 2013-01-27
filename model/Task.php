@@ -14,8 +14,8 @@ class Task {
     private $isliked = 0;
     
     function __construct($taskInfo) {
-        
-        $this->uid = $taskInfo['uid'];
+        if(isset($taskInfo['uid']))
+            $this->uid = $taskInfo['uid'];
         if(isset($taskInfo['tid']))
             $this->tid = $taskInfo['tid'];
         if(isset($taskInfo['content']))
