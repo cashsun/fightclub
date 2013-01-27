@@ -8,20 +8,31 @@ $(document).ready(function(){
 			width: 25
     });
     $('#f_opt .ui-toggle-switch').find('label').eq(0).click(function(){
-        $('#f_group_wrapper').hide(0,function(){socialLoading.show(0)});
-        makeAjaxCall('get',{
+        socialLoading.show(0);
+        $('#f_group_wrapper').hide(0,function(){
+            makeAjaxCall('get',{
             fuid:function(){return $('#f_opt').parent().attr('fuid');},
             webaction:14},function(){socialLoading.hide(0);checkIfEmpty();
-        },function(r){
-                    if(r==-1){
-                        $('#f_group_wrapper').html('oops, try again later.')}
-                    else{
-                        $('#f_group_wrapper').html(r).fadeIn(200);
-                    }
+            },function(r){
+                        if(r==-1){
+                            $('#f_group_wrapper').html('oops, try again later.')}
+                        else{
+                            $('#f_group_wrapper').html(r).fadeIn(200);
+                        }
             });
+        });
+        
     });
     $('#f_opt .ui-toggle-switch').find('label').eq(1).click(function(){
-        
+        $('#f_group_wrapper').hide(0,function(){
+            makeSocialAjaxCall('get','view/f_friends.php',{
+                fuid:function(){return $('#f_opt').parent().attr('fuid');},
+                ftype:0},
+            function(resp){
+                $('#f_group_wrapper').html(resp).fadeIn(200);
+                },function(){showSocial = true});
+        });
+            
     });
     $('.fighto').click(function(){
         var tid = $(this).attr('tid');

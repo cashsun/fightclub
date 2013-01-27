@@ -37,8 +37,8 @@ function getList($uid,$ftype){
     while($row =  mysql_fetch_array($result)){
         $friends[$counter]=new User($row);
         $counter++;
-}
-return $friends;
+    }
+    return $friends;
 }  
 function echoFriend($friend){
     echo '<div class="friend_box">';

@@ -17,5 +17,6 @@ class Actions{
     const GET_USER_TASKS = 14;
     const CREATE_COMMENT = 15;
     const DELETE_COMMENT = 16;
+    const GET_FRIEND_FOLLOWS = 17;
 }
 ?>
