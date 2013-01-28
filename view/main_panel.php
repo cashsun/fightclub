@@ -162,6 +162,7 @@ function getAllByUid($uid){
         </div>
     </div>
     <div id="cache" class="hidden">
+        <div id="comment_main" tid="-1" class="hidden"></div>
         <?php
             foreach($groups as $group){
                 echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'">';
@@ -260,4 +261,7 @@ function getAllByUid($uid){
         }
 </script>
 <script type="text/javascript" src="js/loading.js"></script>
+<script type="text/javascript" src="js/main_panel.js"></script>
+<script type="text/javascript" src="js/social_panel.js"></script>
+
 

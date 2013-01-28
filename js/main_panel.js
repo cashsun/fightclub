@@ -10,12 +10,26 @@ function initTasks(){
     }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
-    $('.texp').tipsy({gravity:'s',fade:false,offset:-10});
+    $('.texp').click(function(){
+        var target = $(this);
+
+        commentMain.slideUp(300,function(){
+            var ctid = target.parent().attr('tid');
+            if(ctid!=commentMain.attr('tid')){
+                commentMain.attr('tid',ctid);
+                target.parent().after(commentMain);
+                commentMain.slideDown(300);
+            }else{
+                commentMain.attr('tid',-1);
+            }
+        });
+    }).tipsy({gravity:'s',fade:false,offset:-10});
     activeDeletes();
     initIsDone();
     if(!$("#u_g_dialog").dialog( "isOpen" )){$('#input_task').val('').focus();}
     $('#tg_selector').show();
 }
+var commentMain;
 //update t_order and cache
 var tasks;
 function sync(){
@@ -430,6 +444,7 @@ $(document).ready(function(){
     tidnew = tgidnew= -1;
     windowDiv = $(window);
     loading_image = $('#loadingImage');
+    commentMain =$('#comment_main');
     originalPriority = 0;
     $('#tg_selector').click(function(){
         $('#panel_group').hide();
