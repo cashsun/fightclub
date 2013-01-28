@@ -12,7 +12,6 @@ function initTasks(){
     });
     $('.texp').click(function(){
         var target = $(this);
-
         commentMain.slideUp(300,function(){
             var ctid = target.parent().attr('tid');
             if(ctid!=commentMain.attr('tid')){
