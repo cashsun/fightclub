@@ -83,8 +83,8 @@ tid int NOT NULL,
 content char(140),
 tstamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 CONSTRAINT pk_commentid PRIMARY KEY (commentid),
-CONSTRAINT fk_comment_uid FOREIGN KEY (uid) REFERENCES USER(uid) ON UPDATE CASCADE,
-CONSTRAINT fk_comment_tid FOREIGN KEY (tid) REFERENCES TASK(tid) ON UPDATE CASCADE
+CONSTRAINT fk_comment_uid FOREIGN KEY (uid) REFERENCES USER(uid),
+CONSTRAINT fk_comment_tid FOREIGN KEY (tid) REFERENCES TASK(tid)
 );
 
 INSERT INTO USER (username, passwd, firstname, lastname, email) VALUES('plutoless', MD5('test'), 'Qianze', 'Zhang', 'qz@gmail.com');

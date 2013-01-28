@@ -66,6 +66,8 @@ if(isset($_SESSION['uid'])){
         case Actions::GET_FRIEND_FOLLOWS:
             getFriendFollows();
             break;
+        case Actions::GET_COMMENTS:
+            getComments();
         default :echo -1;
     }
 }else{
@@ -224,6 +226,16 @@ function deleteComment(){
         echo $result;
     }
 }
+
+function getComments(){
+    if(isset($_POST['tid'])&&isset($_POST['lastcid'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->GetComments($_POST['tid'], $_POST['lastcid']);
+        echo $result;
+    }
+}
+
 function getFriendFollows(){
     if(isset($_GET['fuid'])){
         $db = new DBadapter();

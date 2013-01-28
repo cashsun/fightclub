@@ -28,6 +28,7 @@ DROP PROCEDURE IF EXISTS GetUserTasks;
 DROP PROCEDURE IF EXISTS GetTexpByTgid;
 DROP PROCEDURE IF EXISTS CreateComment;
 DROP PROCEDURE IF EXISTS DeleteComment;
+DROP PROCEDURE IF EXISTS GetComments;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -583,7 +584,7 @@ VALUES(myuid, mytid, mycontent);
 END // 
 DELIMITER ;
 
-/* CREATE COMMENT */
+/* DELETE COMMENT */
 DELIMITER // 
 CREATE PROCEDURE DeleteComment(
 IN mycommentid int
@@ -595,3 +596,21 @@ SELECT ROW_COUNT() AS rows_affected;
 END // 
 DELIMITER ;
 
+/* GET COMMENTS */
+DELIMITER // 
+CREATE PROCEDURE GetComments(
+IN mytid int,
+IN mylastcid int
+)
+BEGIN
+SELECT COMMENT.commentid, COMMENT.uid,
+COMMENT.tid, COMMENT.content,
+COMMENT.tstamp, USER.username,
+USER.firstname, USER.lastname,
+USER.email, USER.avatar
+FROM COMMENT LEFT JOIN USER
+ON COMMENT.uid = USER.uid
+WHERE COMMENT.commentid > mylastcid
+ORDER BY COMMENT.tstamp ASC LIMIT 10;
+END // 
+DELIMITER ;
