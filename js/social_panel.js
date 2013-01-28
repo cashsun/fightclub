@@ -56,17 +56,17 @@ function getUserLists(fuid){
         });
 }
 function makeSocialAjaxCall(type,url,param,successCallback,callback){
-    socialLoading.show(0,function(){
+    socialLoading.fadeIn(0,function(){
         $.ajax({
             url:url,
             timeout:6000,
             type:type,
             data:param,
             success:function(response){
-                if(response==-1){
-                    location.reload();
-                }else if(successCallback!=null){
+                if(successCallback!=null){
                     successCallback(response);
+                }else if(response==-1){
+                    location.reload();
                 }
             },
             error:function(){
@@ -77,7 +77,7 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback){
                 else{
                     location.reload();
                 }
-                socialLoading.hide(0);
+                socialLoading.fadeOut(0);
             }
         });
     });

@@ -8,33 +8,12 @@
     }else{die(-1);}
     if($friend!=null && $friend->getUid()!=-1){
         echoFriend($friend);
-        $groups = $friend->getTaskGroups();
         echo '<div id="f_group_wrapper">';
-        if($groups[0]->getTgid()!=-1){
-            foreach($groups as $group){
-                echoFriendGroup($group);
-            }
-        }
+        
         echo '</div>';
     }else{
         echo -1;
     }
-function echoFriendGroup($group){
-    $tasks = $group->getTasks();
-    if($tasks[0]->getTid()!=-1){
-        echo '<div original-title="'.$group->getTitle().'" class="f_group">'.$group->getTitle().'</div>';
-        foreach($tasks as $task){
-            echoFriendTask($task);
-        }
-    }
-}
-function echoFriendTask($task){
-    $isliked = ' like';
-    if($task->isLiked()){
-        $isliked = ' liked';
-    }
-    echo '<div class="f_task roundcorner"><div class="f_task_texp">'.$task->getTexp().'</div><div class="f_task_text">'.$task->getContent().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
-}
 function echoFriend($friend){
     echo '<div fuid="'.$friend->getUid().'" class="friend_box">';
     echoProfilePic($friend);

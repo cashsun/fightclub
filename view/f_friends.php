@@ -50,5 +50,5 @@ function echoProfilePic($friend){
     echo '<img uid='.$friend->getUid().' class="friend_image" src="image/'.$friend->getAvatar().'.png" alt=""/>';
 }
 ?>
-<script type="text/javascript" src="js/friends.js"></script>
+<script type="text/javascript" src="js/f_friends.js"></script>
 

@@ -1,42 +1,52 @@
 $(document).ready(function(){
-    checkIfEmpty();
-    $('.f_task_text').click(function(){
-        alert($(this).text());
-    });
+    initList();
+    initBtns();
     $('.f_toggle').toggleSwitch({
 			highlight: false,
-			width: 25
-    });
-    $('#f_opt .ui-toggle-switch').find('label').eq(0).click(function(){
-        $('#f_group_wrapper').hide(0,function(){
-            socialLoading.show(0,function(){
-                makeAjaxCall('get',{
-                fuid:function(){return $('#f_opt').parent().attr('fuid');},
-                webaction:14},function(){socialLoading.hide(0,function(){
-                    checkIfEmpty();
-                });
-                },function(r){
-                            if(r==-1){
-                                $('#f_group_wrapper').html('oops, try again later.')}
-                            else{
-                                $('#f_group_wrapper').html(r).fadeIn(200);
+			width: 25,
+                        callback:function(i){
+                            switch(i){
+                                case 0:$('#f_group_wrapper').hide(0,function(){
+                                            socialLoading.show(0,function(){
+                                                makeAjaxCall('get',{
+                                                fuid:function(){return $('#f_opt').parent().attr('fuid');},
+                                                webaction:14},function(){socialLoading.hide(0,function(){
+                                                    checkIfEmpty();
+                                                    initList();    
+                                                });
+                                                },function(r){
+                                                            if(r==-1){
+                                                                $('#f_group_wrapper').html('oops, try again later.')}
+                                                            else{
+                                                                $('#f_group_wrapper').html(r).fadeIn(200);
+                                                            }
+                                                            showSocial = true;
+                                                });
+                                            }); 
+                                        });break;
+                                case 1: var fuid = $('#f_opt').parent().attr('fuid');
+                                        $('#f_group_wrapper').hide(0,function(){
+                                            makeSocialAjaxCall('get','view/f_friends.php',{
+                                                fuid:fuid,
+                                                ftype:0},
+                                            function(resp){
+                                                $('#f_group_wrapper').html(resp).fadeIn(200);
+                                                },function(){});
+                                        });
+                                    break;
                             }
-                            showSocial = true;
-                });
-            }); 
-        });
+                        }
     });
-    $('#f_opt .ui-toggle-switch').find('label').eq(1).click(function(){
-        $('#f_group_wrapper').hide(0,function(){
-            makeSocialAjaxCall('get','view/f_friends.php',{
-                fuid:function(){return $('#f_opt').parent().attr('fuid');},
-                ftype:0},
-            function(resp){
-                $('#f_group_wrapper').html(resp).fadeIn(200);
-                },function(){showSocial = true});
-        });
-            
-    });
+});
+function checkIfEmpty(){
+    if($('#f_group_wrapper').html()==''){
+        $('#f_group_wrapper').html('No task shared by this user.');
+        return true;
+    }
+    return false;
+}
+function initList(){
+    $('.f_task_text').click(function(){});
     $('.fighto').click(function(){
         var tid = $(this).attr('tid');
         if(!$(this).hasClass('liked')){
@@ -59,14 +69,6 @@ $(document).ready(function(){
     }).tipsy({fallback:'FIGHTO!',gravity:'s',fade:false,offset:0});
 
     $('.f_group').tipsy({gravity:'s',fade:false,offset:0});
-    initBtns();
-});
-function checkIfEmpty(){
-    if($('#f_group_wrapper').html()==''){
-        $('#f_group_wrapper').html('No task shared by this user.');
-        return true;
-    }
-    return false;
 }
 
 
