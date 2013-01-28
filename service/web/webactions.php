@@ -259,7 +259,7 @@ function echoFriendTask($task){
     if($task->isLiked()){
         $isliked = ' liked';
     }
-    echo '<div class="f_task roundcorner"><div class="f_task_texp">'.$task->getTexp().'</div><div class="f_task_text">'.$task->getContent().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
+    echo '<div class="f_task roundcorner"><div class="f_task_text" title="'.$task->getContent().'">'.$task->getContent().'</div><div class="f_task_texp">'.$task->getTexp().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
 }
 function getAllByFuid($fuid,$uid){
     $db = new DBadapter();
