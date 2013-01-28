@@ -160,11 +160,10 @@
     position: absolute;
     width: 260px;
     left:0;
-    top: 2px;
     height: 18px;
     margin-top: 9px;
     padding-left: 10px;
-    padding-bottom: 3px;
+    padding-bottom: 5px;
     color: #8d8f90;
     white-space: nowrap;
     text-overflow:ellipsis;
@@ -177,10 +176,11 @@
     width: 25px;
     font-size: 0.8em;
     right: 25px;
+    top: 2px;
     height: 18px;
     padding-top: 9px;
     padding-left: 5px;
-    padding-bottom: 5px;
+    padding-bottom: 3px;
     color: #ff4545;
     white-space: nowrap;
     text-overflow:ellipsis;
