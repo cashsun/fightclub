@@ -25,8 +25,6 @@ var index = {
           {
             if(box.attr('name')=='cm-name')
               box.val('username or email');
-            else
-              box.val('password');
           }
         }
       );
