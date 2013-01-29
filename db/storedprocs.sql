@@ -600,14 +600,15 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE GetComments(
 IN mytid int,
-IN mylastcid int
+IN mylastcid int,
+IN myuid int
 )
 BEGIN
 SELECT COMMENT.commentid, COMMENT.uid,
 COMMENT.tid, COMMENT.content,
 COMMENT.tstamp, USER.username,
 USER.firstname, USER.lastname,
-USER.email, USER.avatar
+USER.email, USER.avatar, (COMMENT.uid = myuid) AS isAuthor
 FROM COMMENT LEFT JOIN USER
 ON COMMENT.uid = USER.uid
 WHERE COMMENT.commentid > mylastcid AND tid = mytid

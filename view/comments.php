@@ -5,7 +5,7 @@
     if(isset($_SESSION['uid'])&&isset($_GET['tid'])&&isset($_GET['lastcid'])){
         $db = new DBadapter();
         $db->connect();
-        $result = $db->GetComments($_GET['tid'], $_GET['lastcid']);
+        $result = $db->GetComments($_GET['tid'], $_GET['lastcid'], $_SESSION['uid']);
         while($row =  mysql_fetch_array($result)){
             echoComment($row);
         }
