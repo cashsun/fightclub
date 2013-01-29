@@ -24,7 +24,7 @@ $(document).ready(function(){
                                                 });
                                             }); 
                                         });break;
-                                case 1: var fuid = $('#f_opt').parent().attr('fuid');
+                                case 1:var fuid = $('#f_opt').parent().attr('fuid');
                                         $('#f_group_wrapper').hide(0,function(){
                                             makeSocialAjaxCall('get','view/f_friends.php',{
                                                 fuid:fuid,
@@ -45,7 +45,25 @@ function checkIfEmpty(){
     }
     return false;
 }
+var comtBtns;
 function initList(){
+    comtBtns = $('.comment_btn');
+    comtBtns.click(function(){
+        var tid=$(this).attr('tid');
+        commentMain.slideUp(200,function(){
+            $('#friends_wrapper').hide(0,function(){
+            var target = $(this);
+            commentMain.attr('tid',tid);
+            getComments(tid,0,commentMain.find('#comment_dialog'),
+            function(){
+                var commentMainClone = commentMain.clone(true,true);
+                commentMain.remove();
+                target.html(commentMainClone.show()).show('slide',{direction:"right"},200,function(){
+                        initCommentBox();
+                })});
+            });
+        });  
+    });
     $('.f_task_text').click(function(){});
     $('.fighto').click(function(){
         var tid = $(this).attr('tid');
@@ -55,7 +73,7 @@ function initList(){
             makeAjaxCall('post',{
             uid:function(){return $('#uid').html();},
             tid:tid,
-            webaction:12},function(){},function(r){if(r==-1){alert('you have already FIGHTOed this task.')} });
+            webaction:12},function(){},function(r){if(r==-1){alert('you have already FIGHTOed this task.')}});
         }
         if ($.browser.webkit) {
             $(this).addClass('liked').animate({zoom:'150%',top:'-5px',right:'-5px'},0,function(){

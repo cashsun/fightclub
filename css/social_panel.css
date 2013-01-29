@@ -1,45 +1,16 @@
-#panel_social{
-    position: absolute;
-    right: -404px;
-    width: 400px;
-    top: 1px;
-    height: 100%;
-    z-index: 20;
-    background-color: #f8f8f8;
-    -webkit-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
-    -ms-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
-    -o-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
-    box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+#panel_social{position: absolute;right: -404px;width: 400px;top: 1px;height: 100%;
+z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+-moz-box-shadow: 0 4px 4px rgba(0,0,0,0.5);-ms-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
+-o-box-shadow: 0 4px 4px rgba(0,0,0,0.5);box-shadow: 0 4px 4px rgba(0,0,0,0.5)
 }
-#social_tabs{
-    height: 100%;
-}
-#social_tabs ul.ui-tabs-nav{
-    height: 30px;
-}
-#social_tabs li{
-    background-color: #eaeaea; 
-    margin-top: 1px
-}
-#social_tabs li.ui-state-active,#user_tabs .ui-state-active{
-    background: none;
-}
-#social_tabs .tab{
-    background: none ! important;
-}
-.tab{
-    height: 100%;
-    overflow-y:auto;
-    background:none;
-}
-#input_friend{
-    width:100%;
-    border: 5px solid #eaeaea
-}
-#friends_radios label{
-    width:60px;
-}
+#social_tabs{height: 100%;}
+#social_tabs ul.ui-tabs-nav{height: 30px;}
+#social_tabs li{background-color: #eaeaea; margin-top: 1px}
+#social_tabs li.ui-state-active,#user_tabs .ui-state-active{background: none}
+#social_tabs .tab{background: none ! important;}
+.tab{height: 100%;overflow-y:auto;background:none}
+#input_friend{width:100%;border: 5px solid #eaeaea}
+#friends_radios label{width:60px}
 #friends_radios .ui-button{
     height: 10px
 }
@@ -79,12 +50,24 @@
     width: 100px;
     float: left
 }
+.friend_image_s{
+    height: 60px;
+    width: 60px;
+    margin-right: 10px;
+    float: left
+}
 .f_info{
     width: auto;
     height: 80px;
     font-size: 0.8em;
     float: left;
     margin-left: 5px;
+}
+.comment_box{
+    clear: left;
+    height: 60px;
+    font-size: 0.8em;
+    margin-top: 10px;
 }
 .f_username{
     color: #8d8f90;
@@ -112,10 +95,6 @@
     width: 50px;
     height: 20px
 }
-/*button.unfollow_friend.ui-button{
-    background: #ff4545 none;
-    border:1px solid #ab1e1e;
-}*/
 #friends_radios .ui-state-active{
     background: #168dd9;
 }
@@ -157,8 +136,8 @@
 }
 .f_task_text{
     position: absolute;
-    width: 260px;
-    left:0;
+    width: 228px;
+    left:32px;
     height: 18px;
     margin-top: 9px;
     padding-left: 10px;
@@ -213,8 +192,48 @@
     border: none;
 }
 #comment_main{
-    border: 1px solid #eaeaea;
-    width: 350px;
-    margin-left:51px; 
-    height: 500px;
+    width: 90%;
+    margin-left:5%; 
+    height: auto;
+    margin-bottom: 10px
+}
+#comment_input{
+    width: 200px;
+    margin-top: 20px;
+    clear: left;
+}
+#comment_loading{
+    margin-left: 40%
+}
+.comment_content{
+    font-size: 13px;
+    margin-bottom: 10px;
+    margin-top: 4px;
+    height: 20px;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    font-family: "Microsoft Yahei","Helvetica","Arial" ! important
+}
+.comment_tstamp{
+    color: #8d8f90;
+    font-size: 0.9em
+}
+.comment_btn{
+    background: url('../image/comment_click.png') no-repeat center center;
+    position: absolute;
+    height: 32px;
+    width: 32px;
+    left: 0;
+    cursor: pointer
+}
+.comment_delete{
+    font-size: 12px;
+    left: 60px;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    margin-top: -25px;
+    margin-left: 170px;
+    background: url('../image/button_close.png') no-repeat center center;
 }

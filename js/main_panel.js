@@ -17,7 +17,15 @@ function initTasks(){
             if(ctid!=commentMain.attr('tid')){
                 commentMain.attr('tid',ctid);
                 target.parent().after(commentMain);
-                commentMain.slideDown(300);
+                loading_image.show(0,function(){
+                    getComments(ctid,0,commentMain.find('#comment_dialog'),
+                    function(){
+                        loading_image.hide(0,function(){
+                            commentMain.slideDown(300)
+                        });
+                    });
+                })
+                
             }else{
                 commentMain.attr('tid',-1);
             }
@@ -429,21 +437,65 @@ function toggleGroupPanel(){
         showGroupPanel(true);
     }
 }
+function postCreateComment(tid,content,callback){
+    makeAjaxCall('post',{
+            tid:tid,
+            content:$.trim(content),
+            webaction:15},function(){},callback);
+}
+function postDeleteComment(cid,callback){
+    makeAjaxCall('post',{
+            commentid:cid,
+            webaction:16},function(){},callback);
+}
+function getComments(tid,lastcid,target,callback){
+    makeSocialAjaxCall('get','view/comments.php',{tid:tid,lastcid:lastcid},function(resp){
+                        target.html(resp);    
+                        $('.comment_delete').click(function(){
+                            var cid = $(this).attr('cid');
+                            if(confirm('Delete this comment?')){   
+                                postDeleteComment(cid,function(){
+                                    var tid = commentMain.attr('tid');
+                                    getComments(tid,0,commentDialog,function(){
+                                        commentMain.find('textarea').val('');
+                                    });
+                                    
+                                });
+                            }
+                        });
+                    },callback);
+}
+function initCommentBox(){
+    commentMain =$('#comment_main');
+    commentDialog=commentMain.find('#comment_dialog');
+    commentMain.find('button').button().unbind('click').click(function(){
+        var content = commentMain.find('textarea').val();
+        if($.trim(content)!=''){
+            var tid = commentMain.attr('tid');
+             postCreateComment(tid,content,function(r){
+                 getComments(tid,0,commentDialog,function(){
+                     commentMain.find('textarea').val('');
+                 });
+             });
+        }
+    });
+}
 var loading_image;
 var priorityMap;
+var commentDialog;
 $(document).ready(function(){
     showGroup = true;
     $('#panel_task').click(function(){
         if(showSocial){
             $('#club_button').click();
         }
-    })
+    });
     $('button').button();
     $('input.datepicker').datepicker();
     tidnew = tgidnew= -1;
     windowDiv = $(window);
     loading_image = $('#loadingImage');
-    commentMain =$('#comment_main');
+    initCommentBox();
     originalPriority = 0;
     $('#tg_selector').click(function(){
         $('#panel_group').hide();
@@ -451,8 +503,6 @@ $(document).ready(function(){
     $('#logout').click(function(){
         location.replace("test/logout.php");
     });
-    
-
     
     priorityMap = new Array("casual","very low","low","minor","medium","important","major","urgent","urgent+","immediate");
     $('#g_priority > span,#u_g_priority > span').each(function(){

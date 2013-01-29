@@ -58,10 +58,10 @@ if(isset($_SESSION['uid'])){
             getUserTasks();
             break;
         case Actions::CREATE_COMMENT:
-            getUserTasks();
+            createComment();
             break;
         case Actions::DELETE_COMMENT:
-            getUserTasks();
+            deleteComment();
             break;
         case Actions::GET_FRIEND_FOLLOWS:
             getFriendFollows();
@@ -266,12 +266,12 @@ function echoFriendGroup($group){
         }
     }
 }
-function echoFriendTask($task){
+function echoFriendTask(Task $task){
     $isliked = ' like';
     if($task->isLiked()){
         $isliked = ' liked';
     }
-    echo '<div class="f_task roundcorner"><div class="f_task_text" title="'.$task->getContent().'">'.$task->getContent().'</div><div class="f_task_texp">'.$task->getTexp().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
+    echo '<div class="f_task roundcorner"><div tid="'.$task->getTid().'" class="comment_btn"></div><div class="f_task_text" title="'.$task->getContent().'">'.$task->getContent().'</div><div class="f_task_texp">'.$task->getTexp().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
 }
 function getAllByFuid($fuid,$uid){
     $db = new DBadapter();

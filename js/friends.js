@@ -13,14 +13,12 @@ function initBtns(){
     delBtns = $('.unfollow_friend');
     addBtns.unbind('click');
     delBtns.unbind('click');
-    
     addBtns.button().click(function(){
         btnImgHtml = '<img src="image/delfriend.png" alt=""/>';
         $(this).removeClass('add_friend').addClass('unfollow_friend').children().html(btnImgHtml);
         var fuid = $(this).attr('uid');
         addFriend(fuid);
     });
-    
     delBtns.button().click(function(){
         if(confirm ("Unfollow this user?")){
         btnImgHtml = '<img src="image/addfriend.png" alt=""/>';

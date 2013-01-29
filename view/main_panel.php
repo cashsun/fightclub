@@ -162,7 +162,11 @@ function getAllByUid($uid){
         </div>
     </div>
     <div id="cache" class="hidden">
-        <div id="comment_main" tid="-1" class="hidden"></div>
+        <div id="comment_main" tid="-1" class="hidden">
+            <div id="comment_dialog"></div>
+            <textarea rows="3" id="comment_input" maxlength="140"></textarea><br/>
+            <button id="comment_submit">comment</button>
+        </div>
         <?php
             foreach($groups as $group){
                 echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'">';

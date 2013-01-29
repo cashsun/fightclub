@@ -161,6 +161,7 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
     font-size: 0.8em;
     color: #8d8f90;
     float: left;
+    cursor: pointer;
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;

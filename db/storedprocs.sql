@@ -610,7 +610,7 @@ USER.firstname, USER.lastname,
 USER.email, USER.avatar
 FROM COMMENT LEFT JOIN USER
 ON COMMENT.uid = USER.uid
-WHERE COMMENT.commentid > mylastcid
+WHERE COMMENT.commentid > mylastcid AND tid = mytid
 ORDER BY COMMENT.tstamp ASC LIMIT 10;
 END // 
 DELIMITER ;
