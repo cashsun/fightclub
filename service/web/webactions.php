@@ -231,7 +231,7 @@ function getComments(){
     if(isset($_POST['tid'])&&isset($_POST['lastcid'])){
         $db = new DBadapter();
         $db->connect();
-        $result = $db->GetComments($_POST['tid'], $_POST['lastcid']);
+        $result = $db->GetComments($_POST['tid'], $_POST['lastcid'], $_SESSION['uid']);
         echo $result;
     }
 }

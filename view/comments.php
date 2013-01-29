@@ -5,7 +5,7 @@
     if(isset($_SESSION['uid'])&&isset($_GET['tid'])&&isset($_GET['lastcid'])){
         $db = new DBadapter();
         $db->connect();
-        $result = $db->GetComments($_GET['tid'], $_GET['lastcid']);
+        $result = $db->GetComments($_GET['tid'], $_GET['lastcid'], $_SESSION['uid']);
         while($row =  mysql_fetch_array($result)){
             echoComment($row);
         }
@@ -17,7 +17,8 @@
         echo '<div class="f_username">'.$row['username'].'</div>';
         echo '<div title="'.$row['content'].'" class="comment_content">'.$row['content'].'</div>';
         echo '<div class="comment_tstamp">'.$row['tstamp'].'</div>';
-        echo '<div class="comment_delete" cid="'.$row['commentid'].'"></div>';
+        if($row['isAuthor'])
+          echo '<div class="comment_delete" cid="'.$row['commentid'].'"></div>';
         
         echo '</div>';
     }
