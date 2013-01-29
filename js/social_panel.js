@@ -29,6 +29,7 @@ $(document).ready(function(){
 });
 function getMyFollows(){
         $('#friends_wrapper').hide(0,function(){
+
             makeSocialAjaxCall('get','view/friends.php',{ftype:0},function(resp){
                 $('#friends_wrapper').html(resp).fadeIn(200);
                 },function(){showSocial = true});
@@ -36,6 +37,7 @@ function getMyFollows(){
 }
 function getMyFriends(){
         $('#friends_wrapper').hide(0,function(){
+
             makeSocialAjaxCall('get','view/friends.php',{ftype:1},function(resp){
                 $('#friends_wrapper').html(resp).fadeIn(200);
                 },function(){showSocial = true});
@@ -43,11 +45,13 @@ function getMyFriends(){
 }
 function getMyFans(){
         $('#friends_wrapper').hide(0,function(){
+
             makeSocialAjaxCall('get','view/friends.php',{ftype:2},function(resp){
                 $('#friends_wrapper').html(resp).fadeIn(200);
                 },function(){showSocial = true});
         });
 }
+
 function getUserLists(fuid){
         $('#friends_wrapper').hide(0,function(){
             makeSocialAjaxCall('get','view/friend_list.php',{fuid:fuid},function(resp){
@@ -55,8 +59,13 @@ function getUserLists(fuid){
                 },function(){showSocial = true});
         });
 }
-function makeSocialAjaxCall(type,url,param,successCallback,callback){
+function makeSocialAjaxCall(type,url,param,successCallback,callback,isForComments){
+
     socialLoading.fadeIn(0,function(){
+        if(!isForComments){
+            $('#cache').prepend(commentMain.hide());
+        }
+        
         $.ajax({
             url:url,
             timeout:6000,

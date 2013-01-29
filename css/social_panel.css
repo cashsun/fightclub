@@ -71,7 +71,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
 }
 .f_username{
     color: #8d8f90;
-    font-size: 0.9em
+    font-size: 11px
 }
 .f_fullname{
     font-size: 1.1em;
@@ -201,6 +201,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     width: 200px;
     margin-top: 20px;
     clear: left;
+    font-size: 12px
 }
 #comment_loading{
     margin-left: 40%
@@ -210,6 +211,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     margin-bottom: 10px;
     margin-top: 4px;
     height: 20px;
+    color: black;
     white-space: nowrap;
     text-overflow:ellipsis;
     overflow: hidden;
@@ -217,15 +219,19 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
 }
 .comment_tstamp{
     color: #8d8f90;
-    font-size: 0.9em
+    font-size: 11px;
+    width: 190px
 }
 .comment_btn{
-    background: url('../image/comment_click.png') no-repeat center center;
+    background: url('../image/comment.png') no-repeat center center;
     position: absolute;
     height: 32px;
     width: 32px;
     left: 0;
     cursor: pointer
+}
+.comment_btn_c{
+    background: url('../image/comment_click.png') no-repeat center center;
 }
 .comment_delete{
     font-size: 12px;
@@ -234,6 +240,6 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     width: 30px;
     cursor: pointer;
     margin-top: -25px;
-    margin-left: 170px;
+    margin-left: 180px;
     background: url('../image/button_close.png') no-repeat center center;
 }

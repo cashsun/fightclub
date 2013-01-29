@@ -49,20 +49,27 @@ var comtBtns;
 function initList(){
     comtBtns = $('.comment_btn');
     comtBtns.click(function(){
-        var tid=$(this).attr('tid');
-        commentMain.slideUp(200,function(){
-            $('#friends_wrapper').hide(0,function(){
-            var target = $(this);
-            commentMain.attr('tid',tid);
-            getComments(tid,0,commentMain.find('#comment_dialog'),
-            function(){
-                var commentMainClone = commentMain.clone(true,true);
-                commentMain.remove();
-                target.html(commentMainClone.show()).show('slide',{direction:"right"},200,function(){
-                        initCommentBox();
-                })});
-            });
-        });  
+        comtBtns.removeClass('comment_btn_c')
+        var target = $(this);
+        commentMain.slideUp(300,function(){
+            var ctid = target.attr('tid');
+            if(ctid!=commentMain.attr('tid')){
+                target.addClass('comment_btn_c');
+                commentMain.attr('tid',ctid);
+                target.parent().after(commentMain);
+                loading_image.show(0,function(){
+                    getComments(ctid,0,commentMain.find('#comment_dialog'),
+                    function(){
+                        loading_image.hide(0,function(){
+                            commentMain.slideDown(300)
+                        });
+                    });
+                })
+                
+            }else{
+                commentMain.attr('tid',-1);
+            }
+        });
     });
     $('.f_task_text').click(function(){});
     $('.fighto').click(function(){

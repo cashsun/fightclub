@@ -3,10 +3,10 @@ function initTasks(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
         var p = $(this).parent().attr('privacy');
-        $('#privacy'+p).click();
         $('#deadline_date').val($(this).attr('dead_date'));
         $('#deadline_time').val($(this).attr('dead_time'));
         $('#t_dialog').dialog('open');
+        $('#privacy'+p).click();
     }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
@@ -463,7 +463,7 @@ function getComments(tid,lastcid,target,callback){
                                 });
                             }
                         });
-                    },callback);
+                    },callback,true);
 }
 function initCommentBox(){
     commentMain =$('#comment_main');
