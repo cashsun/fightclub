@@ -63,7 +63,7 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback,isForComment
 
     socialLoading.fadeIn(0,function(){
         if(!isForComments){
-            $('#cache').prepend(commentMain.hide());
+            $('#cache').prepend(commentMain);
         }
         
         $.ajax({

@@ -96,6 +96,8 @@ function initIsDone(){
 }
 function initTaskGroups(isFromClick){
     $('.tg_title_text').click(function(){
+        $('#cache').prepend(commentMain);
+        
         var index = $('.tg_title_text').index(this);
         $('#tg_selector').css('top', index*51+'px');
         $('#tgid').html($(this).parent().attr('id'));
