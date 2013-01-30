@@ -34,7 +34,6 @@ function initTasks(){
     activeDeletes();
     initIsDone();
     if(!$("#u_g_dialog").dialog( "isOpen" )){$('#input_task').val('').focus();}
-    $('#tg_selector').show();
 }
 var commentMain;
 //update t_order and cache
@@ -175,6 +174,8 @@ function postCreateTaskGroup(){
             type: gtype,
             webaction:1},function(){
                 positionGroup(true,tgidnew,title,priority,gtype);
+                
+                checkIfGroupExists();
             },function(response){tgidnew = response})
 }
 function postCreateTask(content){
@@ -201,7 +202,7 @@ function postDeleteTaskGroup(tgid){
             $('#'+tgid,'#cache').remove();
             checkIfGroupExists();
         });
-        makeAjaxCall('post',{tgid:tgid,webaction:3},function(){});
+        makeAjaxCall('post',{tgid:tgid,webaction:3},function(){checkIfGroupExists()});
 }
 function postDeleteTask(tid){
         $('[tid="'+tid+'"]','#tasks_sortable').slideUp(200, function(){
