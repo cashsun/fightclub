@@ -6,13 +6,13 @@ function initTasks(){
         $('#deadline_date').val($(this).attr('dead_date'));
         $('#deadline_time').val($(this).attr('dead_time'));
         $('#t_dialog').dialog('open');
-        $('#privacy'+p).click();
+        $('#privacy'+p).next().click();
     }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
     $('.texp').click(function(){
         var target = $(this);
-        commentMain.slideUp(300,function(){
+        commentMain.slideUp(200,function(){
             var ctid = target.parent().attr('tid');
             if(ctid!=commentMain.attr('tid')){
                 commentMain.attr('tid',ctid);
@@ -21,7 +21,7 @@ function initTasks(){
                     getComments(ctid,0,commentMain.find('#comment_dialog'),
                     function(){
                         loading_image.hide(0,function(){
-                            commentMain.slideDown(300)
+                            commentMain.slideDown(200);
                         });
                     });
                 })
@@ -34,43 +34,23 @@ function initTasks(){
     activeDeletes();
     initIsDone();
     if(!$("#u_g_dialog").dialog( "isOpen" )){$('#input_task').val('').focus();}
-    $('#tg_selector').show();
 }
 var commentMain;
 //update t_order and cache
-var tasks;
 function sync(){
     var current_tgid = $('#tgid').html();
-    tasks = $('li','#tasks_sortable');
     var task_order = '';
-    var cacheContent = '';
     var comma = ',';
-    var task = tasks.first();
-    for(var i=0;i<tasks.length;i++){
-        if(i==tasks.length-1){
+    visibleTasks = $('#tasks_sortable li');
+    var task;
+    for(var i=0;i<visibleTasks.length;i++){
+        if(i==visibleTasks.length-1){
             comma = '';
         }
+        task = visibleTasks.eq(i);
         task_order +=task.attr('tid')+comma;
-        var checked = '';
-        var ribbon = '';
-        var isNonIE8 = '';
-        var tcheckbox = task.children().eq(2).find('input');
-        var texp = task.children().eq(1).html();
-        if(tcheckbox.is(':checked')){
-            checked='checked'
-        }
-        if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
-            isNonIE8 = 'isDoneNonIE8';
-        }
-        switch(parseInt(task.attr('privacy'))){
-            case 1:ribbon=' shared_f';break;
-            case 2:ribbon=' shared_g';break;
-        }
-        cacheContent += '<li privacy="'+task.attr('privacy')+'" tid="'+task.attr('tid')+'"class="t_content hoverable roundcorner'+ribbon+'"><div class="handle"></div><div original-title="❤" class="texp">'+texp+'</div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox" '+checked+'/></div><div dead_date="'+task.children().eq(3).attr('dead_date')+'" dead_time="'+task.children().eq(3).attr('dead_time')+'" class="t_content_text">'+
-            task.children().eq(3).text()+'</div><div class="delete_task"></div></li>';
-        task = task.next();
     }
-    $('#'+current_tgid,'#cache').html(cacheContent);
+    $('#'+current_tgid,'#cache').html(visibleTasks.clone(true,true));
     makeAjaxCall('post',{
         tgid:current_tgid,
         t_order:task_order,webaction:7},function(){});
@@ -116,6 +96,7 @@ function initTaskGroups(isFromClick){
                     handle:'.handle'
                 });
             $(this).fadeIn(200, function(){
+                visibleTasks = $('#tasks_sortable li');
                 initTasks();
                 sync();
             });
@@ -193,6 +174,8 @@ function postCreateTaskGroup(){
             type: gtype,
             webaction:1},function(){
                 positionGroup(true,tgidnew,title,priority,gtype);
+                
+                checkIfGroupExists();
             },function(response){tgidnew = response})
 }
 function postCreateTask(content){
@@ -219,7 +202,7 @@ function postDeleteTaskGroup(tgid){
             $('#'+tgid,'#cache').remove();
             checkIfGroupExists();
         });
-        makeAjaxCall('post',{tgid:tgid,webaction:3},function(){});
+        makeAjaxCall('post',{tgid:tgid,webaction:3},function(){checkIfGroupExists()});
 }
 function postDeleteTask(tid){
         $('[tid="'+tid+'"]','#tasks_sortable').slideUp(200, function(){
@@ -485,6 +468,8 @@ function initCommentBox(){
 var loading_image;
 var priorityMap;
 var commentDialog;
+var searchText;
+var visibleTasks;
 $(document).ready(function(){
     showGroup = true;
     $('#panel_task').click(function(){
@@ -522,10 +507,14 @@ $(document).ready(function(){
 
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:false});
     $('#input_task').keyup(function() {
-            text = $(this).val();
-            $('#tasks_sortable li').removeClass('highlight');
-            if($.trim(text)!=''){
-                    $("#tasks_sortable div:contains('" + text + "')").parent().addClass('highlight');
+            searchText = $.trim($(this).val().toLowerCase());
+            visibleTasks = $('#tasks_sortable li').removeClass('highlight');
+            if(searchText!=''){
+                for(var i=0;i<visibleTasks.length;i++){
+                    if(visibleTasks.eq(i).find('.t_content_text').html().toLowerCase().indexOf(searchText)>=0){
+                        visibleTasks.eq(i).addClass('highlight');
+                    }
+                }
             }						
     });
     $('.dialog').dialog({autoOpen: false,height:500,width:500,modal:true,resizable:false,closeOnEscape: true});

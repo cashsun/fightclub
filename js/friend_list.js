@@ -51,7 +51,7 @@ function initList(){
     comtBtns.click(function(){
         comtBtns.removeClass('comment_btn_c')
         var target = $(this);
-        commentMain.slideUp(300,function(){
+        commentMain.slideUp(200,function(){
             var ctid = target.attr('tid');
             if(ctid!=commentMain.attr('tid')){
                 target.addClass('comment_btn_c');
@@ -61,7 +61,12 @@ function initList(){
                     getComments(ctid,0,commentMain.find('#comment_dialog'),
                     function(){
                         loading_image.hide(0,function(){
-                            commentMain.slideDown(300)
+                            commentMain.slideDown(200,function(){
+                                $('.friend_image_s').click(function(){
+                                    var fuid = $(this).attr('uid');
+                                    getUserLists(fuid);
+                                });
+                            });
                         });
                     });
                 })
@@ -75,8 +80,8 @@ function initList(){
     $('.fighto').click(function(){
         var tid = $(this).attr('tid');
         if(!$(this).hasClass('liked')){
-            var oriexp = $(this).prev().prev().html();
-            $(this).prev().prev().html(parseInt(oriexp)+1);
+            var oriexp = $(this).siblings('.f_task_texp').html();
+            $(this).siblings('.f_task_texp').html(parseInt(oriexp)+1);
             makeAjaxCall('post',{
             uid:function(){return $('#uid').html();},
             tid:tid,

@@ -19,7 +19,6 @@
         echo '<div class="comment_tstamp">'.$row['tstamp'].'</div>';
         if($row['uid']==$_SESSION['uid'])
           echo '<div class="comment_delete" cid="'.$row['commentid'].'"></div>';
-        
         echo '</div>';
     }
 ?>

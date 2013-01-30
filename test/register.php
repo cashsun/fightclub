@@ -67,7 +67,7 @@
         $username = REGISTER_STATUS::EMPTY_FIELD;
       if(isset($_POST['password'])&&$_POST['password']!='')
       {
-        $pattern = "/^[a-zA-Z0-9!.,#~$\¡ê*+-_]{4,20}$/";
+        $pattern = "/^[a-zA-Z0-9!.,#~$\ï¿½ï¿½*+-_]{4,20}$/";
         if(!preg_match($pattern, $_POST['password']))
           $passwd = REGISTER_STATUS::ERROR_FORMAT;
         else
@@ -141,7 +141,7 @@ if($submit)
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Fightclub</title>
+        <title>Fighto! Club</title>
         <link rel="shortcut icon" href="favicon.ico" />
         <link rel="stylesheet" href="../css/pepper-grinder/jquery-ui-1.8.23.custom.css" type="text/css"/>
         <link rel="stylesheet" href="../css/signup.css"/>

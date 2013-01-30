@@ -8,7 +8,9 @@ $(document).ready(function(){
     $('#club_button').click(function(){  
         if(!showSocial){
             $('#panel_social').animate({right: 0},300,function(){
-                $('#radio0').click();
+                if($('#friends_wrapper').html()==''){
+                    $('#radio0').click();
+                }
                 showSocial = true;
             });
         }else{
