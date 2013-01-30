@@ -10,7 +10,8 @@ function initTasks(){
     }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
-    $('.texp').click(function(){
+    $('.texp').tipsy({gravity:'s',fade:false,offset:-10});
+    $('.comment').click(function(){
         var target = $(this);
         commentMain.slideUp(200,function(){
             var ctid = target.parent().attr('tid');
@@ -190,7 +191,7 @@ function postCreateTask(content){
             if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
                 isNonIE8 = 'isDoneNonIE8';
              }
-            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="handle"></div><div original-title="❤" class="texp">0</div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
+            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="handle"></div><div original-title="❤" class="texp">0</div><div original-title="comment" class="comment"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
 +content+'</div><div class="delete_task"></div></li>');
             $('.tg_title_text',tgid).click();
         },function(response){tidnew = response;});
@@ -222,7 +223,7 @@ function postUpdateTask(){
     var privacy = $('#u_t_privacy :radio:checked').val();
     var deadline = $('#deadline_date').val()+' '+$('#deadline_time').val();
     var task = $('[tid="'+tid+'"]','#tasks_sortable');
-    var t_text = task.children().eq(3);
+    var t_text = task.children().eq(4);
     task.attr('privacy', privacy);
     t_text.attr('dead_date', $('#deadline_date').val()).attr('dead_time', $('#deadline_time').val()).html(content);
     switch(parseInt(privacy)){case 0:task.removeClass('shared_f shared_g');break;case 1:task.removeClass('shared_g').addClass('shared_f');break;case 2:task.removeClass('shared_f').addClass('shared_g');break;}
@@ -370,7 +371,7 @@ function makeAjaxCall(type,param,callback,successCallback){
 }
 function resizeTaskPanel(isFromClick){
     var width = windowDiv.width();
-    if(width<550){
+    if(width<650){
         showGroup = false;
         hideGroupPanel(isFromClick)
     }else{

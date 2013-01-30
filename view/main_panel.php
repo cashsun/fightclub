@@ -18,7 +18,7 @@ function echoTask(Task $task){
         case 1:$ribbon=' shared_f';break;
         case 2:$ribbon=' shared_g';break;
     }
-    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner'.$ribbon.'"><div class="handle"></div><div original-title="❤" class="texp">'.$task->getTExp().'</div>
+    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner'.$ribbon.'"><div class="handle"></div><div original-title="❤" class="texp">'.$task->getTExp().'</div><div original-title="comment" class="comment"></div>
       <div class="isDone"><input class="isdone_checkbox" type="checkbox" '.$option.'/></div><div dead_date="'.$task->getDate().'" dead_time="'.$task->getTime().'" class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
 }
 function echoSortedTasks(TaskGroup $group){

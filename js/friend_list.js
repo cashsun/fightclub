@@ -66,6 +66,8 @@ function initList(){
                                     var fuid = $(this).attr('uid');
                                     getUserLists(fuid);
                                 });
+                                var myuid = $('#uid','#cache').html();
+                                $('.friend_image_s[uid='+myuid+']').unbind('click');
                             });
                         });
                     });

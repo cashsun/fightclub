@@ -154,8 +154,8 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
     background-position: 100% center;
     background-repeat: no-repeat
 }
-.texp{
-    width: 50px;
+.comment{
+    width: 40px;
     height: 34px;
     padding-top: 16px;
     font-size: 0.8em;
@@ -165,7 +165,24 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
+    text-align: center;
     background: url('../image/exp.png') no-repeat center center   
+}
+.texp{
+    width: 30px;
+    height: 33px;
+    padding-top: 17px;
+    font-size: 0.8em;
+    float: left;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    color:#8d8f90;
+    text-align: center
+}
+.texp:hover{
+    color: white
 }
 .tg_text_selected{
     text-shadow: 0 1px 0 rgba(0,0,0,0.6);
@@ -200,7 +217,7 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
 .isDone{
     padding: 0;
     float: left;
-    width: 50px;
+    width: 30px;
     height: 35px;
     padding-top: 15px;
 }

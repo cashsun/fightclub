@@ -54,7 +54,8 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     height: 60px;
     width: 60px;
     margin-right: 10px;
-    float: left
+    float: left;
+    cursor: pointer
 }
 .f_info{
     width: auto;
