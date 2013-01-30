@@ -51,9 +51,6 @@ if(isset($_SESSION['uid'])){
         case Actions::FIGHTO:
             fighto();
             break;
-        case Actions::GET_TEXP_BY_TGID:
-            getTexpbyTgid();
-            break;
         case Actions::GET_USER_TASKS:
             getUserTasks();
             break;
@@ -185,20 +182,7 @@ function fighto(){
         echo $result;
     }
 }
-function getTexpbyTgid(){
-    if(isset($_POST['tgid'])){
-        $db = new DBadapter();
-        $db->connect();
-        $result = $db->getTexpByTgid($_POST['tgid']);
-        $jsonArray = Array();
-        $counter = 0;
-        while($row = mysql_fetch_assoc($result)){
-            $jsonArray[$counter] = $row;
-            $counter++;
-        }
-        echo json_encode($jsonArray);
-    }
-}
+
 function getUserTasks(){
     if(isset($_GET['fuid'])){
         $user = getAllByFuid($_GET['fuid'],$_SESSION['uid']);

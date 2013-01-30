@@ -17,4 +17,5 @@
         <script type="text/javascript" src="js/jquery.imgpreload.min.js"></script>
         <script type="text/javascript" src="js/jquery-ui.toggleSwitch.js"></script>
         <script type="text/javascript" src="js/jquery.timepicker.min.js"></script>
+        <script type="text/javascript" src="js/utilities.js"></script>
 </head>

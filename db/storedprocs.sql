@@ -45,6 +45,9 @@ DECLARE existU BOOLEAN;
 DECLARE existM BOOLEAN;
 DECLARE uid INTEGER;
 DECLARE tgid INTEGER;
+
+SET time_zone = "+00:00";
+
 SELECT (COUNT(*)>0) INTO @existU
 FROM USER WHERE username = myusername;
 SELECT (COUNT(*)>0) INTO @existM
@@ -103,7 +106,8 @@ IN mypri int,
 IN mytype int,
 IN mytorder varchar(65535) CHARACTER SET utf8
 ) 
-BEGIN 
+BEGIN
+SET time_zone = "+00:00";
 INSERT INTO T_GROUP (uid, title, priority, type, t_order)
 VALUES(myuid, mytitle, mypri, mytype, mytorder);
 END // 
@@ -161,7 +165,8 @@ IN myotid int,
 IN mytgid int,
 IN mycontent char(140) CHARACTER SET utf8
 ) 
-BEGIN 
+BEGIN
+SET time_zone = "+00:00";
 INSERT INTO TASK (uid, otid, tgid, content)
 VALUES(myuid, myotid, mytgid, mycontent);
 END // 
@@ -187,7 +192,7 @@ IN mycontent char(140) CHARACTER SET utf8,
 IN myprivacy int,
 IN mydeadline TIMESTAMP
 ) 
-BEGIN 
+BEGIN
 UPDATE TASK
 SET TASK.content = mycontent,
 TASK.privacy = myprivacy,
@@ -244,7 +249,7 @@ CREATE PROCEDURE GetAllMyTasks(
 IN myuid int
 ) 
 BEGIN
-
+SET time_zone = "+00:00";
 SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
 utg.firstname, utg.lastname, utg.email, TASK.content,
 COUNT(EXP.expid) AS texp, TASK.tstamp, TASK.deadline, TASK.isdone,utg.t_order,
@@ -275,6 +280,7 @@ CREATE PROCEDURE GetTask(
 IN mytid int
 ) 
 BEGIN
+SET time_zone = "+00:00";
 SELECT TASK.tid, TASK.uid, USER.username,
 USER.firstname, USER.lastname, TASK.content,
 COUNT(EXP.expid) AS expcount, TASK.tstamp, TASK.isdone, TASK.privacy
@@ -475,7 +481,7 @@ BEGIN
 DECLARE privacylevel INTEGER;
 DECLARE isfans BOOLEAN;
 SET @privacylevel = 1;
-
+SET time_zone = "+00:00";
 SELECT (COUNT(*)>0) into @isfans FROM FRIEND
 WHERE fuid = myuid AND uid = myfuid; 
 
@@ -551,25 +557,6 @@ END //
 DELIMITER ;
 
 
-/* FOR PERSONAL INDEX REFRESH CHECK */
-DELIMITER // 
-CREATE PROCEDURE GetTexpByTgid(
-IN mytgid int
-) 
-BEGIN
-SELECT TASK.tid, COUNT(expid) AS texp
-FROM
-T_GROUP
-LEFT JOIN
-TASK
-ON T_GROUP.tgid = TASK.tgid
-LEFT JOIN
-EXP
-ON TASK.tid = EXP.tid
-WHERE T_GROUP.tgid = mytgid
-GROUP BY TASK.tid;
-END // 
-DELIMITER ;
 
 /* CREATE COMMENT */
 DELIMITER // 
@@ -579,8 +566,13 @@ IN mytid int,
 IN mycontent char(140) CHARACTER SET utf8
 ) 
 BEGIN
+DECLARE tgid INTEGER;
+SET time_zone = "+00:00";
 INSERT INTO COMMENT (uid, tid, content)
 VALUES(myuid, mytid, mycontent);
+SELECT TASK.tgid INTO @tgid FROM TASK WHERE TASK.tid = mytid;
+INSERT INTO EVENT(actionid, uid, tid, tgid)
+VALUES(0, myuid, mytid, @tgid);
 END // 
 DELIMITER ;
 
@@ -600,15 +592,15 @@ DELIMITER ;
 DELIMITER // 
 CREATE PROCEDURE GetComments(
 IN mytid int,
-IN mylastcid int,
-IN myuid int
+IN mylastcid int
 )
 BEGIN
+SET time_zone = "+00:00";
 SELECT COMMENT.commentid, COMMENT.uid,
 COMMENT.tid, COMMENT.content,
 COMMENT.tstamp, USER.username,
 USER.firstname, USER.lastname,
-USER.email, USER.avatar, (COMMENT.uid = myuid) AS isAuthor
+USER.email, USER.avatar
 FROM COMMENT LEFT JOIN USER
 ON COMMENT.uid = USER.uid
 WHERE COMMENT.commentid > mylastcid AND tid = mytid

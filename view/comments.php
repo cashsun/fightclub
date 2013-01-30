@@ -17,7 +17,7 @@
         echo '<div class="f_username">'.$row['username'].'</div>';
         echo '<div title="'.$row['content'].'" class="comment_content">'.$row['content'].'</div>';
         echo '<div class="comment_tstamp">'.$row['tstamp'].'</div>';
-        if($row['isAuthor'])
+        if($row['uid']==$_SESSION['uid'])
           echo '<div class="comment_delete" cid="'.$row['commentid'].'"></div>';
         
         echo '</div>';
