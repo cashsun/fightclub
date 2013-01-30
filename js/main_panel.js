@@ -21,7 +21,7 @@ function initTasks(){
                     getComments(ctid,0,commentMain.find('#comment_dialog'),
                     function(){
                         loading_image.hide(0,function(){
-                            commentMain.slideDown(200)
+                            commentMain.slideDown(200);
                         });
                     });
                 })
