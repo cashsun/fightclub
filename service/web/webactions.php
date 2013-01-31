@@ -130,15 +130,6 @@ function updateTaskGroupTaskOrder(){
         echo $result;
     }
 }
-function getFriends(){
-    if(isset($_POST['uid'])){
-//        $db = new DBadapter();
-//        $db->connect();
-//        $result = $db->getFriends($_POST['uid']);
-//        echo json_encode($result);
-		
-    }
-}
 function toggleTaskComplete(){
     if(isset($_POST['tid'], $_POST['isdone'])){
         $db = new DBadapter();
@@ -255,7 +246,8 @@ function echoFriendTask(Task $task){
     if($task->isLiked()){
         $isliked = ' liked';
     }
-    echo '<div class="f_task roundcorner"><div tid="'.$task->getTid().'" class="comment_btn"></div><div class="f_task_text" title="'.$task->getContent().'">'.$task->getContent().'</div><div class="f_task_texp">'.$task->getTexp().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
+    $str = htmlspecialchars($task->getContent());
+    echo '<div class="f_task roundcorner"><div tid="'.$task->getTid().'" class="comment_btn"></div><div class="f_task_text" title="'.$str.'">'.$str.'</div><div class="f_task_texp">'.$task->getTexp().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
 }
 function getAllByFuid($fuid,$uid){
     $db = new DBadapter();
