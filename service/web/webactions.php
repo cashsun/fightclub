@@ -215,14 +215,6 @@ function getComments(){
     }
 }
 
-function getFightoList(){
-    if(isset($_POST['tid'])){
-        $db = new DBadapter();
-        $db->connect();
-        $result = $db->GetFightoList($_POST['tid']);
-        echo $result;
-    }
-}
 
 function getFriendFollows(){
     if(isset($_GET['fuid'])){

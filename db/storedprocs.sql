@@ -620,7 +620,7 @@ SET time_zone = "+00:00";
 SELECT EXP.expid,
 USER.firstname, USER.lastname,
 USER.username,
-USER.email, USER.avatar
+USER.email, USER.avatar, USER.uid
 FROM EXP LEFT JOIN USER
 ON EXP.uid = USER.uid
 WHERE EXP.tid = mytid
