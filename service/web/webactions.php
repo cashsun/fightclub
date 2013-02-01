@@ -65,6 +65,10 @@ if(isset($_SESSION['uid'])){
             break;
         case Actions::GET_COMMENTS:
             getComments();
+            break;
+        case Actions::GET_FIGHTO_LIST:
+            getFightoList();
+            break;
         default :echo -1;
     }
 }else{
@@ -207,6 +211,15 @@ function getComments(){
         $db = new DBadapter();
         $db->connect();
         $result = $db->GetComments($_POST['tid'], $_POST['lastcid'], $_SESSION['uid']);
+        echo $result;
+    }
+}
+
+function getFightoList(){
+    if(isset($_POST['tid'])){
+        $db = new DBadapter();
+        $db->connect();
+        $result = $db->GetFightoList($_POST['tid']);
         echo $result;
     }
 }

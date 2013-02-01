@@ -617,12 +617,13 @@ IN mytid int
 )
 BEGIN
 SET time_zone = "+00:00";
-COMMENT.tstamp, USER.username,
+SELECT EXP.expid,
 USER.firstname, USER.lastname,
+USER.username,
 USER.email, USER.avatar
 FROM EXP LEFT JOIN USER
 ON EXP.uid = USER.uid
-WHERE COMMENT.commentid > mylastcid AND tid = mytid
-ORDER BY COMMENT.tstamp ASC LIMIT 10;
+WHERE EXP.tid = mytid
+ORDER BY EXP.expid DESC LIMIT 30;
 END // 
 DELIMITER ;
