@@ -65,6 +65,10 @@ if(isset($_SESSION['uid'])){
             break;
         case Actions::GET_COMMENTS:
             getComments();
+            break;
+        case Actions::GET_FIGHTO_LIST:
+            getFightoList();
+            break;
         default :echo -1;
     }
 }else{
@@ -210,6 +214,7 @@ function getComments(){
         echo $result;
     }
 }
+
 
 function getFriendFollows(){
     if(isset($_GET['fuid'])){
