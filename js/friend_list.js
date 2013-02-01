@@ -16,7 +16,7 @@ $(document).ready(function(){
                                                 });
                                                 },function(r){
                                                             if(r==-1){
-                                                                $('#f_group_wrapper').html('oops, try again later.')}
+                                                                $('#f_group_wrapper').html('oops, try again later.').fadeIn(200)}
                                                             else{
                                                                 $('#f_group_wrapper').html(r).fadeIn(200);
                                                             }

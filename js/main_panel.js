@@ -38,7 +38,7 @@ function initTasks(){
 }
 var commentMain;
 //update t_order and cache
-function sync(){
+function updateTorder(){
     var current_tgid = $('#tgid').html();
     var task_order = '';
     var comma = ',';
@@ -92,14 +92,14 @@ function initTaskGroups(isFromClick){
              checkIfDoneMulti();
               $('#tasks_sortable').sortable({
                     update:function(){
-                        sync();
+                        updateTorder();
                     },
                     handle:'.handle'
                 });
             $(this).fadeIn(200, function(){
                 visibleTasks = $('#tasks_sortable li');
                 initTasks();
-                sync();
+//                updateTorder();
             });
             resizeTaskPanel(isFromClick);
         });
@@ -131,7 +131,7 @@ function positionIsDone(item){
             $('#tasks_sortable').append(clone);
             clone.slideDown(300,function(){
                 checkIfDoneMulti();
-                sync();
+                updateTorder();
             })
             target.remove();
         });
@@ -140,7 +140,7 @@ function positionIsDone(item){
             $('#tasks_sortable').prepend(clone);
             checkIfDoneMulti();
             clone.slideDown(300,function(){
-                sync();
+                updateTorder();
             })
             target.remove()
         });
@@ -191,9 +191,12 @@ function postCreateTask(content){
             if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
                 isNonIE8 = 'isDoneNonIE8';
              }
-            $(tgid,'#cache').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner"><div class="handle"></div><div original-title="❤" class="texp">0</div><div original-title="comment" class="comment"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
+            $('#tasks_sortable').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner hidden"><div class="handle"></div><div original-title="❤" class="texp">0</div><div original-title="comment" class="comment"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
 +content+'</div><div class="delete_task"></div></li>');
-            $('.tg_title_text',tgid).click();
+            initTasks();
+            resizeTaskPanel();
+            $('[tid="'+tidnew+'"]','#tasks_sortable').slideDown(300,function(){updateTorder()});
+            
         },function(response){tidnew = response;});
 }
 function postDeleteTaskGroup(tgid){
@@ -213,7 +216,7 @@ function postDeleteTask(tid){
         })
         makeAjaxCall('post',
             {tid:tid,webaction:2},function(){
-                sync();
+                updateTorder();
             })
 }
 function postUpdateTask(){
@@ -234,7 +237,7 @@ function postUpdateTask(){
         deadline:function(){return deadline},
         webaction:4
         },function(){
-            sync();
+            updateTorder();
         }
         );
 }
