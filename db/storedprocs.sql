@@ -29,6 +29,7 @@ DROP PROCEDURE IF EXISTS GetTexpByTgid;
 DROP PROCEDURE IF EXISTS CreateComment;
 DROP PROCEDURE IF EXISTS DeleteComment;
 DROP PROCEDURE IF EXISTS GetComments;
+DROP PROCEDURE IF EXISTS GetFightoList;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -228,7 +229,8 @@ ELSE
       SELECT (-1) AS status;
     ELSE
       UPDATE TASK
-      SET TASK.isdone = myisdone
+      SET TASK.isdone = myisdone,
+      TASK.lastupdate = now()
       WHERE TASK.tid = mytid;
       SELECT (1) AS status;
     END IF;
@@ -603,6 +605,23 @@ USER.firstname, USER.lastname,
 USER.email, USER.avatar
 FROM COMMENT LEFT JOIN USER
 ON COMMENT.uid = USER.uid
+WHERE COMMENT.commentid > mylastcid AND tid = mytid
+ORDER BY COMMENT.tstamp ASC LIMIT 10;
+END // 
+DELIMITER ;
+
+/* GET FIGHTOLIST */
+DELIMITER // 
+CREATE PROCEDURE GetFightoList(
+IN mytid int
+)
+BEGIN
+SET time_zone = "+00:00";
+COMMENT.tstamp, USER.username,
+USER.firstname, USER.lastname,
+USER.email, USER.avatar
+FROM EXP LEFT JOIN USER
+ON EXP.uid = USER.uid
 WHERE COMMENT.commentid > mylastcid AND tid = mytid
 ORDER BY COMMENT.tstamp ASC LIMIT 10;
 END // 
