@@ -656,14 +656,15 @@ IN myuid int
 BEGIN
 SET time_zone = "+00:00";
 /* STEP GET ALL COMMENT */
-SELECT u1.uid,u1.firstname AS firstname1, 
+SELECT u1.uid AS uid1,u1.firstname AS firstname1, 
 u1.lastname AS lastname1,
-u1.avatar AS avatar1,u2.uid,
+u1.avatar AS avatar1, u1.username AS username1,
+u2.uid AS uid2, u2.username AS username2,
 u2.firstname AS firstname2, 
 u2.lastname AS lastname2,
 u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,
 TASK.isdone, TASK.privacy, TASK.deadline, EVENT.tstamp,
-COMMENT.content AS ccontent, COMMENT.cid, EVENT.eventtype,
+COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,
 T_GROUP.title,T_GROUP.type, EXP.expid
 FROM EVENT
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
