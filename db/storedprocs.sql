@@ -718,6 +718,6 @@ AND (EVENT.uid1 = EXP.uid OR EVENT.uid2 = EXP.uid)
 LEFT JOIN EXP e2 ON TASK.tid = e2.tid
 AND myuid = e2.uid
 WHERE EVENT.uid1 = myuid OR EVENT.uid2 = myuid
-ORDER BY EVENT.tstamp DESC;
+ORDER BY EVENT.tstamp DESC LIMIT 30;
 END // 
 DELIMITER ;
