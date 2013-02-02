@@ -653,8 +653,8 @@ u1.lastname AS lastname1,
 u1.avatar AS avatar1,
 u2.firstname AS firstname2, 
 u2.lastname AS lastname2,
-u2.avatar AS avatar2, TASK.tid, TASK.content,EVENT.tstamp,
-COMMENT.content FROM EVENT 
+u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,EVENT.tstamp,
+COMMENT.content AS ccontent FROM EVENT 
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
 LEFT JOIN USER u2 ON EVENT.uid2 = u2.uid
 LEFT JOIN TASK ON EVENT.tid = TASK.tid

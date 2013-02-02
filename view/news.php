@@ -1,12 +1,19 @@
 <?php
     session_start();
+    include_once '../service/EventTypes.php';
     include_once '../db/DBadapter.php';
     if(isset($_SESSION['uid'])){
         $db=new DBadapter();
         $result = $db->getNewsByUid($_SESSION['uid']);
+        
+        while($row=mysql_fetch_array($result))
+        {                    
+          echoCommentEvent($row);
+        }/*
         if(isset($result['eventtype'])){
-            switch($result['eventtype']){
-                case EventTypes::COMMENT:echoCommentEvent($result);break;
+            switch(EventTypes::COMMENT){
+                case EventTypes::COMMENT:
+                    break;
                 case EventTypes::AT:break;
                 case EventTypes::FIGHTO: break;
                 case EventTypes::PUBLISH:break;
@@ -16,13 +23,14 @@
             }
         }else{
             echo -1;
-        }
+        }*/
     }else{
         echo -1;
     }
     
 function echoCommentEvent($result){
-    
+    echo $result['firstname1'].' '.$result['lastname1'].' '.$result['avatar1'].' '.$result['firstname2'].' '.$result['lastname2'].
+            ' '.$result['tcontent'].' '.$result['ccontent'].' '.$result['tid'].' '.$result['tstamp'];
 }
 function echoAtEvent($result){
     
