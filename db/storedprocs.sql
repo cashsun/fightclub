@@ -421,6 +421,8 @@ IF @rowno <> 0 THEN
 ELSE
     INSERT INTO FRIEND (uid, fuid)
     VALUES(myuid, myfuid);
+    INSERT INTO EVENT(eventtype, uid1, uid2)
+    VALUES(3, myuid, myfuid);
     SELECT (1) AS status;
 END IF;
 END // 
@@ -661,7 +663,7 @@ u2.firstname AS firstname2,
 u2.lastname AS lastname2,
 u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,
 TASK.isdone, TASK.privacy, TASK.deadline, EVENT.tstamp,
-COMMENT.content AS ccontent, EVENT.eventtype,
+COMMENT.content AS ccontent, COMMENT.cid, EVENT.eventtype,
 T_GROUP.title,T_GROUP.type, EXP.expid
 FROM EVENT
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
