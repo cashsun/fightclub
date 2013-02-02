@@ -421,6 +421,8 @@ IF @rowno <> 0 THEN
 ELSE
     INSERT INTO FRIEND (uid, fuid)
     VALUES(myuid, myfuid);
+    INSERT INTO EVENT(eventtype, uid1, uid2)
+    VALUES(3, myuid, myfuid);
     SELECT (1) AS status;
 END IF;
 END // 
@@ -546,12 +548,18 @@ IN mytid int
 ) 
 BEGIN
 DECLARE exist BOOLEAN;
+DECLARE tuid INTEGER;
+SET time_zone = "+00:00";
 SELECT (COUNT(expid)>0) INTO @exist FROM
 EXP WHERE uid = myuid
 AND tid = mytid;
 IF(@exist = FALSE) THEN
   INSERT INTO EXP (uid, tid)
   VALUES(myuid, mytid);
+  SELECT uid INTO @tuid FROM TASK
+  WHERE tid = mytid;
+  INSERT INTO EVENT (eventtype, uid1, uid2, tid)
+  VALUES(2, myuid, @tuid, mytid);
   SELECT 1 AS status;
 ELSE
   SELECT -1 AS status;
@@ -648,14 +656,15 @@ IN myuid int
 BEGIN
 SET time_zone = "+00:00";
 /* STEP GET ALL COMMENT */
-SELECT u1.uid,u1.firstname AS firstname1, 
+SELECT u1.uid AS uid1,u1.firstname AS firstname1, 
 u1.lastname AS lastname1,
-u1.avatar AS avatar1,u2.uid,
+u1.avatar AS avatar1, u1.username AS username1,
+u2.uid AS uid2, u2.username AS username2,
 u2.firstname AS firstname2, 
 u2.lastname AS lastname2,
 u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,
 TASK.isdone, TASK.privacy, TASK.deadline, EVENT.tstamp,
-COMMENT.content AS ccontent, EVENT.eventtype,
+COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,
 T_GROUP.title,T_GROUP.type, EXP.expid
 FROM EVENT
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
