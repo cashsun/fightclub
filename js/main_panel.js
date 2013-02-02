@@ -1,3 +1,17 @@
+function getFightoList(tid,target){
+    fightolist.slideUp(200,function(){
+        loading_image.show(0,function(){
+        makeSocialAjaxCall('get','view/fighto_list.php',{tid:tid},function(resp){
+        target.after(fightolist.html(resp));
+        },function(){showSocial = true;
+            fightolist.slideDown(200,function(){
+                loading_image.hide(0,function(){
+                    $('.friend_image_ss').tipsy({fadw:false,gravity:"s"})
+                })
+            })});
+        });
+    });
+}
 function initTasks(){
     $('.t_content_text').click(function(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
@@ -10,7 +24,11 @@ function initTasks(){
     }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
     });
-    $('.texp').tipsy({gravity:'s',fade:false,offset:-10});
+    $('.texp').tipsy({gravity:'s',fade:false,offset:-10}).click(function(){
+        var tid = $(this).attr("mytid");
+        var target = $(this).parent();
+        getFightoList(tid,target);
+    });
     $('.comment').click(function(){
         var target = $(this);
         commentMain.slideUp(200,function(){
@@ -25,8 +43,7 @@ function initTasks(){
                             commentMain.slideDown(200);
                         });
                     });
-                })
-                
+                }) 
             }else{
                 commentMain.attr('tid',-1);
             }
@@ -174,8 +191,7 @@ function postCreateTaskGroup(){
             priority: priority,
             type: gtype,
             webaction:1},function(){
-                positionGroup(true,tgidnew,title,priority,gtype);
-                
+                positionGroup(true,tgidnew,title,priority,gtype);        
                 checkIfGroupExists();
             },function(response){tgidnew = response})
 }
@@ -485,6 +501,7 @@ $(document).ready(function(){
     $('input.datepicker').datepicker();
     tidnew = tgidnew= -1;
     windowDiv = $(window);
+    fightolist = $('#fightolist');
     loading_image = $('#loadingImage');
     initCommentBox();
     originalPriority = 0;
@@ -494,7 +511,6 @@ $(document).ready(function(){
     $('#logout').click(function(){
         location.replace("test/logout.php");
     });
-    
     priorityMap = new Array("casual","very low","low","minor","medium","important","major","urgent","urgent+","immediate");
     $('#g_priority > span,#u_g_priority > span').each(function(){
         $(this).slider({
@@ -508,7 +524,6 @@ $(document).ready(function(){
             }
         });
     });
-
     $('#input_task').tipsy({fallback:'press ENTER to create new task',gravity:'n',fade:false});
     $('#input_task').keyup(function() {
             searchText = $.trim($(this).val().toLowerCase());
@@ -550,14 +565,12 @@ $(document).ready(function(){
                 postCreateTaskGroup();
             }
     }}]);
-
     $('#u_g_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($.trim($('#update_group').val())!=''){
                 postUpdateTaskGroup();
             }
     }}]);
-
     $('#u_group').click(function(){
         var tgid = '#'+$('#tgid').html();
         originalPriority = $(tgid).attr('priority');

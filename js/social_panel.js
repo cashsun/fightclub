@@ -31,7 +31,6 @@ $(document).ready(function(){
 });
 function getMyFollows(){
         $('#friends_wrapper').hide(0,function(){
-
             makeSocialAjaxCall('get','view/friends.php',{ftype:0},function(resp){
                 $('#friends_wrapper').html(resp).fadeIn(200);
                 },function(){showSocial = true});

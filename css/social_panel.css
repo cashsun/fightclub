@@ -11,9 +11,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
 .tab{height: 100%;overflow-y:auto;background:none}
 #input_friend{width:100%;border: 5px solid #eaeaea}
 #friends_radios label{width:60px}
-#friends_radios .ui-button{
-    height: 10px
-}
+#friends_radios .ui-button{height: 10px}
 #friends_radios .ui-state-active{
     background: #168dd9 none;
     height: 11px;
@@ -56,6 +54,16 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     margin-right: 10px;
     float: left;
     cursor: pointer
+}
+#fightolist{
+    width: 90%;
+    height: auto;
+}
+.friend_image_ss{
+    height: 40px;
+    width: 40px;
+    margin-top: 5px;
+    margin-right: 5px;
 }
 .f_info{
     width: auto;
