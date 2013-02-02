@@ -30,6 +30,7 @@ DROP PROCEDURE IF EXISTS CreateComment;
 DROP PROCEDURE IF EXISTS DeleteComment;
 DROP PROCEDURE IF EXISTS GetComments;
 DROP PROCEDURE IF EXISTS GetFightoList;
+DROP PROCEDURE IF EXISTS GetNews;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -568,13 +569,23 @@ IN mytid int,
 IN mycontent char(140) CHARACTER SET utf8
 ) 
 BEGIN
+DECLARE cid INTEGER;
+DECLARE tuid INTEGER;
+DECLARE tid INTEGER;
 DECLARE tgid INTEGER;
 SET time_zone = "+00:00";
 INSERT INTO COMMENT (uid, tid, content)
 VALUES(myuid, mytid, mycontent);
-SELECT TASK.tgid INTO @tgid FROM TASK WHERE TASK.tid = mytid;
-INSERT INTO EVENT(actionid, uid, tid, tgid)
-VALUES(0, myuid, mytid, @tgid);
+SELECT LAST_INSERT_ID() INTO @cid;
+
+SELECT COMMENT.uid, COMMENT.tid, 
+TASK.tgid INTO @tuid,@tid,@tgid
+FROM COMMENT LEFT JOIN TASK
+ON COMMENT.tid = TASK.tid
+WHERE COMMENT.commentid = @cid; 
+
+INSERT INTO EVENT(eventtype, uid1, uid2, cid, tid, tgid)
+VALUES(0, myuid, @tuid, @cid, @tid, @tgid);
 END // 
 DELIMITER ;
 
@@ -625,5 +636,29 @@ FROM EXP LEFT JOIN USER
 ON EXP.uid = USER.uid
 WHERE EXP.tid = mytid
 ORDER BY EXP.expid DESC LIMIT 30;
+END // 
+DELIMITER ;
+
+
+/* GET NEWS */
+DELIMITER // 
+CREATE PROCEDURE GetNews(
+IN myuid int
+)
+BEGIN
+SET time_zone = "+00:00";
+/* STEP GET ALL COMMENT */
+SELECT u1.firstname AS firstname1, 
+u1.lastname AS lastname1,
+u1.avatar AS avatar1,
+u2.firstname AS firstname2, 
+u2.lastname AS lastname2,
+u2.avatar AS avatar2, TASK.tid, TASK.content,EVENT.tstamp,
+COMMENT.content FROM EVENT 
+LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
+LEFT JOIN USER u2 ON EVENT.uid2 = u2.uid
+LEFT JOIN TASK ON EVENT.tid = TASK.tid
+LEFT JOIN COMMENT ON EVENT.cid = COMMENT.commentid
+WHERE EVENT.eventtype = 0;
 END // 
 DELIMITER ;

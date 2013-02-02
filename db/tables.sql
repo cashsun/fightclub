@@ -119,3 +119,7 @@ ALTER TABLE USER ADD newststamp TIMESTAMP;
 ALTER TABLE EVENT ADD tgid int;
 ALTER TABLE EVENT ADD ctstamp TIMESTAMP;
 ALTER TABLE TASK ADD deadline TIMESTAMP;
+ALTER TABLE EVENT change fuid uid2 int;
+ALTER TABLE EVENT change uid uid1 int;
+ALTER TABLE EVENT add cid int;
+ALTER TABLE EVENT change actionid eventtype int;
