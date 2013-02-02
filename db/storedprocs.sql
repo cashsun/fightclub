@@ -573,8 +573,8 @@ SET time_zone = "+00:00";
 INSERT INTO COMMENT (uid, tid, content)
 VALUES(myuid, mytid, mycontent);
 SELECT TASK.tgid INTO @tgid FROM TASK WHERE TASK.tid = mytid;
-INSERT INTO EVENT(actionid, uid, tid, tgid)
-VALUES(0, myuid, mytid, @tgid);
+INSERT INTO EVENT(actionid, uid1, cid)
+VALUES(0, myuid, cid);
 END // 
 DELIMITER ;
 
