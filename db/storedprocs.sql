@@ -195,13 +195,36 @@ IN myprivacy int,
 IN mydeadline TIMESTAMP
 ) 
 BEGIN
+DECLARE ispublish BOOLEAN;
+DECLARE rows_affected INTEGER;
+DECLARE event_exists BOOLEAN;
+DECLARE eventid INTEGER;
+DECLARE uid INTEGER;
+SELECT (COUNT(*)>0), uid
+INTO @ispublish, @uid
+FROM TASK 
+WHERE tid = mytid AND myprivacy > 0
+AND privacy = 0;
 UPDATE TASK
 SET TASK.content = mycontent,
 TASK.privacy = myprivacy,
 TASK.lastupdate = now(),
 TASK.deadline = mydeadline
 WHERE TASK.tid = mytid;
-SELECT ROW_COUNT() AS rows_affected;
+SELECT ROW_COUNT() INTO @rows_affected;
+IF (@ispublish = TRUE) THEN
+  SELECT (COUNT(*)>0), EVENT.eventid
+  INTO @event_exists, @eventid FROM EVENT
+  WHERE EVENT.eventtype = 4 AND EVENT.tid = mytid;
+  IF (@event_exists = TRUE) THEN
+    UPDATE EVENT
+    SET EVENT.tstamp = now()
+    WHERE EVENT.eventid = @eventid;
+  ELSE
+    INSERT INTO EVENT(eventtype, uid1, tid)
+    VALUES (4, @uid, mytid);
+  END IF;
+END IF;
 END // 
 DELIMITER ;
 
@@ -215,8 +238,9 @@ BEGIN
 DECLARE rowno INTEGER;
 DECLARE isdone boolean;
 DECLARE privacy INTEGER;
-SELECT COUNT(*), TASK.isdone, TASK.privacy
-into @rowno, @isdone, @privacy
+DECLARE tuid INTEGER;
+SELECT COUNT(*), TASK.isdone, TASK.privacy, TASK.uid
+into @rowno, @isdone, @privacy, @tuid
 FROM TASK
 WHERE TASK.tid = mytid;
 IF @rowno = 0 THEN
@@ -233,6 +257,8 @@ ELSE
       SET TASK.isdone = myisdone,
       TASK.lastupdate = now()
       WHERE TASK.tid = mytid;
+      INSERT INTO EVENT (eventtype, uid1, tid)
+      VALUES (6, @tuid, mytid);
       SELECT (1) AS status;
     END IF;
   ELSE
@@ -393,7 +419,7 @@ FROM
 (
   SELECT *
   FROM FRIEND
-  WHERE uid = myfuid AND fuid!=myuid
+  WHERE uid = myfuid
 ) ft
 LEFT JOIN USER
 ON USER.uid = ft.fuid
@@ -412,6 +438,7 @@ IN myfuid int
 ) 
 BEGIN
 DECLARE rowno INTEGER;
+DECLARE eventid INTEGER;
 SELECT COUNT(*)
 INTO @rowno
 FROM FRIEND f
@@ -421,8 +448,21 @@ IF @rowno <> 0 THEN
 ELSE
     INSERT INTO FRIEND (uid, fuid)
     VALUES(myuid, myfuid);
-    INSERT INTO EVENT(eventtype, uid1, uid2)
-    VALUES(3, myuid, myfuid);
+    SELECT COUNT(*), EVENT.eventid 
+    INTO @rowno, @eventid
+    FROM EVENT
+    WHERE EVENT.uid1 = myuid
+    AND EVENT.uid2 = myfuid
+    AND EVENT.eventtype=3;
+    IF @rowno > 0 THEN
+      /* ALREADY EXISTS,UPDATE TIMESTAMP */
+      UPDATE EVENT
+      SET EVENT.tstamp = now()
+      WHERE EVENT.eventid = @eventid;
+    ELSE
+      INSERT INTO EVENT(eventtype, uid1, uid2)
+      VALUES(3, myuid, myfuid);
+    END IF;
     SELECT (1) AS status;
 END IF;
 END // 
@@ -455,7 +495,7 @@ lastname, email,
 avatar,fuid
 FROM USER u 
 LEFT JOIN (SELECT fuid FROM FRIEND WHERE uid = myuid) f ON u.uid = f.fuid
-WHERE uid <> myuid AND
+WHERE
 (LOWER(CONCAT(firstname, ' ', lastname)) LIKE CONCAT('%', LOWER(myinput), '%')
 OR LOWER(CONCAT(lastname, ' ', firstname)) LIKE CONCAT('%', LOWER(myinput), '%')
 OR LOWER(username) LIKE CONCAT('%', LOWER(myinput), '%'));
@@ -548,6 +588,7 @@ IN mytid int
 ) 
 BEGIN
 DECLARE exist BOOLEAN;
+DECLARE ismypost BOOLEAN;
 DECLARE tuid INTEGER;
 SET time_zone = "+00:00";
 SELECT (COUNT(expid)>0) INTO @exist FROM
@@ -586,7 +627,7 @@ INSERT INTO COMMENT (uid, tid, content)
 VALUES(myuid, mytid, mycontent);
 SELECT LAST_INSERT_ID() INTO @cid;
 
-SELECT COMMENT.uid, COMMENT.tid, 
+SELECT TASK.uid, COMMENT.tid, 
 TASK.tgid INTO @tuid,@tid,@tgid
 FROM COMMENT LEFT JOIN TASK
 ON COMMENT.tid = TASK.tid
@@ -664,8 +705,8 @@ u2.firstname AS firstname2,
 u2.lastname AS lastname2,
 u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,
 TASK.isdone, TASK.privacy, TASK.deadline, EVENT.tstamp,
-COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,
-T_GROUP.title,T_GROUP.type, EXP.expid
+COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,EVENT.eventid,
+T_GROUP.title,T_GROUP.type, EXP.expid, e2.expid IS NOT NULL AS liked
 FROM EVENT
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
 LEFT JOIN USER u2 ON EVENT.uid2 = u2.uid
@@ -674,6 +715,9 @@ LEFT JOIN COMMENT ON EVENT.cid = COMMENT.commentid
 LEFT JOIN T_GROUP ON T_GROUP.tgid = EVENT.tgid
 LEFT JOIN EXP ON EVENT.tid = EXP.tid 
 AND (EVENT.uid1 = EXP.uid OR EVENT.uid2 = EXP.uid)
-WHERE EVENT.uid1 = myuid OR EVENT.uid2 = myuid;
+LEFT JOIN EXP e2 ON TASK.tid = e2.tid
+AND myuid = e2.uid
+WHERE EVENT.uid1 = myuid OR EVENT.uid2 = myuid
+ORDER BY EVENT.tstamp DESC;
 END // 
 DELIMITER ;
