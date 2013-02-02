@@ -29,21 +29,38 @@
         echo -1;
     }
     
-function echoCommentEvent($result){
-    echo $result['firstname1'].' '.$result['lastname1'].' '.$result['avatar1'].' '.$result['firstname2'].' '.$result['lastname2'].
-            ' '.$result['tcontent'].' '.$result['ccontent'].' '.$result['tid'].' '.$result['tstamp'];
+function echoCommentEvent($row){
+    echo '<div class="news_box">';
+        echo '<img uid="'.$row['uid'].'" class="friend_image_s" src="image/'.$row['avatar1'].'.png" alt=""/>';
+        echo '<div class="news_title"><div class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> commented on '.$row['firstname2'].' '.$row['lastname2'].
+                '\'s task </div> ';
+        echo '<div class="news_content">';
+            echo '<div class="f_task roundcorner"><div class="f_task_text">'.$row['tcontent'].'</div></div>';
+            echoComment($row);
+        echo '</div>';
+    echo '</div>';
 }
-function echoAtEvent($result){
+function echoAtEvent($row){
     
 }
-function echoFightoEvent($result){
+function echoFightoEvent($row){
     
 }
-function echoPublishEvent($result){
+function echoPublishEvent($row){
     
 }
-function echoUpdateEvent($result){
+function echoUpdateEvent($row){
     
 }
-
+function echoComment($row){
+    echo '<div class="comment_box">';
+    echo '<img uid='.$row['uid1'].' class="friend_image_s" src="image/'.$row['avatar1'].'.png" alt=""/>';
+    echo '<div class="f_username">'.$row['username1'].'</div>';
+    $str = htmlspecialchars(($row['ccontent']));
+    echo '<div title="'.$str.'" class="comment_content">'.$str.'</div>';
+    echo '<div class="comment_tstamp">'.$row['tstamp'].'</div>';
+    if($row['uid1']==$_SESSION['uid'])
+      echo '<div class="comment_delete" cid="'.$row['cid'].'"></div>';
+    echo '</div>';
+}
 ?>
