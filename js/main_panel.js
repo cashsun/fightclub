@@ -1,14 +1,14 @@
 function getFightoList(tid,target,callback){
     fightolist.slideUp(200,function(){
+        target.after(fightolist);
         loading_image.show(0,function(){
         makeSocialAjaxCall('get','view/fighto_list.php',{tid:tid},function(resp){
-        target.after(fightolist.html(resp));
+        fightolist.html(resp);
         },function(){showSocial = true;
             fightolist.slideDown(200,function(){
                 loading_image.hide(0,function(){
                     $('.friend_image_ss').tipsy({fade:false,gravity:"s"});
                     if(callback!=null){callback();}
-                    
                 })
             })});
         });
