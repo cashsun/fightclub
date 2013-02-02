@@ -404,7 +404,6 @@ function showGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?200:0);
         var width = windowDiv.width();
         showGroup = true;
-        showSocial = false;
         $('.dialog').dialog('option','width',500);
         $('#panel_group').removeClass('hidden');
         $('#task_wrapper').animate({width:width-310},animaTime);
@@ -422,7 +421,6 @@ function hideGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?200:0)
         var width = windowDiv.width();
         showGroup = false;
-        showSocial = false;
         $('.dialog').dialog('option','width',width-25);
         $('#panel_task').animate({marginLeft:0,width:width},animaTime,function(){
             $('#panel_group').addClass('hidden');
@@ -478,11 +476,10 @@ function initCommentBox(){
     commentMain.find('button').button().unbind('click').click(function(){
         var content = commentMain.find('textarea').val();
         if($.trim(content)!=''){
+            commentMain.find('textarea').val('');
             var tid = commentMain.attr('tid');
              postCreateComment(tid,content,function(r){
-                 getComments(tid,0,commentDialog,function(){
-                     commentMain.find('textarea').val('');
-                 });
+                 getComments(tid,0,commentDialog,function(){});
              });
         }
     });

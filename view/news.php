@@ -66,4 +66,12 @@ function echoComment($row){
         echo '</div>';
     echo '</div>';
 }
+function echoTask($row){
+    $isliked = '';
+    if($row['isliked']==1){
+        $isliked = ' liked';
+    }
+    $str = htmlspecialchars($row['tcontent']);
+    echo '<div class="f_task roundcorner"><div tid="'.$row['tid'].'" class="comment_btn"></div><div class="f_task_text" title="'.$str.'">'.$str.'</div><div tid="'.$row['tid'].'" class="f_task_texp">'.$row['texp'].'</div><div tid="'.$row['tid'].'" class="fighto'.$isliked.'"></div></div>';
+}
 ?>
