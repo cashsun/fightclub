@@ -412,6 +412,7 @@ IN myfuid int
 ) 
 BEGIN
 DECLARE rowno INTEGER;
+DECLARE eventid INTEGER;
 SELECT COUNT(*)
 INTO @rowno
 FROM FRIEND f
@@ -421,8 +422,20 @@ IF @rowno <> 0 THEN
 ELSE
     INSERT INTO FRIEND (uid, fuid)
     VALUES(myuid, myfuid);
-    INSERT INTO EVENT(eventtype, uid1, uid2)
-    VALUES(3, myuid, myfuid);
+    SELECT COUNT(*), eventid 
+    INTO @rowno, @eventid
+    FROM EVENT
+    WHERE EVENT.uid1 = myuid
+    AND EVENT.uid2 = myfuid;
+    IF @rowno > 0 THEN
+      /* ALREADY EXISTS,UPDATE TIMESTAMP */
+      UPDATE EVENT
+      SET EVENT.tstamp = now()
+      WHERE eventid = @eventid;
+    ELSE
+      INSERT INTO EVENT(eventtype, uid1, uid2)
+      VALUES(3, myuid, myfuid);
+    END IF;
     SELECT (1) AS status;
 END IF;
 END // 
@@ -665,7 +678,7 @@ u2.lastname AS lastname2,
 u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,
 TASK.isdone, TASK.privacy, TASK.deadline, EVENT.tstamp,
 COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,
-T_GROUP.title,T_GROUP.type, EXP.expid
+T_GROUP.title,T_GROUP.type, EXP.expid, e2.expid IS NOT NULL AS liked
 FROM EVENT
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
 LEFT JOIN USER u2 ON EVENT.uid2 = u2.uid
@@ -674,6 +687,8 @@ LEFT JOIN COMMENT ON EVENT.cid = COMMENT.commentid
 LEFT JOIN T_GROUP ON T_GROUP.tgid = EVENT.tgid
 LEFT JOIN EXP ON EVENT.tid = EXP.tid 
 AND (EVENT.uid1 = EXP.uid OR EVENT.uid2 = EXP.uid)
+LEFT JOIN EXP e2 ON TASK.tid = e2.tid
+AND myuid = e2.uid
 WHERE EVENT.uid1 = myuid OR EVENT.uid2 = myuid;
 END // 
 DELIMITER ;
