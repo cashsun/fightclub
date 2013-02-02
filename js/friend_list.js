@@ -82,11 +82,14 @@ function initList(){
         var tid = $(this).attr("tid");
         getFightoList(tid,$(this).parent(),function(){
             $('.friend_image_ss').click(function(){
-                var uid = $(this).attr("uid");
-                getUserLists(uid);
-            })
+        var fuid = $(this).attr("uid");
+        if(myuid!=fuid){
+            getUserLists(fuid);
+        }
+    });
         })
     });
+    
     $('.f_task_text').click(function(){});
     $('.fighto').click(function(){
         var tid = $(this).attr('tid');

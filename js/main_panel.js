@@ -6,7 +6,7 @@ function getFightoList(tid,target,callback){
         },function(){showSocial = true;
             fightolist.slideDown(200,function(){
                 loading_image.hide(0,function(){
-                    $('.friend_image_ss').tipsy({fadw:false,gravity:"s"});
+                    $('.friend_image_ss').tipsy({fade:false,gravity:"s"});
                     if(callback!=null){callback();}
                     
                 })
@@ -25,6 +25,12 @@ function initTasks(){
         $('#privacy'+p).next().click();
     }).mouseover(function(){$(this).css('color','white');
         }).mouseout(function(){$(this).css('color', '#8d8f90');
+    });
+    $('#tasks_sortable').sortable({
+                update:function(){
+                    updateTorder();
+                },
+                handle:'.handle'
     });
     $('.texp').tipsy({gravity:'s',fade:false,offset:-10}).click(function(){
         var tid = $(this).attr("mytid");
@@ -109,12 +115,6 @@ function initTaskGroups(isFromClick){
             var task_content = $(tgid,'#cache').html();
              $(this).html(task_content);
              checkIfDoneMulti();
-              $('#tasks_sortable').sortable({
-                    update:function(){
-                        updateTorder();
-                    },
-                    handle:'.handle'
-                });
             $(this).fadeIn(200, function(){
                 visibleTasks = $('#tasks_sortable li');
                 initTasks();
@@ -188,7 +188,7 @@ function postCreateTaskGroup(){
     var priority = $('#g_priority > span').slider('value');
     var gtype = $('#g_type').val();
     makeAjaxCall('post',
-            {uid:function(){return $('#uid').html()},
+            {uid:myuid,
             title:title,
             priority: priority,
             type: gtype,
@@ -199,7 +199,7 @@ function postCreateTaskGroup(){
 }
 function postCreateTask(content){
     makeAjaxCall('post',
-        {uid:function(){return $('#uid').html()},
+        {uid:myuid,
             tgid:function(){return $('#tgid').html()},
             content:content,
             webaction:0},
@@ -492,6 +492,7 @@ var priorityMap;
 var commentDialog;
 var searchText;
 var visibleTasks;
+var myuid;
 $(document).ready(function(){
     showGroup = true;
     $('#panel_task').click(function(){
@@ -507,6 +508,7 @@ $(document).ready(function(){
     loading_image = $('#loadingImage');
     initCommentBox();
     originalPriority = 0;
+    myuid = $('#uid').html();
     $('#tg_selector').click(function(){
         $('#panel_group').hide();
     });
@@ -591,7 +593,7 @@ $(document).ready(function(){
         $('#profile_image').attr('src','image/'+avatar+'.png');
         $('#avatar_dialog').dialog('close');
         makeAjaxCall('post',{
-        uid:function(){return $('#uid').html();},
+        uid:myuid,
         avatar:avatar,
         webaction:11},function(){});
     });
