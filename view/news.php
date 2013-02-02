@@ -7,23 +7,24 @@
         $result = $db->getNewsByUid($_SESSION['uid']);
         
         while($row=mysql_fetch_array($result))
-        {                    
-          echoCommentEvent($row);
-        }/*
-        if(isset($result['eventtype'])){
-            switch(EventTypes::COMMENT){
-                case EventTypes::COMMENT:
-                    break;
-                case EventTypes::AT:break;
-                case EventTypes::FIGHTO: break;
-                case EventTypes::PUBLISH:break;
-                case EventTypes::UPDATE_TASK:break;
-                case EventTypes::COMPLETE_TASK:break;
-                case EventTypes::LEVEL_UP:break;
-            }
-        }else{
-            echo -1;
-        }*/
+        {
+          if(isset($row['eventtype'])){
+              switch(EventTypes::COMMENT){
+                  case EventTypes::COMMENT:
+                      echoCommentEvent($row);
+                      break;
+                  case EventTypes::AT:break;
+                  case EventTypes::FIGHTO: break;
+                  case EventTypes::PUBLISH:break;
+                  case EventTypes::UPDATE_TASK:break;
+                  case EventTypes::COMPLETE_TASK:break;
+                  case EventTypes::LEVEL_UP:break;
+              }
+          }else{
+              echo -1;
+          }
+        }
+        
     }else{
         echo -1;
     }
