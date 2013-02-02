@@ -710,7 +710,7 @@ u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,
 TASK.isdone, TASK.privacy, TASK.deadline, EVENT.tstamp,
 COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,EVENT.eventid,
 T_GROUP.title,T_GROUP.type, EXP.expid, e2.expid IS NOT NULL AS liked,
-IFNULL(e3.tid, CONCAT('NULL',EVENT.eventid)) AS pk, COUNT(e3.expid)
+IFNULL(e3.tid, CONCAT('NULL',EVENT.eventid)) AS pk, COUNT(e3.expid) AS texp
 FROM EVENT
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
 LEFT JOIN USER u2 ON EVENT.uid2 = u2.uid
