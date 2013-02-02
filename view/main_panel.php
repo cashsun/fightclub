@@ -154,6 +154,7 @@ function getAllByUid($uid){
                     <div id="friends_wrapper"></div>
                 </div>
                 <div class="tab" id="tabs-2">
+                    <div id="news_wrapper"></div>
                 </div>
                 <div class="tab" id="tabs-3">
                 </div>

@@ -5,11 +5,17 @@ $(document).ready(function(){
     $('#social_tabs').tabs();
     $("#friends_radios").buttonset();
     $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});
+    $('li[aria-controls=tabs-1]').click(function(){
+        $('#radio0').click();
+    });
+    $('li[aria-controls=tabs-2]').click(function(){
+        getNews();
+    });
     $('#club_button').click(function(){  
         if(!showSocial){
             $('#panel_social').animate({right: 0},300,function(){
-                if($('#friends_wrapper').html()==''){
-                    $('#radio0').click();
+                if($('#friends_wrapper').html()==''){  
+                    $('li[aria-controls=tabs-1]').click();
                 }
                 showSocial = true;
             });
@@ -36,6 +42,7 @@ function getMyFollows(){
                 },function(){showSocial = true});
         });
 }
+
 function getMyFriends(){
         $('#friends_wrapper').hide(0,function(){
 
@@ -52,7 +59,13 @@ function getMyFans(){
                 },function(){showSocial = true});
         });
 }
-
+function getNews(){
+        $('#news_wrapper').hide(0,function(){
+            makeSocialAjaxCall('get','view/news.php',null,function(resp){
+                $('#news_wrapper').html(resp).fadeIn(200);
+                },function(){showSocial = true});
+        });
+}
 function getUserLists(fuid){
         $('#friends_wrapper').hide(0,function(){
             makeSocialAjaxCall('get','view/friend_list.php',{fuid:fuid},function(resp){
