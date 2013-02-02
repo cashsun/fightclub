@@ -1,4 +1,4 @@
-function getFightoList(tid,target){
+function getFightoList(tid,target,callback){
     fightolist.slideUp(200,function(){
         loading_image.show(0,function(){
         makeSocialAjaxCall('get','view/fighto_list.php',{tid:tid},function(resp){
@@ -6,7 +6,9 @@ function getFightoList(tid,target){
         },function(){showSocial = true;
             fightolist.slideDown(200,function(){
                 loading_image.hide(0,function(){
-                    $('.friend_image_ss').tipsy({fadw:false,gravity:"s"})
+                    $('.friend_image_ss').tipsy({fadw:false,gravity:"s"});
+                    if(callback!=null){callback();}
+                    
                 })
             })});
         });

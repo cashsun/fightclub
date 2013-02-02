@@ -58,12 +58,14 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
 #fightolist{
     width: 90%;
     height: auto;
+    margin-left: 6%
 }
 .friend_image_ss{
     height: 40px;
     width: 40px;
     margin-top: 5px;
     margin-right: 5px;
+    margin-bottom: 15px
 }
 .f_info{
     width: auto;
@@ -145,7 +147,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
 }
 .f_task_text{
     position: absolute;
-    width: 228px;
+    width: 218px;
     left:32px;
     height: 18px;
     margin-top: 9px;
@@ -172,7 +174,8 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     white-space: nowrap;
     text-overflow:ellipsis;
     text-align: center;
-    overflow: hidden
+    overflow: hidden;
+    cursor: pointer
 }
 .fighto{
     position: absolute;

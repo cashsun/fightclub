@@ -78,9 +78,19 @@ function initList(){
             }
         });
     });
+    $('.f_task_texp').click(function(){
+        var tid = $(this).attr("tid");
+        getFightoList(tid,$(this).parent(),function(){
+            $('.friend_image_ss').click(function(){
+                var uid = $(this).attr("uid");
+                getUserLists(uid);
+            })
+        })
+    });
     $('.f_task_text').click(function(){});
     $('.fighto').click(function(){
         var tid = $(this).attr('tid');
+        var fightoBtn = $(this);
         if(!$(this).hasClass('liked')){
             var oriexp = $(this).siblings('.f_task_texp').html();
             $(this).siblings('.f_task_texp').html(parseInt(oriexp)+1);
@@ -89,6 +99,7 @@ function initList(){
             tid:tid,
             webaction:12},function(){},function(r){if(r==-1){alert('you have already FIGHTOed this task.')}});
         }
+        fightoBtn.siblings(".f_task_texp").click();
         if ($.browser.webkit) {
             $(this).addClass('liked').animate({zoom:'150%',top:'-5px',right:'-5px'},0,function(){
                 $(this).animate({zoom:'100%',top:'0px',right:'0px'},400);

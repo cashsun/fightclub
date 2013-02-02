@@ -5,7 +5,7 @@ if(isset($_SESSION['uid'])&&isset($_GET['tid'])){
     $db = new DBadapter();
     $result = $db->getFightoList($_GET['tid']);
     while($row =  mysql_fetch_array($result)){
-        echo '<img tid="'.$row['uid'].'" original-title="'.$row['firstname'].' '.$row['lastname'].'" class="friend_image_ss" src="image/'.$row['avatar'].'.png" alt=""/>';
+        echo '<img uid="'.$row['uid'].'" original-title="'.$row['firstname'].' '.$row['lastname'].'" class="friend_image_ss" src="image/'.$row['avatar'].'.png" alt=""/>';
     }
 }else{
     echo -1;
