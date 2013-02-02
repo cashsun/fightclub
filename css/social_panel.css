@@ -35,7 +35,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     width: 100%;
     height: 80px;
     margin-top: 30px;
-    font-family: "Helvetica","Arial" ! important
+    font-family: "Microsoft Yahei","Helvetica","Arial" ! important
 }
 .friend_image{
     height: 80px;
@@ -97,6 +97,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     height: 31px;
     color: #8d8f90;
     font-size: 0.9em;
+    margin-top: -8px
 }
 .isfriend span{
     position: absolute;
@@ -112,7 +113,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
 .isfriend .ui-button span{
     margin-bottom: 2px
 }
-#f_group_wrapper{
+#f_group_wrapper,#f_follow_wrapper{
     margin-top: 50px;
     color: #8d8f90;
     font-size: 11px;
@@ -254,4 +255,21 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     margin-top: -25px;
     margin-left: 180px;
     background: url('../image/button_close.png') no-repeat center center;
+}
+.news_content{
+    font-size: 11px
+}
+.news_comment_wapper{
+    margin-left: 20px
+}
+.news_title{
+    height:60px;
+    font-size: 0.8em
+}
+.news_title .friend_image_ss,.news .f_fullname{
+    float: left
+}
+.news_box{
+    font-family: "Microsoft Yahei","Helvetica","Arial" ! important;
+    margin-bottom: 40px
 }

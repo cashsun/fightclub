@@ -9,7 +9,7 @@
         while($row=mysql_fetch_array($result))
         {
           if(isset($row['eventtype'])){
-              switch(EventTypes::COMMENT){
+              switch($row['eventtype']){
                   case EventTypes::COMMENT:
                       echoCommentEvent($row);
                       break;
@@ -31,9 +31,10 @@
     
 function echoCommentEvent($row){
     echo '<div class="news_box">';
-        echo '<img uid="'.$row['uid'].'" class="friend_image_s" src="image/'.$row['avatar1'].'.png" alt=""/>';
-        echo '<div class="news_title"><div class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> commented on '.$row['firstname2'].' '.$row['lastname2'].
-                '\'s task </div> ';
+        echo '<div class="news_title">';
+            echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> commented on '.$row['firstname2'].' '.$row['lastname2'].
+                    '\'s task';
+        echo '</div> ';
         echo '<div class="news_content">';
             echo '<div class="f_task roundcorner"><div class="f_task_text">'.$row['tcontent'].'</div></div>';
             echoComment($row);
@@ -53,14 +54,16 @@ function echoUpdateEvent($row){
     
 }
 function echoComment($row){
-    echo '<div class="comment_box">';
-    echo '<img uid='.$row['uid1'].' class="friend_image_s" src="image/'.$row['avatar1'].'.png" alt=""/>';
-    echo '<div class="f_username">'.$row['username1'].'</div>';
-    $str = htmlspecialchars(($row['ccontent']));
-    echo '<div title="'.$str.'" class="comment_content">'.$str.'</div>';
-    echo '<div class="comment_tstamp">'.$row['tstamp'].'</div>';
-    if($row['uid1']==$_SESSION['uid'])
-      echo '<div class="comment_delete" cid="'.$row['cid'].'"></div>';
+    echo '<div class="news_comment_wapper">';
+        echo '<div class="comment_box">';
+        echo '<img uid='.$row['uid1'].' class="friend_image_s" src="image/'.$row['avatar1'].'.png" alt=""/>';
+        echo '<div class="f_username">'.$row['username1'].'</div>';
+        $str = htmlspecialchars(($row['ccontent']));
+        echo '<div title="'.$str.'" class="comment_content">'.$str.'</div>';
+        echo '<div class="comment_tstamp">'.$row['tstamp'].'</div>';
+        if($row['uid1']==$_SESSION['uid'])
+          echo '<div class="comment_delete" cid="'.$row['cid'].'"></div>';
+        echo '</div>';
     echo '</div>';
 }
 ?>

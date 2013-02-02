@@ -9,17 +9,25 @@
     if($friend!=null && $friend->getUid()!=-1){
         echoFriend($friend);
         echo '<div id="f_group_wrapper">';
-        
+            $groups = $friend->getTaskGroups();
+            foreach($groups as $group){
+                echoFriendGroup($group);
+            }
         echo '</div>';
+        echo '<div id="f_follow_wrapper"></div>';
     }else{
         echo -1;
     }
 function echoFriend($friend){
     echo '<div fuid="'.$friend->getUid().'" class="friend_box">';
     echoProfilePic($friend);
-    $isfriend = '<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="unfollow_friend"><img src="image/delfriend.png" alt=""/></button></span></div>';
-    if(!$friend->isFriend()){
-        $isfriend='<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="add_friend"><img src="image/addfriend.png" alt=""/></button></span></div>';
+    $isfriend='';
+    if($friend->getUid()!=$_SESSION['uid']){
+        if(!$friend->isFriend()){
+            $isfriend='<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="add_friend"><img src="image/addfriend.png" alt=""/></button></span></div>';
+        }else{
+            $isfriend = '<div class="isfriend"><span><button uid="'.$friend->getUid().'" class="unfollow_friend"><img src="image/delfriend.png" alt=""/></button></span></div>';
+        }
     }
     echo '<div class="f_info"><div class="f_username">'.$friend->getUsername().'</div><div class="f_fullname">'.$friend->getFirstname().' '.$friend->getLastname().'</div><div class="f_exp">Exp '.$friend->getExp().'</div>'.$isfriend.'</div><div id="f_opt"><select class="f_toggle"><option>Tasks</option><option>Follows</option></select></div></div>';
 }
@@ -32,7 +40,7 @@ function getAllByFuid($fuid,$uid){
     $result = $db->getAllByFuid($fuid,$uid);
     $tasks = array();
     $groups = array();
-    $user=null;
+    $user;
     $last_row=array();
     $t_counter=0;
     $g_counter=0;
@@ -59,6 +67,23 @@ function getAllByFuid($fuid,$uid){
     $last_row['taskgroups'] = $groups;
     $user=new User($last_row);
     return $user;
+}
+function echoFriendGroup($group){
+    $tasks = $group->getTasks();
+    if($tasks[0]->getTid()!=-1){
+        echo '<div original-title="'.$group->getTitle().'" class="f_group">'.$group->getTitle().'</div>';
+        foreach($tasks as $task){
+            echoFriendTask($task);
+        }
+    }
+}
+function echoFriendTask(Task $task){
+    $isliked = ' like';
+    if($task->isLiked()){
+        $isliked = ' liked';
+    }
+    $str = htmlspecialchars($task->getContent());
+    echo '<div class="f_task roundcorner"><div tid="'.$task->getTid().'" class="comment_btn"></div><div class="f_task_text" title="'.$str.'">'.$str.'</div><div tid="'.$task->getTid().'" class="f_task_texp">'.$task->getTexp().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
 }
 ?>
 <script type="text/javascript" src="js/friend_list.js"></script>

@@ -1,46 +1,32 @@
 $(document).ready(function(){
     initList();
     initBtns();
+    var fuid = $('#f_opt').parent().attr('fuid');
+    makeSocialAjaxCall('get','view/f_friends.php',{
+                                                fuid:fuid,
+                                                ftype:0},
+                                            function(resp){
+                                                $('#f_follow_wrapper').html(resp);
+                                                },function(){});
     $('.f_toggle').toggleSwitch({
 			highlight: false,
 			width: 25,
                         callback:function(i){
                             switch(i){
-                                case 0:$('#f_group_wrapper').hide(0,function(){
-                                            socialLoading.show(0,function(){
-                                                makeAjaxCall('get',{
-                                                fuid:function(){return $('#f_opt').parent().attr('fuid');},
-                                                webaction:14},function(){socialLoading.hide(0,function(){
-                                                    checkIfEmpty();
-                                                    initList();    
-                                                });
-                                                },function(r){
-                                                            if(r==-1){
-                                                                $('#f_group_wrapper').html('oops, try again later.').fadeIn(200)}
-                                                            else{
-                                                                $('#f_group_wrapper').html(r).fadeIn(200);
-                                                            }
-                                                            showSocial = true;
-                                                });
-                                            }); 
-                                        });break;
-                                case 1:var fuid = $('#f_opt').parent().attr('fuid');
-                                        $('#f_group_wrapper').hide(0,function(){
-                                            makeSocialAjaxCall('get','view/f_friends.php',{
-                                                fuid:fuid,
-                                                ftype:0},
-                                            function(resp){
-                                                $('#f_group_wrapper').html(resp).fadeIn(200);
-                                                },function(){});
-                                        });
+                                case 0:
+                                    $('#f_follow_wrapper').fadeOut(200,function(){$('#f_group_wrapper').fadeIn(200);});break;
+                                case 1:
+                                    $('#f_group_wrapper').hide(200,function(){
+                                        $('#f_follow_wrapper').fadeIn(200);
+                                    });
                                     break;
                             }
                         }
     });
 });
 function checkIfEmpty(){
-    if($('#f_group_wrapper').html()==''){
-        $('#f_group_wrapper').html('No task shared by this user.');
+    if($('#f_group_wrapper,#f_follow_wrapper').html()==''){
+        $('#f_group_wrapper,#f_follow_wrapper').html('Oops, empty.');
         return true;
     }
     return false;
@@ -66,8 +52,6 @@ function initList(){
                                     var fuid = $(this).attr('uid');
                                     getUserLists(fuid);
                                 });
-                                var myuid = $('#uid','#cache').html();
-                                $('.friend_image_s[uid='+myuid+']').unbind('click');
                             });
                         });
                     });
@@ -83,9 +67,8 @@ function initList(){
         getFightoList(tid,$(this).parent(),function(){
             $('.friend_image_ss').click(function(){
         var fuid = $(this).attr("uid");
-        if(myuid!=fuid){
-            getUserLists(fuid);
-        }
+        getUserLists(fuid);
+        
     });
         })
     });
