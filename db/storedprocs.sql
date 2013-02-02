@@ -546,12 +546,18 @@ IN mytid int
 ) 
 BEGIN
 DECLARE exist BOOLEAN;
+DECLARE tuid INTEGER;
+SET time_zone = "+00:00";
 SELECT (COUNT(expid)>0) INTO @exist FROM
 EXP WHERE uid = myuid
 AND tid = mytid;
 IF(@exist = FALSE) THEN
   INSERT INTO EXP (uid, tid)
   VALUES(myuid, mytid);
+  SELECT uid INTO @tuid FROM TASK
+  WHERE tid = mytid;
+  INSERT INTO EVENT (uid1, uid2, tid)
+  VALUES(myuid, @tuid, mytid);
   SELECT 1 AS status;
 ELSE
   SELECT -1 AS status;
