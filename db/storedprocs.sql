@@ -556,8 +556,8 @@ IF(@exist = FALSE) THEN
   VALUES(myuid, mytid);
   SELECT uid INTO @tuid FROM TASK
   WHERE tid = mytid;
-  INSERT INTO EVENT (uid1, uid2, tid)
-  VALUES(myuid, @tuid, mytid);
+  INSERT INTO EVENT (eventtype, uid1, uid2, tid)
+  VALUES(2, myuid, @tuid, mytid);
   SELECT 1 AS status;
 ELSE
   SELECT -1 AS status;
