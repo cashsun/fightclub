@@ -627,7 +627,7 @@ INSERT INTO COMMENT (uid, tid, content)
 VALUES(myuid, mytid, mycontent);
 SELECT LAST_INSERT_ID() INTO @cid;
 
-SELECT COMMENT.uid, COMMENT.tid, 
+SELECT TASK.uid, COMMENT.tid, 
 TASK.tgid INTO @tuid,@tid,@tgid
 FROM COMMENT LEFT JOIN TASK
 ON COMMENT.tid = TASK.tid
@@ -705,7 +705,7 @@ u2.firstname AS firstname2,
 u2.lastname AS lastname2,
 u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,
 TASK.isdone, TASK.privacy, TASK.deadline, EVENT.tstamp,
-COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,
+COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,EVENT.eventid,
 T_GROUP.title,T_GROUP.type, EXP.expid, e2.expid IS NOT NULL AS liked
 FROM EVENT
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
