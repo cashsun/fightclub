@@ -69,12 +69,17 @@ function getAllByFuid($fuid,$uid){
     return $user;
 }
 function echoFriendGroup($group){
-    $tasks = $group->getTasks();
-    if($tasks[0]->getTid()!=-1){
-        echo '<div original-title="'.$group->getTitle().'" class="f_group">'.$group->getTitle().'</div>';
-        foreach($tasks as $task){
-            echoFriendTask($task);
+    if($group->getTgid()==-1){
+        echo 'oops, no result.';
+    }else{
+        $tasks = $group->getTasks();
+        if($tasks[0]->getTid()!=-1){
+            echo '<div original-title="'.$group->getTitle().'" class="f_group">'.$group->getTitle().'</div>';
+            foreach($tasks as $task){
+                echoFriendTask($task);
+            }
         }
+    
     }
 }
 function echoFriendTask(Task $task){

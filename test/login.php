@@ -1,6 +1,5 @@
 <?php
     session_start();
-    include_once '../header.php';
     include_once '../db/DBadapter.php';
 ?>
 <body>
@@ -36,5 +35,5 @@
     <meta http-equiv="refresh" content="0; URL=../index.php">
   </div>
 </body>
-</html>
+
 

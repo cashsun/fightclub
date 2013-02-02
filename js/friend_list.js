@@ -7,14 +7,18 @@ $(document).ready(function(){
                                                 ftype:0},
                                             function(resp){
                                                 $('#f_follow_wrapper').html(resp);
-                                                },function(){});
+                                                },function(){
+                                                    checkIfEmpty($('#f_follow_wrapper'));
+                                                });
     $('.f_toggle').toggleSwitch({
 			highlight: false,
 			width: 25,
                         callback:function(i){
                             switch(i){
                                 case 0:
-                                    $('#f_follow_wrapper').fadeOut(200,function(){$('#f_group_wrapper').fadeIn(200);});break;
+                                    $('#f_follow_wrapper').fadeOut(200,function(){$('#f_group_wrapper').fadeIn(200);});
+                                    checkIfEmpty($('#f_group_wrapper'));
+                                    break;
                                 case 1:
                                     $('#f_group_wrapper').hide(200,function(){
                                         $('#f_follow_wrapper').fadeIn(200);
@@ -24,13 +28,12 @@ $(document).ready(function(){
                         }
     });
 });
-function checkIfEmpty(){
-    if($('#f_group_wrapper,#f_follow_wrapper').html()==''){
-        $('#f_group_wrapper,#f_follow_wrapper').html('Oops, empty.');
-        return true;
+function checkIfEmpty(target){
+    if(target.html()==''){
+        target.html('oops, no result.');
     }
-    return false;
 }
+
 var comtBtns;
 function initList(){
     comtBtns = $('.comment_btn');
@@ -64,7 +67,8 @@ function initList(){
     });
     $('.f_task_texp').click(function(){
         var tid = $(this).attr("tid");
-        getFightoList(tid,$(this).parent(),function(){
+        var target = $(this).parent();
+        getFightoList(tid,target,function(){
             $('.friend_image_ss').click(function(){
         var fuid = $(this).attr("uid");
         getUserLists(fuid);
