@@ -229,8 +229,7 @@ cursor: pointer;background: url('../image/button_add.png') no-repeat center cent
     background-image: url('../image/checkbox_checked.png');
 }
 .isdone_checkbox{
-    cursor:pointer;
-    opacity:0;
+    cursor:pointer
 }
 .highlight{
     background-color: #ff4545;

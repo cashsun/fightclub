@@ -32,7 +32,7 @@ function initTasks(){
                 },
                 handle:'.handle'
     });
-    $('.texp').tipsy({gravity:'s',fade:false,offset:-10}).unbind('click').click(function(){
+    $('.texp').unbind('click').click(function(){
         var tid = $(this).attr("mytid");
         var target = $(this).parent();
         getFightoList(tid,target);
@@ -56,7 +56,7 @@ function initTasks(){
                 commentMain.attr('tid',-1);
             }
         });
-    }).tipsy({gravity:'s',fade:false,offset:-10});
+    });
     activeDeletes();
     initIsDone();
     if(!$("#u_g_dialog").dialog( "isOpen" )){$('#input_task').val('').focus();}
@@ -67,18 +67,17 @@ function updateTorder(){
     var current_tgid = $('#tgid').html();
     var task_order = '';
     var comma = ',';
-    var visibleTasksClone = $('#tasks_sortable li').clone(true,true);
+    visibleTasks = $('#tasks_sortable li');
     
     var task;
-    for(var i=0;i<visibleTasksClone.length;i++){
-        if(i==visibleTasksClone.length-1){
+    for(var i=0;i<visibleTasks.length;i++){
+        if(i==visibleTasks.length-1){
             comma = '';
         }
-        task = visibleTasksClone.eq(i);
-        alert(task.find('input').is(':checked'));
+        task = visibleTasks.eq(i);
         task_order +=task.attr('tid')+comma;
     }
-    $('#'+current_tgid,'#cache').html(visibleTasksClone);
+    $('#'+current_tgid,'#cache').html(visibleTasks.clone(true,true));
     makeAjaxCall('post',{
         tgid:current_tgid,
         t_order:task_order,webaction:7},function(){});
@@ -114,7 +113,8 @@ function initTaskGroups(isFromClick){
         $('.tg_title_text').removeClass('tg_text_selected');
         $(this).addClass('tg_text_selected').parent().addClass('selected');
         $('#tasks_sortable').fadeOut(200, function(){
-            var task_content = $(tgid,'#cache').html();
+            var targetCacheGroup = $(tgid,'#cache');
+            var task_content = $('li',targetCacheGroup).clone(true).show(0);
              $(this).html(task_content);
              checkIfDoneMulti();
             $(this).fadeIn(200, function(){
@@ -131,7 +131,8 @@ function initTaskGroups(isFromClick){
 function checkIfDoneSingle(item){
     var opac = 1;
     var text_dec = 'none';
-    if($(item).is(':checked')){
+    var attr = $(item).attr('checked');
+    if($(item).is(':checked')||(typeof attr !== 'undefined' && attr !== false)){
         opac = 0.4;
         text_dec = 'line-through';
         if($(item).parent().hasClass('isDoneNonIE8')){
@@ -158,7 +159,7 @@ function positionIsDone(item){
         target.slideUp(300,function(){
             target.remove();
             $('#tasks_sortable').append(clone);
-            clone.children().find('input').attr('CHECKED','CHECKED');
+            clone.children().find('input').attr('checked','checked');
             clone.slideDown(300,function(){
                 updateTorder();
                 checkIfDoneMulti();
@@ -555,8 +556,9 @@ $(document).ready(function(){
     $('#deadline_time').timepicker({'timeFormat': 'H:i:s'});
     initTaskGroups(false);
     checkIfGroupExists();
-    if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
+    if(($.browser.msie && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
         $('.isDone').addClass('isDoneNonIE8');
+        $('.isdone_checkbox').css('opacity',0);
     }
     $('#t_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
