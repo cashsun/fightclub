@@ -644,6 +644,15 @@ $(document).ready(function(){
                     },function(){});
                     })
                 }
+            }else if($('#comment_input').is(':focus')){
+                var content = commentMain.find('textarea').val();
+                if($.trim(content)!=''){
+                    commentMain.find('textarea').val('');
+                    var tid = commentMain.attr('tid');
+                     postCreateComment(tid,content,function(r){
+                         getComments(tid,0,commentDialog,function(){});
+                     });
+                }   
             }
         }
     });
