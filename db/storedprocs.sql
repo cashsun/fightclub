@@ -279,26 +279,27 @@ IN myuid int
 ) 
 BEGIN
 SET time_zone = "+00:00";
-SELECT TASK.tid, TASK.otid, utg.uid, utg.username,
-utg.firstname, utg.lastname, utg.email, TASK.content,
-COUNT(EXP.expid) AS texp, TASK.tstamp, TASK.deadline, TASK.isdone,utg.t_order,
-utg.tgid, utg.priority, utg.title, utg.exp, utg.avatar, utg.type, TASK.privacy, 
-CONCAT(CONCAT(IFNULL(TASK.tid, 'NULL'), ' '),utg.tgid) AS pk
-FROM
+SELECT TASK.tid, TASK.otid, myuid, USER.username,
+USER.firstname, USER.lastname, USER.email, TASK.content,
+expc.texp, TASK.tstamp, TASK.deadline, TASK.isdone, T_GROUP.t_order,
+T_GROUP.tgid, T_GROUP.priority, T_GROUP.title, USER.exp, USER.avatar,
+T_GROUP.type, TASK.privacy, commentc.ccount
+FROM USER
+LEFT JOIN T_GROUP ON T_GROUP.uid = USER.uid
+LEFT JOIN TASK ON T_GROUP.tgid = TASK.tgid
+LEFT JOIN 
 (
-  SELECT T_GROUP.tgid, T_GROUP.priority, T_GROUP.type,
-  T_GROUP.title, IFNULL(T_GROUP.t_order,"") AS t_order,USER.uid, USER.username,
-  USER.firstname, USER.lastname, USER.email, USER.exp, USER.avatar
-  FROM T_GROUP RIGHT JOIN USER
-  ON T_GROUP.uid = USER.uid
-  WHERE USER.uid = myuid
-) utg
-LEFT JOIN TASK
-ON
-TASK.tgid = utg.tgid
-LEFT JOIN EXP
-ON TASK.tid = EXP.tid
-GROUP BY pk
+  SELECT expid, tid, COUNT(expid) AS texp FROM EXP
+  GROUP BY tid
+) expc
+on TASK.tid = expc.tid
+LEFT JOIN
+(
+  SELECT commentid, tid, COUNT(commentid) AS ccount FROM COMMENT
+  GROUP BY tid
+) commentc
+on TASK.tid = commentc.tid
+WHERE USER.uid = myuid
 ORDER BY priority DESC,tgid DESC, tstamp DESC;
 END // 
 DELIMITER ;
