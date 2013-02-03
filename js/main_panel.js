@@ -144,24 +144,26 @@ function checkIfDoneSingle(item){
 }
 function positionIsDone(item){
     var target = $(item).parent().parent();
-    var clone = target.clone(true).hide();
+    var clone = target.clone(true,true).hide();
     if($(item).is(':checked')){
         target.slideUp(300,function(){
-            $('#tasks_sortable').append(clone);
-            clone.slideDown(300,function(){
-                checkIfDoneMulti();
-                updateTorder();
-            })
             target.remove();
-        });
-    }else{
-        target.slideUp(300,function(){
-            $('#tasks_sortable').prepend(clone);
+            $('#tasks_sortable').append(clone);
+            clone.children().find('input').attr('checked',true);
             checkIfDoneMulti();
             clone.slideDown(300,function(){
                 updateTorder();
             })
-            target.remove()
+        });
+    }else{
+        target.slideUp(300,function(){
+            target.remove();
+            $('#tasks_sortable').prepend(clone);
+            clone.children().find('input').attr('checked',false);
+            checkIfDoneMulti();
+            clone.slideDown(300,function(){
+                updateTorder();
+            })
         });
     }
     
