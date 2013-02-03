@@ -7,7 +7,7 @@ function getFightoList(tid,target,callback){
         },function(){showSocial = true;
             fightolist.slideDown(200,function(){
                 loading_image.hide(0,function(){
-                    $('.friend_image_ss').tipsy({fade:false,gravity:"s"});
+                    $('.friend_image_ss',fightolist).tipsy({fade:false,gravity:"s"});
                     if(callback!=null){callback();}
                 })
             })});
@@ -404,7 +404,6 @@ function showGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?200:0);
         var width = windowDiv.width();
         showGroup = true;
-        showSocial = false;
         $('.dialog').dialog('option','width',500);
         $('#panel_group').removeClass('hidden');
         $('#task_wrapper').animate({width:width-310},animaTime);
@@ -422,7 +421,6 @@ function hideGroupPanel(isFromClick){
         var animaTime = (isFromClick==true?200:0)
         var width = windowDiv.width();
         showGroup = false;
-        showSocial = false;
         $('.dialog').dialog('option','width',width-25);
         $('#panel_task').animate({marginLeft:0,width:width},animaTime,function(){
             $('#panel_group').addClass('hidden');
@@ -458,7 +456,7 @@ function postDeleteComment(cid,callback){
 function getComments(tid,lastcid,target,callback){
     makeSocialAjaxCall('get','view/comments.php',{tid:tid,lastcid:lastcid},function(resp){
                         target.html(resp);    
-                        $('.comment_delete').click(function(){
+                        $('.comment_delete').unbind('click').click(function(){
                             var cid = $(this).attr('cid');
                             if(confirm('Delete this comment?')){   
                                 postDeleteComment(cid,function(){
@@ -478,11 +476,10 @@ function initCommentBox(){
     commentMain.find('button').button().unbind('click').click(function(){
         var content = commentMain.find('textarea').val();
         if($.trim(content)!=''){
+            commentMain.find('textarea').val('');
             var tid = commentMain.attr('tid');
              postCreateComment(tid,content,function(r){
-                 getComments(tid,0,commentDialog,function(){
-                     commentMain.find('textarea').val('');
-                 });
+                 getComments(tid,0,commentDialog,function(){});
              });
         }
     });
@@ -493,6 +490,7 @@ var commentDialog;
 var searchText;
 var visibleTasks;
 var myuid;
+var fightolist;
 $(document).ready(function(){
     showGroup = true;
     $('#panel_task').click(function(){

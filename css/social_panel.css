@@ -117,6 +117,9 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     margin-top: 50px;
     color: #8d8f90;
     font-size: 11px;
+    margin-left: 0;
+    width: 100%;
+    overflow-y: auto
 }
 .f_group{
     font-size: 13px;
@@ -130,7 +133,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     white-space: nowrap;
     text-overflow:ellipsis;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 20px;
     background: url('../image/f_group_back.png') no-repeat center center;
     color: #fff;
     margin-bottom: 5px;
@@ -139,7 +142,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
 .f_task{
     position: relative;
     background-color: #eaeaea;
-    width:auto;
+    width:90%;
     height: 32px;
     margin-bottom: 10px;
     margin-left: 20px;
@@ -152,7 +155,6 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     left:32px;
     height: 18px;
     margin-top: 9px;
-    padding-left: 10px;
     padding-bottom: 5px;
     color: #8d8f90;
     white-space: nowrap;
@@ -181,7 +183,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
 .fighto{
     position: absolute;
     right: 0;
-    width: 32px;
+    width: 25px;
     height: 32px;
     cursor: pointer
 }
@@ -208,7 +210,7 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     width: 90%;
     margin-left:6%; 
     height: auto;
-    margin-top: 10px
+    margin-top: 10px;
 }
 #comment_input{
     width: 200px;
@@ -230,10 +232,17 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
     overflow: hidden;
     font-family: "Microsoft Yahei","Helvetica","Arial" ! important
 }
-.comment_tstamp{
+.comment_tstamp,.news_tstamp{
     color: #8d8f90;
     font-size: 11px;
     width: 190px
+}
+#news_wrapper{
+    padding-bottom: 80px
+}
+.news_tstamp{
+    margin-left: 107px;
+    margin-bottom: -17px
 }
 .comment_btn{
     background: url('../image/comment.png') no-repeat center center;
@@ -262,14 +271,28 @@ z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0
 .news_comment_wapper{
     margin-left: 20px
 }
+.news_comment_wapper .comment_content{
+    margin-bottom: 8px
+}
+.news_comment_wapper .f_fullname{
+    font-size: 1.5em
+}
 .news_title{
     height:60px;
-    font-size: 0.8em
+    font-size: 0.7em;
+    color:#8d8f90;
+    margin-top: 20px
 }
 .news_title .friend_image_ss,.news .f_fullname{
     float: left
 }
+.news_fighto{
+    float:left;
+    width: 16px;
+    height: 16px
+}
 .news_box{
     font-family: "Microsoft Yahei","Helvetica","Arial" ! important;
-    margin-bottom: 40px
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eaeaea
 }

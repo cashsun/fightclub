@@ -711,7 +711,7 @@ u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,
 TASK.isdone, TASK.privacy, TASK.deadline, EVENT.tstamp,
 COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,EVENT.eventid,
 T_GROUP.title,T_GROUP.type, e2.expid IS NOT NULL AS isliked,
-e3c.texp, FRIEND.fuid
+IFNULL(e3c.texp,0) AS texp, FRIEND.fuid
 FROM EVENT
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
 LEFT JOIN USER u2 ON EVENT.uid2 = u2.uid

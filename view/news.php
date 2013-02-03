@@ -14,8 +14,15 @@
                       echoCommentEvent($row);
                       break;
                   case EventTypes::AT:break;
-                  case EventTypes::FIGHTO: break;
-                  case EventTypes::PUBLISH:break;
+                  case EventTypes::FIGHTO: 
+                      echoFightoEvent($row);
+                      break;
+                  case EventTypes::FOLLOW:
+                      echoFollowEvent($row);
+                      break;
+                  case EventTypes::PUBLISH:
+                      echoPublishEvent($row);
+                      break;
                   case EventTypes::UPDATE_TASK:break;
                   case EventTypes::COMPLETE_TASK:break;
                   case EventTypes::LEVEL_UP:break;
@@ -32,27 +39,82 @@
 function echoCommentEvent($row){
     echo '<div class="news_box">';
         echo '<div class="news_title">';
-            echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> commented on '.$row['firstname2'].' '.$row['lastname2'].
+            echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> commented on '.$row['firstname2'].' '.$row['lastname2'].
                     '\'s task';
         echo '</div> ';
         echo '<div class="news_content">';
-            echo '<div class="f_task roundcorner"><div class="f_task_text">'.$row['tcontent'].'</div></div>';
+            echoTask($row);
             echoComment($row);
         echo '</div>';
     echo '</div>';
 }
 function echoAtEvent($row){
-    
+
 }
 function echoFightoEvent($row){
-    
+    echo '<div class="news_box">';
+        echo '<div class="news_title">';
+            echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> <div class="news_fighto liked"></div> '.$row['firstname2'].' '.$row['lastname2'].
+                    '\'s task';
+        echo '</div> ';
+        echo '<div class="news_content">';
+                echo '<div class="news_comment_wapper">';
+                    echo '<div class="comment_box">';
+                        echo '<img uid='.$row['uid2'].' class="friend_image_s" src="image/'.$row['avatar2'].'.png" alt=""/>';
+                        echo '<div class="f_username">'.$row['username2'].'</div>';
+                        echo '<div class="f_fullname">'.$row['firstname2'].' '.$row['lastname2'].'</div>';
+                    echo '</div>';
+                echo '</div>';
+            echoTask($row);
+        echo '</div>';
+        echo '<div class="news_tstamp">'.$row['tstamp'].'</div>';
+    echo '</div>';
+}
+function echoFollowEvent($row){
+    echo '<div class="news_box">';
+        echo '<div class="news_title">';
+            echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> is now following ';
+        echo '</div> ';
+        echo '<div class="news_content">';
+                echo '<div class="news_comment_wapper">';
+                    echo '<div class="comment_box">';
+                        echo '<img uid='.$row['uid2'].' class="friend_image_s" src="image/'.$row['avatar2'].'.png" alt=""/>';
+                        echo '<div class="f_username">'.$row['username2'].'</div>';
+                        echo '<div class="f_fullname">'.$row['firstname2'].' '.$row['lastname2'].'</div>';
+                    echo '</div>';
+                echo '</div>';
+        echo '</div>';
+        echo '<div class="news_tstamp">'.$row['tstamp'].'</div>';
+    echo '</div>';
 }
 function echoPublishEvent($row){
-    
+    if($row['privacy']==1){
+        if(isset($row['fuid'])){
+            echo '<div class="news_box">';
+                echo '<div class="news_title">';
+                    echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> published a new task!';
+                echo '</div> ';
+                echo '<div class="news_content">';
+                    echoTask($row);
+                echo '</div>';
+            echo '</div>';
+        }
+    }else{
+        echo '<div class="news_box">';
+            echo '<div class="news_title">';
+                echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> published a new task!';
+            echo '</div> ';
+            echo '<div class="news_content">';
+                echoTask($row);
+            echo '</div>';
+        echo '</div>';
+    }
+
 }
 function echoUpdateEvent($row){
     
 }
+/* utility */
 function echoComment($row){
     echo '<div class="news_comment_wapper">';
         echo '<div class="comment_box">';
@@ -66,4 +128,13 @@ function echoComment($row){
         echo '</div>';
     echo '</div>';
 }
+function echoTask($row){
+    $isliked = ' like';
+    if($row['isliked']==1){
+        $isliked = ' liked';
+    }
+    $str = htmlspecialchars($row['tcontent']);
+    echo '<div class="f_task roundcorner"><div tid="'.$row['tid'].'" class="comment_btn"></div><div class="f_task_text" title="'.$str.'">'.$str.'</div><div tid="'.$row['tid'].'" class="f_task_texp">'.$row['texp'].'</div><div tid="'.$row['tid'].'" class="fighto'.$isliked.'"></div></div>';
+}
 ?>
+<script type="text/javascript" src="js/news.js"></script>

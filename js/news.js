@@ -1,42 +1,14 @@
 $(document).ready(function(){
-    initList();
-    initBtns();
-    var fuid = $('#f_opt').parent().attr('fuid');
-    makeSocialAjaxCall('get','view/f_friends.php',{
-                                                fuid:fuid,
-                                                ftype:0},
-                                            function(resp){
-                                                $('#f_follow_wrapper').html(resp);
-                                                },function(){
-                                                    checkIfEmpty($('#f_follow_wrapper'));
-                                                });
-    $('.f_toggle').toggleSwitch({
-			highlight: false,
-			width: 25,
-                        callback:function(i){
-                            switch(i){
-                                case 0:
-                                    $('#f_follow_wrapper').fadeOut(200,function(){$('#f_group_wrapper').fadeIn(200);});
-                                    checkIfEmpty($('#f_group_wrapper'));
-                                    break;
-                                case 1:
-                                    $('#f_group_wrapper').fadeOut(200,function(){
-                                        $('#f_follow_wrapper').fadeIn(200);
-                                    });
-                                    break;
-                            }
-                        }
+    initNewsList();
+    $('.friend_image_s,.friend_image_ss').click(function(){
+        var fuid = $(this).attr('uid');
+        getUserLists(fuid,function(){
+            $('#social_tabs').tabs('option','active',0);
+        });
     });
 });
-function checkIfEmpty(target){
-    if(target.html()==''){
-        target.html('oops, no result.');
-    }
-}
-
-var comtBtns;
-function initList(){
-    comtBtns = $('.comment_btn');
+function initNewsList(){
+    comtBtns = $('.comment_btn','#news_wrapper');
     comtBtns.click(function(){
         comtBtns.removeClass('comment_btn_c')
         var target = $(this);
@@ -53,7 +25,9 @@ function initList(){
                             commentMain.slideDown(200,function(){
                                 $('.friend_image_s').click(function(){
                                     var fuid = $(this).attr('uid');
-                                    getUserLists(fuid);
+                                    getUserLists(fuid,function(){
+                                        $('#social_tabs').tabs('option','active',0);
+                                    });
                                 });
                             });
                         });
@@ -69,9 +43,11 @@ function initList(){
         var tid = $(this).attr("tid");
         var target = $(this).parent();
         getFightoList(tid,target,function(){
-            $('.friend_image_ss').click(function(){
+            $('.friend_image_ss',fightolist).click(function(){
                 var fuid = $(this).attr("uid");
-                getUserLists(fuid);
+                getUserLists(fuid,function(){
+                    $('#social_tabs').tabs('option','active',0);
+                });
             });
         })
     });
@@ -99,8 +75,19 @@ function initList(){
             });
         }
     }).tipsy({fallback:'FIGHTO!',gravity:'s',fade:false,offset:0});
-
-    $('.f_group').tipsy({gravity:'s',fade:false,offset:0});
+    $('.comment_delete').unbind('click').click(function(){
+        
+                            var button = $(this);
+                            var cid = button.attr('cid');
+                            if(confirm('Delete this comment?')){   
+                                postDeleteComment(cid,function(){
+                                    var tid = commentMain.attr('tid');
+                                    getComments(tid,0,commentDialog,function(){
+                                        commentMain.find('textarea').val('');
+                                    });
+                                    button.parent().parent().remove();
+                                });
+                            }
+    });
 }
-
 
