@@ -18,7 +18,7 @@ function echoTask(Task $task){
         case 1:$ribbon=' shared_f';break;
         case 2:$ribbon=' shared_g';break;
     }
-    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner'.$ribbon.'"><div class="handle"></div><div mytid="'.$task->getTid().'" original-title="❤" class="texp">'.$task->getTExp().'</div><div original-title="comment" class="comment"></div>
+    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner'.$ribbon.'"><div class="handle"></div><div mytid="'.$task->getTid().'" original-title="❤" class="texp">'.$task->getTExp().'</div><div original-title="comment" class="comment">'.$task->getCcount().'</div>
       <div class="isDone"><input class="isdone_checkbox" type="checkbox" '.$option.'/></div><div dead_date="'.$task->getDate().'" dead_time="'.$task->getTime().'" class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
 }
 function echoSortedTasks(TaskGroup $group){
@@ -177,7 +177,7 @@ function getAllByUid($uid){
             echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
             
         ?>
-        <div id="uid"><?php echo $user->getUid() ?></div>
+        <div id="uid"><?php echo $_SESSION['uid']; ?></div>
     </div>
     <div id="g_dialog" class="dialog" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
         priority:

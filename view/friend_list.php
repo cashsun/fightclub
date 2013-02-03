@@ -89,10 +89,10 @@ function echoFriendTask(Task $task){
         $isliked = ' liked';
     }
     if($task->isDone()==1){
-        $isDone = 'done';
+        $isDone = 'f_task_done';
     }
     $str = htmlspecialchars($task->getContent());
-    echo '<div class="f_task roundcorner"><div tid="'.$task->getTid().'" class="comment_btn"></div><div class="f_task_text" title="'.$str.'">'.$str.'</div><div tid="'.$task->getTid().'" class="f_task_texp">'.$task->getTexp().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
+    echo '<div class="f_task roundcorner "><div tid="'.$task->getTid().'" class="comment_btn"></div><div class="f_task_text '.$isDone.'" title="'.$str.'">'.$str.'</div><div tid="'.$task->getTid().'" class="f_task_texp">'.$task->getTexp().'</div><div tid="'.$task->getTid().'" class="fighto'.$isliked.'"></div></div>';
 }
 ?>
 <script type="text/javascript" src="js/friend_list.js"></script>

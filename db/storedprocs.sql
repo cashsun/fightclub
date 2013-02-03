@@ -279,7 +279,7 @@ IN myuid int
 ) 
 BEGIN
 SET time_zone = "+00:00";
-SELECT TASK.tid, TASK.otid, myuid, USER.username,
+SELECT TASK.tid, TASK.otid, USER.uid, USER.username,
 USER.firstname, USER.lastname, USER.email, TASK.content,
 expc.texp, TASK.tstamp, TASK.deadline, TASK.isdone, T_GROUP.t_order,
 T_GROUP.tgid, T_GROUP.priority, T_GROUP.title, USER.exp, USER.avatar,

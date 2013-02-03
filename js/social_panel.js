@@ -14,7 +14,7 @@ $(document).ready(function(){
     $('#club_button').click(function(){  
         if(!showSocial){
             $('#panel_social').animate({right: 0},300,function(){
-                if($('#news_wrapper').html()==''){
+                if($('#friends_wrapper').html()==''){
                     $('li[aria-controls=tabs-1]').click();
                 }
                 showSocial = true;
@@ -69,7 +69,7 @@ function getNews(){
 function getUserLists(fuid,callback){
     $('#friends_wrapper').hide(0,function(){
         makeSocialAjaxCall('get','view/friend_list.php',{fuid:fuid},function(resp){
-            $('#friends_wrapper').html(resp).fadeIn(200);
+            $('#friends_wrapper').html(resp).show('slide',{direction:'right'},200);
             },function(){showSocial = true});
     });
     if(callback!=null){callback();}
