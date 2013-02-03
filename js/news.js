@@ -75,5 +75,18 @@ function initNewsList(){
             });
         }
     }).tipsy({fallback:'FIGHTO!',gravity:'s',fade:false,offset:0});
+    $('.comment_delete').click(function(){
+                            var button = $(this);
+                            var cid = button.attr('cid');
+                            if(confirm('Delete this comment?')){   
+                                postDeleteComment(cid,function(){
+                                    var tid = commentMain.attr('tid');
+                                    getComments(tid,0,commentDialog,function(){
+                                        commentMain.find('textarea').val('');
+                                    });
+                                    button.parent().parent().remove();
+                                });
+                            }
+    });
 }
 

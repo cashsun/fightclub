@@ -70,9 +70,9 @@ function initList(){
         var target = $(this).parent();
         getFightoList(tid,target,function(){
             $('.friend_image_ss').click(function(){
-            var fuid = $(this).attr("uid");
-            getUserLists(fuid);
-    });
+                var fuid = $(this).attr("uid");
+                getUserLists(fuid);
+            });
         })
     });
     
