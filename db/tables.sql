@@ -134,7 +134,7 @@ ALTER TABLE EVENT add cid int;
 ALTER TABLE EVENT change actionid eventtype int;
 
 
-alter table comment drop foreign key fk_comment_uid;
-alter table comment drop foreign key fk_comment_tid;
+alter table COMMENT drop foreign key fk_comment_uid;
+alter table COMMENT drop foreign key fk_comment_tid;
 ALTER TABLE COMMENT ADD CONSTRAINT fk_comment_uid FOREIGN KEY (uid) REFERENCES USER(uid) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE COMMENT ADD CONSTRAINT fk_comment_tid FOREIGN KEY (tid) REFERENCES TASK(tid) ON DELETE CASCADE ON UPDATE CASCADE;
