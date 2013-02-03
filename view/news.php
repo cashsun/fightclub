@@ -37,6 +37,7 @@
     }
     
 function echoCommentEvent($row){
+    if($row['privacy']!=0){
     echo '<div class="news_box">';
         echo '<div class="news_title">';
             echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> commented on '.$row['firstname2'].' '.$row['lastname2'].
@@ -47,6 +48,7 @@ function echoCommentEvent($row){
             echoComment($row);
         echo '</div>';
     echo '</div>';
+    }
 }
 function echoAtEvent($row){
 
