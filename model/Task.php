@@ -12,6 +12,7 @@ class Task {
     private $privacy = 0;
     private $deadline = '0000-00-00 00:00:00';
     private $isliked = 0;
+    private $ccount = 0;
     
     function __construct($taskInfo) {
         if(isset($taskInfo['uid']))
@@ -36,6 +37,8 @@ class Task {
             $this->deadline = $taskInfo['deadline'];
         if(isset($taskInfo['isliked']))
             $this->isliked = $taskInfo['isliked'];
+        if(isset($taskInfo['ccount']))
+            $this->ccount = $taskInfo['ccount'];
     }
     
     
@@ -86,6 +89,9 @@ class Task {
     
     function isLiked(){
         return ($this->isliked==0)?false:true;
+    }
+    function getCcount() {
+        return $this->ccount;
     }
 }
 ?>

@@ -32,12 +32,12 @@ function initTasks(){
                 },
                 handle:'.handle'
     });
-    $('.texp').tipsy({gravity:'s',fade:false,offset:-10}).click(function(){
+    $('.texp').tipsy({gravity:'s',fade:false,offset:-10}).unbind('click').click(function(){
         var tid = $(this).attr("mytid");
         var target = $(this).parent();
         getFightoList(tid,target);
     });
-    $('.comment').click(function(){
+    $('.comment').unbind('click').click(function(){
         var target = $(this);
         commentMain.slideUp(200,function(){
             var ctid = target.parent().attr('tid');
@@ -101,7 +101,7 @@ function initIsDone(){
     });
 }
 function initTaskGroups(isFromClick){
-    $('.tg_title_text').click(function(){
+    $('.tg_title_text').unbind('click').click(function(){
         $('#cache').prepend(commentMain);
         
         var index = $('.tg_title_text').index(this);
@@ -175,7 +175,7 @@ function checkIfDoneMulti(){
     }
 }
 function activeDeletes(){
-    $('.delete_task').click(function(){
+    $('.delete_task').unbind('click').click(function(){
         if(confirm ("Delete this task?")){
             var tid = $(this).parent().attr('tid');
             postDeleteTask(tid);
