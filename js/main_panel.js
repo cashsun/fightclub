@@ -7,7 +7,7 @@ function getFightoList(tid,target,callback){
         },function(){showSocial = true;
             fightolist.slideDown(200,function(){
                 loading_image.hide(0,function(){
-                    $('.friend_image_ss').tipsy({fade:false,gravity:"s"});
+                    $('.friend_image_ss',fightolist).tipsy({fade:false,gravity:"s"});
                     if(callback!=null){callback();}
                 })
             })});
@@ -490,6 +490,7 @@ var commentDialog;
 var searchText;
 var visibleTasks;
 var myuid;
+var fightolist;
 $(document).ready(function(){
     showGroup = true;
     $('#panel_task').click(function(){

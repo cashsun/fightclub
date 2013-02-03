@@ -14,7 +14,7 @@ $(document).ready(function(){
     $('#club_button').click(function(){  
         if(!showSocial){
             $('#panel_social').animate({right: 0},300,function(){
-                if($('#friends_wrapper').html()==''){  
+                if($('#news_wrapper').html()==''){
                     $('li[aria-controls=tabs-1]').click();
                 }
                 showSocial = true;
@@ -66,15 +66,15 @@ function getNews(){
                 },function(){showSocial = true});
         });
 }
-function getUserLists(fuid){
-        $('#friends_wrapper').hide(0,function(){
-            makeSocialAjaxCall('get','view/friend_list.php',{fuid:fuid},function(resp){
-                $('#friends_wrapper').html(resp).fadeIn(200);
-                },function(){showSocial = true});
-        });
+function getUserLists(fuid,callback){
+    $('#friends_wrapper').hide(0,function(){
+        makeSocialAjaxCall('get','view/friend_list.php',{fuid:fuid},function(resp){
+            $('#friends_wrapper').html(resp).fadeIn(200);
+            },function(){showSocial = true});
+    });
+    if(callback!=null){callback();}
 }
 function makeSocialAjaxCall(type,url,param,successCallback,callback,isForComments){
-
     socialLoading.fadeIn(0,function(){
         if(!isForComments){
             $('#cache').prepend(commentMain);

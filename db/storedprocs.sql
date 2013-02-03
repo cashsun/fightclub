@@ -709,7 +709,7 @@ u2.lastname AS lastname2,
 u2.avatar AS avatar2, TASK.tid, TASK.content AS tcontent,
 TASK.isdone, TASK.privacy, TASK.deadline, EVENT.tstamp,
 COMMENT.content AS ccontent, EVENT.cid, EVENT.eventtype,EVENT.eventid,
-T_GROUP.title,T_GROUP.type, EXP.expid, e2.expid IS NOT NULL AS liked,
+T_GROUP.title,T_GROUP.type, EXP.expid, e2.expid IS NOT NULL AS isliked,
 IFNULL(e3.tid, CONCAT('NULL',EVENT.eventid)) AS pk, COUNT(e3.expid) AS texp
 FROM EVENT
 LEFT JOIN USER u1 ON EVENT.uid1 = u1.uid
@@ -724,6 +724,6 @@ AND myuid = e2.uid
 LEFT JOIN EXP e3 ON e3.expid = e2.expid
 WHERE EVENT.uid1 = myuid OR EVENT.uid2 = myuid
 GROUP BY pk
-ORDER BY EVENT.tstamp DESC LIMIT 30;
+ORDER BY EVENT.tstamp DESC LIMIT 50;
 END // 
 DELIMITER ;
