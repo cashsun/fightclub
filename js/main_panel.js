@@ -15,7 +15,7 @@ function getFightoList(tid,target,callback){
     });
 }
 function initTasks(){
-    $('.t_content_text').click(function(){
+    $('.t_content_text','#tasks_sortable').unbind('click').click(function(){
         $('#tid','#t_dialog').html($(this).parent().attr('tid'));
         $('#update_task').val(($(this).text()));
         var p = $(this).parent().attr('privacy');
@@ -67,16 +67,18 @@ function updateTorder(){
     var current_tgid = $('#tgid').html();
     var task_order = '';
     var comma = ',';
-    visibleTasks = $('#tasks_sortable li');
+    var visibleTasksClone = $('#tasks_sortable li').clone(true,true);
+    
     var task;
-    for(var i=0;i<visibleTasks.length;i++){
-        if(i==visibleTasks.length-1){
+    for(var i=0;i<visibleTasksClone.length;i++){
+        if(i==visibleTasksClone.length-1){
             comma = '';
         }
-        task = visibleTasks.eq(i);
+        task = visibleTasksClone.eq(i);
+        alert(task.find('input').is(':checked'));
         task_order +=task.attr('tid')+comma;
     }
-    $('#'+current_tgid,'#cache').html(visibleTasks.clone(true,true));
+    $('#'+current_tgid,'#cache').html(visibleTasksClone);
     makeAjaxCall('post',{
         tgid:current_tgid,
         t_order:task_order,webaction:7},function(){});
@@ -118,7 +120,6 @@ function initTaskGroups(isFromClick){
             $(this).fadeIn(200, function(){
                 visibleTasks = $('#tasks_sortable li');
                 initTasks();
-//                updateTorder();
             });
             resizeTaskPanel(isFromClick);
         });
@@ -133,7 +134,7 @@ function checkIfDoneSingle(item){
     if($(item).is(':checked')){
         opac = 0.4;
         text_dec = 'line-through';
-        if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
+        if($(item).parent().hasClass('isDoneNonIE8')){
             $(item).parent().addClass('checked');
         }
     }else{
@@ -142,32 +143,6 @@ function checkIfDoneSingle(item){
     $(item).parent().parent().css('opacity',opac);
     $(item).parent().siblings('.t_content_text').css('text-decoration',text_dec); 
 }
-function positionIsDone(item){
-    var target = $(item).parent().parent();
-    var clone = target.clone(true,true).hide();
-    if($(item).is(':checked')){
-        target.slideUp(300,function(){
-            target.remove();
-            $('#tasks_sortable').append(clone);
-            clone.children().find('input').attr('checked',true);
-            checkIfDoneMulti();
-            clone.slideDown(300,function(){
-                updateTorder();
-            })
-        });
-    }else{
-        target.slideUp(300,function(){
-            target.remove();
-            $('#tasks_sortable').prepend(clone);
-            clone.children().find('input').attr('checked',false);
-            checkIfDoneMulti();
-            clone.slideDown(300,function(){
-                updateTorder();
-            })
-        });
-    }
-    
-}
 function checkIfDoneMulti(){
     var tcheckboxes = $('input[type="checkbox"]','#tasks_sortable');
     var tcb = null;
@@ -175,6 +150,32 @@ function checkIfDoneMulti(){
         tcb = tcheckboxes.eq(i);
         checkIfDoneSingle(tcb);
     }
+}
+function positionIsDone(item){
+    var target = $(item).parent().parent();
+    var clone = target.clone(true,true).hide();
+    if($(item).is(':checked')){
+        target.slideUp(300,function(){
+            target.remove();
+            $('#tasks_sortable').append(clone);
+            clone.children().find('input').attr('CHECKED','CHECKED');
+            clone.slideDown(300,function(){
+                updateTorder();
+                checkIfDoneMulti();
+            })
+        });
+    }else{
+        target.slideUp(300,function(){
+            target.remove();
+            $('#tasks_sortable').prepend(clone);
+            clone.children().find('input').removeAttr('checked');
+            clone.slideDown(300,function(){
+                updateTorder();
+                checkIfDoneMulti();
+            })
+        });
+    }
+    
 }
 function activeDeletes(){
     $('.delete_task').unbind('click').click(function(){
