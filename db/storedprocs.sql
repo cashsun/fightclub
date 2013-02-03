@@ -632,8 +632,7 @@ SELECT TASK.uid, COMMENT.tid,
 TASK.tgid INTO @tuid,@tid,@tgid
 FROM COMMENT LEFT JOIN TASK
 ON COMMENT.tid = TASK.tid
-WHERE COMMENT.commentid = @cid; 
-SELECT 
+WHERE COMMENT.commentid = @cid;
 INSERT INTO EVENT(eventtype, uid1, uid2, cid, tid, tgid)
 VALUES(0, myuid, @tuid, @cid, @tid, @tgid);
 END // 
