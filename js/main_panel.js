@@ -456,7 +456,7 @@ function postDeleteComment(cid,callback){
 function getComments(tid,lastcid,target,callback){
     makeSocialAjaxCall('get','view/comments.php',{tid:tid,lastcid:lastcid},function(resp){
                         target.html(resp);    
-                        $('.comment_delete').click(function(){
+                        $('.comment_delete').unbind('click').click(function(){
                             var cid = $(this).attr('cid');
                             if(confirm('Delete this comment?')){   
                                 postDeleteComment(cid,function(){

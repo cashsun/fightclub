@@ -75,7 +75,8 @@ function initNewsList(){
             });
         }
     }).tipsy({fallback:'FIGHTO!',gravity:'s',fade:false,offset:0});
-    $('.comment_delete').click(function(){
+    $('.comment_delete').unbind('click').click(function(){
+        
                             var button = $(this);
                             var cid = button.attr('cid');
                             if(confirm('Delete this comment?')){   
