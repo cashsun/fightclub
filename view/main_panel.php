@@ -177,7 +177,7 @@ function getAllByUid($uid){
             echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
             
         ?>
-        <div id="uid"><?php echo $user->getUid() ?></div>
+        <div id="uid"><?php echo $_SESSION['uid']; ?></div>
     </div>
     <div id="g_dialog" class="dialog" title="Create New Group">name:<input type="text" class="input" id="input_group" maxlength="40"/><br/><br/>
         priority:
