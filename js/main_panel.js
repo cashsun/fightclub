@@ -134,9 +134,9 @@ function checkIfDoneSingle(item){
     if($(item).is(':checked')){
         opac = 0.4;
         text_dec = 'line-through';
-//        if($(item).parent().hasClass('isDoneNonIE8')){
-//            $(item).parent().addClass('checked');
-//        }
+        if($(item).parent().hasClass('isDoneNonIE8')){
+            $(item).parent().addClass('checked');
+        }
     }else{
         $(item).parent().removeClass('checked'); 
     }
@@ -204,9 +204,8 @@ function postCreateTask(content){
             content:content,
             webaction:0},
         function(){
-            var tgid = '#'+$('#tgid').html();
             var isNonIE8 = '';
-            if(($.browser.msie  && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
+            if(($.browser.msie && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
                 isNonIE8 = 'isDoneNonIE8';
              }
             $('#tasks_sortable').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner hidden"><div class="handle"></div><div original-title="❤" class="texp">0</div><div original-title="comment" class="comment"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
@@ -552,10 +551,9 @@ $(document).ready(function(){
     $('#deadline_time').timepicker({'timeFormat': 'H:i:s'});
     initTaskGroups(false);
     checkIfGroupExists();
-//    if(($.browser.msie && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
-//        $('.isDone').addClass('isDoneNonIE8');
-//        $('.isdone_checkbox').css('opacity',0);
-//    }
+    if(($.browser.msie && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
+        $('.isDone').addClass('isDoneNonIE8');
+    }
     $('#t_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($('#update_task').val()!=''){
@@ -633,6 +631,7 @@ $(document).ready(function(){
             }else if($('#input_task').is(':focus')){
                 if($.trim($('#input_task').val())!=''){
                     postCreateTask($.trim($('#input_task').val()));
+                    $('#input_task').val('');
                 }
             }else if($('#input_friend').is(':focus')){
                 if($.trim($('#input_friend').val())!=''){
