@@ -239,28 +239,41 @@ DECLARE rowno INTEGER;
 DECLARE isdone boolean;
 DECLARE privacy INTEGER;
 DECLARE tuid INTEGER;
-SELECT COUNT(*), TASK.isdone, TASK.privacy, TASK.uid
-into @rowno, @isdone, @privacy, @tuid
+DECLARE texp INTEGER;
+
+SELECT TASK.isdone, TASK.privacy, TASK.uid, COUNT(*)
+INTO @isdone, @privacy, @tuid, @rowno
 FROM TASK
 WHERE TASK.tid = mytid;
+
 IF @rowno = 0 THEN
   /* NO RECORD EXISTS */
   SELECT (-1) AS status;
 ELSE
+  SELECT COUNT(EXP.expid) INTO @texp
+  FROM TASK LEFT JOIN EXP
+  ON TASK.tid = EXP.tid
+  WHERE TASK.tid = mytid;
   IF @privacy <> 0 THEN
     /* IF ALREADY PUBLISHED */
+    UPDATE TASK
+    SET TASK.isdone = myisdone,
+    TASK.lastupdate = now()
+    WHERE TASK.tid = mytid;
     IF(myisdone <> @isdone) AND (myisdone = FALSE) THEN
       /* NOT ALLOWED WHEN PUBLISHED */
-      SELECT (-1) AS status;
+      /* SELECT (-1) AS status; */
+      UPDATE USER
+      SET USER.exp = USER.exp - @texp
+      WHERE USER.uid = @tuid;
     ELSE
-      UPDATE TASK
-      SET TASK.isdone = myisdone,
-      TASK.lastupdate = now()
-      WHERE TASK.tid = mytid;
+      UPDATE USER
+      SET USER.exp = USER.exp + @texp
+      WHERE USER.uid = @tuid;
       INSERT INTO EVENT (eventtype, uid1, tid)
       VALUES (6, @tuid, mytid);
-      SELECT (1) AS status;
     END IF;
+    SELECT (1) AS status;
   ELSE
     /* IS PRIVATE, OK TO MODIFY */
     UPDATE TASK
@@ -591,6 +604,7 @@ BEGIN
 DECLARE exist BOOLEAN;
 DECLARE ismypost BOOLEAN;
 DECLARE tuid INTEGER;
+DECLARE isdone BOOLEAN;
 SET time_zone = "+00:00";
 SELECT (COUNT(expid)>0) INTO @exist FROM
 EXP WHERE uid = myuid
@@ -598,8 +612,13 @@ AND tid = mytid;
 IF(@exist = FALSE) THEN
   INSERT INTO EXP (uid, tid)
   VALUES(myuid, mytid);
-  SELECT uid INTO @tuid FROM TASK
-  WHERE tid = mytid;
+  SELECT TASK.uid, TASK.isdone INTO @tuid, @isdone FROM TASK
+  WHERE TASK.tid = mytid;
+  IF (@isdone = TRUE) THEN
+    UPDATE USER
+    SET USER.exp = USER.exp + 1
+    WHERE USER.uid = @tuid;
+  END IF;
   INSERT INTO EVENT (eventtype, uid1, uid2, tid)
   VALUES(2, myuid, @tuid, mytid);
   SELECT 1 AS status;
