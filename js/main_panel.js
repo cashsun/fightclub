@@ -83,7 +83,7 @@ function updateTorder(){
         t_order:task_order,webaction:7},function(){});
 }
 function initIsDone(){
-    $('input[type="checkbox"]','.isDone').unbind('change').change(function(){       
+    $('input[type="checkbox"]','#tasks_sortable').unbind('change').change(function(){       
         var tcheckbox = $(this);
         checkIfDoneSingle(tcheckbox);
         positionIsDone(tcheckbox);
@@ -134,9 +134,9 @@ function checkIfDoneSingle(item){
     if($(item).is(':checked')){
         opac = 0.4;
         text_dec = 'line-through';
-        if($(item).parent().hasClass('isDoneNonIE8')){
-            $(item).parent().addClass('checked');
-        }
+//        if($(item).parent().hasClass('isDoneNonIE8')){
+//            $(item).parent().addClass('checked');
+//        }
     }else{
         $(item).parent().removeClass('checked'); 
     }
@@ -153,27 +153,22 @@ function checkIfDoneMulti(){
 }
 function positionIsDone(item){
     var target = $(item).parent().parent();
-    var clone = target.clone(true,true).hide();
     if($(item).is(':checked')){
         target.slideUp(300,function(){
-            alert('should appear');
-            $('#tasks_sortable').append(clone);
-            clone.children().find('input').attr('checked','checked');
-            clone.slideDown(300,function(){
-                target.remove();
+            $('#tasks_sortable').append(target);
+            checkIfDoneMulti();
+            target.children().find('input').attr('checked','checked');
+            target.slideDown(300,function(){
                 updateTorder();
-                checkIfDoneMulti();
             });
         });
     }else{
         target.slideUp(300,function(){
-            alert('should appear');
-            $('#tasks_sortable').prepend(clone);
-            clone.children().find('input').removeAttr('checked');
-            clone.slideDown(300,function(){
-                target.remove();
+            $('#tasks_sortable').prepend(target);
+            target.children().find('input').removeAttr('checked');
+            checkIfDoneMulti();
+            target.slideDown(300,function(){
                 updateTorder();
-                checkIfDoneMulti();
             })
         });
     }
@@ -260,7 +255,7 @@ function postUpdateTask(){
         deadline:function(){return deadline},
         webaction:4
         },function(){
-            updateTorder();
+//            updateTorder();
         }
         );
 }
@@ -557,10 +552,10 @@ $(document).ready(function(){
     $('#deadline_time').timepicker({'timeFormat': 'H:i:s'});
     initTaskGroups(false);
     checkIfGroupExists();
-    if(($.browser.msie && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
-        $('.isDone').addClass('isDoneNonIE8');
-        $('.isdone_checkbox').css('opacity',0);
-    }
+//    if(($.browser.msie && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
+//        $('.isDone').addClass('isDoneNonIE8');
+//        $('.isdone_checkbox').css('opacity',0);
+//    }
     $('#t_dialog').dialog("option", "buttons", [ 
         {text:"OK",click:function(){
             if($('#update_task').val()!=''){
