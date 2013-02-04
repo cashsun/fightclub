@@ -1,5 +1,6 @@
 $(function(){
     index.init();
+    $('.signup,.register').button();
 });
 
 var index = {
