@@ -83,7 +83,7 @@ function updateTorder(){
         t_order:task_order,webaction:7},function(){});
 }
 function initIsDone(){
-    $('input[type="checkbox"]','.isDone').change(function(){       
+    $('input[type="checkbox"]','.isDone').unbind('change').change(function(){       
         var tcheckbox = $(this);
         checkIfDoneSingle(tcheckbox);
         positionIsDone(tcheckbox);
@@ -131,8 +131,7 @@ function initTaskGroups(isFromClick){
 function checkIfDoneSingle(item){
     var opac = 1;
     var text_dec = 'none';
-    var attr = $(item).attr('checked');
-    if($(item).is(':checked')||(typeof attr !== 'undefined' && attr !== false)){
+    if($(item).is(':checked')){
         opac = 0.4;
         text_dec = 'line-through';
         if($(item).parent().hasClass('isDoneNonIE8')){
@@ -157,20 +156,22 @@ function positionIsDone(item){
     var clone = target.clone(true,true).hide();
     if($(item).is(':checked')){
         target.slideUp(300,function(){
-            target.remove();
+            alert('should appear');
             $('#tasks_sortable').append(clone);
             clone.children().find('input').attr('checked','checked');
             clone.slideDown(300,function(){
+                target.remove();
                 updateTorder();
                 checkIfDoneMulti();
-            })
+            });
         });
     }else{
         target.slideUp(300,function(){
-            target.remove();
+            alert('should appear');
             $('#tasks_sortable').prepend(clone);
             clone.children().find('input').removeAttr('checked');
             clone.slideDown(300,function(){
+                target.remove();
                 updateTorder();
                 checkIfDoneMulti();
             })
