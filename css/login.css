@@ -9,7 +9,7 @@
 .front-login{
   position:absolute;
   width: 500px;
-  margin-left: -200px;
+  margin-left: -250px;
   left: 50%;
   top: 50%;
 }
@@ -40,11 +40,14 @@
     top: 10px;
     width: 150px
 }
+.signup{
+    width: 90px;
+    margin-bottom: -15px
+}
 .register{
-    height: 15px;
-    top: -2px
+    height: 13px;
+    margin-top: 3px
 }
 .front-login .register a{
-  text-decoration: none;
-  color: white;
+  color: white
 }
