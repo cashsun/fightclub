@@ -196,18 +196,18 @@ IN myprivacy int,
 IN mydeadline TIMESTAMP
 ) 
 BEGIN
-DECLARE ispublish BOOLEAN;
-DECLARE isprivate BOOLEAN;
-DECLARE rows_affected INTEGER;
-DECLARE event_exists BOOLEAN;
-DECLARE eventid INTEGER;
-DECLARE tuid INTEGER;
-DECLARE texp INTEGER;
+DECLARE ispublish, isprivate, event_exists, isdone, isdone2 BOOLEAN;
+DECLARE rows_affected,eventid,tuid,tuid2,texp INTEGER;
 SELECT (COUNT(*)>0), TASK.uid, TASK.isdone
 INTO @ispublish, @tuid, @isdone
 FROM TASK 
 WHERE tid = mytid AND myprivacy > 0
 AND privacy = 0;
+SELECT (COUNT(*)>0), TASK.uid,TASK.isdone
+INTO @isprivate, @tuid2,@isdone2
+FROM TASK 
+WHERE tid = mytid AND myprivacy = 0
+AND privacy > 0;
 UPDATE TASK
 SET TASK.content = mycontent,
 TASK.privacy = myprivacy,
@@ -224,6 +224,7 @@ IF (@ispublish = TRUE) THEN
     UPDATE USER
     SET USER.exp = USER.exp + @texp
     WHERE USER.uid = @tuid;
+    SELECT (1) AS status;
   END IF;
   SELECT (COUNT(*)>0), EVENT.eventid
   INTO @event_exists, @eventid FROM EVENT
@@ -237,22 +238,20 @@ IF (@ispublish = TRUE) THEN
     VALUES (4, @tuid, mytid);
   END IF;
 ELSE
-  SELECT (COUNT(*)>0), TASK.isdone
-  INTO @isprivate
-  FROM TASK 
-  WHERE tid = mytid AND myprivacy = 0
-  AND privacy > 0;
   IF (@isprivate = TRUE) THEN
-    IF (@isdone = TRUE) THEN
+    IF (@isdone2 = TRUE) THEN
       SELECT COUNT(EXP.expid) INTO @texp
       FROM TASK LEFT JOIN EXP
       ON TASK.tid = EXP.tid
       WHERE TASK.tid = mytid;
       UPDATE USER
-      SET USER.exp = USER.exp + @texp
-      WHERE USER.uid = @tuid;
+      SET USER.exp = USER.exp - @texp
+      WHERE USER.uid = @tuid2;
+      SELECT (2) AS status;
     END IF;
     /* IS TO SET BACK TO PRIVATE, EXP ROLL BACK */
+  ELSE
+    SELECT (0) AS status;
   END IF;
 END IF;
 END // 
@@ -810,7 +809,9 @@ read_loop: LOOP
     IF done THEN
       LEAVE read_loop;
     END IF;
-    UPDATE USER SET USER.exp = USER.exp + htexp WHERE USER.uid = huid;
+    IF(hisdone = TRUE AND hprivacy > 0) THEN
+      UPDATE USER SET USER.exp = USER.exp + htexp WHERE USER.uid = huid;
+    END IF;
 END LOOP;
 CLOSE cur1;
 END // 
