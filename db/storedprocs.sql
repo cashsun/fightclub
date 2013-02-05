@@ -31,6 +31,7 @@ DROP PROCEDURE IF EXISTS DeleteComment;
 DROP PROCEDURE IF EXISTS GetComments;
 DROP PROCEDURE IF EXISTS GetFightoList;
 DROP PROCEDURE IF EXISTS GetNews;
+DROP PROCEDURE IF EXISTS ExpHouseKeeping;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -196,12 +197,14 @@ IN mydeadline TIMESTAMP
 ) 
 BEGIN
 DECLARE ispublish BOOLEAN;
+DECLARE isprivate BOOLEAN;
 DECLARE rows_affected INTEGER;
 DECLARE event_exists BOOLEAN;
 DECLARE eventid INTEGER;
 DECLARE tuid INTEGER;
-SELECT (COUNT(*)>0), uid
-INTO @ispublish, @tuid
+DECLARE texp INTEGER;
+SELECT (COUNT(*)>0), TASK.uid, TASK.isdone
+INTO @ispublish, @tuid, @isdone
 FROM TASK 
 WHERE tid = mytid AND myprivacy > 0
 AND privacy = 0;
@@ -213,6 +216,15 @@ TASK.deadline = mydeadline
 WHERE TASK.tid = mytid;
 SELECT ROW_COUNT() INTO @rows_affected;
 IF (@ispublish = TRUE) THEN
+  IF(@isdone = TRUE) THEN
+    SELECT COUNT(EXP.expid) INTO @texp
+    FROM TASK LEFT JOIN EXP
+    ON TASK.tid = EXP.tid
+    WHERE TASK.tid = mytid;
+    UPDATE USER
+    SET USER.exp = USER.exp + @texp
+    WHERE USER.uid = @tuid;
+  END IF;
   SELECT (COUNT(*)>0), EVENT.eventid
   INTO @event_exists, @eventid FROM EVENT
   WHERE EVENT.eventtype = 4 AND EVENT.tid = mytid;
@@ -223,6 +235,24 @@ IF (@ispublish = TRUE) THEN
   ELSE
     INSERT INTO EVENT(eventtype, uid1, tid)
     VALUES (4, @tuid, mytid);
+  END IF;
+ELSE
+  SELECT (COUNT(*)>0), TASK.isdone
+  INTO @isprivate
+  FROM TASK 
+  WHERE tid = mytid AND myprivacy = 0
+  AND privacy > 0;
+  IF (@isprivate = TRUE) THEN
+    IF (@isdone = TRUE) THEN
+      SELECT COUNT(EXP.expid) INTO @texp
+      FROM TASK LEFT JOIN EXP
+      ON TASK.tid = EXP.tid
+      WHERE TASK.tid = mytid;
+      UPDATE USER
+      SET USER.exp = USER.exp + @texp
+      WHERE USER.uid = @tuid;
+    END IF;
+    /* IS TO SET BACK TO PRIVATE, EXP ROLL BACK */
   END IF;
 END IF;
 END // 
@@ -266,20 +296,21 @@ ELSE
       UPDATE USER
       SET USER.exp = USER.exp - @texp
       WHERE USER.uid = @tuid;
+      SELECT (2) AS status;
     ELSE
       UPDATE USER
       SET USER.exp = USER.exp + @texp
       WHERE USER.uid = @tuid;
       INSERT INTO EVENT (eventtype, uid1, tid)
       VALUES (6, @tuid, mytid);
+      SELECT (1) AS status;
     END IF;
-    SELECT (1) AS status;
   ELSE
     /* IS PRIVATE, OK TO MODIFY */
     UPDATE TASK
     SET TASK.isdone = myisdone
     WHERE TASK.tid = mytid;
-    SELECT (1) AS status;
+    SELECT (0) AS status;
   END IF;
 END IF;
 END // 
@@ -544,7 +575,7 @@ SET time_zone = "+00:00";
 SELECT (COUNT(*)>0) into @isfans FROM FRIEND
 WHERE fuid = myuid AND uid = myfuid; 
 
-IF(@isfans = TRUE) THEN
+IF(@isfans = TRUE OR myfuid = myuid) THEN
   SET @privacylevel = 0;
 END IF;
 
@@ -756,3 +787,32 @@ OR EXISTS
 ORDER BY EVENT.tstamp DESC LIMIT 50;
 END // 
 DELIMITER ;
+
+/* GET NEWS */
+DELIMITER // 
+CREATE PROCEDURE ExpHouseKeeping(
+)
+BEGIN
+/* STEP GET ALL COMMENT */
+DECLARE done BOOLEAN DEFAULT 0;
+DECLARE huid, htid, hprivacy, htexp INTEGER;
+DECLARE hisdone BOOLEAN;
+DECLARE cur1 CURSOR FOR 
+  SELECT TASK.uid, TASK.tid, TASK.isdone, TASK.privacy, COUNT(EXP.expid)
+  FROM TASK LEFT JOIN EXP
+  ON TASK.tid = EXP.tid
+  GROUP BY TASK.tid;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+UPDATE USER SET USER.exp = 0;
+OPEN cur1;
+read_loop: LOOP
+    FETCH cur1 INTO huid,htid,hisdone,hprivacy,htexp;
+    IF done THEN
+      LEAVE read_loop;
+    END IF;
+    UPDATE USER SET USER.exp = USER.exp + htexp WHERE USER.uid = huid;
+END LOOP;
+CLOSE cur1;
+END // 
+DELIMITER ;
+
