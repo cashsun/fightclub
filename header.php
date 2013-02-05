@@ -6,7 +6,6 @@
         <link rel="shortcut icon" href="favicon.ico" />
         <link rel="stylesheet" href="theme/jquery-ui.css"/>
         <link rel="stylesheet" href="css/main.css"/>
-        <link rel="stylesheet" href="css/login.css"/>
         <link rel="stylesheet" href="css/social_panel.css"/>
         <link rel="stylesheet" href="css/tipsy.css" type="text/css"/>
         <link rel="stylesheet" href="css/jquery.timepicker.css" type="text/css"/>

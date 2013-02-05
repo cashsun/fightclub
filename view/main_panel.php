@@ -20,6 +20,7 @@ function echoTask(Task $task){
     }
     echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner'.$ribbon.'"><div class="handle"></div><div mytid="'.$task->getTid().'" title="❤" class="texp">'.$task->getTExp().'</div><div title="comment" class="comment">'.$task->getCcount().'</div>
       <div class="isDone"><input class="isdone_checkbox" title="complete" type="checkbox" '.$option.'/></div><div dead_date="'.$task->getDate().'" dead_time="'.$task->getTime().'" class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
+
 }
 function echoSortedTasks(TaskGroup $group){
     $order = $group->getTaskOrder();
@@ -266,7 +267,7 @@ function getAllByUid($uid){
         }
 </script>
 <script type="text/javascript" src="js/loading.js"></script>
-<script type="text/javascript" src="js/main_panel_min.js"></script>
+<script type="text/javascript" src="js/main_panel.js"></script>
 <script type="text/javascript" src="js/social_panel.js"></script>
 
 

@@ -1,12 +1,18 @@
-.front-login{
-  position:relative;
-  width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  top: 200px;
+#login-wrapper{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../image/login.jpg') no-repeat center center
 }
-
-
+.front-login{
+  position:absolute;
+  width: 500px;
+  margin-left: -250px;
+  left: 50%;
+  top: 50%;
+}
 .ErrorMsg{
   margin-top: 0px;
   width: 100%;
@@ -21,36 +27,27 @@
 .front-login .input-box{
   width: 120px;
   height: 25px;
-  background: #C0E0EC;
-  border: 2px solid #D0E3EC;
+  border: 1px solid #8d8f90;
   color: #7993B4;
   padding: 3px 5px;
   display: inline;
   font-size: 12px;
   margin-right: 2px;
 }
-
-.front-login .signup{
-  width: 52px;
-  height: 34px;
-  background: #E34E50;
-  color: white;
-  margin-left: 1px;
-  border: 0;
-  cursor: pointer;
+#fighto_logo{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 150px
 }
-
-.front-login .register{
-  width: 50px;
-  height: 32px;
-  background: #FCBA63;
-  color: #7993B4;
-  padding: 7px 5px 8px 5px;
-  margin-left: 1px;
-  display: inline;
+.signup{
+    width: 90px;
+    margin-bottom: -15px
 }
-
+.register{
+    height: 13px;
+    margin-top: 3px
+}
 .front-login .register a{
-  text-decoration: none;
-  color: white;
+  color: white
 }
