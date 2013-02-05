@@ -1,301 +1,58 @@
-#panel_social{position: absolute;right: -404px;width: 400px;top: 1px;height: 100%;
-z-index: 20;background-color: #f8f8f8;-webkit-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
--moz-box-shadow: 0 4px 4px rgba(0,0,0,0.5);-ms-box-shadow: 0 4px 4px rgba(0,0,0,0.5);
--o-box-shadow: 0 4px 4px rgba(0,0,0,0.5);box-shadow: 0 4px 4px rgba(0,0,0,0.5)
-}
-#social_tabs{height: 100%;}
-#social_tabs ul.ui-tabs-nav{height: 30px;}
-#social_tabs li{background-color: #eaeaea; margin-top: 1px}
-#social_tabs li.ui-state-active,#user_tabs .ui-state-active{background: none}
-#social_tabs .tab{background: none ! important;}
-.tab{height: 100%;overflow-y:auto;background:none}
-#input_friend{width:100%;border: 5px solid #eaeaea}
+#panel_social{position:absolute;right:-404px;width:400px;top:1px;height:100%;z-index:20;background-color:#f8f8f8;-webkit-box-shadow:0 4px 4px rgba(0,0,0,0.5);-moz-box-shadow:0 4px 4px rgba(0,0,0,0.5);-ms-box-shadow:0 4px 4px rgba(0,0,0,0.5);-o-box-shadow:0 4px 4px rgba(0,0,0,0.5);box-shadow:0 4px 4px rgba(0,0,0,0.5)}
+#social_tabs{height:100%}
+#social_tabs ul.ui-tabs-nav{height:30px}
+#social_tabs li{background-color:#eaeaea;margin-top:1px}
+#social_tabs li.ui-state-active,#user_tabs .ui-state-active{background:none}
+#social_tabs .tab{background:none!important}
+.tab{height:100%;overflow-y:auto;background:none}
+#input_friend{width:100%;border:5px solid #eaeaea}
 #friends_radios label{width:60px}
-#friends_radios .ui-button{height: 10px}
-#friends_radios .ui-state-active{
-    background: #168dd9 none;
-    height: 11px;
-    border-bottom: none
-}
-#friends_radios .ui-corner-left{
-    margin-right: -5px
-}
-#friends_radios .ui-corner-right{
-    margin-left: -1px
-}
-#friends_wrapper{
-    padding-bottom: 80px
-}
-#social_loading{
-    position: absolute;
-    margin-top: 300px;
-    margin-left: 130px
-}
-.friend_box{
-    width: 100%;
-    height: 80px;
-    margin-top: 30px;
-    font-family: "Microsoft Yahei","Helvetica","Arial" ! important
-}
-.friend_image{
-    height: 80px;
-    width: 80px; 
-    float: left;
-    cursor: pointer
-}
-.friend_image_l{
-    height: 100px;
-    width: 100px;
-    float: left
-}
-.friend_image_s{
-    height: 60px;
-    width: 60px;
-    margin-right: 10px;
-    float: left;
-    cursor: pointer
-}
-#fightolist{
-    width: 90%;
-    height: auto;
-    margin-left: 6%
-}
-.friend_image_ss{
-    height: 40px;
-    width: 40px;
-    margin-top: 5px;
-    margin-right: 5px;
-    margin-bottom: 15px
-}
-.f_info{
-    width: auto;
-    height: 80px;
-    font-size: 0.8em;
-    float: left;
-    margin-left: 5px;
-}
-.comment_box{
-    clear: left;
-    height: 60px;
-    font-size: 0.8em;
-    margin-bottom: 10px;
-}
-.f_username{
-    color: #8d8f90;
-    font-size: 11px
-}
-.f_fullname{
-    font-size: 1.1em;
-    margin-top: 5px;
-}
-.f_exp{
-    color: #8d8f90;
-    font-size: 0.9em
-}
-.isfriend{
-    position: relative;
-    height: 31px;
-    color: #8d8f90;
-    font-size: 0.9em;
-    margin-top: -8px
-}
-.isfriend span{
-    position: absolute;
-    bottom:0
-}
-.isfriend .ui-button{
-    width: 50px;
-    height: 20px
-}
-#friends_radios .ui-state-active{
-    background: #168dd9;
-}
-.isfriend .ui-button span{
-    margin-bottom: 2px
-}
-#f_group_wrapper,#f_follow_wrapper{
-    margin-top: 50px;
-    color: #8d8f90;
-    font-size: 11px;
-    margin-left: 0;
-    width: 100%;
-    overflow-y: auto
-}
-.f_group{
-    font-size: 13px;
-    width: 76px;
-    padding-right: 4px;
-    padding-left: 3px;
-    height: 14px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-    text-align: center;
-    margin-top: 20px;
-    background: url('../image/f_group_back.png') no-repeat center center;
-    color: #fff;
-    margin-bottom: 5px;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.6);
-}
-.f_task{
-    position: relative;
-    background-color: #eaeaea;
-    width:90%;
-    height: 32px;
-    margin-bottom: 10px;
-    margin-left: 20px;
-    margin-right: 10px;
-    overflow: hidden;
-}
-.f_task_done{
-    text-decoration: line-through
-}
-.f_task_text{
-    position: absolute;
-    width: 218px;
-    left:32px;
-    height: 18px;
-    margin-top: 9px;
-    padding-bottom: 5px;
-    color: #8d8f90;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-    text-align: center;
-    overflow: hidden;
-    font-size: 12px;
-}
-.f_task_texp{
-    position: absolute;
-    width: 25px;
-    font-size: 0.8em;
-    right: 25px;
-    top: 2px;
-    height: 18px;
-    padding-top: 9px;
-    padding-left: 5px;
-    padding-bottom: 3px;
-    color: #ff4545;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-    text-align: center;
-    overflow: hidden;
-    cursor: pointer
-}
-.fighto{
-    position: absolute;
-    right: 0;
-    width: 25px;
-    height: 32px;
-    cursor: pointer
-}
-.like{
-    background: url('../image/like.png') no-repeat center center;
-}
-.liked{
-    background: url('../image/liked.png') no-repeat center center;
-}
-#f_opt{
-    float: left;
-    height: 20px;
-    width: 100%;
-    font-size: 0.8em;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    text-align: center
-}
-#f_opt label.ui-state-active{
-    background: none;
-    border: none;
-}
-#comment_main{
-    width: 90%;
-    margin-left:6%; 
-    height: auto;
-    margin-top: 10px;
-}
-#comment_input{
-    width: 200px;
-    margin-top: 20px;
-    clear: left;
-    font-size: 12px
-}
-#comment_loading{
-    margin-left: 40%
-}
-.comment_content{
-    font-size: 13px;
-    margin-bottom: 10px;
-    margin-top: 4px;
-    height: 20px;
-    color: black;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-    overflow: hidden;
-    font-family: "Microsoft Yahei","Helvetica","Arial" ! important
-}
-.comment_tstamp,.news_tstamp{
-    color: #8d8f90;
-    font-size: 11px;
-    width: 190px
-}
-#news_wrapper{
-    padding-bottom: 80px
-}
-.news_tstamp{
-    margin-left: 107px;
-    margin-bottom: -17px
-}
-.comment_btn{
-    background: url('../image/comment.png') no-repeat center center;
-    position: absolute;
-    height: 32px;
-    width: 32px;
-    left: 0;
-    cursor: pointer
-}
-.comment_btn_c{
-    background: url('../image/comment_click.png') no-repeat center center;
-}
-.comment_delete{
-    font-size: 12px;
-    left: 60px;
-    height: 30px;
-    width: 30px;
-    cursor: pointer;
-    margin-top: -25px;
-    margin-left: 180px;
-    background: url('../image/button_close.png') no-repeat center center;
-}
-.news_content{
-    font-size: 11px
-}
-.news_comment_wapper{
-    margin-left: 20px
-}
-.news_comment_wapper .comment_content{
-    margin-bottom: 8px
-}
-.news_comment_wapper .f_fullname{
-    font-size: 1.5em
-}
-.news_title{
-    height:60px;
-    font-size: 0.7em;
-    color:#8d8f90;
-    margin-top: 20px
-}
-.news_title .friend_image_ss,.news .f_fullname{
-    float: left
-}
-.news_fighto{
-    float:left;
-    width: 16px;
-    height: 16px
-}
-.news_box{
-    font-family: "Microsoft Yahei","Helvetica","Arial" ! important;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eaeaea
-}
+#friends_radios .ui-button{height:10px}
+#friends_radios .ui-state-active{height:11px;border-bottom:none;background:#168dd9}
+#friends_radios .ui-corner-left{margin-right:-5px}
+#friends_radios .ui-corner-right{margin-left:-1px}
+#social_loading{position:absolute;margin-top:300px;margin-left:130px}
+.friend_box{width:100%;height:80px;margin-top:30px;font-family:"Microsoft Yahei",Helvetica,Arial!important}
+.friend_image{height:80px;width:80px;float:left;cursor:pointer}
+.friend_image_l{height:100px;width:100px;float:left}
+.friend_image_s{height:60px;width:60px;margin-right:10px;float:left;cursor:pointer}
+#fightolist{width:90%;height:auto;margin-left:6%}
+.friend_image_ss{height:40px;width:40px;margin-top:5px;margin-right:5px;margin-bottom:15px}
+.f_info{width:auto;height:80px;font-size:.8em;float:left;margin-left:5px}
+.comment_box{clear:left;height:60px;font-size:.8em;margin-bottom:10px}
+.f_username{color:#8d8f90;font-size:11px}
+.f_fullname{font-size:1.1em;margin-top:5px}
+.f_exp{color:#8d8f90;font-size:.9em}
+.isfriend{position:relative;height:31px;color:#8d8f90;font-size:.9em;margin-top:-8px}
+.isfriend span{position:absolute;bottom:0}
+.isfriend .ui-button{width:50px;height:20px}
+.isfriend .ui-button span{margin-bottom:2px}
+#f_group_wrapper,#f_follow_wrapper{margin-top:50px;color:#8d8f90;font-size:11px;margin-left:0;width:100%;overflow-y:auto}
+.f_group{font-size:13px;width:76px;height:14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:center;margin-top:20px;background:url(../image/f_group_back.png) no-repeat center center;color:#fff;margin-bottom:5px;text-shadow:0 1px 0 rgba(0,0,0,0.6);padding:3px 4px 3px 3px}
+.f_task{position:relative;background-color:#eaeaea;width:90%;height:32px;margin-bottom:10px;margin-left:20px;margin-right:10px;overflow:hidden}
+.f_task_done{text-decoration:line-through}
+.f_task_text{position:absolute;width:218px;left:32px;height:18px;margin-top:9px;padding-bottom:5px;color:#8d8f90;white-space:nowrap;text-overflow:ellipsis;text-align:center;overflow:hidden;font-size:12px}
+.f_task_texp{position:absolute;width:25px;font-size:.8em;right:25px;top:2px;height:18px;padding-top:9px;padding-left:5px;padding-bottom:3px;color:#ff4545;white-space:nowrap;text-overflow:ellipsis;text-align:center;overflow:hidden;cursor:pointer}
+.fighto{position:absolute;right:0;width:25px;height:32px;cursor:pointer}
+.like{background:url(../image/like.png) no-repeat center center}
+.liked{background:url(../image/liked.png) no-repeat center center}
+#f_opt{float:left;height:20px;width:100%;font-size:.8em;margin-top:20px;margin-bottom:10px;text-align:center}
+#f_opt label.ui-state-active{background:none;border:none}
+#comment_main{width:90%;margin-left:6%;height:auto;margin-top:10px}
+#comment_input{width:200px;margin-top:20px;clear:left;font-size:12px}
+#comment_loading{margin-left:40%}
+.comment_content{font-size:13px;margin-bottom:10px;margin-top:4px;height:20px;color:#000;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-family:"Microsoft Yahei",Helvetica,Arial!important}
+.comment_tstamp,.news_tstamp{color:#8d8f90;font-size:11px;width:190px}
+.news_tstamp{margin-left:107px;margin-bottom:-17px}
+.comment_btn{background:url(../image/comment.png) no-repeat center center;position:absolute;height:32px;width:32px;left:0;cursor:pointer}
+.comment_btn_c{background:url(../image/comment_click.png) no-repeat center center}
+.comment_delete{font-size:12px;left:60px;height:30px;width:30px;cursor:pointer;margin-top:-25px;margin-left:180px;background:url(../image/button_close.png) no-repeat center center}
+.news_content{font-size:11px}
+.news_comment_wapper{margin-left:20px}
+.news_comment_wapper .comment_content{margin-bottom:8px}
+.news_comment_wapper .f_fullname{font-size:1.5em}
+.news_title{height:60px;font-size:.7em;color:#8d8f90;margin-top:20px}
+.news_title .friend_image_ss,.news .f_fullname{float:left}
+.news_fighto{float:left;width:16px;height:16px}
+.news_box{font-family:"Microsoft Yahei",Helvetica,Arial!important;padding-bottom:20px;border-bottom:1px solid #eaeaea}
+#friends_wrapper,#news_wrapper{padding-bottom:80px}

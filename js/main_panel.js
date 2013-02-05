@@ -208,7 +208,7 @@ function postCreateTask(content){
             if(($.browser.msie && parseInt($.browser.version, 10) != 8)||!$.browser.msie){
                 isNonIE8 = 'isDoneNonIE8';
              }
-            $('#tasks_sortable').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner hidden"><div class="handle"></div><div original-title="❤" class="texp">0</div><div original-title="comment" class="comment"></div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
+            $('#tasks_sortable').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner hidden"><div class="handle"></div><div mytid="'+tidnew+'" title="❤" class="texp">0</div><div title="comment" class="comment">0</div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" title="complete" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
 +content+'</div><div class="delete_task"></div></li>');
             initTasks();
             resizeTaskPanel();
