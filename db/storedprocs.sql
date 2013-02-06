@@ -638,9 +638,10 @@ IN mytid int
 BEGIN
 DECLARE exist BOOLEAN;
 DECLARE ismypost BOOLEAN;
-DECLARE tuid INTEGER;
+DECLARE tuid,status INTEGER;
 DECLARE isdone BOOLEAN;
 SET time_zone = "+00:00";
+SET status = 0;
 SELECT (COUNT(expid)>0) INTO @exist FROM
 EXP WHERE uid = myuid
 AND tid = mytid;
@@ -653,12 +654,13 @@ IF(@exist = FALSE) THEN
     UPDATE USER
     SET USER.exp = USER.exp + 1
     WHERE USER.uid = @tuid;
+    SET status = 1;
   END IF;
   INSERT INTO EVENT (eventtype, uid1, uid2, tid)
   VALUES(2, myuid, @tuid, mytid);
-  SELECT 1 AS status;
 ELSE
-  SELECT -1 AS status;
+  SET status = -1;
+SELECT @status AS status;
 END IF;
 END // 
 DELIMITER ;
