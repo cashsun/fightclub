@@ -95,9 +95,11 @@ function initIsDone(){
                 isdone:isdone,
                 webaction:8},function(){},function(r){
                     if(r==-1){
-                        alert('you cannot undone public task!');
+                        alert('Server error.');
                         location.reload();
                     }
+                        var expNew = tcheckbox.parent().siblings('.texp').html();
+                        updateExp(expNew,r);
                 });
     });
 }
@@ -209,8 +211,7 @@ function postCreateTask(content){
                 isNonIE8 = 'isDoneNonIE8';
              }
             $('#tasks_sortable').prepend('<li privacy="0" tid="'+tidnew+'"class="t_content hoverable roundcorner hidden"><div class="handle"></div><div mytid="'+tidnew+'" title="❤" class="texp">0</div><div title="comment" class="comment">0</div><div class="isDone '+isNonIE8+'"><input class="isdone_checkbox" title="complete" type="checkbox"/></div><div dead_date="0000-00-00" dead_time="00:00:00" class="t_content_text">'
-
-+content+'</div><div class="delete_task"></div></li>');
++content+'</div><div class="delete_task"></div><div class="tshare"><div></li>');
             initTasks();
             resizeTaskPanel();
             $('[tid="'+tidnew+'"]','#tasks_sortable').slideDown(300,function(){updateTorder()});
@@ -237,6 +238,14 @@ function postDeleteTask(tid){
                 updateTorder();
             })
 }
+function updateExp(expNew,actionCode){
+    var expOld = $('.my_exp').html().split(" ")[1];
+    if(actionCode==1){
+        $('.my_exp').html("Exp "+(parseInt(expOld)+parseInt(expNew)));
+    }else if(actionCode==2){
+        $('.my_exp').html("Exp "+(parseInt(expOld)-parseInt(expNew)));
+    }
+}
 function postUpdateTask(){
     $('.dialog').dialog('close');
     var tid = $('#tid','#t_dialog').html();
@@ -247,15 +256,16 @@ function postUpdateTask(){
     var t_text = task.children().eq(4);
     task.attr('privacy', privacy);
     t_text.attr('dead_date', $('#deadline_date').val()).attr('dead_time', $('#deadline_time').val()).html(content);
-    switch(parseInt(privacy)){case 0:task.removeClass('shared_f shared_g');break;case 1:task.removeClass('shared_g').addClass('shared_f');break;case 2:task.removeClass('shared_f').addClass('shared_g');break;}
+    switch(parseInt(privacy)){case 0:task.children().eq(6).removeClass('shared_f shared_g');break;case 1:task.children().eq(6).removeClass('shared_g').addClass('shared_f');break;case 2:task.children().eq(6).removeClass('shared_f').addClass('shared_g');break;}
     makeAjaxCall('post',{
         tid:function(){return $('#tid','#t_dialog').html()},
         content:function(){return $('#update_task').val()},
         privacy:privacy,
         deadline:function(){return deadline},
         webaction:4
-        },function(){
-//            updateTorder();
+        },function(){},function(r){
+            var expNew = task.children().eq(1).html();
+            updateExp(expNew,r);
         }
         );
 }

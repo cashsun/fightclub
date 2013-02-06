@@ -1,6 +1,16 @@
 $(function(){
     index.init();
     $('.signup,.register').button();
+    $('.signup').click(function(){
+        $('#submit').click();
+    });
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            e.preventDefault();
+            $('.signup').click();
+        }
+    });
+       
 });
 
 var index = {

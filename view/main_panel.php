@@ -18,8 +18,8 @@ function echoTask(Task $task){
         case 1:$ribbon=' shared_f';break;
         case 2:$ribbon=' shared_g';break;
     }
-    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner'.$ribbon.'"><div class="handle"></div><div mytid="'.$task->getTid().'" title="❤" class="texp">'.$task->getTExp().'</div><div title="comment" class="comment">'.$task->getCcount().'</div>
-      <div class="isDone"><input class="isdone_checkbox" title="complete" type="checkbox" '.$option.'/></div><div dead_date="'.$task->getDate().'" dead_time="'.$task->getTime().'" class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div></li>';
+    echo '<li privacy="'.$task->getPrivacy().'" tid="'.$task->getTid().'" class="t_content hoverable roundcorner"><div class="handle"></div><div mytid="'.$task->getTid().'" title="❤" class="texp">'.$task->getTExp().'</div><div title="comment" class="comment">'.$task->getCcount().'</div>
+      <div class="isDone"><input class="isdone_checkbox" title="complete" type="checkbox" '.$option.'/></div><div dead_date="'.$task->getDate().'" dead_time="'.$task->getTime().'" class="t_content_text">'.$task->getContent().'</div><div class="delete_task"></div><div class="tshare'.$ribbon.'"><div></li>';
 
 }
 function echoSortedTasks(TaskGroup $group){
@@ -97,7 +97,10 @@ function getAllByUid($uid){
     <div id="navibar">
         <?php echoProfilePic($user);?>
         <div id="profile_username" class="username">
-            <?php echo 'Welcome back, '.$user->getUsername()?>
+            <?php
+            echo '<div class="my_fullname">'.$user->getFirstname().' '.$user->getLastname().'</div>';
+            echo '<div class="my_exp">Exp '.$user->getExp().'</div>';
+            ?>
         </div>
         <button id="logout">Logout</button>
         <button id="club_button" class="button">Club</button>

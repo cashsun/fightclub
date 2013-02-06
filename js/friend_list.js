@@ -86,7 +86,9 @@ function initList(){
             makeAjaxCall('post',{
             uid:function(){return $('#uid').html();},
             tid:tid,
-            webaction:12},function(){},function(r){if(r==-1){alert('you have already FIGHTOed this task.')}});
+            webaction:12},function(){},function(r){if(r==-1){alert('you have already FIGHTOed this task.')}
+                updateFriendListExp(1,r);
+            });
         }
         fightoBtn.siblings(".f_task_texp").click();
         if ($.browser.webkit) {
@@ -101,6 +103,14 @@ function initList(){
     }).tipsy({fallback:'FIGHTO!',gravity:'s',fade:false,offset:0});
 
     $('.f_group').tipsy({gravity:'s',fade:false,offset:0});
+}
+function updateFriendListExp(expNew,actionCode){
+    var expOld = $('.f_exp','.f_info').html().split(" ")[1];
+    if(actionCode==1){
+        $('.f_exp','.f_info').html("Exp "+(parseInt(expOld)+expNew));
+    }else if(actionCode==2){
+        $('.f_exp','.f_info').html("Exp "+(parseInt(expOld)-expNew));
+    }
 }
 
 

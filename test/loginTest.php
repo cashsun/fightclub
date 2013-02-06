@@ -8,8 +8,9 @@
             <input type="text" name="cm-name" class="input-box" value="username or email">
             <input type="password" name="cm-pass" class="input-box" value="password">
 
-            <input type="submit" value="Login" class="signup">
-            <div class ="register"><a href="test/register.php">Register</a></div>
+            <button class="signup">Login</button>
+            <button class ="register">Register</button>
+            <input id="submit" type="submit" style="display: none"/>
         </div>
         </form>
     </div>
