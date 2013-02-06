@@ -197,7 +197,8 @@ IN mydeadline TIMESTAMP
 ) 
 BEGIN
 DECLARE ispublish, isprivate, event_exists, isdone, isdone2 BOOLEAN;
-DECLARE rows_affected,eventid,tuid,tuid2,texp INTEGER;
+DECLARE rows_affected,eventid,tuid,tuid2,texp, status INTEGER;
+SET status = -1;
 SELECT (COUNT(*)>0), TASK.uid, TASK.isdone
 INTO @ispublish, @tuid, @isdone
 FROM TASK 
@@ -223,7 +224,9 @@ IF (@ispublish = TRUE) THEN
     UPDATE USER
     SET USER.exp = USER.exp + @texp
     WHERE USER.uid = @tuid;
-    SELECT (1) AS status;
+    SET @status = 1;
+  ELSE 
+    SET @status = 0;
   END IF;
   SELECT (COUNT(*)>0), EVENT.eventid
   INTO @event_exists, @eventid FROM EVENT
@@ -246,13 +249,16 @@ ELSE
       UPDATE USER
       SET USER.exp = USER.exp - @texp
       WHERE USER.uid = @tuid2;
-      SELECT (2) AS status;
+      SET @status = 2;
+    ELSE 
+      SET @status = 0;
     END IF;
     /* IS TO SET BACK TO PRIVATE, EXP ROLL BACK */
   ELSE
-    SELECT (0) AS status;
+    SET @status = 0;
   END IF;
 END IF;
+SELECT @status AS status;
 END // 
 DELIMITER ;
 
