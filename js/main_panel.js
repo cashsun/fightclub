@@ -228,7 +228,9 @@ function postDeleteTaskGroup(tgid){
         makeAjaxCall('post',{tgid:tgid,webaction:3},function(){checkIfGroupExists()});
 }
 function postDeleteTask(tid){
+        var expNew = $('[tid="'+tid+'"]','#tasks_sortable').children().eq(1).html();
         $('[tid="'+tid+'"]','#tasks_sortable').slideUp(200, function(){
+            
             $(this).remove();
             $('li[tid="'+tid+'"]','#cache').remove();
             $('#input_task').focus();
@@ -236,6 +238,9 @@ function postDeleteTask(tid){
         makeAjaxCall('post',
             {tid:tid,webaction:2},function(){
                 updateTorder();
+            },function(r){
+                alert(expNew+":"+r);
+                updateExp(expNew,r);
             })
 }
 function updateExp(expNew,actionCode){

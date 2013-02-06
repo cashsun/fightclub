@@ -270,7 +270,7 @@ function getAllByUid($uid){
         }
 </script>
 <script type="text/javascript" src="js/loading.js"></script>
-<script type="text/javascript" src="js/main_panel_min.js"></script>
+<script type="text/javascript" src="js/main_panel.js"></script>
 <script type="text/javascript" src="js/social_panel.js"></script>
 
 
