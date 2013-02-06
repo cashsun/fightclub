@@ -1,8 +1,11 @@
-$(function(){
+$(document).ready(function(){
     index.init();
     $('.signup,.register').button();
     $('.signup').click(function(){
         $('#submit').click();
+    });
+    $('.register').click(function(){
+        location.href="test/registerTest.php";
     });
     $(document).keypress(function(e) {
         if(e.which == 13) {

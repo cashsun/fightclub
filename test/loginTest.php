@@ -7,9 +7,8 @@
         <div>
             <input type="text" name="cm-name" class="input-box" value="username or email">
             <input type="password" name="cm-pass" class="input-box" value="password">
-
-            <button class="signup">Login</button>
-            <button class ="register">Register</button>
+            <div class="signup">Login</div>
+            <div class ="register">Register</div>
             <input id="submit" type="submit" style="display: none"/>
         </div>
         </form>

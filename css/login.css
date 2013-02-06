@@ -42,14 +42,14 @@
 }
 .signup{
     float:left;
-    height: 30px;
+    height: 17px;
     width: 80px;
-    margin-left: 5px;
+    margin-left: 10px;
     margin-right: 5px
 }
 .register{
     float: left;
-    height: 30px;
+    height: 17px;
     width: 67px
 }
 .front-login .register a{
