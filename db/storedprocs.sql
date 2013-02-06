@@ -214,7 +214,6 @@ TASK.privacy = myprivacy,
 TASK.lastupdate = now(),
 TASK.deadline = mydeadline
 WHERE TASK.tid = mytid;
-SELECT ROW_COUNT() INTO @rows_affected;
 IF (@ispublish = TRUE) THEN
   IF(@isdone = TRUE) THEN
     SELECT COUNT(EXP.expid) INTO @texp
