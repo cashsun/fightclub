@@ -195,7 +195,7 @@ IF(@texp > 0) THEN
   /* NEED MINUS EXP FROM THIS TASK */
   UPDATE USER
   SET USER.exp = USER.exp - @texp;
-  SET @status = 1;
+  SET @status = 2;
 END IF;
 SELECT @status AS status;
 END // 
