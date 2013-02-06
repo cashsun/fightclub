@@ -239,7 +239,6 @@ function postDeleteTask(tid){
             {tid:tid,webaction:2},function(){
                 updateTorder();
             },function(r){
-                alert(expNew+":"+r);
                 updateExp(expNew,r);
             })
 }
