@@ -136,6 +136,9 @@ function echoTask($row){
         $isliked = ' liked';
     }
     $str = htmlspecialchars($row['tcontent']);
+    if($str == ''){
+        $str = '*DELETED*';
+    }
     echo '<div class="f_task roundcorner"><div tid="'.$row['tid'].'" class="comment_btn"></div><div class="f_task_text" title="'.$str.'">'.$str.'</div><div tid="'.$row['tid'].'" class="f_task_texp">'.$row['texp'].'</div><div tid="'.$row['tid'].'" class="fighto'.$isliked.'"></div></div>';
 }
 ?>

@@ -180,10 +180,24 @@ DELIMITER //
 CREATE PROCEDURE DeleteTask(
 IN mytid int
 ) 
-BEGIN 
+BEGIN
+DECLARE rows_affected, texp, status INTEGER;
+SET @status = 0;
+SELECT COUNT(EXP.expid) INTO @texp
+FROM TASK LEFT JOIN EXP
+ON TASK.tid = EXP.tid
+WHERE TASK.tid = mytid AND TASK.isdone = TRUE
+AND TASK.privacy > 0;
 DELETE FROM TASK
 WHERE TASK.tid = mytid;
-SELECT ROW_COUNT() AS rows_affected;
+SELECT ROW_COUNT() INTO @rows_affected;
+IF(@texp > 0) THEN
+  /* NEED MINUS EXP FROM THIS TASK */
+  UPDATE USER
+  SET USER.exp = USER.exp - @texp;
+  SET @status = 2;
+END IF;
+SELECT @status AS status;
 END // 
 DELIMITER ;
 
@@ -273,16 +287,18 @@ DECLARE rowno INTEGER;
 DECLARE isdone boolean;
 DECLARE privacy INTEGER;
 DECLARE tuid INTEGER;
-DECLARE texp INTEGER;
+DECLARE texp, status INTEGER;
 
 SELECT TASK.isdone, TASK.privacy, TASK.uid, COUNT(*)
 INTO @isdone, @privacy, @tuid, @rowno
 FROM TASK
 WHERE TASK.tid = mytid;
 
+SET @status = 0;
+
 IF @rowno = 0 THEN
   /* NO RECORD EXISTS */
-  SELECT (-1) AS status;
+  SET @status = -1;
 ELSE
   SELECT COUNT(EXP.expid) INTO @texp
   FROM TASK LEFT JOIN EXP
@@ -300,23 +316,24 @@ ELSE
       UPDATE USER
       SET USER.exp = USER.exp - @texp
       WHERE USER.uid = @tuid;
-      SELECT (2) AS status;
+      SET @status = 2;
     ELSE
       UPDATE USER
       SET USER.exp = USER.exp + @texp
       WHERE USER.uid = @tuid;
       INSERT INTO EVENT (eventtype, uid1, tid)
       VALUES (6, @tuid, mytid);
-      SELECT (1) AS status;
+      SET @status = 1;
     END IF;
   ELSE
     /* IS PRIVATE, OK TO MODIFY */
     UPDATE TASK
     SET TASK.isdone = myisdone
     WHERE TASK.tid = mytid;
-    SELECT (0) AS status;
+    SET @status = 0;
   END IF;
 END IF;
+SELECT @status AS status;
 END // 
 DELIMITER ;
 

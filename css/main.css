@@ -5,7 +5,8 @@ body{background-color:#f8f8f8}
 #navibar{position:absolute;height:40px;width:100%;top:0;border-bottom:1px solid #ececec;z-index:10;-webkit-box-shadow:0 0 5px rgba(0,0,0,0.5);-moz-box-shadow:0 0 5px rgba(0,0,0,0.5);-ms-box-shadow:0 0 5px rgba(0,0,0,0.5);-o-box-shadow:0 0 5px rgba(0,0,0,0.5);box-shadow:0 0 5px rgba(0,0,0,0.5)}
 #panel_main{position:absolute;height:auto;top:40px;width:100%;bottom:0;overflow:hidden;-webkit-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;-moz-user-select:0;-ms-touch-action:none}
 #profile_image{float:left;margin-left:50px;width:40px;height:40px;cursor:pointer}
-#profile_username{float:left;margin-top:10px;margin-left:10px;font-size:.9em}
+#profile_username{float:left;margin-left:10px;margin-top:4px;font-size:.9em}
+.my_exp{margin-top: -4px;font-size: .9em;color:#8d8f90}
 #loadingImage{position:absolute;margin-left:-44px;left:50%;top:20px}
 #panel_group{position:absolute;width:290px;height:100%;left:0;overflow-y:auto;background-color:#e7ebec;z-index:5;background-image:url(../image/panel_g_shadow.png)}
 #group_wrapper{width:270px;overflow-y:auto;cursor:auto;z-index:19}
@@ -26,16 +27,17 @@ body{background-color:#f8f8f8}
 #u_group,#option{padding-top:6px;padding-bottom:6px;width:134px;float:left;color:#8d8f90;text-align:center;cursor:default;border-right:1px solid #dbe0e2;-webkit-box-shadow:1px 0 0 rgba(255,255,255,0.8);-moz-box-shadow:1px 0 0 rgba(255,255,255,0.8);-ms-box-shadow:1px 0 0 rgba(255,255,255,0.8);-o-box-shadow:1px 0 0 rgba(255,255,255,0.8);box-shadow:1px 0 0 rgba(255,255,255,0.8);text-shadow:1px 0 0 rgba(255,255,255,0.6);margin:0}
 #panel_control{position:fixed;left:0;bottom:0;z-index:21;border-top:1px solid #dbe0e2;background-color:#e7ebec;background-image:url(../image/panel_g_shadow.png);height:28px;-webkit-box-shadow:0 -1px 0 rgba(255,255,255,0.8);-moz-box-shadow:0 -1px 0 rgba(255,255,255,0.8);-ms-box-shadow:0 -1px 0 rgba(255,255,255,0.8);-o-box-shadow:0 -1px 0 rgba(255,255,255,0.8);box-shadow:0 -1px 0 rgba(255,255,255,0.8)}
 .selected{background-color:#ff4545;background-image:url(../image/tg_selected_shadow.png)}
-.shared_f{background-image:url(../image/ribbon_f.png);background-position:100% center;background-repeat:no-repeat}
-.shared_g{background-image:url(../image/ribbon_g.png);background-position:100% center;background-repeat:no-repeat}
+.shared_f{background-image:url(../image/ribbon_f.png);background-position:center center;background-repeat:no-repeat}
+.shared_g{background-image:url(../image/ribbon_g.png);background-position:center center;background-repeat:no-repeat}
 .comment{width:40px;height:34px;padding-top:16px;font-size:.8em;color:#8d8f90;float:left;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;background:url(../image/exp.png) no-repeat center center}
 .texp{width:30px;height:33px;padding-top:17px;font-size:.8em;float:left;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#8d8f90;text-align:center}
 .texp:hover{color:#FFF}
+.tshare{width: 33px;height: 50px;float: left}
 .tg_text_selected{text-shadow:0 1px 0 rgba(0,0,0,0.6);color:#FFF}
 .hidden{display:none}
 #logout,#club_button,#news_button,#group_button{width:72px;height:25px;float:left;margin-top:7px}
 #club_button,#group_button{float:right}
-#logout{margin-left:10px}
+#logout{margin-left:20px}
 #club_button{margin-right:15px;width:65px}
 #group_button{margin-right:5px;width:100px;margin-top:10px}
 #group_button label{margin:2px}

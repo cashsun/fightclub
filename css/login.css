@@ -30,7 +30,7 @@
   border: 1px solid #8d8f90;
   color: #7993B4;
   padding: 3px 5px;
-  display: inline;
+  float:left;
   font-size: 12px;
   margin-right: 2px;
 }
@@ -41,12 +41,16 @@
     width: 150px
 }
 .signup{
-    width: 90px;
-    margin-bottom: -15px
+    float:left;
+    height: 17px;
+    width: 80px;
+    margin-left: 10px;
+    margin-right: 5px
 }
 .register{
-    height: 13px;
-    margin-top: 3px
+    float: left;
+    height: 17px;
+    width: 67px
 }
 .front-login .register a{
   color: white
