@@ -131,6 +131,6 @@ function getAlarm(){
         
     });
     setTimeout(function(){
-        getAlerm();
+        getAlarm();
     },5000);
 }
