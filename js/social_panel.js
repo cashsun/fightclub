@@ -79,17 +79,16 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback,isForComment
         if(!isForComments){
             $('#cache').prepend(commentMain);
         }
-        
         $.ajax({
             url:url,
             timeout:6000,
             type:type,
             data:param,
             success:function(response){
-                if(successCallback!=null){
-                    successCallback(response);
-                }else if(response==-1){
+                if(response==-2){
                     location.reload();
+                }else if(successCallback!=null){
+                    successCallback(response);
                 }
             },
             error:function(){
@@ -125,4 +124,12 @@ function checkChange(){
             }
         }
     });
+}
+function getAlarm(){
+    makeAjaxCall('post',{webaction:19},function(){},function(r){
+        
+    });
+    setTimeout(function(){
+        getAlerm();
+    },10000);
 }

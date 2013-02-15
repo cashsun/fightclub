@@ -33,7 +33,7 @@
         }
         
     }else{
-        echo -1;
+        echo -2;
     }
     
 function echoCommentEvent($row){

@@ -4,6 +4,8 @@
     include_once('../model/User.php');
     if(isset($_SESSION['uid'])&&isset($_GET['ftype'])){
         $friends = getList($_SESSION['uid'], $_GET['ftype']);
+    }else{
+        die(-2);
     }
     if(!isset($friends[0])){
         echo '<br/><br/><div style="font-size:0.75em;color:#8d8f90;margin-left:10px;text-align:center;width:200px">Oops, no result.<br/><br/>T3T</div>';

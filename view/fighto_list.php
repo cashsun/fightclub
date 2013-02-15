@@ -8,6 +8,6 @@ if(isset($_SESSION['uid'])&&isset($_GET['tid'])){
         echo '<img uid="'.$row['uid'].'" original-title="'.$row['firstname'].' '.$row['lastname'].'" class="friend_image_ss" src="image/'.$row['avatar'].'.png" alt=""/>';
     }
 }else{
-    echo -1;
+    echo -2;
 }
 ?>

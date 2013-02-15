@@ -5,7 +5,7 @@
     $friend = null;
     if(isset($_SESSION['uid'])&&isset($_GET['fuid'])){
         $friend = getAllByFuid($_GET['fuid'],$_SESSION['uid']);
-    }else{die(-1);}
+    }else{die(-2);}
     if($friend!=null && $friend->getUid()!=-1){
         echoFriend($friend);
         echo '<div id="f_group_wrapper">';

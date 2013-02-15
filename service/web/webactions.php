@@ -69,10 +69,13 @@ if(isset($_SESSION['uid'])){
         case Actions::GET_FIGHTO_LIST:
             getFightoList();
             break;
+        case Actions::GET_ALERM:
+            getAlarmByUid();
+            break;
         default :echo -1;
     }
 }else{
-    echo -1;
+    echo -2;
 }
 
 function createTask(){
