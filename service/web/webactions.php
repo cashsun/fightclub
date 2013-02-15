@@ -292,6 +292,10 @@ function getAllByFuid($fuid,$uid){
     return $user;
 }
 function getAlarmByUid(){
+    $db = new DBadapter();
+    $db->connect();
+    $result = $db->getAlarmsByUid($_SESSION['uid']);
+    echo json_encode($result);
     
 }
 function echoFriend($friend){
