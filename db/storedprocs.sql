@@ -32,6 +32,7 @@ DROP PROCEDURE IF EXISTS GetComments;
 DROP PROCEDURE IF EXISTS GetFightoList;
 DROP PROCEDURE IF EXISTS GetNews;
 DROP PROCEDURE IF EXISTS ExpHouseKeeping;
+DROP PROCEDURE IF EXISTS GetAlarmsByUid;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -504,7 +505,7 @@ IN myfuid int
 ) 
 BEGIN
 DECLARE rowno INTEGER;
-DECLARE eventid INTEGER;
+DECLARE eventid,alarmid INTEGER;
 SELECT COUNT(*)
 INTO @rowno
 FROM FRIEND f
@@ -528,6 +529,21 @@ ELSE
     ELSE
       INSERT INTO EVENT(eventtype, uid1, uid2)
       VALUES(3, myuid, myfuid);
+    END IF;
+    SELECT COUNT(*),ALARM.alarmid
+    INTO @rowno,@alarmid
+    FROM ALARM
+    WHERE ALARM.alarmtype = 0
+    AND uid1 = myuid
+    AND uid2 = myfuid;
+    IF @rowno > 0 THEN
+      /* ALREADY EXISTS,UPDATE TIMESTAMP */
+      UPDATE ALARM
+      SET ALARM.tstamp = now()
+      WHERE ALARM.alarmid = @alarmid;
+    ELSE
+      INSERT INTO ALARM(alarmtype, uid1, uid2)
+      VALUES(0, myuid, myfuid);
     END IF;
     SELECT (1) AS status;
 END IF;
@@ -656,6 +672,7 @@ BEGIN
 DECLARE exist BOOLEAN;
 DECLARE ismypost BOOLEAN;
 DECLARE tuid INTEGER;
+DECLARE alarmid INTEGER;
 DECLARE status INTEGER;
 DECLARE isdone BOOLEAN;
 SET time_zone = "+00:00";
@@ -676,6 +693,17 @@ IF(@exist = FALSE) THEN
   END IF;
   INSERT INTO EVENT (eventtype, uid1, uid2, tid)
   VALUES(2, myuid, @tuid, mytid);
+  SELECT (COUNT(*)>0),ALARM.alarmid
+  INTO @exist, @alarmid
+  FROM ALARM
+  WHERE ALARM.alarmtype = 2 AND ALARM.tid = mytid;
+  IF(@exist = TRUE) THEN
+    UPDATE ALARM SET ALARM.tstamp = now()
+    WHERE ALARM.alarmid = @alarmid;
+  ELSE
+    INSERT INTO ALARM(alarmtype, tid)
+    VALUES(2, mytid);
+  END IF;
 ELSE
   SET @status = -1;
 END IF;
@@ -697,6 +725,8 @@ DECLARE cid INTEGER;
 DECLARE tuid INTEGER;
 DECLARE tid INTEGER;
 DECLARE tgid INTEGER;
+DECLARE rowno INTEGER;
+DECLARE alarmid INTEGER;
 SET time_zone = "+00:00";
 INSERT INTO COMMENT (uid, tid, content)
 VALUES(myuid, mytid, mycontent);
@@ -709,6 +739,17 @@ ON COMMENT.tid = TASK.tid
 WHERE COMMENT.commentid = @cid;
 INSERT INTO EVENT(eventtype, uid1, uid2, cid, tid, tgid)
 VALUES(0, myuid, @tuid, @cid, @tid, @tgid);
+SELECT COUNT(*),ALARM.alarmid
+INTO @rowno, @alarmid
+FROM ALARM
+WHERE ALARM.alarmtype = 1 AND ALARM.tid = @tid;
+IF(@rowno > 0) THEN
+  UPDATE ALARM SET ALARM.tstamp = now()
+  WHERE ALARM.alarmid = @alarmid;
+ELSE
+  INSERT INTO ALARM(alarmtype, tid)
+  VALUES(1, @tid);
+END IF;
 END // 
 DELIMITER ;
 
@@ -842,3 +883,27 @@ CLOSE cur1;
 END // 
 DELIMITER ;
 
+/* GET ALARMS */
+DELIMITER // 
+CREATE PROCEDURE GetAlarmsByUid(
+IN myuid int
+)
+BEGIN
+SELECT ALARM.alarmtype, ALARM.tid, TASK.tgid,
+af.focount
+FROM
+ALARM
+LEFT JOIN 
+TASK
+ON ALARM.tid = TASK.tid
+LEFT JOIN
+(
+  SELECT fa.alarmid, fa.uid2, COUNT(frid) AS focount FROM ALARM fa
+  LEFT JOIN FRIEND f1
+  ON fa.uid1 = f1.uid AND fa.uid2 = f1.fuid
+  WHERE fa.uid2 = myuid
+) af
+ON af.alarmid = ALARM.alarmid
+WHERE af.uid2 = myuid OR TASK.uid = myuid;
+END // 
+DELIMITER ;

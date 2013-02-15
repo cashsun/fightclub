@@ -142,12 +142,14 @@ ALTER TABLE COMMENT ADD CONSTRAINT fk_comment_tid FOREIGN KEY (tid) REFERENCES T
 
 
 
-/* 07/02/13 */
+/* 15/02/13 */
 CREATE TABLE ALARM
 (
 alarmid int NOT NULL AUTO_INCREMENT,
-title char(50),
-lowexp int,
-hightexp int,
-CONSTRAINT pk_lvid PRIMARY KEY (lvid)
+alarmtype int NOT NULL,
+uid1 int,
+uid2 int,
+tid int,
+tstamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+CONSTRAINT pk_alarmid PRIMARY KEY (alarmid)
 );
