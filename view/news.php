@@ -92,18 +92,13 @@ function echoFollowEvent($row){
     echo '</div>';
 }
 function echoPublishEvent($row){
+    $isShow = true;
     if($row['privacy']==1){
-        if(isset($row['fuid'])){
-            echo '<div class="news_box">';
-                echo '<div class="news_title">';
-                    echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> published a new task!';
-                echo '</div> ';
-                echo '<div class="news_content">';
-                    echoTask($row);
-                echo '</div>';
-            echo '</div>';
+        if(!isset($row['fuid'])){
+            $isShow = false;
         }
-    }else{
+    }
+    if($isShow){
         echo '<div class="news_box">';
             echo '<div class="news_title">';
                 echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> published a new task!';
@@ -111,15 +106,31 @@ function echoPublishEvent($row){
             echo '<div class="news_content">';
                 echoTask($row);
             echo '</div>';
+            echo '<div class="news_tstamp">'.$row['tstamp'].'</div>';
         echo '</div>';
     }
-
 }
 function echoUpdateEvent($row){
-    
+
 }
 function echoCompleteTaskEvent($row){
-    
+    $isShow = true;
+    if($row['privacy']==1){
+        if(!isset($row['fuid'])){
+            $isShow = false;
+        }
+    }
+    if($isShow){
+        echo '<div class="news_box">';
+                echo '<div class="news_title">';
+                    echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> completed a task and won '.$row['texp'].' exp!';
+                echo '</div> ';
+                echo '<div class="news_content">';
+                    echoTask($row);
+                echo '</div>';
+                echo '<div class="news_tstamp">'.$row['tstamp'].'</div>';
+        echo '</div>';
+    }
 }
 /* utility */
 function echoComment($row){
