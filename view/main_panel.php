@@ -7,6 +7,17 @@ if(isset($_SESSION['uid'])){
 function echoProfilePic($user){
     echo '<img id="profile_image" src="image/'.$user->getAvatar().'.png" alt=""/>';
 }
+function echoTaskGroup($group,$i){
+   if($group->getTgid()!=-1){
+        $isSelect = "";
+        $tgTextSel = "";
+        if($i==0){
+            $isSelect = " selected";
+            $tgTextSel = " tg_text_selected";
+        }
+        echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group"></div><div class="tg_title_text"'.$tgTextSel.'><span>'.$group->getTitle().'</span></div><div class="roundcorner tg_alerm"></div></div>';
+    }
+} 
 function echoTask(Task $task){
     $isDone = $task->isDone();
     $option = '';
@@ -113,16 +124,8 @@ function getAllByUid($uid){
             <?php
                 $i=-1;
                 foreach($groups as $group){
-                    if($group->getTgid()!=-1){
-                        $i++;
-                        $isSelect = "";
-                        if($i==0){
-                            $isSelect = " selected";
-                            echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group"></div><div class="tg_title_text tg_text_selected"><span>'.$group->getTitle().'</span></div></div>';
-                        }else{
-                            echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.'"><div class="delete_group"></div><div class="tg_title_text"><span>'.$group->getTitle().'</span></div></div>';
-                        }  
-                    }
+                    $i++;
+                    echoTaskGroup($group,$i);
                 }
             ?>
             </div>

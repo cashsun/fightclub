@@ -4,14 +4,17 @@
     include_once('../model/User.php');
     if(isset($_SESSION['uid'])&&isset($_GET['ftype'])&&isset($_GET['fuid'])){
         $friends = getList($_GET['fuid'], $_GET['ftype']);
-    }
-    if(!isset($friends[0])){
+        if(!isset($friends[0])){
         echo '<br/><br/><div style="text-align:center;width:200px">Oops, no result.<br/><br/>T3T</div>';
-    }else{
-        foreach($friends as $friend){
-            echoFriend($friend);
+        }else{
+            foreach($friends as $friend){
+                echoFriend($friend);
+            }
         }
+    }else{
+        echo -2;
     }
+
     
 function getList($fuid,$ftype){
     $db = new DBadapter();

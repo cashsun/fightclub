@@ -69,10 +69,13 @@ if(isset($_SESSION['uid'])){
         case Actions::GET_FIGHTO_LIST:
             getFightoList();
             break;
+        case Actions::GET_ALERM:
+            getAlarmByUid();
+            break;
         default :echo -1;
     }
 }else{
-    echo -1;
+    echo -2;
 }
 
 function createTask(){
@@ -287,6 +290,13 @@ function getAllByFuid($fuid,$uid){
     $last_row['taskgroups'] = $groups;
     $user=new User($last_row);
     return $user;
+}
+function getAlarmByUid(){
+    $db = new DBadapter();
+    $db->connect();
+    $result = $db->getAlarmsByUid($_SESSION['uid']);
+    echo json_encode($result);
+    
 }
 function echoFriend($friend){
     echo '<div class="friend_box">';

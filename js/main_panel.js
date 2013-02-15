@@ -386,10 +386,10 @@ function makeAjaxCall(type,param,callback,successCallback){
         type:type,
         data:param,
         success:function(response){
-            if(successCallback!=null){
-                successCallback(response);
-            }else if(response == -1){
+            if(response == -2){
                 location.reload();
+            }else if(successCallback!=null){
+                successCallback(response);
             }
         },
         error:function(){

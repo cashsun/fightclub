@@ -19,5 +19,6 @@ class Actions{
     const DELETE_COMMENT = 16;
     const GET_FRIEND_FOLLOWS = 17;
     const GET_COMMENTS = 18;
+    const GET_ALERM = 19;
 }
 ?>

@@ -9,6 +9,8 @@
         while($row =  mysql_fetch_array($result)){
             echoComment($row);
         }
+    }else{
+        echo -2;
     }
     function echoComment($row){
         echo '<div class="comment_box">';

@@ -24,7 +24,9 @@
                       echoPublishEvent($row);
                       break;
                   case EventTypes::UPDATE_TASK:break;
-                  case EventTypes::COMPLETE_TASK:break;
+                  case EventTypes::COMPLETE_TASK:
+                      echoCompleteTaskEvent($row);
+                      break;
                   case EventTypes::LEVEL_UP:break;
               }
           }else{
@@ -33,7 +35,7 @@
         }
         
     }else{
-        echo -1;
+        echo -2;
     }
     
 function echoCommentEvent($row){
@@ -114,6 +116,9 @@ function echoPublishEvent($row){
 
 }
 function echoUpdateEvent($row){
+    
+}
+function echoCompleteTaskEvent($row){
     
 }
 /* utility */
