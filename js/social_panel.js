@@ -1,5 +1,6 @@
 var socialLoading;
 $(document).ready(function(){
+    getAlarm();
     socialLoading = $('#social_loading');
     showSocial = false;
     $('#social_tabs').tabs();
@@ -131,5 +132,5 @@ function getAlarm(){
     });
     setTimeout(function(){
         getAlerm();
-    },10000);
+    },5000);
 }

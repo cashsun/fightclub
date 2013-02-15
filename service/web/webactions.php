@@ -66,9 +66,6 @@ if(isset($_SESSION['uid'])){
         case Actions::GET_COMMENTS:
             getComments();
             break;
-        case Actions::GET_FIGHTO_LIST:
-            getFightoList();
-            break;
         case Actions::GET_ALERM:
             getAlarmByUid();
             break;
