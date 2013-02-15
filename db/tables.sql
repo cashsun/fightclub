@@ -138,3 +138,16 @@ alter table COMMENT drop foreign key fk_comment_uid;
 alter table COMMENT drop foreign key fk_comment_tid;
 ALTER TABLE COMMENT ADD CONSTRAINT fk_comment_uid FOREIGN KEY (uid) REFERENCES USER(uid) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE COMMENT ADD CONSTRAINT fk_comment_tid FOREIGN KEY (tid) REFERENCES TASK(tid) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+
+
+/* 07/02/13 */
+CREATE TABLE ALARM
+(
+alarmid int NOT NULL AUTO_INCREMENT,
+title char(50),
+lowexp int,
+hightexp int,
+CONSTRAINT pk_lvid PRIMARY KEY (lvid)
+);
