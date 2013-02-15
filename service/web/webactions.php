@@ -291,6 +291,9 @@ function getAllByFuid($fuid,$uid){
     $user=new User($last_row);
     return $user;
 }
+function getAlarmByUid(){
+    
+}
 function echoFriend($friend){
     echo '<div class="friend_box">';
     echoProfilePic($friend);
