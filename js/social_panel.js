@@ -142,6 +142,7 @@ function updateTgAlarm(tgid,counter){
 }
 function getAlarm(){
     makeAjaxCall('post',{webaction:19},function(){},function(r){
+        $('.tg_alarm').removeClass("tg_alarm_new"); 
         var jsonArray = $.parseJSON(r);
         var tempTgid=-1;
         var tempTid = -1;

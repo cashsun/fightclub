@@ -472,7 +472,7 @@ function getComments(tid,lastcid,target,callback){
                         target.html(resp);
                         var tasks = $('li[tid="'+tid+'"]');
                         for(var i=0;i<tasks.length;i++){
-                            tasks.eq(i).children().eq(2).html($(".ccount").html())
+                            tasks.eq(i).children().eq(2).removeClass('comment_new').html($(".ccount").html());
                         }
                         $('.comment_delete').unbind('click').click(function(){
                             var cid = $(this).attr('cid');
