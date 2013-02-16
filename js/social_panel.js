@@ -128,7 +128,12 @@ function checkChange(){
 }
 function getAlarm(){
     makeAjaxCall('post',{webaction:19},function(){},function(r){
-        
+        var jsonArray = $.parseJSON(r);
+        for(var i=0;i<jsonArray.length;i++){
+            if(jsonArray[i].alarmtype==1){
+                console.log("new comment");
+            }
+        }
     });
     setTimeout(function(){
         getAlarm();
