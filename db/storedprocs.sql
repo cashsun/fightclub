@@ -771,11 +771,18 @@ DELIMITER ;
 /* GET COMMENTS */
 DELIMITER // 
 CREATE PROCEDURE GetComments(
+IN myuid int,
 IN mytid int,
 IN mylastcid int
 )
 BEGIN
+DECLARE tuid INTEGER;
 SET time_zone = "+00:00";
+SELECT TASK.uid INTO @tuid FROM TASK WHERE tid = mytid;
+if(myuid = @tuid) THEN
+  DELETE FROM ALARM
+  WHERE ALARM.alarmtype=1 AND ALARM.tid= mytid;
+END IF;
 SELECT COMMENT.commentid, COMMENT.uid,
 COMMENT.tid, COMMENT.content,
 COMMENT.tstamp, USER.username,
@@ -785,6 +792,7 @@ FROM COMMENT LEFT JOIN USER
 ON COMMENT.uid = USER.uid
 WHERE COMMENT.commentid > mylastcid AND tid = mytid
 ORDER BY COMMENT.tstamp ASC LIMIT 10;
+
 END // 
 DELIMITER ;
 
