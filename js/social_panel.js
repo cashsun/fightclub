@@ -180,5 +180,5 @@ function getAlarm(){
     });
     setTimeout(function(){
         getAlarm();
-    },5000);
+    },10000);
 }
