@@ -126,12 +126,14 @@ function checkChange(){
         }
     });
 }
-function updateTgAlarm(tgid,tid,counter){
+function updateTaskAlarm(tid){
     var tasks = $('li[tid="'+tid+'"]');
     for(var i=0;i<tasks.length;i++){
-        console.log(tid);
         tasks.eq(i).children().eq(2).addClass('comment_new');
     }
+}
+function updateTgAlarm(tgid,counter){
+
     var targetTg = $("#"+tgid,"#group_wrapper");
     var targetAlarm = $(".tg_alarm",targetTg);
     targetAlarm.addClass("tg_alarm_new");
@@ -150,28 +152,25 @@ function getAlarm(){
                     break;
                 case 1:console.log("new comment!");
                     var tgid = jsonArray[i].tgid;
+                    tempTid = jsonArray[i].tid;
+                    updateTaskAlarm(tempTid);
                     if(tempTgid==-1){
                         tempTgid = tgid;
                         counter++;
                         if(i==jsonArray.length-1){
-                            tempTid = jsonArray[i].tid;
-                            updateTgAlarm(tgid,tempTid,counter);
+                            updateTgAlarm(tgid,counter);
                         }else if(jsonArray[i+1].alarmtype == 2){
-                            tempTid = jsonArray[i].tid;
-                            updateTgAlarm(tgid,tempTid,counter);
+                            updateTgAlarm(tgid,counter);
                         }
                     }else if(tempTgid==tgid){
                         counter++;
                         if(i==jsonArray.length-1){
-                            tempTid = jsonArray[i].tid;
-                            updateTgAlarm(tgid,tempTid,counter);
+                            updateTgAlarm(tgid,counter);
                         }else if(jsonArray[i+1].alarmtype == 2){
-                            tempTid = jsonArray[i].tid;
-                            updateTgAlarm(tgid,tempTid,counter);
+                            updateTgAlarm(tgid,counter);
                         }
                     }else{
-                        tempTid = jsonArray[i].tid;
-                        updateTgAlarm(tgid,tempTid,counter);
+                        updateTgAlarm(tgid,counter);
                     }
                     break;
                 case 2:console.log("new fighto!");break;  
