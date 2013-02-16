@@ -129,9 +129,21 @@ function checkChange(){
 function getAlarm(){
     makeAjaxCall('post',{webaction:19},function(){},function(r){
         var jsonArray = $.parseJSON(r);
+        var tglist = new Array();
         for(var i=0;i<jsonArray.length;i++){
-            if(jsonArray[i].alarmtype==1){
-                console.log("new comment");
+            switch(parseInt(jsonArray[i].alarmtype)){
+                case 0:console.log("new follow!");
+                    break;
+                case 1:console.log("new comment!");
+                    var tgid = jsonArray[i].tgid;
+                    var tid = jsonArray[i].tid;
+                    var targetTg = $("#"+tgid,"#group_wrapper");
+                    var targetAlarm = $(".tg_alarm",targetTg);
+                    targetAlarm.addClass("tg_alarm_new");
+                    var newCount = parseInt(targetAlarm.html());
+                    targetAlarm.html(++newCount);
+                    break;
+                case 2:console.log("new fighto!");break;  
             }
         }
     });

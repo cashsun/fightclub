@@ -306,7 +306,7 @@ function positionGroup(isNewGroup,tgid,title,priority,gtype){
             cachecontent = '<div gtype="'+gtype+'" priority="'+priority+'" id="'+tgid+'"></div>';
             $('#cache').prepend(cachecontent);
         
-        tgcontent = '<div gtype="'+gtype+'" priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div></div>';
+        tgcontent = '<div gtype="'+gtype+'" priority="'+priority+'" id="'+tgid+'" class="tg_title"><div class="delete_group"></div><div class="tg_title_text"><span>'+title+'</span></div><div class="roundcorner tg_alarm">0</div></div>';
         groups = $('.tg_title','#group_wrapper');
         if(groups.length == 0){
             $('#group_wrapper').append(tgcontent);

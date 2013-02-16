@@ -15,7 +15,7 @@ function echoTaskGroup($group,$i){
             $isSelect = " selected";
             $tgTextSel = " tg_text_selected";
         }
-        echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group"></div><div class="tg_title_text"'.$tgTextSel.'><span>'.$group->getTitle().'</span></div><div class="roundcorner tg_alerm"></div></div>';
+        echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group"></div><div class="tg_title_text"'.$tgTextSel.'><span>'.$group->getTitle().'</span></div><div class="roundcorner tg_alarm">0</div></div>';
     }
 } 
 function echoTask(Task $task){
