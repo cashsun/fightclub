@@ -166,24 +166,6 @@ function getAlarm(){
                       update = false;
                       counter = 0;
                     }
-                    /*
-                    if(tempTgid==tgid || tempTgid==-1){
-                        tempTgid = tgid;
-                        counter++;
-                        if(i==jsonArray.length-1 || jsonArray[i+1].alarmtype == 2 
-                              || jsonArray[i+1].tgid!=tgid){
-                            updateTgAlarm(tgid,counter);
-                            counter = 0;
-                        }
-                    }else{
-                        updateTgAlarm(tempTgid,counter);
-                        tempTgid = tgid;
-                        counter = 0;
-                        if(i==jsonArray.length-1 || jsonArray[i+1].alarmtype == 2){
-                            counter ++;
-                            updateTgAlarm(tgid,counter);
-                        }
-                    }*/
                     break;
                 case 2:console.log("new fighto!");break;  
             }

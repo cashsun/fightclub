@@ -469,24 +469,30 @@ function postDeleteComment(cid,callback){
 }
 function getComments(tid,lastcid,target,callback){
     makeSocialAjaxCall('get','view/comments.php',{tid:tid,lastcid:lastcid},function(resp){
-                        target.html(resp);
-                        var tasks = $('li[tid="'+tid+'"]');
-                        for(var i=0;i<tasks.length;i++){
-                            tasks.eq(i).children().eq(2).removeClass('comment_new').html($(".ccount").html());
-                        }
-                        $('.comment_delete').unbind('click').click(function(){
-                            var cid = $(this).attr('cid');
-                            if(confirm('Delete this comment?')){   
-                                postDeleteComment(cid,function(){
-                                    var tid = commentMain.attr('tid');
-                                    getComments(tid,0,commentDialog,function(){
-                                        commentMain.find('textarea').val('');
-                                    });
-                                    
-                                });
-                            }
+        if(resp==-2){
+            location.reload();
+        }else if(resp==-1){
+            target.html("oops,please try again later.");
+        }else{
+            getAlarm();
+            target.html(resp);
+            var tasks = $('li[tid="'+tid+'"]');
+            for(var i=0;i<tasks.length;i++){
+                tasks.eq(i).children().eq(2).removeClass('comment_new').html($(".ccount").html());
+            }
+            $('.comment_delete').unbind('click').click(function(){
+                var cid = $(this).attr('cid');
+                if(confirm('Delete this comment?')){   
+                    postDeleteComment(cid,function(){
+                        var tid = commentMain.attr('tid');
+                        getComments(tid,0,commentDialog,function(){
+                            commentMain.find('textarea').val('');
                         });
-                    },callback,true);
+                    });
+                }
+            });
+        }
+    },callback,true);
 }
 function initCommentBox(){
     commentMain =$('#comment_main');
