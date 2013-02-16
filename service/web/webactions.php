@@ -294,7 +294,7 @@ function getAlarmByUid(){
     $result = $db->getAlarmsByUid($_SESSION['uid']);
     $alarms = array();
     $counter = 0;
-    while($row =  mysql_fetch_array($result))
+    while($row =  mysql_fetch_assoc($result))
     {
       $alarms[$counter++] = $row;
     }

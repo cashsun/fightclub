@@ -890,7 +890,7 @@ IN myuid int
 )
 BEGIN
 SELECT ALARM.alarmtype, ALARM.tid, TASK.tgid,
-af.focount
+af.flcount
 FROM
 ALARM
 LEFT JOIN 
@@ -898,12 +898,13 @@ TASK
 ON ALARM.tid = TASK.tid
 LEFT JOIN
 (
-  SELECT fa.alarmid, fa.uid2, COUNT(frid) AS focount FROM ALARM fa
+  SELECT fa.alarmid, fa.uid2, COUNT(frid) AS flcount FROM ALARM fa
   LEFT JOIN FRIEND f1
   ON fa.uid1 = f1.uid AND fa.uid2 = f1.fuid
   WHERE fa.uid2 = myuid
 ) af
 ON af.alarmid = ALARM.alarmid
-WHERE af.uid2 = myuid OR TASK.uid = myuid;
+WHERE af.uid2 = myuid OR TASK.uid = myuid
+ORDER BY ALARM.alarmtype ASC, TASK.tgid ASC;
 END // 
 DELIMITER ;
