@@ -140,6 +140,12 @@ function updateTgAlarm(tgid,counter){
     targetAlarm.html(counter);
 }
 function getAlarm(){
+    getAlarmOnce();
+    setTimeout(function(){
+        getAlarm();
+    },10000);
+}
+function getAlarmOnce(){
     makeAjaxCall('post',{webaction:19},function(){},function(r){
         $('.tg_alarm').removeClass("tg_alarm_new"); 
         var jsonArray = $.parseJSON(r);
@@ -171,7 +177,4 @@ function getAlarm(){
             }
         }
     });
-    setTimeout(function(){
-        getAlarm();
-    },10000);
 }

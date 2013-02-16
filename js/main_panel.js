@@ -474,7 +474,7 @@ function getComments(tid,lastcid,target,callback){
         }else if(resp==-1){
             target.html("oops,please try again later.");
         }else{
-            getAlarm();
+            getAlarmOnce();
             target.html(resp);
             var tasks = $('li[tid="'+tid+'"]');
             for(var i=0;i<tasks.length;i++){
