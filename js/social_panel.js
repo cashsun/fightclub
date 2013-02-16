@@ -1,8 +1,10 @@
 var socialLoading;
 $(document).ready(function(){
-    getAlarm();
     socialLoading = $('#social_loading');
     showSocial = false;
+    clubBtnAlrm=$('#club_button').children().find(".club_alarm");
+    friendTabAlrm=$("li","#social_tabs").eq(0).children().find('.club_alarm');
+    getAlarms();
     $('#social_tabs').tabs();
     $("#friends_radios").buttonset();
     $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});
@@ -46,16 +48,16 @@ function getMyFollows(){
 
 function getMyFriends(){
         $('#friends_wrapper').hide(0,function(){
-
             makeSocialAjaxCall('get','view/friends.php',{ftype:1},function(resp){
+                getAlarmOnce();
                 $('#friends_wrapper').html(resp).fadeIn(200);
                 },function(){showSocial = true});
         });
 }
 function getMyFans(){
         $('#friends_wrapper').hide(0,function(){
-
             makeSocialAjaxCall('get','view/friends.php',{ftype:2},function(resp){
+                getAlarmOnce();
                 $('#friends_wrapper').html(resp).fadeIn(200);
                 },function(){showSocial = true});
         });
@@ -105,27 +107,6 @@ function makeSocialAjaxCall(type,url,param,successCallback,callback,isForComment
         });
     });
 }
-var texparray;
-var temp_tid;
-var temp_texp;
-var cacheitem;
-function checkChange(){
-    var tgid = $('#tgid').html();
-    makeAjaxCall('post',{tgid:tgid,webaction:13},function(){
-        setTimeout("checkChange()",10000);
-    },function(r){
-        texparray = $.parseJSON(r);
-        for(var i=0;i<texparray.length;i++){
-            temp_tid = texparray[i].tid;
-            temp_texp = texparray[i].texp;
-            cacheitem = $('li[tid="'+temp_tid+'"]','#cache').children().eq(1);
-            if(parseInt(cacheitem.html())!=temp_texp){
-                $('li[tid="'+temp_tid+'"]','#tasks_sortable').children().eq(1).html(temp_texp);
-                sync();
-            }
-        }
-    });
-}
 function updateTaskAlarm(tid){
     var tasks = $('li[tid="'+tid+'"]');
     for(var i=0;i<tasks.length;i++){
@@ -133,29 +114,45 @@ function updateTaskAlarm(tid){
     }
 }
 function updateTgAlarm(tgid,counter){
-
     var targetTg = $("#"+tgid,"#group_wrapper");
     var targetAlarm = $(".tg_alarm",targetTg);
     targetAlarm.addClass("tg_alarm_new");
     targetAlarm.html(counter);
 }
-function getAlarm(){
+function updateClubAlarm(flcounter){
+    clubBtnAlrm.html(flcounter).addClass("club_alarm_new");
+    updateFriendAlarm(flcounter);
+}
+function updateFriendAlarm(flcounter){
+    if(flcounter>0){friendTabAlrm.html(flcounter).addClass("club_alarm_new");}
+}
+function getAlarms(){
     getAlarmOnce();
     setTimeout(function(){
-        getAlarm();
+        getAlarms();
     },10000);
 }
+var clubBtnAlrm;
+var friendTabAlrm;
 function getAlarmOnce(){
     makeAjaxCall('post',{webaction:19},function(){},function(r){
+        clubBtnAlrm.removeClass("club_alarm_new");
+        friendTabAlrm.removeClass("club_alarm_new");
         $('.tg_alarm').removeClass("tg_alarm_new"); 
         var jsonArray = $.parseJSON(r);
         var tempTgid=-1;
         var tempTid = -1;
         var counter = 0;
+        var flcounter = 0;
         var update = false;
         for(var i=0;i<jsonArray.length;i++){
             switch(parseInt(jsonArray[i].alarmtype)){
                 case 0:console.log("new follow!");
+                    flcounter++;
+                    if(i==jsonArray.length-1 || jsonArray[i+1].alarmtype == 1){
+                        updateClubAlarm(flcounter);
+                        flcounter=0;
+                    }
                     break;
                 case 1:console.log("new comment!");
                     var tgid = jsonArray[i].tgid;
@@ -165,7 +162,6 @@ function getAlarmOnce(){
                     counter++;
                     if(i==jsonArray.length-1 || jsonArray[i+1].alarmtype == 2 || jsonArray[i+1].tgid!=tgid)
                       update = true;
-                    
                     if(update)
                     {
                       updateTgAlarm(tgid, counter);

@@ -15,7 +15,7 @@ function echoTaskGroup($group,$i){
             $isSelect = " selected";
             $tgTextSel = " tg_text_selected";
         }
-        echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group"></div><div class="tg_title_text"'.$tgTextSel.'><span>'.$group->getTitle().'</span></div><div class="roundcorner tg_alarm">0</div></div>';
+        echo '<div gtype="'.$group->getGType().'" priority="'.$group->getPriority().'" id="'.$group->getTgid().'" class="tg_title'.$isSelect.' g_first"><div class="delete_group"></div><div class="tg_title_text"'.$tgTextSel.'><span>'.$group->getTitle().'</span></div><div class="roundcorner tg_alarm"></div></div>';
     }
 } 
 function echoTask(Task $task){
@@ -114,7 +114,7 @@ function getAllByUid($uid){
             ?>
         </div>
         <button id="logout">Logout</button>
-        <button id="club_button" class="button">Club</button>
+        <button id="club_button" class="button">Club<div class="roundcorner club_alarm"></div></button>
         <div id="group_button"><select data-highlight="true" id="show_group"><option>on</option><option>off</option></select></div>
     </div>
     <div id="panel_main">
@@ -147,7 +147,7 @@ function getAllByUid($uid){
             <div id="social_loading" class="hidden"></div>
             <div id="social_tabs">
                 <ul>
-                <li><a href="#tabs-1">Friends</a></li>
+                <li><a href="#tabs-1">Friends<div class="roundcorner club_alarm">6</div></a></li>
                 <li><a href="#tabs-2">News</a></li>
                 <li><a href="#tabs-3">Backyard</a></li>
                 </ul>
