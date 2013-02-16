@@ -126,22 +126,53 @@ function checkChange(){
         }
     });
 }
+function updateTgAlarm(tgid,tid,counter){
+    var tasks = $('li[tid="'+tid+'"]');
+    for(var i=0;i<tasks.length;i++){
+        console.log(tid);
+        tasks.eq(i).children().eq(2).addClass('comment_new');
+    }
+    var targetTg = $("#"+tgid,"#group_wrapper");
+    var targetAlarm = $(".tg_alarm",targetTg);
+    targetAlarm.addClass("tg_alarm_new");
+    targetAlarm.html(counter);
+    counter=0;
+}
 function getAlarm(){
     makeAjaxCall('post',{webaction:19},function(){},function(r){
         var jsonArray = $.parseJSON(r);
-        var tglist = new Array();
+        var tempTgid=-1;
+        var tempTid = -1;
+        var counter = 0;
         for(var i=0;i<jsonArray.length;i++){
             switch(parseInt(jsonArray[i].alarmtype)){
                 case 0:console.log("new follow!");
                     break;
                 case 1:console.log("new comment!");
                     var tgid = jsonArray[i].tgid;
-                    var tid = jsonArray[i].tid;
-                    var targetTg = $("#"+tgid,"#group_wrapper");
-                    var targetAlarm = $(".tg_alarm",targetTg);
-                    targetAlarm.addClass("tg_alarm_new");
-                    var newCount = parseInt(targetAlarm.html());
-                    targetAlarm.html(++newCount);
+                    if(tempTgid==-1){
+                        tempTgid = tgid;
+                        counter++;
+                        if(i==jsonArray.length-1){
+                            tempTid = jsonArray[i].tid;
+                            updateTgAlarm(tgid,tempTid,counter);
+                        }else if(jsonArray[i+1].alarmtype == 2){
+                            tempTid = jsonArray[i].tid;
+                            updateTgAlarm(tgid,tempTid,counter);
+                        }
+                    }else if(tempTgid==tgid){
+                        counter++;
+                        if(i==jsonArray.length-1){
+                            tempTid = jsonArray[i].tid;
+                            updateTgAlarm(tgid,tempTid,counter);
+                        }else if(jsonArray[i+1].alarmtype == 2){
+                            tempTid = jsonArray[i].tid;
+                            updateTgAlarm(tgid,tempTid,counter);
+                        }
+                    }else{
+                        tempTid = jsonArray[i].tid;
+                        updateTgAlarm(tgid,tempTid,counter);
+                    }
                     break;
                 case 2:console.log("new fighto!");break;  
             }

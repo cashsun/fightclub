@@ -232,7 +232,7 @@ function postDeleteTask(tid){
         $('[tid="'+tid+'"]','#tasks_sortable').slideUp(200, function(){
             
             $(this).remove();
-            $('li[tid="'+tid+'"]','#cache').remove();
+            $('[tid="'+tid+'"]','#cache').remove();
             $('#input_task').focus();
         })
         makeAjaxCall('post',
@@ -469,7 +469,11 @@ function postDeleteComment(cid,callback){
 }
 function getComments(tid,lastcid,target,callback){
     makeSocialAjaxCall('get','view/comments.php',{tid:tid,lastcid:lastcid},function(resp){
-                        target.html(resp);    
+                        target.html(resp);
+                        var tasks = $('li[tid="'+tid+'"]');
+                        for(var i=0;i<tasks.length;i++){
+                            tasks.eq(i).children().eq(2).html($(".ccount").html())
+                        }
                         $('.comment_delete').unbind('click').click(function(){
                             var cid = $(this).attr('cid');
                             if(confirm('Delete this comment?')){   
