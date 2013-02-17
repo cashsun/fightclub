@@ -144,7 +144,7 @@ function getAlarmOnce(){
     makeAjaxCall('post',{webaction:19},function(){},function(r){
         clubBtnAlrm.removeClass("club_alarm_new");
         friendTabAlrm.removeClass("club_alarm_new");
-        friendTabAlrm.removeClass("club_alarm_new");
+        newsTabAlrm.removeClass("club_alarm_new");
         $('.tg_alarm').removeClass("tg_alarm_new"); 
         var jsonArray = $.parseJSON(r);
         var tempTgid=-1;
