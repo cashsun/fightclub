@@ -482,7 +482,7 @@ USER.lastname, USER.email,
 USER.avatar
 FROM
 (
-  SELECT FRIEND1.uid, FRIEND1.fuid
+  SELECT FRIEND1.uid, FRIEND1.fuid, FRIEND1.frid
   FROM 
   (SELECT * FROM FRIEND WHERE uid = myuid ) FRIEND1
   JOIN 
