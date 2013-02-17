@@ -4,6 +4,7 @@ $(document).ready(function(){
     showSocial = false;
     clubBtnAlrm=$('#club_button').children().find(".club_alarm");
     friendTabAlrm=$("li","#social_tabs").eq(0).children().find('.club_alarm');
+    newsTabAlrm = $("li","#social_tabs").eq(1).children().find('.club_alarm');
     getAlarms();
     $('#social_tabs').tabs();
     $("#friends_radios").buttonset();
@@ -65,6 +66,7 @@ function getMyFans(){
 function getNews(){
         $('#news_wrapper').hide(0,function(){
             makeSocialAjaxCall('get','view/news.php',null,function(resp){
+                getAlarmOnce();
                 $('#news_wrapper').html(resp).fadeIn(200);
                 },function(){showSocial = true});
         });
@@ -126,6 +128,9 @@ function updateClubAlarm(flcounter){
 function updateFriendAlarm(flcounter){
     if(flcounter>0){friendTabAlrm.html(flcounter).addClass("club_alarm_new");}
 }
+function updateNewsAlarm(newsCounter){
+    newsTabAlrm.html(newsCounter).addClass("club_alarm_new");
+}
 function getAlarms(){
     getAlarmOnce();
     setTimeout(function(){
@@ -134,9 +139,11 @@ function getAlarms(){
 }
 var clubBtnAlrm;
 var friendTabAlrm;
+var newsTabAlrm;
 function getAlarmOnce(){
     makeAjaxCall('post',{webaction:19},function(){},function(r){
         clubBtnAlrm.removeClass("club_alarm_new");
+        friendTabAlrm.removeClass("club_alarm_new");
         friendTabAlrm.removeClass("club_alarm_new");
         $('.tg_alarm').removeClass("tg_alarm_new"); 
         var jsonArray = $.parseJSON(r);
@@ -169,7 +176,10 @@ function getAlarmOnce(){
                       counter = 0;
                     }
                     break;
-                case 2:console.log("new fighto!");break;  
+                case 2:console.log("new fighto!");break;
+                case 3:console.log("news!");
+                    updateNewsAlarm(jsonArray[i].tid);
+                    break;
             }
         }
     });

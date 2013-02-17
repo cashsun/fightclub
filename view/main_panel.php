@@ -147,8 +147,8 @@ function getAllByUid($uid){
             <div id="social_loading" class="hidden"></div>
             <div id="social_tabs">
                 <ul>
-                <li><a href="#tabs-1">Friends<div class="roundcorner club_alarm">6</div></a></li>
-                <li><a href="#tabs-2">News</a></li>
+                <li><a href="#tabs-1">Friends<div class="roundcorner club_alarm"></div></a></li>
+                <li><a href="#tabs-2">News<div class="roundcorner club_alarm"></div></a></li>
                 <li><a href="#tabs-3">Story</a></li>
                 </ul>
                 <div class="tab" id="tabs-1">

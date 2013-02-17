@@ -17,7 +17,7 @@ body{background-color:#f8f8f8}
 .tg_title span{padding-right:56px}
 .tg_alarm{left: 50px;margin-top: -34px;display:none;position: absolute;color: white;font-size: .8em;border:1px solid white;text-align: center;}
 .club_alarm{left: -10px;margin-top: -24px;padding-top: 3px;display:none;position: absolute;color: white;font-size: .8em;border:1px solid white;text-align: center;}
-#social_tabs .club_alarm{left: 53px;height: 14px;padding-top: 0px;text-decoration: none;font-weight: lighter}
+#social_tabs .club_alarm{left: 6px;height: 14px;padding-top: 0px;text-decoration: none;font-weight: lighter}
 .tg_alarm_new,.club_alarm_new{background-color: #ff4545;display:block ! important;width: 18px;height:15px;-webkit-box-shadow:0 0 5px rgba(0,0,0,0.5);-moz-box-shadow:0 0 5px rgba(0,0,0,0.5);-ms-box-shadow:0 0 5px rgba(0,0,0,0.5);-o-box-shadow:0 0 5px rgba(0,0,0,0.5);box-shadow:0 0 5px rgba(0,0,0,0.5)}
 .t_content{margin-top:10px;height:50px;text-align:center;color:#FFF;background-color:#eaeaea;z-index:21;padding:0 5px}
 .handle{width:45px;height:50px;float:left;background:url(../image/handle.png) no-repeat 0 center;cursor:n-resize;border-right:2px dotted #f8f8f8}
