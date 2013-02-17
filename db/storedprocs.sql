@@ -417,6 +417,18 @@ CREATE PROCEDURE GetMyFans(
 IN myuid int
 )
 BEGIN
+DELETE FROM ALARM
+WHERE frid IN (SELECT FRIEND.frid FROM FRIEND WHERE fuid = myuid)
+AND frid NOT IN (
+    SELECT FRIEND2.frid
+    FROM 
+    (SELECT * FROM FRIEND WHERE uid = myuid ) FRIEND1
+    JOIN 
+    (SELECT * FROM FRIEND WHERE fuid = myuid ) FRIEND2
+    ON
+    FRIEND1.fuid = FRIEND2.uid
+);
+
 SELECT ft.uid,
 USER.exp, USER.username,
 USER.firstname,
@@ -449,6 +461,18 @@ CREATE PROCEDURE GetMyFriends(
 IN myuid int
 )
 BEGIN
+
+DELETE FROM ALARM
+WHERE frid IN (
+    SELECT FRIEND2.frid
+    FROM 
+    (SELECT * FROM FRIEND WHERE uid = myuid ) FRIEND1
+    JOIN 
+    (SELECT * FROM FRIEND WHERE fuid = myuid ) FRIEND2
+    ON
+    FRIEND1.fuid = FRIEND2.uid
+);
+
 SELECT myuid AS fuid, ft.fuid AS uid,
 USER.exp, USER.username,
 USER.firstname,
@@ -505,7 +529,7 @@ IN myfuid int
 ) 
 BEGIN
 DECLARE rowno INTEGER;
-DECLARE eventid,alarmid INTEGER;
+DECLARE eventid,alarmid, frid INTEGER;
 SELECT COUNT(*)
 INTO @rowno
 FROM FRIEND f
@@ -515,6 +539,7 @@ IF @rowno <> 0 THEN
 ELSE
     INSERT INTO FRIEND (uid, fuid)
     VALUES(myuid, myfuid);
+    SELECT LAST_INSERT_ID() INTO @frid;
     SELECT COUNT(*), EVENT.eventid 
     INTO @rowno, @eventid
     FROM EVENT
@@ -530,21 +555,8 @@ ELSE
       INSERT INTO EVENT(eventtype, uid1, uid2)
       VALUES(3, myuid, myfuid);
     END IF;
-    SELECT COUNT(*),ALARM.alarmid
-    INTO @rowno,@alarmid
-    FROM ALARM
-    WHERE ALARM.alarmtype = 0
-    AND uid1 = myuid
-    AND uid2 = myfuid;
-    IF @rowno > 0 THEN
-      /* ALREADY EXISTS,UPDATE TIMESTAMP */
-      UPDATE ALARM
-      SET ALARM.tstamp = now()
-      WHERE ALARM.alarmid = @alarmid;
-    ELSE
-      INSERT INTO ALARM(alarmtype, uid1, uid2)
-      VALUES(0, myuid, myfuid);
-    END IF;
+    INSERT INTO ALARM(alarmtype, frid)
+    VALUES(0, @frid);
     SELECT (1) AS status;
 END IF;
 END // 
@@ -700,9 +712,11 @@ IF(@exist = FALSE) THEN
   IF(@exist = TRUE) THEN
     UPDATE ALARM SET ALARM.tstamp = now()
     WHERE ALARM.alarmid = @alarmid;
-  ELSE
+  ELSE 
+    IF(myuid <> @tuid) THEN
     INSERT INTO ALARM(alarmtype, tid)
     VALUES(2, mytid);
+    END IF;
   END IF;
 ELSE
   SET @status = -1;
@@ -746,9 +760,11 @@ WHERE ALARM.alarmtype = 1 AND ALARM.tid = @tid;
 IF(@rowno > 0) THEN
   UPDATE ALARM SET ALARM.tstamp = now()
   WHERE ALARM.alarmid = @alarmid;
-ELSE
+ELSE 
+  IF(myuid <> @tuid) THEN
   INSERT INTO ALARM(alarmtype, tid)
   VALUES(1, @tid);
+  END IF;
 END IF;
 END // 
 DELIMITER ;
@@ -779,10 +795,6 @@ BEGIN
 DECLARE tuid INTEGER;
 SET time_zone = "+00:00";
 SELECT TASK.uid INTO @tuid FROM TASK WHERE tid = mytid;
-if(myuid = @tuid) THEN
-  DELETE FROM ALARM
-  WHERE ALARM.alarmtype=1 AND ALARM.tid= mytid;
-END IF;
 SELECT COMMENT.commentid, COMMENT.uid,
 COMMENT.tid, COMMENT.content,
 COMMENT.tstamp, USER.username,
@@ -803,6 +815,8 @@ IN mytid int
 )
 BEGIN
 SET time_zone = "+00:00";
+DELETE FROM ALARM WHERE
+alarmtype = 2 AND tid = mytid;
 SELECT EXP.expid,
 USER.firstname, USER.lastname,
 USER.username,
@@ -822,6 +836,9 @@ IN myuid int
 )
 BEGIN
 SET time_zone = "+00:00";
+UPDATE USER 
+SET newststamp = now()
+WHERE USER.uid = myuid;
 /* STEP GET ALL COMMENT */
 SELECT u1.uid AS uid1,u1.firstname AS firstname1, 
 u1.lastname AS lastname1,
@@ -897,22 +914,37 @@ CREATE PROCEDURE GetAlarmsByUid(
 IN myuid int
 )
 BEGIN
-SELECT ALARM.alarmtype, ALARM.tid, TASK.tgid,
-af.flcount
-FROM
-ALARM
-LEFT JOIN 
-TASK
-ON ALARM.tid = TASK.tid
-LEFT JOIN
+
+DECLARE nstamp TIMESTAMP;
+DECLARE newscount INTEGER;
+SELECT USER.newststamp INTO @nstamp FROM USER WHERE USER.uid = myuid;
+SELECT COUNT(*) INTO @newscount FROM EVENT 
+WHERE (EVENT.uid1 = myuid OR EVENT.uid2 = myuid
+OR EXISTS 
 (
-  SELECT fa.alarmid, fa.uid2, COUNT(frid) AS flcount FROM ALARM fa
-  LEFT JOIN FRIEND f1
-  ON fa.uid1 = f1.uid AND fa.uid2 = f1.fuid
-  WHERE fa.uid2 = myuid
-) af
-ON af.alarmid = ALARM.alarmid
-WHERE af.uid2 = myuid OR TASK.uid = myuid
-ORDER BY ALARM.alarmtype ASC, TASK.tgid ASC;
+  SELECT frid FROM FRIEND 
+  WHERE uid = myuid 
+  AND EVENT.uid1 = FRIEND.fuid
+)) AND
+EVENT.tstamp > @nstamp;
+
+(
+  SELECT ALARM.alarmtype, ALARM.tid, TASK.tgid, ALARM.frid
+  FROM
+  ALARM
+  LEFT JOIN 
+  TASK
+  ON ALARM.tid = TASK.tid
+  LEFT JOIN 
+  FRIEND
+  ON ALARM.frid = FRIEND.frid
+  WHERE FRIEND.fuid = myuid OR TASK.uid = myuid
+)
+UNION
+(
+  SELECT 3 AS alarmtype, @newscount AS tid, null AS tgid,
+  null AS frid
+)
+ORDER BY alarmtype ASC, tgid ASC;
 END // 
 DELIMITER ;
