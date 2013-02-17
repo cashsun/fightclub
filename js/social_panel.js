@@ -122,7 +122,8 @@ function updateTgAlarm(tgid,counter){
     targetAlarm.html(counter);
 }
 function updateClubAlarm(flcounter,newsCounter){
-    clubBtnAlrm.html(parseInt(flcounter)+parseInt(newsCounter)).addClass("club_alarm_new");
+    var clubcount = parseInt(flcounter)+parseInt(newsCounter);
+    if(clubcount>0){clubBtnAlrm.html(clubcount).addClass("club_alarm_new");}
     updateNewsAlarm(newsCounter);
     updateFriendAlarm(flcounter);
 }
