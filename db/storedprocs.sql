@@ -407,7 +407,8 @@ FROM
   WHERE uid = myuid
 ) ft
 LEFT JOIN USER
-ON USER.uid = ft.fuid ORDER BY USER.firstname;
+ON USER.uid = ft.fuid
+ORDER BY ft.frid DESC;
 END // 
 DELIMITER ;
 
@@ -451,7 +452,8 @@ FROM
   )
 ) ft
 LEFT JOIN USER
-ON USER.uid = ft.uid ORDER BY USER.firstname;
+ON USER.uid = ft.uid
+ORDER BY ft.frid DESC;
 END // 
 DELIMITER ;
 
@@ -480,7 +482,7 @@ USER.lastname, USER.email,
 USER.avatar
 FROM
 (
-  SELECT FRIEND1.uid, FRIEND1.fuid
+  SELECT FRIEND1.uid, FRIEND1.fuid, FRIEND1.frid
   FROM 
   (SELECT * FROM FRIEND WHERE uid = myuid ) FRIEND1
   JOIN 
@@ -489,7 +491,7 @@ FROM
   FRIEND1.fuid = FRIEND2.uid
 ) ft
 LEFT JOIN USER
-ON USER.uid = ft.fuid ORDER BY USER.firstname;
+ON USER.uid = ft.fuid ORDER BY ft.frid DESC;
 END // 
 DELIMITER ;
 
@@ -516,7 +518,7 @@ LEFT JOIN USER
 ON USER.uid = ft.fuid
 LEFT JOIN FRIEND
 ON USER.uid = FRIEND.fuid AND FRIEND.uid = myuid
-ORDER BY USER.firstname;
+ORDER BY ft.frid DESC;
 END // 
 DELIMITER ;
 
