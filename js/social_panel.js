@@ -129,7 +129,7 @@ function updateFriendAlarm(flcounter){
     if(flcounter>0){friendTabAlrm.html(flcounter).addClass("club_alarm_new");}
 }
 function updateNewsAlarm(newsCounter){
-    newsTabAlrm.html(newsCounter).addClass("club_alarm_new");
+    if(newsCounter>0){newsTabAlrm.html(newsCounter).addClass("club_alarm_new");}
 }
 function getAlarms(){
     getAlarmOnce();
