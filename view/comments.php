@@ -6,15 +6,17 @@
         $db = new DBadapter();
         $db->connect();
         $result = $db->GetComments($_GET['tid'], $_GET['lastcid'], $_SESSION['uid']);
+        $counter = 0;
         while($row =  mysql_fetch_array($result)){
+            $counter++;
             echoComment($row);
         }
+        echo '<div class="ccount hidden">'.$counter.'</div>';
     }else{
         echo -2;
     }
     function echoComment($row){
         echo '<div class="comment_box">';
-        
         echo '<img uid='.$row['uid'].' class="friend_image_s" src="image/'.$row['avatar'].'.png" alt=""/>';
         echo '<div class="f_username">'.$row['username'].'</div>';
         $str = htmlspecialchars(($row['content']));

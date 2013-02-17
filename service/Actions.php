@@ -13,7 +13,6 @@ class Actions{
     const UNFOLLOW_FRIEND = 10;
     const UPDATE_AVATAR = 11;
     const FIGHTO = 12;
-    const GET_TEXP_BY_TGID = 13;
     const GET_USER_TASKS = 14;
     const CREATE_COMMENT = 15;
     const DELETE_COMMENT = 16;

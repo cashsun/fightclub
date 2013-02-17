@@ -66,9 +66,6 @@ if(isset($_SESSION['uid'])){
         case Actions::GET_COMMENTS:
             getComments();
             break;
-        case Actions::GET_FIGHTO_LIST:
-            getFightoList();
-            break;
         case Actions::GET_ALERM:
             getAlarmByUid();
             break;
@@ -295,7 +292,13 @@ function getAlarmByUid(){
     $db = new DBadapter();
     $db->connect();
     $result = $db->getAlarmsByUid($_SESSION['uid']);
-    echo json_encode($result);
+    $alarms = array();
+    $counter = 0;
+    while($row =  mysql_fetch_assoc($result))
+    {
+      $alarms[$counter++] = $row;
+    }
+    echo json_encode($alarms);
     
 }
 function echoFriend($friend){
