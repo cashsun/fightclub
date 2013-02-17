@@ -121,8 +121,9 @@ function updateTgAlarm(tgid,counter){
     targetAlarm.addClass("tg_alarm_new");
     targetAlarm.html(counter);
 }
-function updateClubAlarm(flcounter){
-    clubBtnAlrm.html(flcounter).addClass("club_alarm_new");
+function updateClubAlarm(flcounter,newsCounter){
+    clubBtnAlrm.html(flcounter+newsCounter).addClass("club_alarm_new");
+    updateNewsAlarm(newsCounter);
     updateFriendAlarm(flcounter);
 }
 function updateFriendAlarm(flcounter){
@@ -156,10 +157,6 @@ function getAlarmOnce(){
             switch(parseInt(jsonArray[i].alarmtype)){
                 case 0:console.log("new follow!");
                     flcounter++;
-                    if(i==jsonArray.length-1 || jsonArray[i+1].alarmtype == 1){
-                        updateClubAlarm(flcounter);
-                        flcounter=0;
-                    }
                     break;
                 case 1:console.log("new comment!");
                     var tgid = jsonArray[i].tgid;
@@ -178,7 +175,7 @@ function getAlarmOnce(){
                     break;
                 case 2:console.log("new fighto!");break;
                 case 3:console.log("news!");
-                    updateNewsAlarm(jsonArray[i].tid);
+                    updateClubAlarm(flcounter,jsonArray[i].tid);
                     break;
             }
         }
