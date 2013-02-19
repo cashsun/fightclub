@@ -796,6 +796,8 @@ IN mylastcid int
 BEGIN
 DECLARE tuid INTEGER;
 SET time_zone = "+00:00";
+DELETE FROM ALARM
+WHERE tid = mytid AND alarmtype = 1;
 SELECT TASK.uid INTO @tuid FROM TASK WHERE tid = mytid;
 SELECT COMMENT.commentid, COMMENT.uid,
 COMMENT.tid, COMMENT.content,
