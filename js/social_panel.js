@@ -156,10 +156,10 @@ function getAlarmOnce(){
         var update = false;
         for(var i=0;i<jsonArray.length;i++){
             switch(parseInt(jsonArray[i].alarmtype)){
-                case 0:console.log("new follow!");
+                case 0:
                     flcounter++;
                     break;
-                case 1:console.log("new comment!");
+                case 1:
                     var tgid = jsonArray[i].tgid;
                     updateTaskAlarm(jsonArray[i].tid);
                     if(tempTgid == -1)
@@ -174,8 +174,8 @@ function getAlarmOnce(){
                       counter = 0;
                     }
                     break;
-                case 2:console.log("new fighto!");break;
-                case 3:console.log("news!");
+                case 2:break;
+                case 3:
                     updateClubAlarm(flcounter,jsonArray[i].tid);
                     break;
             }

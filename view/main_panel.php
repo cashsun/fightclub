@@ -149,7 +149,7 @@ function getAllByUid($uid){
                 <ul>
                 <li><a href="#tabs-1">Friends<div class="roundcorner club_alarm"></div></a></li>
                 <li><a href="#tabs-2">News<div class="roundcorner club_alarm"></div></a></li>
-                <li><a href="#tabs-3">Fightory<span style="vertical-align:super;font-size: .6em">TM</span></a></li>
+                <li><a href="#tabs-3">Fightory<span style="vertical-align:super;font-size: .55em">TM</span></a></li>
                 </ul>
                 <div class="tab" id="tabs-1">
                     <input type="text" class="roundcorner" maxlength="50" id="input_friend"/>
