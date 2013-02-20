@@ -93,8 +93,8 @@ function echoFollowEvent($row){
 }
 function echoPublishEvent($row){
     $isShow = true;
-    if($row['privacy']==1){
-        if(!isset($row['fuid'])){
+    if($row['privacy']==1&&!isset($row['fuid'])){
+        if($row['uid1']!=$_SESSION['uid']){
             $isShow = false;
         }
     }
