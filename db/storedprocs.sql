@@ -33,6 +33,7 @@ DROP PROCEDURE IF EXISTS GetFightoList;
 DROP PROCEDURE IF EXISTS GetNews;
 DROP PROCEDURE IF EXISTS ExpHouseKeeping;
 DROP PROCEDURE IF EXISTS GetAlarmsByUid;
+DROP FUNCTION IF EXISTS SplitString;
 
 /* CREATE A USER */
 DELIMITER // 
@@ -585,9 +586,9 @@ IN myinput VARCHAR(50) CHARACTER SET utf8
 ) 
 BEGIN
 SELECT uid,
-exp, username,
+username,
 firstname,
-lastname, email, 
+lastname, 
 avatar,fuid
 FROM USER u 
 LEFT JOIN (SELECT fuid FROM FRIEND WHERE uid = myuid) f ON u.uid = f.fuid
@@ -734,7 +735,8 @@ DELIMITER //
 CREATE PROCEDURE CreateComment(
 IN myuid int,
 IN mytid int,
-IN mycontent char(140) CHARACTER SET utf8
+IN mycontent char(140) CHARACTER SET utf8,
+IN myat varchar(256) CHARACTER SET utf8
 ) 
 BEGIN
 DECLARE cid INTEGER;
@@ -742,7 +744,11 @@ DECLARE tuid INTEGER;
 DECLARE tid INTEGER;
 DECLARE tgid INTEGER;
 DECLARE rowno INTEGER;
-DECLARE alarmid INTEGER;
+DECLARE alarmid, noOfCommas INTEGER;
+DECLARE x INT DEFAULT 0; 
+DECLARE y INT DEFAULT 0;
+DECLARE atuid varchar(256) CHARACTER SET utf8;
+
 SET time_zone = "+00:00";
 INSERT INTO COMMENT (uid, tid, content)
 VALUES(myuid, mytid, mycontent);
@@ -753,8 +759,32 @@ TASK.tgid INTO @tuid,@tid,@tgid
 FROM COMMENT LEFT JOIN TASK
 ON COMMENT.tid = TASK.tid
 WHERE COMMENT.commentid = @cid;
+
 INSERT INTO EVENT(eventtype, uid1, uid2, cid, tid, tgid)
 VALUES(0, myuid, @tuid, @cid, @tid, @tgid);
+
+IF (myat <> "") THEN
+  SET y = 1;  
+  SELECT LENGTH(myat) - LENGTH(REPLACE(myat, ',', '')) INTO @noOfCommas; 
+      
+  IF  @noOfCommas = 0 
+  THEN 
+    INSERT INTO 
+    EVENT(eventtype, uid1, uid2, tid)
+    VALUES(1, myuid, CAST(myat AS UNSIGNED), mytid); 
+  ELSE 
+    SET x = @noOfCommas + 1; 
+    WHILE y  <=  x DO
+       SELECT SplitString(myat, ',', y) INTO @atuid; 
+       INSERT INTO
+       EVENT(eventtype, uid1, uid2, tid)
+       VALUES(1, myuid, CAST(@atuid AS UNSIGNED), mytid);
+       SET  y = y + 1; 
+    END WHILE; 
+  END IF; 
+END IF;
+
+
 SELECT COUNT(*),ALARM.alarmid
 INTO @rowno, @alarmid
 FROM ALARM
@@ -952,3 +982,21 @@ UNION
 ORDER BY alarmtype ASC, tgid ASC;
 END // 
 DELIMITER ;
+
+DELIMITER // 
+CREATE FUNCTION SplitString(
+stringToSplit VARCHAR(256) CHARACTER SET utf8, 
+sign VARCHAR(12) CHARACTER SET utf8, 
+position INT) RETURNS VARCHAR(256) CHARACTER SET utf8 DETERMINISTIC
+BEGIN
+        RETURN REPLACE(
+                  SUBSTRING(
+                      SUBSTRING_INDEX(stringToSplit, sign, position),
+                      LENGTH(SUBSTRING_INDEX(stringToSplit, sign, position -1)) + 1), 
+                  sign, '');
+END // 
+DELIMITER ;
+
+
+
+
