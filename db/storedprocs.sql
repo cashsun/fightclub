@@ -742,7 +742,7 @@ BEGIN
 DECLARE cid INTEGER;
 DECLARE tuid INTEGER;
 DECLARE tid INTEGER;
-DECLARE tgid INTEGER;
+DECLARE tgid, privacy INTEGER;
 DECLARE rowno INTEGER;
 DECLARE alarmid, noOfCommas INTEGER;
 DECLARE x INT DEFAULT 0; 
@@ -755,14 +755,15 @@ VALUES(myuid, mytid, mycontent);
 SELECT LAST_INSERT_ID() INTO @cid;
 
 SELECT TASK.uid, COMMENT.tid, 
-TASK.tgid INTO @tuid,@tid,@tgid
+TASK.tgid, TASK.privacy INTO @tuid,@tid,
+@tgid, @privacy
 FROM COMMENT LEFT JOIN TASK
 ON COMMENT.tid = TASK.tid
 WHERE COMMENT.commentid = @cid;
-
-INSERT INTO EVENT(eventtype, uid1, uid2, cid, tid, tgid)
-VALUES(0, myuid, @tuid, @cid, @tid, @tgid);
-
+IF(@privacy > 0) THEN
+  INSERT INTO EVENT(eventtype, uid1, uid2, cid, tid, tgid)
+  VALUES(0, myuid, @tuid, @cid, @tid, @tgid);
+END IF;
 IF (myat <> "") THEN
   SET y = 1;  
   SELECT LENGTH(myat) - LENGTH(REPLACE(myat, ',', '')) INTO @noOfCommas; 
