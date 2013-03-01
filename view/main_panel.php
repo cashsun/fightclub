@@ -275,5 +275,6 @@ function getAllByUid($uid){
 <script type="text/javascript" src="js/loading.js"></script>
 <script type="text/javascript" src="js/main_panel.js"></script>
 <script type="text/javascript" src="js/social_panel.js"></script>
+<script type="text/javascript" src="js/at.js"></script>
 
 
