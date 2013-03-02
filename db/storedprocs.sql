@@ -761,7 +761,7 @@ TASK.tgid, TASK.privacy INTO @tuid,@tid,
 FROM COMMENT LEFT JOIN TASK
 ON COMMENT.tid = TASK.tid
 WHERE COMMENT.commentid = @cid;
-IF(@privacy > 0) THEN
+IF(@privacy > 0 AND myuid <> @tuid) THEN
   INSERT INTO EVENT(eventtype, uid1, uid2, cid, tid, tgid)
   VALUES(0, myuid, @tuid, @cid, @tid, @tgid);
 END IF;
