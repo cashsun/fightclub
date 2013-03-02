@@ -38,8 +38,10 @@ var comtBtns;
 function initList(){
     comtBtns = $('.comment_btn');
     comtBtns.click(function(){
-        comtBtns.removeClass('comment_btn_c')
+        comtBtns.removeClass('comment_btn_c');
         var target = $(this);
+        autofill.hide();
+        commentInput.val("");
         commentMain.slideUp(200,function(){
             var ctid = target.attr('tid');
             if(ctid!=commentMain.attr('tid')){

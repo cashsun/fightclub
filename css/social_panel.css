@@ -59,6 +59,6 @@
 #friends_wrapper,#news_wrapper{padding-bottom:80px}
 #autofill{width: 200px;min-height: 200px;background-color: white;z-index: 25;position: absolute}
 .at_friend_box .friend_image_ss{float:left;margin-bottom: 5px}
-.at_friend_box{margin-left: 10px;clear: left;height: 50px}
+.at_friend_box{padding-left: 10px;clear: left;height: 50px}
 .at_friend_box .f_info{height: 50px;cursor: pointer}
 .at_friend_box:hover{background-color: #eaeaea}

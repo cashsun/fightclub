@@ -1,22 +1,25 @@
-var commentInput;
 var atindex
 $(document).ready(function(){
-    commentInput = commentMain.find('textarea');
     commentInput.keyup(function(){
-        var str = commentInput.val().toLowerCase();
+        var offset = commentInput.offset();
+        var height = commentInput.height();
+        autofill.offset({left:offset.left,top:offset.top+height});
+        var src = commentInput.val();
+        var list = src.split(" ");
+        var str = list[list.length-1];
         atindex = str.indexOf("@");
         if(atindex>=0){
-            var offset = commentInput.offset();
-//            autofill.offset({left:offset.left,top:offset.top+53}).show();
-autofill.show();
+            autofill.fadeIn();
             var key = str.substring(atindex).replace("@","");
             if(key.indexOf(" ")<0&&key!=""){
                 setTimeout(function(){
-                    if(str == commentInput.val().toLowerCase()){
+                    if(src == commentInput.val()){
                         getAutofill(key,autofill);
                     }
                 },700);
             }
+        }else{
+            autofill.hide();
         }
     });
 });

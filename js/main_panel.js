@@ -39,6 +39,8 @@ function initTasks(){
     });
     $('.comment').unbind('click').click(function(){
         var target = $(this);
+        autofill.hide();
+        commentInput.val("");
         commentMain.slideUp(200,function(){
             var ctid = target.parent().attr('tid');
             if(ctid!=commentMain.attr('tid')){
@@ -48,7 +50,6 @@ function initTasks(){
                     getComments(ctid,0,commentMain.find('#comment_dialog'),
                     function(){
                         loading_image.hide(0,function(){
-                            autofill.hide();
                             commentMain.slideDown(200);
                         });
                     });
@@ -502,6 +503,7 @@ function getComments(tid,lastcid,target,callback){
 }
 function initCommentBox(){
     commentMain =$('#comment_main');
+    commentInput = commentMain.find('textarea');
     commentDialog=commentMain.find('#comment_dialog');
     commentMain.find('button').button().unbind('click').click(function(){
         var content = commentMain.find('textarea').val();
@@ -521,6 +523,7 @@ var searchText;
 var visibleTasks;
 var myuid;
 var fightolist;
+var commentInput;
 $(document).ready(function(){
     showGroup = true;
     $('#panel_task').click(function(){
