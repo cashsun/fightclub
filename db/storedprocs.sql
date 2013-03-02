@@ -784,8 +784,8 @@ IF (myat <> "") THEN
        FROM USER WHERE username = @atusername;
        IF(@exist = TRUE) THEN
          INSERT INTO
-         EVENT(eventtype, uid1, uid2, tid)
-         VALUES(1, myuid, @atuid, mytid);
+         EVENT(eventtype, uid1, uid2, tid, cid)
+         VALUES(1, myuid, @atuid, mytid, @cid);
        END IF;
        SET  y = y + 1; 
     END WHILE; 
