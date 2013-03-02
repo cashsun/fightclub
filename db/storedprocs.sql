@@ -744,10 +744,11 @@ DECLARE tuid INTEGER;
 DECLARE tid INTEGER;
 DECLARE tgid, privacy INTEGER;
 DECLARE rowno INTEGER;
-DECLARE alarmid, noOfCommas INTEGER;
+DECLARE alarmid, noOfCommas, atuid INTEGER;
+DECLARE exist BOOLEAN;
 DECLARE x INT DEFAULT 0; 
 DECLARE y INT DEFAULT 0;
-DECLARE atuid varchar(256) CHARACTER SET utf8;
+DECLARE atusername varchar(256) CHARACTER SET utf8;
 
 SET time_zone = "+00:00";
 INSERT INTO COMMENT (uid, tid, content)
@@ -776,10 +777,16 @@ IF (myat <> "") THEN
   ELSE 
     SET x = @noOfCommas + 1; 
     WHILE y  <=  x DO
-       SELECT SplitString(myat, ',', y) INTO @atuid; 
-       INSERT INTO
-       EVENT(eventtype, uid1, uid2, tid)
-       VALUES(1, myuid, CAST(@atuid AS UNSIGNED), mytid);
+       SET @exist = FALSE;
+       SELECT SplitString(myat, ',', y) INTO @atusername;
+       SELECT USER.uid, (COUNT(USER.uid)>0)
+       INTO @atuid, @exist
+       FROM USER WHERE username = @atusername;
+       IF(@exist = TRUE) THEN
+         INSERT INTO
+         EVENT(eventtype, uid1, uid2, tid)
+         VALUES(1, myuid, @atuid, mytid);
+       END IF;
        SET  y = y + 1; 
     END WHILE; 
   END IF; 
