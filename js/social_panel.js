@@ -5,7 +5,7 @@ $(document).ready(function(){
     clubBtnAlrm=$('#club_button').children().find(".club_alarm");
     friendTabAlrm=$("li","#social_tabs").eq(0).children().find('.club_alarm');
     newsTabAlrm = $("li","#social_tabs").eq(1).children().find('.club_alarm');
-//    getAlarms();
+    getAlarms();
     $('#social_tabs').tabs();
     $("#friends_radios").buttonset();
     $('#input_friend').tipsy({fallback:'ENTER to search',gravity:'s',fade:false,offset:0});

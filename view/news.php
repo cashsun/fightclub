@@ -13,7 +13,9 @@
                   case EventTypes::COMMENT:
                       echoCommentEvent($row);
                       break;
-                  case EventTypes::AT:break;
+                  case EventTypes::AT:
+                      echoAtEvent($row);
+                      break;
                   case EventTypes::FIGHTO: 
                       echoFightoEvent($row);
                       break;
@@ -53,7 +55,18 @@ function echoCommentEvent($row){
     }
 }
 function echoAtEvent($row){
-
+    if($row['privacy']!=0){
+    echo '<div class="news_box">';
+        echo '<div class="news_title">';
+            echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> tagged '.$row['firstname2'].' '.$row['lastname2'].
+                    'at task';
+        echo '</div> ';
+        echo '<div class="news_content">';
+            echoTask($row);
+            echoComment($row);
+        echo '</div>';
+    echo '</div>';
+    }
 }
 function echoFightoEvent($row){
     echo '<div class="news_box">';
