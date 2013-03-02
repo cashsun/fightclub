@@ -771,9 +771,16 @@ IF (myat <> "") THEN
       
   IF  @noOfCommas = 0 
   THEN 
-    INSERT INTO 
-    EVENT(eventtype, uid1, uid2, tid)
-    VALUES(1, myuid, CAST(myat AS UNSIGNED), mytid); 
+    SET @exist = FALSE;
+    SELECT SplitString(myat, ',', y) INTO @atusername;
+    SELECT USER.uid, (COUNT(USER.uid)>0)
+    INTO @atuid, @exist
+    FROM USER WHERE username = @atusername;
+    IF(@exist = TRUE) THEN
+     INSERT INTO
+     EVENT(eventtype, uid1, uid2, tid, cid)
+     VALUES(1, myuid, @atuid, mytid, @cid);
+    END IF;
   ELSE 
     SET x = @noOfCommas + 1; 
     WHILE y  <=  x DO
