@@ -1,8 +1,8 @@
 <?php
-preg_match_all("/@[a-zA-Z0-9]+/",
-    "dd dd@abc dd @dd @",
+preg_match_all("/@\w*/",
+    "@cashsun @plutoless @testuser",
     $out, PREG_PATTERN_ORDER);
-echo sizeof($out[0]);
-echo $out[0][0] . ", " . $out[0][1] . "\n";
-echo $out[1][0] . ", " . $out[1][1] . "\n";
+$atstr = implode(",", $out[0]);
+            $atstr = str_replace("@", "", $atstr);
+            echo $atstr;
 ?>
