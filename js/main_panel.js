@@ -48,6 +48,7 @@ function initTasks(){
                     getComments(ctid,0,commentMain.find('#comment_dialog'),
                     function(){
                         loading_image.hide(0,function(){
+                            autofill.hide();
                             commentMain.slideDown(200);
                         });
                     });
@@ -61,6 +62,7 @@ function initTasks(){
     initIsDone();
     if(!$("#u_g_dialog").dialog( "isOpen" )){$('#input_task').val('').focus();}
 }
+var autofill;
 var commentMain;
 //update t_order and cache
 function updateTorder(){
@@ -68,7 +70,7 @@ function updateTorder(){
     var task_order = '';
     var comma = ',';
     visibleTasks = $('#tasks_sortable li');
-    
+    autofill = $("#autofill");
     var task;
     for(var i=0;i<visibleTasks.length;i++){
         if(i==visibleTasks.length-1){
@@ -378,10 +380,14 @@ function positionGroup(isNewGroup,tgid,title,priority,gtype){
         }
     });
 }
-function makeAjaxCall(type,param,callback,successCallback){
+function makeAjaxCall(type,param,callback,successCallback,url){
     loading_image.show(0);
+    var realurl = url;
+    if(realurl == null){
+        realurl = 'service/web/webactions.php';
+    }
     $.ajax({
-        url:'service/web/webactions.php',
+        url:realurl,
         timeout:6000,
         type:type,
         data:param,
@@ -529,7 +535,8 @@ $(document).ready(function(){
     fightolist = $('#fightolist');
     loading_image = $('#loadingImage');
     initCommentBox();
-    originalPriority = 0;
+    originalPriority = 0; 
+    autofill = $('#autofill');
     myuid = $('#uid').html();
     $('#tg_selector').click(function(){
         $('#panel_group').hide();

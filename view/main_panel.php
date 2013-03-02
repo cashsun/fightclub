@@ -172,8 +172,9 @@ function getAllByUid($uid){
         <div id="comment_main" tid="-1" class="hidden">
             <div id="comment_dialog"></div>
             <textarea rows="3" id="comment_input" maxlength="140"></textarea><br/>
+            <div id="autofill" class="hidden"></div>
             <button id="comment_submit">comment</button>
-        </div>
+        </div> 
         <div id="fightolist" class="hidden"></div>
         <?php
             foreach($groups as $group){
@@ -182,7 +183,6 @@ function getAllByUid($uid){
                 echo '</div>';
             }
             echo '<div id="tgid">'.$groups[0]->getTgid().'</div>';
-            
         ?>
         <div id="uid"><?php echo $_SESSION['uid']; ?></div>
     </div>
@@ -275,6 +275,6 @@ function getAllByUid($uid){
 <script type="text/javascript" src="js/loading.js"></script>
 <script type="text/javascript" src="js/main_panel.js"></script>
 <script type="text/javascript" src="js/social_panel.js"></script>
-<script type="text/javascript" src="js/at.js"></script>
+<script type="text/javascript" src="js/at_main.js"></script>
 
 

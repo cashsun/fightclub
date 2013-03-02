@@ -25,7 +25,8 @@
 .f_exp{color:#8d8f90;font-size:.9em}
 .isfriend{position:relative;height:31px;color:#8d8f90;font-size:.9em;margin-top:-8px}
 .isfriend span{position:absolute;bottom:0}
-.isfriend .ui-button{width:50px;height:20px}
+.isfriend .ui-button{width:50px;height
+          :20px}
 .isfriend .ui-button span{margin-bottom:2px}
 #f_group_wrapper,#f_follow_wrapper{margin-top:50px;color:#8d8f90;font-size:11px;margin-left:0;width:100%;overflow-y:auto}
 .f_group{font-size:13px;width:76px;height:14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:center;margin-top:20px;background:url(../image/f_group_back.png) no-repeat center center;color:#fff;margin-bottom:5px;text-shadow:0 1px 0 rgba(0,0,0,0.6);padding:3px 4px 3px 3px}
@@ -56,3 +57,8 @@
 .news_fighto{float:left;width:16px;height:16px}
 .news_box{font-family:"Microsoft Yahei",Helvetica,Arial!important;padding-bottom:20px;border-bottom:1px solid #eaeaea}
 #friends_wrapper,#news_wrapper{padding-bottom:80px}
+#autofill{width: 200px;min-height: 200px;background-color: white;z-index: 25;position: absolute}
+.at_friend_box .friend_image_ss{float:left;margin-bottom: 5px}
+.at_friend_box{margin-left: 10px;clear: left;height: 50px}
+.at_friend_box .f_info{height: 50px;cursor: pointer}
+.at_friend_box:hover{background-color: #eaeaea}
