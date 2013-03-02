@@ -59,7 +59,7 @@ function echoAtEvent($row){
     echo '<div class="news_box">';
         echo '<div class="news_title">';
             echo '<img uid="'.$row['uid1'].'" class="friend_image_ss" src="image/'.$row['avatar1'].'.png" alt=""/><div style="color:black" class="f_fullname">'.$row['firstname1'].' '.$row['lastname1'].'</div> tagged '.$row['firstname2'].' '.$row['lastname2'].
-                    'at task';
+                    ' at task';
         echo '</div> ';
         echo '<div class="news_content">';
             echoTask($row);
