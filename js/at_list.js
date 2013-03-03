@@ -10,6 +10,7 @@ $(document).ready(function(){
         }
         afterstr += str.substring(0, atindex)+"@"+username+" ";
         commentInput.focus().val(afterstr);
+        autofill.hide();
     });
 });
 
