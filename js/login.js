@@ -5,7 +5,7 @@ $(document).ready(function(){
         $('#submit').click();
     });
     $('.register').click(function(){
-        location.href="test/registerTest.php";
+        location.replace("view/register.php");
     });
     $(document).keypress(function(e) {
         if(e.which == 13) {

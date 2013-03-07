@@ -545,7 +545,7 @@ $(document).ready(function(){
         $('#panel_group').hide();
     });
     $('#logout').click(function(){
-        location.replace("test/logout.php");
+        location.replace("service/logout.php");
     });
     priorityMap = new Array("casual","very low","low","minor","medium","important","major","urgent","urgent+","immediate");
     $('#g_priority > span,#u_g_priority > span').each(function(){
