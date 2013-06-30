@@ -1,5 +1,5 @@
 <?php
-  include_once '/db/DBadapter.php';
+  include_once './db/DBadapter.php';
   
   $first = true;
   $success = false;
