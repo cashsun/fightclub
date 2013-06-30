@@ -6,7 +6,7 @@
     include_once 'model/TaskGroup.php';
     include_once 'db/DBadapter.php';
     if(!isset($_SESSION['uid']))
-      include_once '/view/login.php';
+      include_once 'view/login.php';
     else
       include_once 'view/main_panel.php';
 ?>
