@@ -30,7 +30,7 @@ class Task {
         if(isset($taskInfo['creatorname']))
             $this->creatorname = $taskInfo['creatorname'];
         if(isset($taskInfo['otid']))
-            $this->creatorname = $taskInfo['otid'];
+            $this->otid = $taskInfo['otid'];
         if(isset($taskInfo['privacy']))
             $this->privacy = $taskInfo['privacy'];
         if(isset($taskInfo['deadline']))
