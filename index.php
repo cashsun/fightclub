@@ -1,5 +1,6 @@
 <?php
     session_start();
+    ob_start();
     include_once 'header.php';
     include_once 'model/User.php';
     include_once 'model/Task.php';
