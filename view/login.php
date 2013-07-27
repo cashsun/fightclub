@@ -28,7 +28,10 @@
     }
   }
 if($success)
-  header("location:/fightclub/index.php");
+{
+  header("location: /fightclub/index.php");
+  exit();
+}
   
 ?>
 
